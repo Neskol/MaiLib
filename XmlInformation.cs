@@ -80,7 +80,7 @@ namespace MaiLib
             nameStr.InnerText = this.TrackName;
             name.AppendChild(nameId);
             name.AppendChild(nameStr);
-            root.AppendChild(root);
+            root.AppendChild(name);
             XmlElement rightsInfoName = this.TakeInValue.CreateElement("rightsInfoName");
             XmlElement rightsInfoNameId = this.TakeInValue.CreateElement("id");
             rightsInfoNameId.InnerText = "0";
