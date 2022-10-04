@@ -188,37 +188,65 @@ namespace MaiLib
                 {
                     case 0:
                         notesDesignerStrCandidate.InnerText = this.Information["Easy Chart Maker"];
-                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        int designerIndex = Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
+                        if (designerIndex>1)
+                        {
+                            notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        }
                         isEnabledCandidate.InnerText = "true";
                         break;
                     case 1:
                         notesDesignerStrCandidate.InnerText = this.Information["Basic Chart Maker"];
-                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        designerIndex = Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
+                        if (designerIndex > 1)
+                        {
+                            notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        }
                         isEnabledCandidate.InnerText = "true";
                         break;
                     case 2:
                         notesDesignerStrCandidate.InnerText = this.Information["Advanced Chart Maker"];
-                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        designerIndex = Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
+                        if (designerIndex > 1)
+                        {
+                            notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        }
                         isEnabledCandidate.InnerText = "true";
                         break;
                     case 3:
                         notesDesignerStrCandidate.InnerText = this.Information["Expert Chart Maker"];
-                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        designerIndex = Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
+                        if (designerIndex > 1)
+                        {
+                            notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        }
                         isEnabledCandidate.InnerText = "true";
                         break;
                     case 4:
                         notesDesignerStrCandidate.InnerText = this.Information["Master Chart Maker"];
-                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        designerIndex = Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
+                        if (designerIndex > 1)
+                        {
+                            notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        }
                         isEnabledCandidate.InnerText = "true";
                         break;
                     case 5:
                         notesDesignerStrCandidate.InnerText = this.Information["Remaster Chart Maker"];
-                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        designerIndex = Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
+                        if (designerIndex > 1)
+                        {
+                            notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        }
                         isEnabledCandidate.InnerText = "true";
                         break;
                     case 6:
                         notesDesignerStrCandidate.InnerText = this.Information["Utage Chart Maker"];
-                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        designerIndex = Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
+                        if (designerIndex > 1)
+                        {
+                            notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        }
                         isEnabledCandidate.InnerText = "true";
                         break;
                 }
