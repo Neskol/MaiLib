@@ -64,9 +64,9 @@ namespace MaiLib
             root.AppendChild(netOpenName);
             XmlElement releaseTagName = this.TakeInValue.CreateElement("releaseTagName");
             XmlElement releaseTagNameId = this.TakeInValue.CreateElement("id");
-            releaseTagNameId.InnerText = Array.IndexOf(TrackInformation.addVersion,this.Information["Version Number"]).ToString();
+            releaseTagNameId.InnerText = Array.IndexOf(TrackInformation.addVersion,this.Information["Version"]).ToString();
             XmlElement releaseTagNameStr = this.TakeInValue.CreateElement("str");
-            releaseTagNameStr.InnerText = this.Information["Version Number"];
+            releaseTagNameStr.InnerText = this.Information["Version"];
             releaseTagName.AppendChild(releaseTagNameId);
             releaseTagName.AppendChild(releaseTagNameStr);
             root.AppendChild(releaseTagName);
@@ -118,7 +118,7 @@ namespace MaiLib
             XmlElement addVersionId = this.TakeInValue.CreateElement("id");
             addVersionId.InnerText = this.TrackVersionNumber;
             XmlElement addVersionStr = this.TakeInValue.CreateElement("str");            
-            addVersionStr.InnerText = TrackInformation.shortVersion[int.Parse(this.TrackVersionNumber)];
+            addVersionStr.InnerText = TrackInformation.shortVersion[int.Parse(this.TrackVersionNumber.Substring(1))];
             addVersion.AppendChild(addVersionId);
             addVersion.AppendChild(addVersionStr);
             root.AppendChild(addVersion);
