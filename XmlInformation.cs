@@ -64,9 +64,9 @@ namespace MaiLib
             root.AppendChild(netOpenName);
             XmlElement releaseTagName = this.TakeInValue.CreateElement("releaseTagName");
             XmlElement releaseTagNameId = this.TakeInValue.CreateElement("id");
-            releaseTagNameId.InnerText = Array.IndexOf(TrackInformation.addVersion,this.Information["Version"]).ToString();
+            releaseTagNameId.InnerText = "1";
             XmlElement releaseTagNameStr = this.TakeInValue.CreateElement("str");
-            releaseTagNameStr.InnerText = this.Information["Version"];
+            releaseTagNameStr.InnerText = "Ver1.00.00";
             releaseTagName.AppendChild(releaseTagNameId);
             releaseTagName.AppendChild(releaseTagNameStr);
             root.AppendChild(releaseTagName);

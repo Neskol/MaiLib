@@ -17,7 +17,7 @@ namespace MaiLib
 
         public static readonly string[] difficulty = { "Basic", "Advance", "Expert", "Master", "Remaster", "Utage", "Easy" };
 
-        public static readonly string[] addVersion = { "Ver1.00.00" };
+        public static readonly string[] addVersion = { "Ver1.00.00"};
 
         /// <summary>
         /// Stores the genre name used in information
