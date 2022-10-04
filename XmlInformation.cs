@@ -167,7 +167,7 @@ namespace MaiLib
             dotNetListView.InnerText = "true";
             root.AppendChild(dotNetListView);
             XmlElement notesData = this.TakeInValue.CreateElement("notesData");
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
                 XmlElement noteCandidate = this.TakeInValue.CreateElement("Notes");
                 XmlElement fileCandidate = this.TakeInValue.CreateElement("file");
@@ -176,17 +176,83 @@ namespace MaiLib
                 fileCandidate.AppendChild(pathCandidate);
                 XmlElement levelCandidate = this.TakeInValue.CreateElement("level");
                 XmlElement levelDecimalCandidate = this.TakeInValue.CreateElement("levelDecimal");
+                XmlElement notesDesignerCandidate = this.TakeInValue.CreateElement("notesDesigner");
+                XmlElement notesDesignerIdCandidate = this.TakeInValue.CreateElement("id");
+                XmlElement notesDesignerStrCandidate = this.TakeInValue.CreateElement("str");
+                XmlElement notesTypeCandidate = this.TakeInValue.CreateElement("notesType");
+                notesTypeCandidate.InnerText = "0";
+                XmlElement musicLevelIDCandidate = this.TakeInValue.CreateElement("musicLevelID");
+                XmlElement isEnabledCandidate = this.TakeInValue.CreateElement("isEnabled");
 
+                switch (i)
+                {
+                    case 0:
+                        notesDesignerStrCandidate.InnerText = this.Information["Easy Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        isEnabledCandidate.InnerText = "true";
+                        break;
+                    case 1:
+                        notesDesignerStrCandidate.InnerText = this.Information["Basic Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        isEnabledCandidate.InnerText = "true";
+                        break;
+                    case 2:
+                        notesDesignerStrCandidate.InnerText = this.Information["Advanced Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        isEnabledCandidate.InnerText = "true";
+                        break;
+                    case 3:
+                        notesDesignerStrCandidate.InnerText = this.Information["Expert Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        isEnabledCandidate.InnerText = "true";
+                        break;
+                    case 4:
+                        notesDesignerStrCandidate.InnerText = this.Information["Master Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        isEnabledCandidate.InnerText = "true";
+                        break;
+                    case 5:
+                        notesDesignerStrCandidate.InnerText = this.Information["Remaster Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        isEnabledCandidate.InnerText = "true";
+                        break;
+                    case 6:
+                        notesDesignerStrCandidate.InnerText = this.Information["Utage Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = TrackInformation.artistNameDic.Keys.ToArray()[Array.IndexOf(TrackInformation.artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
+                        isEnabledCandidate.InnerText = "true";
+                        break;
+                }
+                notesDesignerCandidate.AppendChild(notesDesignerIdCandidate);
+                notesDesignerCandidate.AppendChild(notesDesignerStrCandidate);
+                if (!this.TrackLevels[i].Equals(""))
+                {
+                    levelCandidate.InnerText = TrackLevels[i];
+                    musicLevelIDCandidate.InnerText = TrackLevels[i];
+                }
+                else levelCandidate.InnerText = "0";
+                if (!this.TrackDecimalLevels[i].Equals(""))
+                {
+                    levelCandidate.InnerText = TrackDecimalLevels[i];
+                }
+                else levelCandidate.InnerText = "0";
+                noteCandidate.AppendChild(fileCandidate);
+                noteCandidate.AppendChild(levelCandidate);
+                noteCandidate.AppendChild(levelDecimalCandidate);
+                noteCandidate.AppendChild(notesDesignerCandidate);
+                noteCandidate.AppendChild(notesTypeCandidate);
+                noteCandidate.AppendChild(musicLevelIDCandidate);
+                noteCandidate.AppendChild(isEnabledCandidate);
+                root.AppendChild(noteCandidate);
             }
             XmlElement jacketFile = this.TakeInValue.CreateElement("jacketFile");
             XmlElement thumbnailName = this.TakeInValue.CreateElement("thumbnailName");
             XmlElement rightFile = this.TakeInValue.CreateElement("rightFile");
             XmlElement priority = this.TakeInValue.CreateElement("priority");
             priority.InnerText = "0";
-
-
-
-
+            root.AppendChild(jacketFile);
+            root.AppendChild(thumbnailName);
+            root.AppendChild(rightFile);
+            root.AppendChild(priority);
         }
 
         public XmlElement CreateNotesInformation(Dictionary<string, string> information, int chartIndex)
