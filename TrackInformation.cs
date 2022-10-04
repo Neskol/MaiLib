@@ -1426,27 +1426,79 @@ namespace MaiLib
                         { "BPM", "" },
                         { "Composer", "" },
                         { "Easy", "" },
+                        { "Easy Decimal","" },
                         { "Easy Chart Maker", "" },
                         { "Easy Chart Path", "" },
                         { "Basic", "" },
+                        { "Basic Decimal", "" },
                         { "Basic Chart Maker", "" },
                         { "Basic Chart Path", "" },
                         { "Advanced", "" },
+                        { "Advanced Decimal", "" },
                         { "Advanced Chart Maker", "" },
                         { "Advanced Chart Path", "" },
                         { "Expert", "" },
+                        { "Expert Decimal", "" },
                         { "Expert Chart Maker", "" },
                         { "Expert Chart Path", "" },
                         { "Master", "" },
+                        { "Master Decimal", "" },
                         { "Master Chart Maker", "" },
                         { "Master Chart Path", "" },
                         { "Remaster", "" },
+                        { "Remaster Decimal", "" },
                         { "Remaster Chart Maker", "" },
                         { "Remaster Chart Path", "" },
                         { "Utage", "" },
                         { "Utage Chart Maker", "" },
                         { "Utage Chart Path", "" },
                         {"SDDX Suffix",""}
+                    };
+        }
+
+        /// <summary>
+        /// Add in necessary nodes in information for dummy chart.
+        /// </summary>
+        public void FormatDummyInformation()
+        {
+            this.information = new Dictionary<string, string>
+                    {
+                        { "Name", "Dummy" },
+                        { "Sort Name", "DUMMY" },
+                        { "Music ID", "000000" },
+                        { "Genre", "maimai" },
+                        { "Version", "maimai" },
+                        {"Version Number","101"},
+                        { "BPM", "120" },
+                        { "Composer", "SEGA" },
+                        { "Easy", "1" },
+                        { "Easy Decimal","1.0" },
+                        { "Easy Chart Maker", "SEGA" },
+                        { "Easy Chart Path", "000000_11.ma2" },
+                        { "Basic", "2" },
+                        { "Basic Decimal", "2.0" },
+                        { "Basic Chart Maker", "SEGA" },
+                        { "Basic Chart Path", "000000_00.ma2" },
+                        { "Advanced", "3" },
+                        { "Advanced Decimal", "3.0" },
+                        { "Advanced Chart Maker", "SEGA" },
+                        { "Advanced Chart Path", "000000_01.ma2" },
+                        { "Expert", "4" },
+                        { "Expert Decimal", "4.0" },
+                        { "Expert Chart Maker", "SEGA" },
+                        { "Expert Chart Path", "000000_02.ma2" },
+                        { "Master", "5" },
+                        { "Master Decimal", "5.0" },
+                        { "Master Chart Maker", "SEGA" },
+                        { "Master Chart Path", "000000_03.ma2" },
+                        { "Remaster", "6" },
+                        { "Remaster Decimal", "6.0" },
+                        { "Remaster Chart Maker", "SEGA" },
+                        { "Remaster Chart Path", "000000_04.ma2" },
+                        { "Utage", "11" },
+                        { "Utage Chart Maker", "SEGA" },
+                        { "Utage Chart Path", "000000_05.ma2" },
+                        {"SDDX Suffix","SD"}
                     };
         }
 
@@ -1511,13 +1563,103 @@ namespace MaiLib
         }
 
         /// <summary>
-        /// Return the most representative level of the track = by default master
+        /// Return the most representative level of the track = set by default master
         /// </summary>
-        /// <value>this.MasterTrackLevel</value>
+        /// <value>this.TrackLevel</value>
         public string TrackSymbolicLevel
         {
-            get { return this.Information.GetValueOrDefault("Master") ?? throw new NullReferenceException("Master level is not defined"); }
-            set { this.information["Master"] = value; }
+            get 
+            {
+                if (this.Information.TryGetValue("Utage", out string? utageLevel) && level != null && !utageLevel.Equals(""))
+                {
+                    return utageLevel;
+                }
+                else if (this.Information.TryGetValue("Remaster", out string? remasLevel) && remasLevel != null && !remasLevel.Equals(""))
+                {
+                    return remasLevel;
+                }
+                else if (this.Information.TryGetValue("Master", out string? masterLevel) && masterLevel != null && !masterLevel.Equals(""))
+                {
+                    return masterLevel;
+                }
+                else if (this.Information.TryGetValue("Expert", out string? expertLevel) && expertLevel != null && !expertLevel.Equals(""))
+                {
+                    return expertLevel;
+                }
+                else if (this.Information.TryGetValue("Advanced", out string? advanceLevel) && advanceLevel != null && !advanceLevel.Equals(""))
+                {
+                    return advanceLevel;
+                }
+                else if (this.Information.TryGetValue("Basic", out string? basicLevel) && basicLevel != null && !basicLevel.Equals(""))
+                {
+                    return basicLevel;
+                }
+                else if (this.Information.TryGetValue("Expert", out string? easyLevel) && easyLevel != null && !easyLevel.Equals(""))
+                {
+                    return easyLevel;
+                }
+                else throw new NullReferenceException("NONE LEVEL DEFINED");
+            }
+            set 
+            { 
+                this.information["Master"] = value; 
+            }
+        }
+
+        /// <summary>
+        /// Return track levels by [Easy, Basic, Advance, Expert, Master, Remaster, Utage]
+        /// </summary>
+        public string[] TrackLevels
+        {
+            get
+            {
+                string[] result = { this.Information["Easy"],
+                    this.Information["Basic"],
+                    this.Information["Advanced"],
+                    this.Information["Expert"],
+                    this.Information["Master"],
+                    this.Information["Remaster"],
+                    this.Information["Utage"] };
+                return result;
+            }
+            set
+            {
+                this.Information["Easy"] = value[0];
+                this.Information["Basic"] = value[1];
+                this.Information["Advanced"] = value[2];
+                this.Information["Expert"] = value[3];
+                this.Information["Master"] = value[4];
+                this.Information["Remaster"] = value[5];
+                this.Information["Utage"] = value[6];
+            }
+        }
+
+        /// <summary>
+        /// Return track decimal levels by [Easy, Basic, Advance, Expert, Master, Remaster, Utage] * Utage returns utage level
+        /// </summary>
+        public string[] TrackDecimalLevels
+        {
+            get
+            {
+                string[] result = { this.Information["Easy Decimal"],
+                    this.Information["Basic Decimal"],
+                    this.Information["Advanced Decimal"],
+                    this.Information["Expert Decimal"],
+                    this.Information["Master Decimal"],
+                    this.Information["Remaster Decimal"],
+                    this.Information["Utage"] };
+                return result;
+            }
+            set
+            {
+                this.Information["Easy Decimal"] = value[0];
+                this.Information["Basic Decimal"] = value[1];
+                this.Information["Advanced Decimal"] = value[2];
+                this.Information["Expert Decimal"] = value[3];
+                this.Information["Master Decimal"] = value[4];
+                this.Information["Remaster Decimal"] = value[5];
+                this.Information["Utage"] = value[6];
+            }
         }
 
         /// <summary>

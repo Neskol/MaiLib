@@ -228,6 +228,9 @@ namespace MaiLib
                     var enableCandidate = candidate["isEnable"] ?? throw new NullReferenceException();
                     if (pathCandidate.InnerText.Contains("00.ma2") && enableCandidate.InnerText.Equals("true"))
                     {
+                        var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                        var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                        this.Information["Basic Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                         var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                         var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
@@ -239,6 +242,9 @@ namespace MaiLib
                     }
                     else if (pathCandidate.InnerText.Contains("01.ma2") && enableCandidate.InnerText.Equals("true"))
                     {
+                        var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                        var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                        this.Information["Advanced Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                         var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                         var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
@@ -250,6 +256,9 @@ namespace MaiLib
                     }
                     else if (pathCandidate.InnerText.Contains("02.ma2") && enableCandidate.InnerText.Equals("true"))
                     {
+                        var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                        var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                        this.Information["Expert Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                         var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                         var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
@@ -261,6 +270,9 @@ namespace MaiLib
                     }
                     else if (pathCandidate.InnerText.Contains("03.ma2") && enableCandidate.InnerText.Equals("true"))
                     {
+                        var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                        var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                        this.Information["Master Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                         var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                         var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
@@ -272,6 +284,9 @@ namespace MaiLib
                     }
                     else if (pathCandidate.InnerText.Contains("04.ma2") && enableCandidate.InnerText.Equals("true"))
                     {
+                        var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                        var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                        this.Information["Remaster Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                         var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                         var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
@@ -280,6 +295,34 @@ namespace MaiLib
                         this.Information["Remaster"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
                         this.Information["Remaster Chart Maker"] = notesDesignerCandidate.InnerText;
                         this.Information["Remaster Chart Path"] = fileCandidate.InnerText;
+                    }
+                    else if (pathCandidate.InnerText.Contains("05.ma2") && enableCandidate.InnerText.Equals("true"))
+                    {
+                        var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                        var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                        this.Information["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                        var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                        var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                        notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
+                        var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                        fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
+                        this.Information["Utage"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
+                        this.Information["Utage Chart Path"] = fileCandidate.InnerText;
+                    }
+                    else if (pathCandidate.InnerText.Contains("11.ma2") && enableCandidate.InnerText.Equals("true"))
+                    {
+                        var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                        var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                        this.Information["Easy Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                        var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                        var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                        notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
+                        var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                        fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
+                        this.Information["Easy"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Easy Chart Maker"] = notesDesignerCandidate.InnerText;
+                        this.Information["Easy Chart Path"] = fileCandidate.InnerText;
                     }
 
                 }
