@@ -8,7 +8,7 @@ namespace MaiLib
     /// <summary>
     /// Compile various Ma2 charts
     /// </summary>
-    public class SimaiCompiler : Compiler
+    public class SimaiCompiler : ICompiler
     {
         /// <summary>
         /// Stores difficulty keywords
@@ -154,7 +154,17 @@ namespace MaiLib
             }
         }
 
-        public override string Compose()
+        public bool CheckValidity()
+        {
+            bool result = true;
+            foreach (Chart x in charts)
+            {
+                result = result && x.CheckValidity();
+            }
+            return result;
+        }
+
+        public string Compose()
         {
             string result = "";
             //Add information
@@ -252,7 +262,7 @@ namespace MaiLib
         /// </summary>
         /// <param name="chart">Chart to compose</param>
         /// <returns>Maidata of specified chart WITHOUT headers</returns>
-        public override string Compose(Chart chart)
+        public string Compose(Chart chart)
         {
             string result = "";
             int delayBar = (chart.TotalDelay) / 384 + 2;
@@ -352,7 +362,7 @@ namespace MaiLib
         /// </summary>
         /// <param name="isUtage">switch to produce utage</param>
         /// <returns>Corresponding utage chart</returns>
-        public override string Compose(bool isUtage, List<string> ma2files)
+        public string Compose(bool isUtage, List<string> ma2files)
         {
             string result = "";
             //Add information
@@ -447,7 +457,7 @@ namespace MaiLib
             {
                 return this.charts[3].FirstNote ?? throw new NullReferenceException("Null first note: master chart is invalid");
             }
-            else if(isUtage)
+            else if (isUtage)
             {
                 return this.charts[0].FirstNote ?? throw new NullReferenceException("Null first note: utage chart is invalid");
             }
@@ -465,8 +475,8 @@ namespace MaiLib
             {
                 throw new NullReferenceException("This compiler has empty chat list!");
             }
-            result += "(" + this.information["Music ID"] + ")"+this.information["Name"]+", "+this.information["Genre"]+", ";
-            
+            result += "(" + this.information["Music ID"] + ")" + this.information["Name"] + ", " + this.information["Genre"] + ", ";
+
             return result;
         }
     }
