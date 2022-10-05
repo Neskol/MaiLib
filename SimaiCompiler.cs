@@ -8,7 +8,7 @@ namespace MaiLib
     /// <summary>
     /// Compile various Ma2 charts
     /// </summary>
-    public class SimaiCompiler : ICompiler
+    public class SimaiCompiler : Compiler
     {
         /// <summary>
         /// Stores difficulty keywords
@@ -154,17 +154,7 @@ namespace MaiLib
             }
         }
 
-        public bool CheckValidity()
-        {
-            bool result = true;
-            foreach (Chart x in charts)
-            {
-                result = result && x.CheckValidity();
-            }
-            return result;
-        }
-
-        public string Compose()
+        public override string Compose()
         {
             string result = "";
             //Add information
@@ -262,7 +252,7 @@ namespace MaiLib
         /// </summary>
         /// <param name="chart">Chart to compose</param>
         /// <returns>Maidata of specified chart WITHOUT headers</returns>
-        public string Compose(Chart chart)
+        public override string Compose(Chart chart)
         {
             string result = "";
             int delayBar = (chart.TotalDelay) / 384 + 2;
@@ -362,7 +352,7 @@ namespace MaiLib
         /// </summary>
         /// <param name="isUtage">switch to produce utage</param>
         /// <returns>Corresponding utage chart</returns>
-        public string Compose(bool isUtage, List<string> ma2files)
+        public override string Compose(bool isUtage, List<string> ma2files)
         {
             string result = "";
             //Add information
@@ -419,64 +409,6 @@ namespace MaiLib
             }
 
             Console.WriteLine("Finished composing.");
-            return result;
-        }
-
-        public void TakeInformation(Dictionary<string, string> information)
-        {
-            this.information = information;
-        }
-
-        /// <summary>
-        /// Return the chart bpm change table of MaiCompiler
-        /// </summary>
-        /// <returns>First BPM change table of this.charts</returns>
-        public BPMChanges SymbolicBPMTable()
-        {
-            BPMChanges bpmTable = new BPMChanges();
-            bool foundTable = false;
-            for (int i = 0; i < this.charts.Count && !foundTable; i++)
-            {
-                if (this.charts[i] != null)
-                {
-                    bpmTable = this.charts[i].BPMChanges;
-                    foundTable = true;
-                }
-            }
-            return bpmTable;
-        }
-
-        /// <summary>
-        /// Return the first note of master chart
-        /// </summary>
-        /// <returns>The first note of the master chart, or first note of the Utage chart if isUtage is turned true</returns>
-        /// <exception cref="System.NullReferenceException">Throws null reference exception if the chart does not exist</exception>
-        public Note SymbolicFirstNote(bool isUtage)
-        {
-            if (!isUtage)
-            {
-                return this.charts[3].FirstNote ?? throw new NullReferenceException("Null first note: master chart is invalid");
-            }
-            else if (isUtage)
-            {
-                return this.charts[0].FirstNote ?? throw new NullReferenceException("Null first note: utage chart is invalid");
-            }
-            else throw new NullReferenceException("This compiler contains invalid Master Chart and is not Utage Chart: no first note is returned");
-        }
-
-        /// <summary>
-        /// Generate one line summary of this track with ID, name, genere and difficulty
-        /// </summary>
-        /// <returns></returns>
-        public string GenerateOneLineSummary()
-        {
-            string result = "";
-            if (this.charts.Equals(null) || !this.CheckValidity())
-            {
-                throw new NullReferenceException("This compiler has empty chat list!");
-            }
-            result += "(" + this.information["Music ID"] + ")" + this.information["Name"] + ", " + this.information["Genre"] + ", ";
-
             return result;
         }
     }
