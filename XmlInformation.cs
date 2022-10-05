@@ -47,8 +47,8 @@ namespace MaiLib
             XmlAttribute xsi = this.TakeInValue.CreateAttribute("xmlns:xsi");
             xsi.Value = "http://www.w3.org/2001/XMLSchema-instance";
             XmlAttribute xsd = this.TakeInValue.CreateAttribute("xmlns:xsd");
-            //root.AppendChild(xsi);
-            //root.AppendChild(xsd);
+            root.Attributes.Append(xsi);
+            root.Attributes.Append(xsd);
 
             //Create tags. *data name: inner text = music0xxxxx
             XmlElement dataName = this.TakeInValue.CreateElement("dataName");
