@@ -8,7 +8,7 @@ namespace MaiLib
     /// <summary>
     /// Compile various Ma2 charts
     /// </summary>
-    public class SimaiCompiler : ICompiler
+    public class SimaiCompiler : Compiler
     {
         /// <summary>
         /// Stores difficulty keywords
@@ -154,17 +154,7 @@ namespace MaiLib
             }
         }
 
-        public bool CheckValidity()
-        {
-            bool result = true;
-            foreach (Chart x in charts)
-            {
-                result = result && x.CheckValidity();
-            }
-            return result;
-        }
-
-        public string Compose()
+        public override string Compose()
         {
             string result = "";
             //Add information
@@ -262,7 +252,7 @@ namespace MaiLib
         /// </summary>
         /// <param name="chart">Chart to compose</param>
         /// <returns>Maidata of specified chart WITHOUT headers</returns>
-        public string Compose(Chart chart)
+        public override string Compose(Chart chart)
         {
             string result = "";
             int delayBar = (chart.TotalDelay) / 384 + 2;
@@ -362,7 +352,7 @@ namespace MaiLib
         /// </summary>
         /// <param name="isUtage">switch to produce utage</param>
         /// <returns>Corresponding utage chart</returns>
-        public string Compose(bool isUtage, List<string> ma2files)
+        public override string Compose(bool isUtage, List<string> ma2files)
         {
             string result = "";
             //Add information
