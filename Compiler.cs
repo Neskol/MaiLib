@@ -12,7 +12,7 @@ namespace MaiLib
      /// Stores difficulty keywords
      /// </summary>
      /// <value>Difficulty</value>
-        public static readonly string[] difficulty = { "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
+        public static readonly string[] difficulty = { "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage","Easy" };
 
         /// <summary>
         /// Stores chart collections
