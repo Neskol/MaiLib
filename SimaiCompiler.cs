@@ -25,26 +25,34 @@ namespace MaiLib
             this.Information = MusicXml.Information;
             //Construct Charts
             {
+                if (!this.Information["Easy"].Equals(""))
+                {
+                    Charts[0] = new Ma2(location + this.Information.GetValueOrDefault("Advanced Chart Path"));
+                }
                 if (!this.Information["Basic"].Equals(""))
                 {
                     //Console.WriteLine("Have basic: "+ location + this.Information.GetValueOrDefault("Basic Chart Path"));
-                    Charts[0] = new Ma2(location + this.Information.GetValueOrDefault("Basic Chart Path"));
+                    Charts[1] = new Ma2(location + this.Information.GetValueOrDefault("Basic Chart Path"));
                 }
                 if (!this.Information["Advanced"].Equals(""))
                 {
-                    Charts[1] = new Ma2(location + this.Information.GetValueOrDefault("Advanced Chart Path"));
+                    Charts[2] = new Ma2(location + this.Information.GetValueOrDefault("Advanced Chart Path"));
                 }
                 if (!this.Information["Expert"].Equals(""))
                 {
-                    Charts[2] = new Ma2(location + this.Information.GetValueOrDefault("Expert Chart Path"));
+                    Charts[3] = new Ma2(location + this.Information.GetValueOrDefault("Expert Chart Path"));
                 }
                 if (!this.Information["Master"].Equals(""))
                 {
-                    Charts[3] = new Ma2(location + this.Information.GetValueOrDefault("Master Chart Path"));
+                    Charts[4] = new Ma2(location + this.Information.GetValueOrDefault("Master Chart Path"));
                 }
                 if (!this.Information["Remaster"].Equals(""))
                 {
-                    Charts[4] = new Ma2(location + this.Information.GetValueOrDefault("Remaster Chart Path"));
+                    Charts[5] = new Ma2(location + this.Information.GetValueOrDefault("Remaster Chart Path"));
+                }
+                if (!this.Information["Utage"].Equals(""))
+                {
+                    Charts[6] = new Ma2(location + this.Information.GetValueOrDefault("Advanced Chart Path"));
                 }
             }
 
@@ -125,10 +133,14 @@ namespace MaiLib
                 beginning += "&chartconverter=Neskol\n";
                 beginning += "\n";
 
+                if (this.Information.TryGetValue("Easy", out string? easy) && this.Information.TryGetValue("Easy Chart Maker", out string? easyMaker))
+                {
+                    beginning += "&lv_1=" + easy + "\n";
+                    beginning += "&des_1=" + easyMaker + "\n";
+                    beginning += "\n";
+                }
 
                 if (this.Information.TryGetValue("Basic", out string? basic) && this.Information.TryGetValue("Basic Chart Maker", out string? basicMaker))
-
-
                 {
                     beginning += "&lv_2=" + basic + "\n";
                     beginning += "&des_2=" + basicMaker + "\n";
@@ -182,7 +194,7 @@ namespace MaiLib
                         {
                             isDxChart = "";
                         }
-                        result += "&inote_" + (i + 2) + "=\n";
+                        result += "&inote_" + (i+1) + "=\n";
                         result += this.Compose(Charts[i]);
                         this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
                     }
@@ -310,7 +322,7 @@ namespace MaiLib
             beginning += "&des=" + this.Information.GetValueOrDefault("Master Chart Maker") + "\n";
             beginning += "&shortid=" + this.Information.GetValueOrDefault("Music ID") + "\n";
             beginning += "&genre=" + this.Information.GetValueOrDefault("Genre") + "\n";
-            beginning += "&cabinate=SD";
+            beginning += "&cabinet=SD";
             beginning += "&version=" + this.MusicXml.TrackVersion + "\n";
             beginning += "&chartconverter=Neskol\n";
             beginning += "\n";
