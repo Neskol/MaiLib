@@ -19,7 +19,7 @@ namespace MaiLib
         {
             for (int i = 0; i<7; i++)
             {
-                this.Charts[i] = new Simai();
+                this.Charts.Add(new Simai());
             }
             this.MusicXml = new XmlInformation(location);
             this.Information = MusicXml.Information;
@@ -93,7 +93,7 @@ namespace MaiLib
         {
             for (int i = 0; i < 7; i++)
             {
-                this.Charts[i] = new Simai();
+                this.Charts.Add(new Simai());
             }
             Charts = new List<Chart>();
             Information = new Dictionary<string, string>();
