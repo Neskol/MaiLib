@@ -167,7 +167,7 @@ namespace MaiLib
                 for (int i = 0; i < this.Charts.Count; i++)
                 {
                     // Console.WriteLine("Processing chart: " + i);
-                    if (!this.Information[difficulty[i]].Equals(""))
+                    if (!this.Information[this.Difficulty[i]].Equals(""))
                     {
                         string? isDxChart = this.Information.GetValueOrDefault("SDDX Suffix");
                         if (!Charts[i].IsDXChart)
@@ -176,7 +176,7 @@ namespace MaiLib
                         }
                         result += "&inote_" + (i + 2) + "=\n";
                         result += this.Compose(Charts[i]);
-                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + difficulty[i] + "]");
+                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
                     }
                     result += "\n";
                 }
@@ -329,12 +329,12 @@ namespace MaiLib
                 for (int i = 0; i < this.Charts.Count; i++)
                 {
                     // Console.WriteLine("Processing chart: " + i);
-                    if (!this.Information[difficulty[i]].Equals(""))
+                    if (!this.Information[this.Difficulty[i]].Equals(""))
                     {
                         string? isDxChart = "Utage";
                         result += "&inote_" + (i + 2) + "=\n";
                         result += this.Compose(Charts[i]);
-                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + difficulty[i] + "]");
+                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
                     }
                     result += "\n";
                 }
