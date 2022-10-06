@@ -10,11 +10,6 @@ namespace MaiLib
     /// </summary>
     public class SimaiCompiler : Compiler
     {
-        /// <summary>
-        /// Stores difficulty keywords
-        /// </summary>
-        /// <value>Difficulty</value>
-        public static readonly string[] difficulty = { "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
 
         /// <summary>
         /// Stores chart collections
@@ -37,11 +32,6 @@ namespace MaiLib
         private string globalSep;
 
         /// <summary>
-        /// Stores the information of Compiled Chart
-        /// </summary>
-        public static List<string> compiledChart = new();
-
-        /// <summary>
         /// Construct compiler of a single song.
         /// </summary>
         /// <param name="location">Folder</param>
@@ -51,7 +41,7 @@ namespace MaiLib
             charts = new List<Chart>();
             for (int i = 0; i < 5; i++)
             {
-                charts.Add(new Ma2());
+                charts.Add(new Simai());
             }
             this.musicXml = new XmlInformation(location);
             this.information = musicXml.Information;
