@@ -17,6 +17,10 @@ namespace MaiLib
         /// <param name="targetLocation">Output folder</param>
         public SimaiCompiler(string location, string targetLocation)
         {
+            for (int i = 0; i<7; i++)
+            {
+                this.Charts[i] = new Simai();
+            }
             this.MusicXml = new XmlInformation(location);
             this.Information = MusicXml.Information;
             //Construct Charts
@@ -87,6 +91,10 @@ namespace MaiLib
         /// </summary>
         public SimaiCompiler()
         {
+            for (int i = 0; i < 7; i++)
+            {
+                this.Charts[i] = new Simai();
+            }
             Charts = new List<Chart>();
             Information = new Dictionary<string, string>();
             this.MusicXml = new XmlInformation();
