@@ -35,9 +35,55 @@ namespace MaiLib
         private string globalSep;
 
         /// <summary>
+        /// Access the path separator
+        /// </summary>
+        public string GlobalSep
+        {
+            get { return this.globalSep; }
+        }
+
+        /// <summary>
         /// Stores the information of Compiled Chart
         /// </summary>
-        public static List<string> compiledChart = new();
+        private List<string> compiledChart;
+
+        /// <summary>
+        /// Stores the information of Compiled Chart
+        /// </summary>
+        public List<string> CompiledChart
+        {
+            get { return this.compiledChart; }
+            set { this.compiledChart = value; }
+        }
+
+        /// <summary>
+        /// Access stored charts
+        /// </summary>
+        public List<Chart> Charts
+        {
+            get { return this.charts; }
+            set { this.charts = value; }
+        }
+
+        /// <summary>
+        /// Access global information
+        /// </summary>
+        public Dictionary<string, string> Information
+        {
+            get { return this.information; }
+            set { this.information = value; }
+        }
+
+        /// <summary>
+        /// Access read in music XML file
+        /// </summary>
+        public XmlInformation MusicXml
+        {
+            get { return this.musicXml; }
+            set { this.musicXml = value; }
+        }
+
+
 
         /// <summary>
         /// Construct compiler of a single song.
@@ -46,6 +92,7 @@ namespace MaiLib
         /// <param name="targetLocation">Output folder</param>
         public Compiler(string location, string targetLocation)
         {
+            compiledChart = new();
             charts = new List<Chart>();
             this.musicXml = new XmlInformation(location);
             musicXml.Update();
@@ -66,6 +113,7 @@ namespace MaiLib
         /// </summary>
         public Compiler()
         {
+            compiledChart = new();
             charts = new List<Chart>();
             information = new Dictionary<string, string>();
             this.musicXml = new XmlInformation();
