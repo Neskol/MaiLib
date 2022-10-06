@@ -82,6 +82,14 @@ namespace MaiLib
             get { return this.musicXml; }
             set { this.musicXml = value; }
         }
+        
+        /// <summary>
+        /// Access difficulty;
+        /// </summary>
+        public string[] Difficulty
+        {
+            get { return difficulty; }
+        }
 
 
 
