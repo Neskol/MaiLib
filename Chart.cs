@@ -376,6 +376,20 @@ namespace MaiLib
                                 this.holdNumber++;
                                 x.TickBPMDisagree = (GetBPMByTick(x.TickStamp) != GetBPMByTick(x.WaitTickStamp) || GetBPMByTick(x.WaitTickStamp) != GetBPMByTick(x.LastTickStamp) || GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp));
                                 x.Update();
+                                if (x.TickTimeStamp == 0)
+                                {
+                                    x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
+                                }
+                                if (x.CalculatedWaitTime == 0)
+                                {
+                                    x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
+                                    x.CalculatedWaitTime = x.WaitTimeStamp - x.TickTimeStamp;
+                                }
+                                if (x.CalculatedLastTime == 0)
+                                {
+                                    x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
+                                    x.CalculatedLastTime = x.LastTimeStamp - x.WaitTimeStamp;
+                                }
                                 if (delay > this.TotalDelay)
                                 {
                                     this.totalDelay = delay;

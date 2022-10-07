@@ -146,19 +146,27 @@
                 switch (this.NoteType)
                 {
                     case "HLD":
-                        result += (Convert.ToInt32(this.Key) + 1) + "h" + GenerateAppropriateLength(this.LastLength);
+                        result += (Convert.ToInt32(this.Key) + 1) + "h";
                         break;
                     case "XHO":
-                        result += (Convert.ToInt32(this.Key) + 1) + "xh" + GenerateAppropriateLength(this.LastLength);
+                        result += (Convert.ToInt32(this.Key) + 1) + "xh";
                         break;
                     case "THO":
                         if (this.SpecialEffect == 1)
                         {
-                            result += this.Key.ToCharArray()[1].ToString() + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString() + "hf" + GenerateAppropriateLength(this.LastLength));
+                            result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString() + "hf";
                         }
                         else
-                            result += this.Key.ToCharArray()[1].ToString() + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString() + "xh" + GenerateAppropriateLength(this.LastLength));
+                            result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString() + "xh";
                         break;
+                }
+                if (this.TickBPMDisagree || this.Delayed)
+                {
+                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString()) + GenerateAppropriateLength(this.LastLength, this.BPM);
+                }
+                else
+                {
+                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString()) + GenerateAppropriateLength(this.LastLength);
                 }
             }
             return result;
