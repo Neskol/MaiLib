@@ -204,7 +204,7 @@ namespace MaiLib
         }
 
         /// <summary>
-        /// Generate one line summary of this track with ID, name, genere and difficulty
+        /// Generate one line summary of this track with ID, name, genre and difficulty
         /// </summary>
         /// <returns></returns>
         public string GenerateOneLineSummary()
