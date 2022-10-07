@@ -131,6 +131,9 @@ namespace MaiLib
                 }
                 beginning += "&version=" + this.MusicXml.TrackVersion + "\n";
                 beginning += "&chartconverter=Neskol\n";
+                beginning += "&chartconverttool=MaichartConverter";
+                beginning += "&chartconverttoolversion=1.0.3.0";
+                beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates";
                 beginning += "\n";
 
                 if (this.Information.TryGetValue("Easy", out string? easy) && this.Information.TryGetValue("Easy Chart Maker", out string? easyMaker))
