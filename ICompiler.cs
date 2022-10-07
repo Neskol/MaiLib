@@ -20,7 +20,7 @@
         /// <summary>
         /// Check if the chart given is valid to print.
         /// </summary>
-        /// <returns>True if valid, false elsewise</returns>
+        /// <returns>True if valid, false otherwise</returns>
         public bool CheckValidity();
     }
 }

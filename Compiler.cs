@@ -12,7 +12,7 @@ namespace MaiLib
      /// Stores difficulty keywords
      /// </summary>
      /// <value>Difficulty</value>
-        public static readonly string[] difficulty = { "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage","Easy" };
+        public static readonly string[] difficulty = {"Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
 
         /// <summary>
         /// Stores chart collections
@@ -194,7 +194,7 @@ namespace MaiLib
         {
             if (!isUtage)
             {
-                return this.charts[3].FirstNote ?? throw new NullReferenceException("Null first note: master chart is invalid");
+                return this.charts[4].FirstNote ?? throw new NullReferenceException("Null first note: master chart is invalid");
             }
             else if (isUtage)
             {
@@ -204,7 +204,7 @@ namespace MaiLib
         }
 
         /// <summary>
-        /// Generate one line summary of this track with ID, name, genere and difficulty
+        /// Generate one line summary of this track with ID, name, genre and difficulty
         /// </summary>
         /// <returns></returns>
         public string GenerateOneLineSummary()
