@@ -628,9 +628,19 @@ namespace MaiLib
         public string GenerateAppropriateLength(int length, double bpm)
         {
             string result = "";
-            double sustain = this.WaitTimeStamp - this.TickTimeStamp;
-            double duration = this.LastTimeStamp - this.WaitTimeStamp;
-            result = "[" + sustain + "##" + duration + "]";
+            switch (this.NoteType)
+            {
+                case "SLIDE":
+                    double sustain = this.WaitTimeStamp - this.TickTimeStamp;
+                    double duration = this.LastTimeStamp - this.WaitTimeStamp;
+                    result = "[" + sustain + "##" + duration + "]";
+                    break;
+                case "HLD":
+                    double startTime = this.TickTimeStamp;
+                    duration = this.LastTimeStamp - this.TickTimeStamp;
+                    result = "[" + startTime + "##" + duration + "]";
+                    break;
+            }
             return result;
         }
 

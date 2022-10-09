@@ -162,11 +162,11 @@
                 }
                 if (this.TickBPMDisagree || this.Delayed)
                 {
-                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString()) + GenerateAppropriateLength(this.LastLength, this.BPM);
+                    result += GenerateAppropriateLength(this.LastLength, this.BPM);
                 }
                 else
                 {
-                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString()) + GenerateAppropriateLength(this.LastLength);
+                    result += GenerateAppropriateLength(this.LastLength);
                 }
             }
             return result;
