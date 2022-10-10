@@ -210,7 +210,7 @@ namespace MaiLib
         public string GenerateOneLineSummary()
         {
             string result = "";
-            if (this.charts.Equals(null) || !this.CheckValidity())
+            if (this.charts.Equals(null))
             {
                 throw new NullReferenceException("This compiler has empty chat list!");
             }
