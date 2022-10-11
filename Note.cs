@@ -628,7 +628,7 @@ namespace MaiLib
         public string GenerateAppropriateLength(int length, double bpm)
         {
             string result = "";
-            switch (this.NoteType)
+            switch (this.NoteGenre)
             {
                 case "SLIDE":
                     double sustain = this.WaitTimeStamp - this.TickTimeStamp;
