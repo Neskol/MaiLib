@@ -635,7 +635,7 @@ namespace MaiLib
                     double duration = this.LastTimeStamp - this.WaitTimeStamp;
                     result = "[" + sustain + "##" + duration + "]";
                     break;
-                case "HLD":
+                case "HOLD":
                     double startTime = this.TickTimeStamp;
                     duration = this.LastTimeStamp - this.TickTimeStamp;
                     result = "[" + startTime + "##" + duration + "]";
