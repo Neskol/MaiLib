@@ -162,7 +162,7 @@
                 }
                 if (this.TickBPMDisagree || this.Delayed)
                 {
-                    result += GenerateAppropriateLength(this.LastLength, this.BPM);
+                    result += GenerateAppropriateLength(this.FixedLastLength);
                 }
                 else
                 {
