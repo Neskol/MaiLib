@@ -384,7 +384,7 @@ namespace MaiLib
                                 {
                                     x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
-                                    x.FixedLastLength = (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.Tick)));
+                                    x.FixedLastLength = (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp)));
                                 }
                                 if (delay > this.TotalDelay)
                                 {
