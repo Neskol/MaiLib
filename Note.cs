@@ -34,9 +34,19 @@ namespace MaiLib
         private int tick;
 
         /// <summary>
+        /// Start time fixed to BPM
+        /// </summary>
+        private int fixedTick;
+
+        /// <summary>
         /// The absolute tick calculated by this.bar*384+this.tick
         /// </summary>
         private int tickStamp;
+
+        /// <summary>
+        /// The absolute tick calculated by this.bar*384+this.tick
+        /// </summary>
+        private int fixedTickStamp;
 
         /// <summary>
         /// The start time stamp
