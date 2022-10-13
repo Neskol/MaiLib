@@ -44,11 +44,6 @@ namespace MaiLib
         private int tickStamp;
 
         /// <summary>
-        /// The absolute tick calculated by this.bar*384+this.tick
-        /// </summary>
-        private int fixedTickStamp;
-
-        /// <summary>
         /// The start time stamp
         /// </summary>
         private double tickTimeStamp;
@@ -77,6 +72,11 @@ namespace MaiLib
         /// The last length
         /// </summary>
         private int lastLength;
+
+        /// <summary>
+        /// Fixed tick last length with fixed BPM
+        /// </summary>
+        private int fixedLastLength;
 
         /// <summary>
         /// The stamp when the last time ends in ticks
@@ -143,6 +143,7 @@ namespace MaiLib
             endKey = "";
             bar = 0;
             tick = 0;
+            fixedTick = 0;
             tickStamp = 0;
             tickTimeStamp = 0.0;
             lastLength = 0;
@@ -245,6 +246,21 @@ namespace MaiLib
         }
 
         /// <summary>
+        /// Access FixedTick
+        /// </summary>
+        public int FixedTick
+        {
+            get
+            {
+                return this.fixedTick;
+            }
+            set
+            {
+                this.fixedTick = value;
+            }
+        }
+
+        /// <summary>
         /// Access Tick Stamp = this.Bar*384 + this.Tick
         /// </summary>
         public int TickStamp
@@ -321,6 +337,21 @@ namespace MaiLib
             set
             {
                 this.lastLength = value;
+            }
+        }
+
+        /// <summary>
+        /// Access FixedEndTime
+        /// </summary>
+        public int FixedLastLength
+        {
+            get
+            {
+                return this.fixedLastLength;
+            }
+            set
+            {
+                this.fixedLastLength = value;
             }
         }
 
