@@ -327,18 +327,22 @@ namespace MaiLib
             int tick = int.Parse(candidate[(int)StdParam.Tick]);
             if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam]))
             {
-                Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
-                Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
-                Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
-                throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
+                //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
+                //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
+                //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
+                //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
+                PreviousSlideStart = new Tap("NST",int.Parse(candidate[(int)StdParam.Bar]),int.Parse(candidate[(int)StdParam.Tick]), candidate[(int)StdParam.KeyOrParam]);
             }
-            return new Slide(candidate[(int)StdParam.Type],
+            Slide result = new Slide(candidate[(int)StdParam.Type],
                         bar,
                         tick,
                         PreviousSlideStart.Key,
                         int.Parse(candidate[(int)StdParam.WaitTimeOrParam]),
                         int.Parse(candidate[(int)StdParam.LastTime]),
                         candidate[(int)StdParam.EndKey]);
+            result.SlideStart = PreviousSlideStart;
+            PreviousSlideStart.ConsecutiveSlide = result;
+            return result ;
         }
 
 
