@@ -400,7 +400,7 @@ namespace MaiLib
         /// <summary>
         /// Stores if the wait or last are in different BPM
         /// </summary>
-        /// <value>True if in different BPM, false elsewise</value>
+        /// <value>True if in different BPM, false otherwise</value>
         public bool TickBPMDisagree
         {
             get => this.tickBPMDisagree;
@@ -503,7 +503,7 @@ namespace MaiLib
         /// <summary>
         /// Return if this is a true note
         /// </summary>
-        /// <returns>True if is TAP,HOLD or SLIDE, false elsewise</returns>
+        /// <returns>True if is TAP,HOLD or SLIDE, false otherwise</returns>
         public abstract bool IsNote { get; }
 
         public abstract bool CheckValidity();
