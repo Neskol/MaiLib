@@ -90,6 +90,10 @@ namespace MaiLib
                         case "SLIDE_START":
                             //if (x.IsNote() && x.NoteSpecificType().Equals("SLIDE"))
                             //{
+                            if (x.NoteType.Equals("NSS"))
+                            {
+                                Console.WriteLine("NSS");
+                            }
 
                             //}
                             break;
@@ -108,8 +112,16 @@ namespace MaiLib
                             result += ",";
                             break;
                     }
+                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST"))
+                    {
+                        result += x.SlideStart.Compose(0);
+                    }
                     result += x.Compose(0);
                     lastNote = x;
+                    if (x.NoteType.Equals("SLIDE_START")&&x.ConsecutiveSlide == null)
+                    {
+                        result += "$";
+                    }
                     //if (x.NoteGenre().Equals("BPM"))
                     //{
                     //    result+="("+ x.Bar + "_" + x.Tick + ")";
