@@ -52,9 +52,9 @@ namespace MaiLib
         private int totalDelay = 0;
         private List<List<Note>> chart;
         private Dictionary<string, string> information;
-        private readonly string[] TapTypes = { "TAP", "STR", "TTP", "XTP", "XST" };
-        private readonly string[] HoldTypes = { "HLD", "THO", "XHO" };
-        private readonly string[] SlideTypes = { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
+        private enum TapTypes { TAP, STR, TTP, XTP, XST };
+        private enum HoldTypes{ HLD, THO, XHO };
+        private enum SlideTypes { SI_, SV_, SF_, SCL, SCR, SUL, SUR, SLL, SLR, SXL, SXR, SSL, SSR };
 
         ///Theoretical Rating = (Difference in 100-down and Max score)/100-down
         /// <summary>
@@ -332,20 +332,9 @@ namespace MaiLib
                     if (this.FirstNote == null && !(x.NoteType.Equals("BPM") || x.NoteType.Equals("MEASURE")))
                     {
                         this.FirstNote = x;
-                        // Console.WriteLine(x.Compose(0));
                     }
-                    //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
-                    //x.Update();
-                    //x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
-                    //x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
-                    //x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                     if (x.Bar == i)
                     {
-                        //x.ReplaceBPMChanges(this.bpmChanges);
-                        //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
-                        //x.Update();
-                        // Console.WriteLine("This note contains "+x.BPMChangeNotes.Count+" BPM notes");
-                        //Console.WriteLine(GetNoteDetail(this.bpmChanges, x));
                         int delay = x.Bar * 384 + x.Tick + x.WaitLength + x.LastLength;
                         switch (x.NoteSpecificType)
                         {
@@ -389,8 +378,6 @@ namespace MaiLib
                                 if (delay > this.TotalDelay)
                                 {
                                     this.totalDelay = delay;
-                                    //Console.WriteLine("New delay: " + delay);
-                                    //Console.WriteLine(x.Compose(1));
                                 }
                                 if (x.NoteType.Equals("THO"))
                                 {
@@ -430,35 +417,15 @@ namespace MaiLib
                                 if (delay > this.TotalDelay)
                                 {
                                     this.totalDelay = delay;
-                                    //Console.WriteLine("New delay: "+delay);
-                                    //Console.WriteLine(x.Compose(1));
                                 }
                                 break;
                             default:
                                 break;
                         }
                         x.BPM = currentBPM;
-                        //if (x.NoteGenre.Equals("SLIDE") && !lastNote.NoteSpecificType.Equals("SLIDE_START"))
-                        //{
-                        //    x.Prev = new Tap("NST", x.Bar, x.Tick, x.Key);
-                        //    lastNote.Next = x.Prev;
-                        //}
-                        //else
-                        {
-                            lastNote.Next = x;
-                            x.Prev = lastNote;
-                        }
+                        lastNote.Next = x;
+                        x.Prev = lastNote;
                         x.Prev.Next = x;
-                        //if ((!x.NoteGenre.Equals("SLIDE")) && x.Prev.NoteType.Equals("STR")&&x.Prev.ConsecutiveSlide == null)
-                        //{
-                        //    Console.WriteLine("Found NSS");
-                        //    Console.WriteLine("This note's note type: " + x.NoteType);
-                        //    Console.WriteLine(x.Compose(1));
-                        //    Console.WriteLine("Prev note's note type: " + x.Prev.NoteType);
-                        //    Console.WriteLine(x.Prev.Compose(1));
-                        //    lastNote.NoteType = "NSS";
-                        //    x.Prev.NoteType = "NSS";
-                        //}
                         lastNote.Next = x;
                         bar.Add(x);
                         if (!x.NoteGenre.Equals("SLIDE"))
@@ -472,13 +439,9 @@ namespace MaiLib
 
                 List<Note> afterBar = new List<Note>();
                 afterBar.Add(new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar))));
-                //Console.WriteLine();
-                //Console.WriteLine("In bar "+i+", LeastMeasure is "+ CalculateLeastMeasure(bar)+", so quaver will be "+ CalculateQuaver(CalculateLeastMeasure(bar)));
                 afterBar.AddRange(bar);
                 this.chart.Add(FinishBar(afterBar, this.BPMChanges.ChangeNotes, i, CalculateQuaver(CalculateLeastMeasure(bar))));
             }
-            //Console.WriteLine("TOTAL DELAY: "+this.TotalDelay);
-            //Console.WriteLine("TOTAL COUNT: "+ this.chart.Count * 384);
             if (this.totalDelay < this.chart.Count * 384)
             {
                 this.totalDelay = 0;
@@ -614,16 +577,10 @@ namespace MaiLib
                         if (x.NoteSpecificType.Equals("BPM"))
                         {
                             bpm = x;
-                            //List<Note> tempSet = new List<Note>();
-                            //tempSet.Add(x);
-                            //tempSet.AddRange(eachSet);
-                            //eachSet=tempSet;
-                            //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                         }
                         else
                         {
                             eachSet.Add(x);
-                            //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                             writeRest = false;
                         }
                     }
@@ -632,12 +589,10 @@ namespace MaiLib
                         if (x.NoteSpecificType.Equals("BPM"))
                         {
                             bpm = x;
-                            //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                         }
                         else
                         {
                             touchEachSet.Add(x);
-                            //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                             writeRest = false;
                         }
                     }

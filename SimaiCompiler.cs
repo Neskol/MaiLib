@@ -6,7 +6,7 @@ using System.Xml;
 namespace MaiLib
 {
     /// <summary>
-    /// Compile various Ma2 Charts
+    /// Compile various Charts simai chart
     /// </summary>
     public class SimaiCompiler : Compiler
     {
@@ -264,10 +264,9 @@ namespace MaiLib
                     // Console.WriteLine("Processing chart: " + i);
                     if (!this.Information[this.Difficulty[i]].Equals(""))
                     {
-                        string? isDxChart = "Utage";
                         result += "&inote_" + (i + 2) + "=\n";
                         result += this.Compose(Charts[i]);
-                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
+                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + "Utage" + " [宴]");
                     }
                     result += "\n";
                 }

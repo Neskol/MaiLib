@@ -1,0 +1,31 @@
+using System;
+
+namespace MaiLib
+{
+    /// <summary>
+    /// Compile Charts back to Ma2 format
+    /// </summary>
+    public class Ma2Compiler : Compiler
+    {
+        /// <summary>
+        /// Construct empty Ma2Compiler
+        /// </summary>
+        public Ma2Compiler()
+        {
+        }
+        public override string Compose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string Compose(Chart chart)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string Compose(bool isUtage, List<string> ma2files)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
