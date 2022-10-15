@@ -52,8 +52,6 @@
             get { return this.quaver; }
         }
 
-        public override string NoteType => "MET";
-
         public override bool CheckValidity()
         {
             return this.quaver>0;

@@ -2,7 +2,13 @@
 
 namespace MaiLib
 {
+    /// <summary>
+    /// Give enums of parameters of Standard Keys
+    /// </summary>
     public enum StdParam { Type, Bar, Tick, KeyOrParam, WaitTimeOrParam, LastTime, EndKey };
+    /// <summary>
+    /// Give enums of parameters of Deluxe Keys
+    /// </summary>
     public enum DxParam { Type, Bar, Tick, Key, KeyGroupOrLastTime, SpecialEffect, NoteSize };
     /// <summary>
     /// Parses ma2 file into Ma2 chart format

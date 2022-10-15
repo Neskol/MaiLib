@@ -216,6 +216,32 @@ namespace MaiLib
         }
 
         /// <summary>
+        /// Get the number value of Key
+        /// </summary>
+        /// <value>Number value of Key 0-7, exclude key group</value>
+        public int KeyNum
+        {
+            get => int.Parse(this.key.ToCharArray()[0].ToString());
+        }
+
+        /// <summary>
+        /// Get the key group of the key - only for touch notes
+        /// </summary>
+        /// <value>Key group of the touch note</value>
+        public string KeyGroup
+        {
+            get
+            {
+                string result = "";
+                if (this.key.ToCharArray().Count()>1)
+                {
+                    result = this.key.ToCharArray()[1].ToString();
+                }
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Access Bar
         /// </summary>
         public int Bar
@@ -420,6 +446,15 @@ namespace MaiLib
             {
                 this.endKey = value;
             }
+        }
+
+        /// <summary>
+        /// Get the number value of End Key
+        /// </summary>
+        /// <value>Number value of Key 0-7, exclude key group</value>
+        public int EndKeyNum
+        {
+            get => int.Parse(this.endKey.ToCharArray()[0].ToString());
         }
 
         /// <summary>
