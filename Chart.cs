@@ -558,7 +558,7 @@ namespace MaiLib
         /// Judges if this bar contains notes
         /// </summary>
         /// <param name="Bar">Bar to analyze on</param>
-        /// <returns>True if contains, false elsewise</returns>
+        /// <returns>True if contains, false otherwise</returns>
         public static bool ContainNotes(List<Note> Bar)
         {
             bool result = false;
@@ -720,7 +720,7 @@ namespace MaiLib
         /// Return if this is a prime (1 counts)
         /// </summary>
         /// <param name="number">Number to inspect</param>
-        /// <returns>True if is prime, false elsewise</returns>
+        /// <returns>True if is prime, false otherwise</returns>
         public static bool IsPrime(int number)
         {
             if (number < 1) return false;
@@ -931,6 +931,27 @@ namespace MaiLib
             }
 
             return result;
+        }
+
+        public void ShiftByOffset(int overallTick)
+        {
+            foreach(Note x in this.Notes)
+            {
+                if (!x.NoteType.Equals("BPM")||!x.NoteType.Equals("MEASURE")||(x.NoteType.Equals("BPM")&&x.Bar!=0 && x.Tick!=0)||(x.NoteType.Equals("MEASURE") && x.Bar != 0 && x.Tick != 0))
+                {
+
+                }
+            }
+        }
+
+        public void ShiftByOffset(int bar, int tick)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RotateNotes(string method)
+        {
+            throw new NotImplementedException();
         }
     }
 }
