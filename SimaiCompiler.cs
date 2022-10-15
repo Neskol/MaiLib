@@ -17,7 +17,7 @@ namespace MaiLib
         /// <param name="targetLocation">Output folder</param>
         public SimaiCompiler(string location, string targetLocation)
         {
-            for (int i = 0; i<7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 this.Charts.Add(new Simai());
             }
@@ -197,7 +197,7 @@ namespace MaiLib
                         {
                             isDxChart = "";
                         }
-                        result += "&inote_" + (i+1) + "=\n";
+                        result += "&inote_" + (i + 1) + "=\n";
                         result += this.Compose(Charts[i]);
                         this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
                     }
@@ -243,14 +243,21 @@ namespace MaiLib
             int defaultChartIndex = 7;
             if (ma2files.Count > 1)
             {
-                defaultChartIndex = 0;
+                defaultChartIndex = 2;
+                foreach (string ma2file in ma2files)
+                {
+                    beginning += "&lv_" + defaultChartIndex + "=" + "宴" + "\n";
+                    beginning += "\n";
+                    defaultChartIndex++;
+                }
             }
-
-            foreach (string ma2file in ma2files)
+            else
             {
                 beginning += "&lv_" + defaultChartIndex + "=" + "宴" + "\n";
                 beginning += "\n";
             }
+
+
 
             result += beginning;
             Console.WriteLine("Finished writing header of " + this.Information.GetValueOrDefault("Name"));
@@ -267,7 +274,7 @@ namespace MaiLib
                         string? isDxChart = "Utage";
                         result += "&inote_" + (i + 2) + "=\n";
                         result += this.Compose(Charts[i]);
-                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
+                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [宴]");
                     }
                     result += "\n";
                 }
