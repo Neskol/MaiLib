@@ -34,6 +34,11 @@ namespace MaiLib
         private int tick;
 
         /// <summary>
+        /// Start time fixed to BPM
+        /// </summary>
+        private int fixedTick;
+
+        /// <summary>
         /// The absolute tick calculated by this.bar*384+this.tick
         /// </summary>
         private int tickStamp;
@@ -67,6 +72,11 @@ namespace MaiLib
         /// The last length
         /// </summary>
         private int lastLength;
+
+        /// <summary>
+        /// Fixed tick last length with fixed BPM
+        /// </summary>
+        private int fixedLastLength;
 
         /// <summary>
         /// The stamp when the last time ends in ticks
@@ -133,6 +143,7 @@ namespace MaiLib
             endKey = "";
             bar = 0;
             tick = 0;
+            fixedTick = 0;
             tickStamp = 0;
             tickTimeStamp = 0.0;
             lastLength = 0;
@@ -235,6 +246,21 @@ namespace MaiLib
         }
 
         /// <summary>
+        /// Access FixedTick
+        /// </summary>
+        public int FixedTick
+        {
+            get
+            {
+                return this.fixedTick;
+            }
+            set
+            {
+                this.fixedTick = value;
+            }
+        }
+
+        /// <summary>
         /// Access Tick Stamp = this.Bar*384 + this.Tick
         /// </summary>
         public int TickStamp
@@ -315,6 +341,21 @@ namespace MaiLib
         }
 
         /// <summary>
+        /// Access FixedEndTime
+        /// </summary>
+        public int FixedLastLength
+        {
+            get
+            {
+                return this.fixedLastLength;
+            }
+            set
+            {
+                this.fixedLastLength = value;
+            }
+        }
+
+        /// <summary>
         /// Access Last time in ticks
         /// </summary>
         public int LastTickStamp
@@ -359,7 +400,7 @@ namespace MaiLib
         /// <summary>
         /// Stores if the wait or last are in different BPM
         /// </summary>
-        /// <value>True if in different BPM, false elsewise</value>
+        /// <value>True if in different BPM, false otherwise</value>
         public bool TickBPMDisagree
         {
             get => this.tickBPMDisagree;
@@ -462,7 +503,7 @@ namespace MaiLib
         /// <summary>
         /// Return if this is a true note
         /// </summary>
-        /// <returns>True if is TAP,HOLD or SLIDE, false elsewise</returns>
+        /// <returns>True if is TAP,HOLD or SLIDE, false otherwise</returns>
         public abstract bool IsNote { get; }
 
         public abstract bool CheckValidity();

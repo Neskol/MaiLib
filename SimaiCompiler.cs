@@ -17,7 +17,7 @@ namespace MaiLib
         /// <param name="targetLocation">Output folder</param>
         public SimaiCompiler(string location, string targetLocation)
         {
-            for (int i = 0; i<7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 this.Charts.Add(new Simai());
             }
@@ -197,7 +197,7 @@ namespace MaiLib
                         {
                             isDxChart = "";
                         }
-                        result += "&inote_" + (i+1) + "=\n";
+                        result += "&inote_" + (i + 1) + "=\n";
                         result += this.Compose(Charts[i]);
                         this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
                     }
@@ -215,97 +215,7 @@ namespace MaiLib
         /// <returns>Maidata of specified chart WITHOUT headers</returns>
         public override string Compose(Chart chart)
         {
-            string result = "";
-            int delayBar = (chart.TotalDelay) / 384 + 2;
-            //Console.WriteLine(chart.Compose());
-            //foreach (BPMChange x in chart.BPMChanges.ChangeNotes)
-            //{
-            //    Console.WriteLine("BPM Change verified in " + x.Bar + " " + x.Tick + " of BPM" + x.BPM);
-            //}
-            List<Note> firstBpm = new List<Note>();
-            foreach (Note bpm in chart.Notes)
-            {
-                if (bpm.NoteSpecificType.Equals("BPM"))
-                {
-                    firstBpm.Add(bpm);
-                }
-            }
-            // if (firstBpm.Count > 1)
-            // {
-            //     chart.Chart[0][0] = firstBpm[1];
-            // }
-            foreach (List<Note> bar in chart.StoredChart)
-            {
-                Note lastNote = new MeasureChange();
-                //result += bar[1].Bar;
-                foreach (Note x in bar)
-                {
-                    switch (lastNote.NoteSpecificType)
-                    {
-                        case "MEASURE":
-                            break;
-                        case "BPM":
-                            break;
-                        case "TAP":
-                            if (x.IsNote && ((!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
-                            {
-                                result += "/";
-                            }
-                            else result += ",";
-                            break;
-                        case "HOLD":
-                            if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "/";
-                            }
-                            else result += ",";
-                            break;
-                        case "SLIDE_START":
-                            //if (x.IsNote() && x.NoteSpecificType().Equals("SLIDE"))
-                            //{
-
-                            //}
-                            break;
-                        case "SLIDE":
-                            if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "/";
-                            }
-                            else if (x.IsNote && x.NoteSpecificType.Equals("SLIDE") && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "*";
-                            }
-                            else result += ",";
-                            break;
-                        default:
-                            result += ",";
-                            break;
-                    }
-                    //if (x.Prev!=null&&x.Prev.NoteType.Equals("NST"))
-                    //if (x.NoteGenre.Equals("SLIDE")&&x.SlideStart== null)
-                    //{
-                    //    result += Int32.Parse(x.Key) + 1;
-                    //    result += "!";
-                    //}
-                    result += x.Compose(0);
-                    lastNote = x;
-                    //if (x.NoteGenre().Equals("BPM"))
-                    //{
-                    //    result+="("+ x.Bar + "_" + x.Tick + ")";
-                    //}
-                }
-                result += ",\n";
-            }
-            //if (delayBar>0)
-            //{
-            //    Console.WriteLine("TOTAL DELAYED BAR: "+delayBar);
-            //}
-            for (int i = 0; i < delayBar + 1; i++)
-            {
-                result += "{1},\n";
-            }
-            result += "E\n";
-            return result;
+            return new Simai(chart).Compose();
         }
 
         /// <summary>
@@ -333,14 +243,21 @@ namespace MaiLib
             int defaultChartIndex = 7;
             if (ma2files.Count > 1)
             {
-                defaultChartIndex = 0;
+                defaultChartIndex = 2;
+                foreach (string ma2file in ma2files)
+                {
+                    beginning += "&lv_" + defaultChartIndex + "=" + "宴" + "\n";
+                    beginning += "\n";
+                    defaultChartIndex++;
+                }
             }
-
-            foreach (string ma2file in ma2files)
+            else
             {
                 beginning += "&lv_" + defaultChartIndex + "=" + "宴" + "\n";
                 beginning += "\n";
             }
+
+
 
             result += beginning;
             Console.WriteLine("Finished writing header of " + this.Information.GetValueOrDefault("Name"));
@@ -357,7 +274,7 @@ namespace MaiLib
                         string? isDxChart = "Utage";
                         result += "&inote_" + (i + 2) + "=\n";
                         result += this.Compose(Charts[i]);
-                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
+                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [宴]");
                     }
                     result += "\n";
                 }

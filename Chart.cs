@@ -329,7 +329,7 @@ namespace MaiLib
                 }
                 foreach (Note x in this.Notes)
                 {
-                    if (this.FirstNote==null&&!(x.NoteType.Equals("BPM")||x.NoteType.Equals("MEASURE")))
+                    if (this.FirstNote == null && !(x.NoteType.Equals("BPM") || x.NoteType.Equals("MEASURE")))
                     {
                         this.FirstNote = x;
                         // Console.WriteLine(x.Compose(0));
@@ -374,7 +374,7 @@ namespace MaiLib
                                 break;
                             case "HOLD":
                                 this.holdNumber++;
-                                x.TickBPMDisagree = ( GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp));
+                                x.TickBPMDisagree = (GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) || HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp));
                                 x.Update();
                                 if (x.TickTimeStamp == 0)
                                 {
@@ -384,6 +384,7 @@ namespace MaiLib
                                 {
                                     x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
+                                    x.FixedLastLength = (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp)));
                                 }
                                 if (delay > this.TotalDelay)
                                 {
@@ -407,11 +408,11 @@ namespace MaiLib
                                     GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
                                     HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp));
                                 x.Update();
-                                if (x.TickTimeStamp==0)
+                                if (x.TickTimeStamp == 0)
                                 {
                                     x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
                                 }
-                                if (x.CalculatedWaitTime ==0)
+                                if (x.CalculatedWaitTime == 0)
                                 {
                                     x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
                                     x.CalculatedWaitTime = x.WaitTimeStamp - x.TickTimeStamp;
@@ -486,7 +487,7 @@ namespace MaiLib
             {
                 this.totalDelay -= this.chart.Count * 384;
             }
-            this.totalNoteNumber += (this.tapNumber+this.holdNumber+this.slideNumber);
+            this.totalNoteNumber += (this.tapNumber + this.holdNumber + this.slideNumber);
         }
 
         /// <summary>
