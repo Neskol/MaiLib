@@ -181,18 +181,6 @@
             get
             {
                 string result = "HOLD";
-                //switch (this.NoteType)
-                //{
-                //    case "HLD":
-                //        result += "HOLD";
-                //        break;
-                //    case "XHO":
-                //        result += "HOLD";
-                //        break;
-                //    case "THO":
-                //        result += "HOLD_TOUCH";
-                //        break;
-                //}
                 return result;
             }
         }
