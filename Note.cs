@@ -234,7 +234,7 @@ namespace MaiLib
             get
             {
                 string result = "";
-                if (this.key.ToCharArray().Count()>1)
+                if (this.key.ToCharArray().Count() > 1)
                 {
                     result = this.key.ToCharArray()[1].ToString();
                 }
@@ -641,6 +641,11 @@ namespace MaiLib
             // Console.WriteLine("This note has bpm note number of " + this.BPMChangeNotes.Count());
             bool result = false;
             this.tickStamp = this.bar * 384 + this.tick;
+            while (this.tick >= 384)
+            {
+                this.tick -= 384;
+                this.bar++;
+            }
             // string noteInformation = "This note is "+this.NoteType+", in tick "+ this.tickStamp+", ";
             //this.tickTimeStamp = this.GetTimeStamp(this.tickStamp);
             this.waitTickStamp = this.tickStamp + this.waitLength;

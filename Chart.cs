@@ -994,17 +994,8 @@ namespace MaiLib
 
         public void ShiftByOffset(int bar, int tick)
         {
-            foreach (Note x in this.Notes)
-            {
-                if (!x.NoteType.Equals("BPM") || !x.NoteGenre.Equals("MEASURE") || (x.NoteType.Equals("BPM") && x.Bar != 0 && x.Tick != 0) || (x.NoteGenre.Equals("MEASURE") && x.Bar != 0 && x.Tick != 0))
-                {
-                    x.Bar += bar;
-                    x.Tick += tick;
-                    x.Update();
-                } //! This method is not designed with detecting overallTickOverflow!
-                Console.WriteLine(x.Compose(0));
-            }
-            this.Update();
+            int overallTick = bar * 384 + tick;
+            this.ShiftByOffset(overallTick);
         }
 
         public void RotateNotes(string method)
