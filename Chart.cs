@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Xml;
@@ -937,16 +938,57 @@ namespace MaiLib
 
         public void ShiftByOffset(int overallTick)
         {
+            List<Note> updatedNotes = new List<Note>();
             foreach (Note x in this.Notes)
             {
                 if (!x.NoteType.Equals("BPM") || !x.NoteGenre.Equals("MEASURE") || (x.NoteType.Equals("BPM") && x.Bar != 0 && x.Tick != 0) || (x.NoteGenre.Equals("MEASURE") && x.Bar != 0 && x.Tick != 0))
                 {
-                    x.TickStamp += overallTick;
-                    x.Bar += overallTick / 384;
-                    x.Tick += overallTick - x.Bar * 384;
-                    x.Update();
+                    Note copy;
+                    switch (x.NoteGenre)
+                    {                    
+                        case "TAP":
+                        case "SLIDE_START":
+                            copy = new Tap(x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        case "HOLD":
+                            copy = new Hold(x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        case "SLIDE":
+                            copy = new Slide(x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        case "BPM":
+                            copy = new BPMChange(x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        case "MEASURE":
+                            copy = new MeasureChange((MeasureChange)x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        default:
+                            copy = new Rest();
+                            break;
+                    }
+                    updatedNotes.Add(copy);
                 } //! This method is not designed with detecting overallTickOverflow!
+                else
+                {
+                    updatedNotes.Add(x);
+                }
             }
+            this.Notes = new List<Note>(updatedNotes);
             this.Update();
         }
 
@@ -960,6 +1002,7 @@ namespace MaiLib
                     x.Tick += tick;
                     x.Update();
                 } //! This method is not designed with detecting overallTickOverflow!
+                Console.WriteLine(x.Compose(0));
             }
             this.Update();
         }

@@ -45,6 +45,17 @@
             this.Update();
         }
 
+        /// <summary>
+        /// Construct BPMChange with take in value
+        /// </summary>
+        /// <param name="takeIn">Take in note</param>
+        public BPMChange(Note takeIn)
+        {
+            this.Bar = takeIn.Bar;
+            this.Tick = takeIn.Tick;
+            this.Update();
+        }
+
 
         public override bool CheckValidity()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Reflection;
 using System.Resources;
 
 namespace MaiLib
@@ -454,7 +455,15 @@ namespace MaiLib
         /// <value>Number value of Key 0-7, exclude key group</value>
         public int EndKeyNum
         {
-            get => int.Parse(this.endKey.ToCharArray()[0].ToString());
+            get
+            {
+                int result = 0;
+                if (!this.endKey.Equals(""))
+                {
+                    result = int.Parse(this.endKey.ToCharArray()[0].ToString());
+                }
+                return result;
+            }
         }
 
         /// <summary>
