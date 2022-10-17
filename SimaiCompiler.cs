@@ -270,13 +270,10 @@ namespace MaiLib
                 for (int i = 0; i < this.Charts.Count; i++)
                 {
                     // Console.WriteLine("Processing chart: " + i);
-                    if (!this.Information[this.Difficulty[i]].Equals(""))
-                    {
-                        string? isDxChart = "Utage";
+                    string? isDxChart = "Utage";
                         result += "&inote_" + (i + 2) + "=\n";
                         result += this.Compose(Charts[i]);
                         this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [宴]");
-                    }
                     result += "\n";
                 }
             }
