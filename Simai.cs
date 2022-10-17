@@ -88,14 +88,11 @@ namespace MaiLib
                             else result += ",";
                             break;
                         case "SLIDE_START":
-                            //if (x.IsNote() && x.NoteSpecificType().Equals("SLIDE"))
-                            //{
-                            if (x.NoteType.Equals("NSS"))
+                            if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
                             {
-                                Console.WriteLine("NSS");
+                                result += "/";
                             }
-
-                            //}
+                            else result += ",";
                             break;
                         case "SLIDE":
                             if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
