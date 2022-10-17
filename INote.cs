@@ -14,14 +14,20 @@
         /// <summary>
         /// See if current note has all information needed
         /// </summary>
-        /// <returns>True if qualified, false elsewise</returns>
+        /// <returns>True if qualified, false otherwise</returns>
         bool CheckValidity();
 
         /// <summary>
         /// Updates this note instance.
         /// </summary>
-        /// <returns>True if Calculated Times is defined, false elsewise</returns>
+        /// <returns>True if Calculated Times is defined, false otherwise</returns>
         bool Update();
+
+        /// <summary>
+        /// Flip the note according to the method specified
+        /// </summary>
+        /// <param name="method">UpSideDown, LeftToRight, Clockwise90/180, Counterclockwise90/180</param>
+        void Flip(string method);
 
         /// <summary>
         /// Give time stamp given overall tick
