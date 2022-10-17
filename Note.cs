@@ -1,4 +1,6 @@
 ﻿using System.Numerics;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Resources;
 
 namespace MaiLib
@@ -233,7 +235,7 @@ namespace MaiLib
             get
             {
                 string result = "";
-                if (this.key.ToCharArray().Count()>1)
+                if (this.key.ToCharArray().Count() > 1)
                 {
                     result = this.key.ToCharArray()[1].ToString();
                 }
@@ -454,7 +456,15 @@ namespace MaiLib
         /// <value>Number value of Key 0-7, exclude key group</value>
         public int EndKeyNum
         {
-            get => int.Parse(this.endKey.ToCharArray()[0].ToString());
+            get
+            {
+                int result = 0;
+                if (!this.endKey.Equals(""))
+                {
+                    result = int.Parse(this.endKey.ToCharArray()[0].ToString());
+                }
+                return result;
+            }
         }
 
         /// <summary>
@@ -627,11 +637,511 @@ namespace MaiLib
             return result;
         }
 
+        public virtual void Flip(string method)
+        {
+            if (this.Key != null && !this.Key.Equals("") && !(this.Key.Count() > 1 && this.Key.ToCharArray()[1] == 'C'))
+            {
+                switch (method)
+                {
+                    case "Clockwise90":
+                        switch (this.KeyNum)
+                        {
+                            case 0:
+                                this.Key = "2" + this.KeyGroup;
+                                break;
+                            case 1:
+                                this.Key = "3" + this.KeyGroup;
+                                break;
+                            case 2:
+                                this.Key = "4" + this.KeyGroup;
+                                break;
+                            case 3:
+                                this.Key = "5" + this.KeyGroup;
+                                break;
+                            case 4:
+                                this.Key = "6" + this.KeyGroup;
+                                break;
+                            case 5:
+                                this.Key = "7" + this.KeyGroup;
+                                break;
+                            case 6:
+                                this.Key = "0" + this.KeyGroup;
+                                break;
+                            case 7:
+                                this.Key = "1" + this.KeyGroup;
+                                break;
+                        }
+                        switch (this.EndKeyNum)
+                        {
+                            case 0:
+                                this.EndKey = "2";
+                                break;
+                            case 1:
+                                this.EndKey = "3";
+                                break;
+                            case 2:
+                                this.EndKey = "4";
+                                break;
+                            case 3:
+                                this.EndKey = "5";
+                                break;
+                            case 4:
+                                this.EndKey = "6";
+                                break;
+                            case 5:
+                                this.EndKey = "7";
+                                break;
+                            case 6:
+                                this.EndKey = "0";
+                                break;
+                            case 7:
+                                this.EndKey = "1";
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case "Clockwise180":
+                        switch (this.KeyNum)
+                        {
+                            case 0:
+                                this.Key = "4" + this.KeyGroup;
+                                break;
+                            case 1:
+                                this.Key = "5" + this.KeyGroup;
+                                break;
+                            case 2:
+                                this.Key = "6" + this.KeyGroup;
+                                break;
+                            case 3:
+                                this.Key = "7" + this.KeyGroup;
+                                break;
+                            case 4:
+                                this.Key = "0" + this.KeyGroup;
+                                break;
+                            case 5:
+                                this.Key = "1" + this.KeyGroup;
+                                break;
+                            case 6:
+                                this.Key = "2" + this.KeyGroup;
+                                break;
+                            case 7:
+                                this.Key = "3" + this.KeyGroup;
+                                break;
+                        }
+                        switch (this.EndKeyNum)
+                        {
+                            case 0:
+                                this.EndKey = "4";
+                                break;
+                            case 1:
+                                this.EndKey = "5";
+                                break;
+                            case 2:
+                                this.EndKey = "6";
+                                break;
+                            case 3:
+                                this.EndKey = "7";
+                                break;
+                            case 4:
+                                this.EndKey = "0";
+                                break;
+                            case 5:
+                                this.EndKey = "1";
+                                break;
+                            case 6:
+                                this.EndKey = "2";
+                                break;
+                            case 7:
+                                this.EndKey = "3";
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case "Counterclockwise90":
+                        switch (this.KeyNum)
+                        {
+                            case 0:
+                                this.Key = "6" + this.KeyGroup;
+                                break;
+                            case 1:
+                                this.Key = "7" + this.KeyGroup;
+                                break;
+                            case 2:
+                                this.Key = "0" + this.KeyGroup;
+                                break;
+                            case 3:
+                                this.Key = "1" + this.KeyGroup;
+                                break;
+                            case 4:
+                                this.Key = "2" + this.KeyGroup;
+                                break;
+                            case 5:
+                                this.Key = "3" + this.KeyGroup;
+                                break;
+                            case 6:
+                                this.Key = "4" + this.KeyGroup;
+                                break;
+                            case 7:
+                                this.Key = "5" + this.KeyGroup;
+                                break;
+                        }
+                        switch (this.EndKeyNum)
+                        {
+                            case 0:
+                                this.EndKey = "6";
+                                break;
+                            case 1:
+                                this.EndKey = "7";
+                                break;
+                            case 2:
+                                this.EndKey = "0";
+                                break;
+                            case 3:
+                                this.EndKey = "1";
+                                break;
+                            case 4:
+                                this.EndKey = "2";
+                                break;
+                            case 5:
+                                this.EndKey = "3";
+                                break;
+                            case 6:
+                                this.EndKey = "4";
+                                break;
+                            case 7:
+                                this.EndKey = "5";
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case "Counterclockwise180":
+                        switch (this.KeyNum)
+                        {
+                            case 0:
+                                this.Key = "4" + this.KeyGroup;
+                                break;
+                            case 1:
+                                this.Key = "5" + this.KeyGroup;
+                                break;
+                            case 2:
+                                this.Key = "6" + this.KeyGroup;
+                                break;
+                            case 3:
+                                this.Key = "7" + this.KeyGroup;
+                                break;
+                            case 4:
+                                this.Key = "0" + this.KeyGroup;
+                                break;
+                            case 5:
+                                this.Key = "1" + this.KeyGroup;
+                                break;
+                            case 6:
+                                this.Key = "2" + this.KeyGroup;
+                                break;
+                            case 7:
+                                this.Key = "3" + this.KeyGroup;
+                                break;
+                        }
+                        switch (this.EndKeyNum)
+                        {
+                            case 0:
+                                this.EndKey = "4";
+                                break;
+                            case 1:
+                                this.EndKey = "5";
+                                break;
+                            case 2:
+                                this.EndKey = "6";
+                                break;
+                            case 3:
+                                this.EndKey = "7";
+                                break;
+                            case 4:
+                                this.EndKey = "0";
+                                break;
+                            case 5:
+                                this.EndKey = "1";
+                                break;
+                            case 6:
+                                this.EndKey = "2";
+                                break;
+                            case 7:
+                                this.EndKey = "3";
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case "UpSideDown":
+                        if (this.NoteType.Equals("TTP") && (this.KeyGroup.Equals("E") || this.KeyGroup.Equals("D")))
+                        {
+                            switch (this.KeyNum)
+                            {
+                                case 0:
+                                    this.Key = "4" + this.KeyGroup;
+                                    break;
+                                case 1:
+                                    this.Key = "3" + this.KeyGroup;
+                                    break;
+                                case 2:
+                                    break;
+                                case 3:
+                                    this.Key = "1" + this.KeyGroup;
+                                    break;
+                                case 4:
+                                    this.Key = "0" + this.KeyGroup;
+                                    break;
+                                case 5:
+                                    this.Key = "7" + this.KeyGroup;
+                                    break;
+                                case 6:
+                                    break;
+                                case 7:
+                                    this.Key = "5" + this.KeyGroup;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (this.KeyNum)
+                            {
+                                case 0:
+                                    this.Key = "3" + this.KeyGroup;
+                                    break;
+                                case 1:
+                                    this.Key = "2" + this.KeyGroup;
+                                    break;
+                                case 2:
+                                    this.Key = "1" + this.KeyGroup;
+                                    break;
+                                case 3:
+                                    this.Key = "0" + this.KeyGroup;
+                                    break;
+                                case 4:
+                                    this.Key = "7" + this.KeyGroup;
+                                    break;
+                                case 5:
+                                    this.Key = "6" + this.KeyGroup;
+                                    break;
+                                case 6:
+                                    this.Key = "5" + this.KeyGroup;
+                                    break;
+                                case 7:
+                                    this.Key = "4" + this.KeyGroup;
+                                    break;
+                            }
+                        }
+                        switch (this.EndKeyNum)
+                        {
+                            case 0:
+                                this.EndKey = "3";
+                                break;
+                            case 1:
+                                this.EndKey = "2";
+                                break;
+                            case 2:
+                                this.EndKey = "1";
+                                break;
+                            case 3:
+                                this.EndKey = "0";
+                                break;
+                            case 4:
+                                this.EndKey = "7";
+                                break;
+                            case 5:
+                                this.EndKey = "6";
+                                break;
+                            case 6:
+                                this.EndKey = "5";
+                                break;
+                            case 7:
+                                this.EndKey = "4";
+                                break;
+                            default:
+                                break;
+                        }
+                        if (this.NoteGenre.Equals("SLIDE"))
+                        {
+                            switch (this.NoteType)
+                            {
+                                case "SCL":
+                                    this.NoteType = "SCR";
+                                    break;
+                                case "SCR":
+                                    this.NoteType = "SCL";
+                                    break;
+                                case "SUL":
+                                    this.NoteType = "SUR";
+                                    break;
+                                case "SUR":
+                                    this.NoteType = "SUL";
+                                    break;
+                                case "SLL":
+                                    this.NoteType = "SLR";
+                                    break;
+                                case "SLR":
+                                    this.NoteType = "SLL";
+                                    break;
+                                case "SXL":
+                                    this.NoteType = "SXR";
+                                    break;
+                                case "SXR":
+                                    this.NoteType = "SXL";
+                                    break;
+                                case "SSL":
+                                    this.NoteType = "SSR";
+                                    break;
+                                case "SSR":
+                                    this.NoteType = "SSL";
+                                    break;
+                            }
+                        }
+                        break;
+                    case "LeftToRight":
+                        if (this.NoteType.Equals("TTP") && (this.KeyGroup.Equals("E") || this.KeyGroup.Equals("D")))
+                        {
+                            switch (this.KeyNum)
+                            {
+                                case 0:
+                                    break;
+                                case 1:
+                                    this.Key = "7" + this.KeyGroup;
+                                    break;
+                                case 2:
+                                    this.Key = "6" + this.KeyGroup;
+                                    break;
+                                case 3:
+                                    this.Key = "5" + this.KeyGroup;
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+                                    this.Key = "3" + this.KeyGroup;
+                                    break;
+                                case 6:
+                                    this.Key = "2" + this.KeyGroup;
+                                    break;
+                                case 7:
+                                    this.Key = "1" + this.KeyGroup;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (this.KeyNum)
+                            {
+                                case 0:
+                                    this.Key = "7" + this.KeyGroup;
+                                    break;
+                                case 1:
+                                    this.Key = "6" + this.KeyGroup;
+                                    break;
+                                case 2:
+                                    this.Key = "5" + this.KeyGroup;
+                                    break;
+                                case 3:
+                                    this.Key = "4" + this.KeyGroup;
+                                    break;
+                                case 4:
+                                    this.Key = "3" + this.KeyGroup;
+                                    break;
+                                case 5:
+                                    this.Key = "2" + this.KeyGroup;
+                                    break;
+                                case 6:
+                                    this.Key = "1" + this.KeyGroup;
+                                    break;
+                                case 7:
+                                    this.Key = "0" + this.KeyGroup;
+                                    break;
+                            }
+                        }
+                        switch (this.EndKeyNum)
+                        {
+                            case 0:
+                                this.EndKey = "7";
+                                break;
+                            case 1:
+                                this.EndKey = "6";
+                                break;
+                            case 2:
+                                this.EndKey = "5";
+                                break;
+                            case 3:
+                                this.EndKey = "4";
+                                break;
+                            case 4:
+                                this.EndKey = "3";
+                                break;
+                            case 5:
+                                this.EndKey = "2";
+                                break;
+                            case 6:
+                                this.EndKey = "1";
+                                break;
+                            case 7:
+                                this.EndKey = "0";
+                                break;
+                            default:
+                                break;
+                        }
+                        if (this.NoteGenre.Equals("SLIDE"))
+                        {
+                            switch (this.NoteType)
+                            {
+                                case "SCL":
+                                    this.NoteType = "SCR";
+                                    break;
+                                case "SCR":
+                                    this.NoteType = "SCL";
+                                    break;
+                                case "SUL":
+                                    this.NoteType = "SUR";
+                                    break;
+                                case "SUR":
+                                    this.NoteType = "SUL";
+                                    break;
+                                case "SLL":
+                                    this.NoteType = "SLR";
+                                    break;
+                                case "SLR":
+                                    this.NoteType = "SLL";
+                                    break;
+                                case "SXL":
+                                    this.NoteType = "SXR";
+                                    break;
+                                case "SXR":
+                                    this.NoteType = "SXL";
+                                    break;
+                                case "SSL":
+                                    this.NoteType = "SSR";
+                                    break;
+                                case "SSR":
+                                    this.NoteType = "SSL";
+                                    break;
+                            }
+                        }
+                        break;
+                    default:
+                            throw new NotImplementedException("METHOD SPECIFIED INVALID. EXPECT: Clockwise90, Clockwise180, Counterclockwise90, Counterclockwise180, UpSideDown, LeftToRight");
+                }
+            }
+            this.Update();
+        }
+
         public bool Update()
         {
             // Console.WriteLine("This note has bpm note number of " + this.BPMChangeNotes.Count());
             bool result = false;
             this.tickStamp = this.bar * 384 + this.tick;
+            while (this.tick >= 384)
+            {
+                this.tick -= 384;
+                this.bar++;
+            }
             // string noteInformation = "This note is "+this.NoteType+", in tick "+ this.tickStamp+", ";
             //this.tickTimeStamp = this.GetTimeStamp(this.tickStamp);
             this.waitTickStamp = this.tickStamp + this.waitLength;

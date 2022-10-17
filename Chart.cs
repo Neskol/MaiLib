@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Xml;
@@ -937,224 +938,71 @@ namespace MaiLib
 
         public void ShiftByOffset(int overallTick)
         {
+            List<Note> updatedNotes = new List<Note>();
             foreach (Note x in this.Notes)
             {
                 if (!x.NoteType.Equals("BPM") || !x.NoteGenre.Equals("MEASURE") || (x.NoteType.Equals("BPM") && x.Bar != 0 && x.Tick != 0) || (x.NoteGenre.Equals("MEASURE") && x.Bar != 0 && x.Tick != 0))
                 {
-                    x.TickStamp += overallTick;
-                    x.Bar += overallTick / 384;
-                    x.Tick += overallTick - x.Bar * 384;
-                    x.Update();
+                    Note copy;
+                    switch (x.NoteGenre)
+                    {                    
+                        case "TAP":
+                        case "SLIDE_START":
+                            copy = new Tap(x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        case "HOLD":
+                            copy = new Hold(x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        case "SLIDE":
+                            copy = new Slide(x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        case "BPM":
+                            copy = new BPMChange(x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        case "MEASURE":
+                            copy = new MeasureChange((MeasureChange)x);
+                            copy.Bar += overallTick / 384;
+                            copy.Tick += overallTick % 384;
+                            copy.Update();
+                            break;
+                        default:
+                            copy = new Rest();
+                            break;
+                    }
+                    updatedNotes.Add(copy);
                 } //! This method is not designed with detecting overallTickOverflow!
+                else
+                {
+                    updatedNotes.Add(x);
+                }
             }
+            this.Notes = new List<Note>(updatedNotes);
             this.Update();
         }
 
         public void ShiftByOffset(int bar, int tick)
         {
-            foreach (Note x in this.Notes)
-            {
-                if (!x.NoteType.Equals("BPM") || !x.NoteGenre.Equals("MEASURE") || (x.NoteType.Equals("BPM") && x.Bar != 0 && x.Tick != 0) || (x.NoteGenre.Equals("MEASURE") && x.Bar != 0 && x.Tick != 0))
-                {
-                    x.Bar += bar;
-                    x.Tick += tick;
-                    x.Update();
-                } //! This method is not designed with detecting overallTickOverflow!
-            }
-            this.Update();
+            int overallTick = bar * 384 + tick;
+            this.ShiftByOffset(overallTick);
         }
 
         public void RotateNotes(string method)
         {
             foreach (Note x in this.Notes)
             {
-                if (x.Key != null && !x.Key.Equals("") && !(x.Key.Count() > 1 && x.Key.ToCharArray()[1] == 'C'))
-                {
-                    int keyOffset = 0;
-                    switch (method)
-                    {
-                        case "Clockwise90":
-                            keyOffset = 2;
-                            int key = x.KeyNum;
-                            key += keyOffset;
-                            int endKey = x.EndKeyNum;
-                            endKey += keyOffset;
-                            while (key > 7)
-                            {
-                                key -= 7;
-                            }
-                            while (endKey > 7)
-                            {
-                                endKey -= 7;
-                            }
-                            x.Key = key.ToString() + x.KeyGroup;
-                            x.EndKey = endKey.ToString();
-                            break;
-                        case "Clockwise180":
-                            keyOffset = 4;
-                            key = x.KeyNum;
-                            key += keyOffset;
-                            endKey = x.EndKeyNum;
-                            endKey += keyOffset;
-                            while (key > 7)
-                            {
-                                key -= 7;
-                            }
-                            while (endKey > 7)
-                            {
-                                endKey -= 7;
-                            }
-                            x.Key = key.ToString() + x.KeyGroup;
-                            x.EndKey = endKey.ToString();
-                            break;
-                        case "Counterclockwise90":
-                            keyOffset = -2;
-                            key = x.KeyNum;
-                            key += keyOffset;
-                            endKey = x.EndKeyNum;
-                            endKey += keyOffset;
-                            while (key < 0)
-                            {
-                                key += 7;
-                            }
-                            while (endKey < 0)
-                            {
-                                endKey += 7;
-                            }
-                            x.Key = key.ToString() + x.KeyGroup;
-                            x.EndKey = endKey.ToString();
-                            break;
-                        case "Counterclockwise180":
-                            keyOffset = -4;
-                            key = x.KeyNum;
-                            key += keyOffset;
-                            endKey = x.EndKeyNum;
-                            endKey += keyOffset;
-                            while (key < 0)
-                            {
-                                key += 7;
-                            }
-                            while (endKey < 0)
-                            {
-                                endKey += 7;
-                            }
-                            x.Key = key.ToString() + x.KeyGroup;
-                            x.EndKey = endKey.ToString();
-                            break;
-                        case "UpSideDown":
-                            switch (x.KeyNum)
-                            {
-                                case 0:
-                                    x.Key = "3" + x.KeyGroup;
-                                    break;
-                                case 1:
-                                    x.Key = "2" + x.KeyGroup;
-                                    break;
-                                case 2:
-                                    x.Key = "1" + x.KeyGroup;
-                                    break;
-                                case 3:
-                                    x.Key = "0" + x.KeyGroup;
-                                    break;
-                                case 4:
-                                    x.Key = "7" + x.KeyGroup;
-                                    break;
-                                case 5:
-                                    x.Key = "6" + x.KeyGroup;
-                                    break;
-                                case 6:
-                                    x.Key = "5" + x.KeyGroup;
-                                    break;
-                                case 7:
-                                    x.Key = "4" + x.KeyGroup;
-                                    break;
-                            }
-                            switch (x.EndKeyNum)
-                            {
-                                case 0:
-                                    x.EndKey = "3";
-                                    break;
-                                case 1:
-                                    x.EndKey = "2";
-                                    break;
-                                case 2:
-                                    x.EndKey = "1";
-                                    break;
-                                case 3:
-                                    x.EndKey = "0";
-                                    break;
-                                case 4:
-                                    x.EndKey = "7";
-                                    break;
-                                case 5:
-                                    x.EndKey = "6";
-                                    break;
-                                case 6:
-                                    x.EndKey = "5";
-                                    break;
-                                case 7:
-                                    x.EndKey = "4";
-                                    break;
-                            }
-                            break;
-                        case "LeftToRight":
-                            switch (x.KeyNum)
-                            {
-                                case 0:
-                                    x.Key = "7" + x.KeyGroup;
-                                    break;
-                                case 1:
-                                    x.Key = "6" + x.KeyGroup;
-                                    break;
-                                case 2:
-                                    x.Key = "5" + x.KeyGroup;
-                                    break;
-                                case 3:
-                                    x.Key = "4" + x.KeyGroup;
-                                    break;
-                                case 4:
-                                    x.Key = "3" + x.KeyGroup;
-                                    break;
-                                case 5:
-                                    x.Key = "2" + x.KeyGroup;
-                                    break;
-                                case 6:
-                                    x.Key = "1" + x.KeyGroup;
-                                    break;
-                                case 7:
-                                    x.Key = "0" + x.KeyGroup;
-                                    break;
-                            }
-                            switch (x.EndKeyNum)
-                            {
-                                case 0:
-                                    x.EndKey = "7";
-                                    break;
-                                case 1:
-                                    x.EndKey = "6";
-                                    break;
-                                case 2:
-                                    x.EndKey = "5";
-                                    break;
-                                case 3:
-                                    x.EndKey = "4";
-                                    break;
-                                case 4:
-                                    x.EndKey = "3";
-                                    break;
-                                case 5:
-                                    x.EndKey = "2";
-                                    break;
-                                case 6:
-                                    x.EndKey = "1";
-                                    break;
-                                case 7:
-                                    x.EndKey = "0";
-                                    break;
-                            }
-                            break;
-                    }
-                }
+                x.Flip(method);
             }
             this.Update();
         }
