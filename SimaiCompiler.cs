@@ -271,10 +271,9 @@ namespace MaiLib
                 {
                     // Console.WriteLine("Processing chart: " + i);
                     string? isDxChart = "Utage";
-                        result += "&inote_" + (i + 2) + "=\n";
-                        result += this.Compose(Charts[i]);
-                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [宴]");
-                    //Simai
+                    result += "&inote_" + (i + 2) + "=\n";
+                    result += this.Compose(Charts[i]);
+                    this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [宴]");
                     result += "\n";
                 }
             }
