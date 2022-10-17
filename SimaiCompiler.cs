@@ -250,6 +250,7 @@ namespace MaiLib
                     beginning += "\n";
                     defaultChartIndex++;
                 }
+                defaultChartIndex = 0;
             }
             else
             {
