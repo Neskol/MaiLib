@@ -1594,11 +1594,11 @@ namespace MaiLib
                 {
                     return basicLevel;
                 }
-                else if (this.Information.TryGetValue("Expert", out string? easyLevel) && easyLevel != null && !easyLevel.Equals(""))
+                else if (this.Information.TryGetValue("Easy", out string? easyLevel) && easyLevel != null && !easyLevel.Equals(""))
                 {
                     return easyLevel;
                 }
-                else throw new NullReferenceException("NONE LEVEL DEFINED");
+                else return "ORIGINAL";
             }
             set 
             { 
