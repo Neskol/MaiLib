@@ -27,7 +27,7 @@ namespace MaiLib
             {
                 if (!this.Information["Easy"].Equals(""))
                 {
-                    Charts[0] = new Ma2(location + this.Information.GetValueOrDefault("Advanced Chart Path"));
+                    Charts[0] = new Ma2(location + this.Information.GetValueOrDefault("Easy Chart Path"));
                 }
                 if (!this.Information["Basic"].Equals(""))
                 {
@@ -52,7 +52,7 @@ namespace MaiLib
                 }
                 if (!this.Information["Utage"].Equals(""))
                 {
-                    Charts[6] = new Ma2(location + this.Information.GetValueOrDefault("Advanced Chart Path"));
+                    Charts[6] = new Ma2(location + this.Information.GetValueOrDefault("Utage Chart Path"));
                 }
             }
 
