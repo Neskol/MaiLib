@@ -92,11 +92,11 @@ namespace MaiLib
                             {
                                 result += "$";
                             }
-                            if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                            if (x.IsNote && (!x.NoteGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
                             {
                                 result += "/";
                             }
-                            else result += ",";
+                            // else result += ",";
                             break;
                         case "SLIDE":
                             if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
