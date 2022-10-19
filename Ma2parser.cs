@@ -331,13 +331,13 @@ namespace MaiLib
             string[] candidate = token.Split('\t');
             int bar = int.Parse(candidate[(int)StdParam.Bar]);
             int tick = int.Parse(candidate[(int)StdParam.Tick]);
-            if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam]))
+            if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam])||PreviousSlideStart.Bar!=bar || PreviousSlideStart.Tick!=tick)
             {
                 //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
                 //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
                 //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
                 //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
-                PreviousSlideStart = new Tap("NST",int.Parse(candidate[(int)StdParam.Bar]),int.Parse(candidate[(int)StdParam.Tick]), candidate[(int)StdParam.KeyOrParam]);
+                PreviousSlideStart = new Tap("NST",bar,tick, candidate[(int)StdParam.KeyOrParam]);
             }
             Slide result = new Slide(candidate[(int)StdParam.Type],
                         bar,
