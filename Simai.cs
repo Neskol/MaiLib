@@ -96,7 +96,10 @@ namespace MaiLib
                             {
                                 result += "/";
                             }
-                            // else result += ",";
+                            else if (x.NoteGenre!="SLIDE")
+                            {
+                                result += ",";
+                            }
                             break;
                         case "SLIDE":
                             if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
