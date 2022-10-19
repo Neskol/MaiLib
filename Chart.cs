@@ -424,11 +424,11 @@ namespace MaiLib
                                     x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.WaitTimeStamp;
                                 }
-                                if (lastNote.NoteSpecificType.Equals("SLIDE_START"))
-                                {
-                                    x.SlideStart = lastNote;
-                                    lastNote.ConsecutiveSlide = x;
-                                }
+                                // if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
+                                // {
+                                //     x.SlideStart = lastNote;
+                                //     lastNote.ConsecutiveSlide = x;
+                                // }
                                 if (delay > this.TotalDelay)
                                 {
                                     this.totalDelay = delay;
