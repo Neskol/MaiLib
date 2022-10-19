@@ -100,6 +100,10 @@ namespace MaiLib
                             {
                                 result += ",";
                             }
+                            else if (lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
+                            {
+                                result += ",";
+                            }
                             break;
                         case "SLIDE":
                             if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
