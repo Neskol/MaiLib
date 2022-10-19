@@ -164,25 +164,22 @@ namespace MaiLib
             string[] candidate = token.Split('\t');
             int bar = Int32.Parse(candidate[(int)StdParam.Bar]);
             int tick = Int32.Parse(candidate[(int)StdParam.Tick]);
-            foreach (string x in candidate)
+            if (isTap)
             {
-                if (isTap)
+                result = TapOfToken(token);
+                if (result.NoteSpecificType.Equals("SLIDE_START"))
                 {
-                    result = TapOfToken(token); 
-                    if (result.NoteSpecificType.Equals("SLIDE_START"))
-                    {
-                        PreviousSlideStart = (Tap)result;
-                    }
+                    PreviousSlideStart = (Tap)result;
                 }
-                else if (isHold)
-                {
-                    result = HoldOfToken(token);
-                }
-                else if (isSlide)
-                {
-                    result = SlideOfToken(token);
-                    result.SlideStart = PreviousSlideStart;
-                }
+            }
+            else if (isHold)
+            {
+                result = HoldOfToken(token);
+            }
+            else if (isSlide)
+            {
+                result = SlideOfToken(token);
+                // result.SlideStart = PreviousSlideStart;
             }
             if (result.Tick == 384)
             {
