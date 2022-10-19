@@ -96,11 +96,7 @@ namespace MaiLib
                             {
                                 result += "/";
                             }
-                            else if (x.NoteGenre!="SLIDE")
-                            {
-                                result += ",";
-                            }
-                            else if (lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
+                            else if (x.NoteGenre != "SLIDE"||lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
                             {
                                 result += ",";
                             }
