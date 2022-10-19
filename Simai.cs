@@ -116,6 +116,13 @@ namespace MaiLib
                             result += ",";
                             break;
                     }
+                    if (x.NoteGenre.Equals("SLIDE"))
+                    {
+                        if (x.SlideStart==null)
+                        {
+                            x.SlideStart = new Tap("NST",x.Bar,x.Tick,x.Key);
+                        }
+                    }
                     if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST"))
                     {
                         result += x.SlideStart.Compose(0);
