@@ -309,21 +309,27 @@ namespace MaiLib
 
         public Slide SlideOfToken(string token, int bar, int tick, Note slideStart, double bpm)
         {
-            Note result;
             string[] candidate = token.Split('\t');
-            result = new Slide(candidate[(int)StdParam.Type],
-                                   bar,
-                                   tick,
-                                   slideStart.Key,
-                                   int.Parse(candidate[(int)StdParam.WaitTimeOrParam]),
-                                   int.Parse(candidate[(int)StdParam.LastTime]),
-                                   candidate[(int)StdParam.EndKey]);
-            if (!slideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam]))
+            Note localSlideStart = new Slide(slideStart);
+            if (!localSlideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam]) || localSlideStart.Bar != bar || localSlideStart.Tick != tick)
             {
-                throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
+                //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
+                //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
+                //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
+                //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
+                localSlideStart = new Tap("NST", bar, tick, candidate[(int)StdParam.KeyOrParam]);
             }
-            result.BPM = bpm;
-            return (Slide)result;
+            Slide result = new Slide(candidate[(int)StdParam.Type],
+                        bar,
+                        tick,
+                        localSlideStart.Key,
+                        int.Parse(candidate[(int)StdParam.WaitTimeOrParam]),
+                        int.Parse(candidate[(int)StdParam.LastTime]),
+                        candidate[(int)StdParam.EndKey]);
+            result.SlideStart = localSlideStart;
+            localSlideStart.ConsecutiveSlide = result;
+            slideStart = localSlideStart;
+            return result;
         }
 
         public Slide SlideOfToken(string token)
