@@ -141,7 +141,7 @@ namespace MaiLib
                             x.SlideStart = new Tap("NST",x.Bar,x.Tick,x.Key);
                         }
                     }
-                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&(!lastNote.NoteGenre.Equals("SLIDE")||lastNote.NoteGenre.Equals("SLIDE")&&lastNote.TickStamp!=x.TickStamp))
+                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&(!lastNote.NoteGenre.Equals("SLIDE")||lastNote.NoteGenre.Equals("SLIDE")&&lastNote.TickStamp!=x.TickStamp&&!lastNote.Key.Equals(x)))
                     {
                         result += x.SlideStart.Compose(0);
                     }
