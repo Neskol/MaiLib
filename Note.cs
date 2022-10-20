@@ -293,8 +293,12 @@ namespace MaiLib
         /// </summary>
         public int TickStamp
         {
-            get { return this.tickStamp; }
-            set { this.tickStamp = value; }
+            get { this.tickStamp = this.tick + this.bar * 384;
+                return this.tickStamp; }
+            set {
+                this.bar = value / 384;
+                this.tick = value % 384;
+            }
         }
 
         /// <summary>
