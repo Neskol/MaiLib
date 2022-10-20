@@ -1,3 +1,5 @@
+using System.Net.Http.Headers;
+
 namespace MaiLib
 {
     public class Simai : Chart
@@ -12,6 +14,22 @@ namespace MaiLib
             this.MeasureChanges = new MeasureChanges();
             this.StoredChart = new List<List<Note>>();
             this.Information = new Dictionary<string, string>();
+        }
+
+        /// <summary>
+        /// Constructs Simai chart directly from path specified
+        /// </summary>
+        /// <param name="location"></param>
+        public Simai(string location)
+        {
+            string[] tokens = new SimaiTokenizer().Tokens(location);
+            Chart chart = new SimaiParser().ChartOfToken(tokens);
+            this.Notes = new List<Note>(chart.Notes);
+            this.BPMChanges = new BPMChanges(chart.BPMChanges);
+            this.MeasureChanges = new MeasureChanges(chart.MeasureChanges);
+            this.StoredChart = new List<List<Note>>();
+            this.Information = new Dictionary<string, string>(chart.Information);
+            this.Update();
         }
 
         /// <summary>
