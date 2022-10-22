@@ -693,20 +693,23 @@ namespace MaiLib
             }
             if (RealNoteNumber(result) != RealNoteNumber(bar))
             {
-                string error = "";
-                error += ("Bar notes not match in bar: " + barNumber) + "\n";
-                error += ("Expected: " + RealNoteNumber(bar)) + "\n";
-                foreach (Note x in bar)
+                if (RealNoteNumber(result)+numberNstAdded!=RealNoteNumber(bar))
                 {
-                    error += (x.Compose(1)) + "\n";
+                    string error = "";
+                    error += ("Bar notes not match in bar: " + barNumber) + "\n";
+                    error += ("Expected: " + RealNoteNumber(bar)) + "\n";
+                    foreach (Note x in bar)
+                    {
+                        error += (x.Compose(1)) + "\n";
+                    }
+                    error += ("\nActual: " + RealNoteNumber(result)) + "\n";
+                    foreach (Note y in result)
+                    {
+                        error += (y.Compose(1)) + "\n";
+                    }
+                    Console.WriteLine(error);
+                    throw new Exception("NOTE NUMBER IS NOT MATCHING");
                 }
-                error += ("\nActual: " + RealNoteNumber(result)) + "\n";
-                foreach (Note y in result)
-                {
-                    error += (y.Compose(1)) + "\n";
-                }
-                Console.WriteLine(error);
-                throw new Exception("NOTE NUMBER IS NOT MATCHING");
             }
             bool hasFirstBPMChange = false;
             List<Note> changedResult = new List<Note>();
