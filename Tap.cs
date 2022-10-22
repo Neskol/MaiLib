@@ -204,7 +204,7 @@
         {
             get
             {
-                if (this.NoteType.Equals("NSS"))
+                if (this.NoteType.Equals("NST"))
                 {
                     return false;
                 }

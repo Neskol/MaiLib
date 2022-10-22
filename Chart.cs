@@ -424,17 +424,10 @@ namespace MaiLib
                                     x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.WaitTimeStamp;
                                 }
-                                if ((lastNote.NoteSpecificType.Equals("SLIDE_START") || lastNote.NoteSpecificType.Equals("SLIDE")) && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
+                                if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
                                 {
                                     x.SlideStart = lastNote;
                                     lastNote.ConsecutiveSlide = x;
-                                }
-                                if (x.NoteGenre.Equals("SLIDE"))
-                                {
-                                    if (x.SlideStart == null)
-                                    {
-                                        x.SlideStart = new Tap("NST", x.Bar, x.Tick, x.Key);
-                                    }
                                 }
                                 if (delay > this.TotalDelay)
                                 {
@@ -607,8 +600,6 @@ namespace MaiLib
             List<Note> result = new List<Note>();
             bool writeRest = true;
             result.Add(bar[0]);
-            int numberNstAdded = 0;
-            List<Note> addedNstList = new();
             for (int i = 0; i < 384; i += 384 / minimalQuaver)
             {
                 //Separate Touch and others to prevent ordering issue
@@ -633,21 +624,6 @@ namespace MaiLib
                         }
                         else
                         {
-                            if (x.NoteGenre.Equals("SLIDE"))
-                            {
-                                if (x.SlideStart != null && !eachSet.Contains(x.SlideStart))
-                                {
-                                    eachSet.Add(x.SlideStart);
-                                    numberNstAdded++;
-                                    addedNstList.Add(x.SlideStart);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("The Slide Note: " + x.Compose(1));
-                                    Console.WriteLine("The start is present : " + (x.SlideStart != null).ToString());
-                                    throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
-                                }
-                            }
                             eachSet.Add(x);
                             //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                             writeRest = false;
@@ -693,23 +669,20 @@ namespace MaiLib
             }
             if (RealNoteNumber(result) != RealNoteNumber(bar))
             {
-                if (RealNoteNumber(result)+numberNstAdded!=RealNoteNumber(bar))
+                string error = "";
+                error += ("Bar notes not match in bar: " + barNumber) + "\n";
+                error += ("Expected: " + RealNoteNumber(bar)) + "\n";
+                foreach (Note x in bar)
                 {
-                    string error = "";
-                    error += ("Bar notes not match in bar: " + barNumber) + "\n";
-                    error += ("Expected: " + RealNoteNumber(bar)) + "\n";
-                    foreach (Note x in bar)
-                    {
-                        error += (x.Compose(1)) + "\n";
-                    }
-                    error += ("\nActual: " + RealNoteNumber(result)) + "\n";
-                    foreach (Note y in result)
-                    {
-                        error += (y.Compose(1)) + "\n";
-                    }
-                    Console.WriteLine(error);
-                    throw new Exception("NOTE NUMBER IS NOT MATCHING");
+                    error += (x.Compose(1)) + "\n";
                 }
+                error += ("\nActual: " + RealNoteNumber(result)) + "\n";
+                foreach (Note y in result)
+                {
+                    error += (y.Compose(1)) + "\n";
+                }
+                Console.WriteLine(error);
+                throw new Exception("NOTE NUMBER IS NOT MATCHING");
             }
             bool hasFirstBPMChange = false;
             List<Note> changedResult = new List<Note>();
@@ -972,7 +945,7 @@ namespace MaiLib
                 {
                     Note copy;
                     switch (x.NoteGenre)
-                    {
+                    {                    
                         case "TAP":
                         case "SLIDE_START":
                             copy = new Tap(x);
