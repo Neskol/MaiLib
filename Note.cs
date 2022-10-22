@@ -559,6 +559,8 @@ namespace MaiLib
 
         public abstract string Compose(int format);
 
+        public abstract Note NewInstance();
+
         public int CompareTo(Object? obj)
         {
             int result = 0;

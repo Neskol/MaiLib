@@ -184,5 +184,11 @@
                 return result;
             }
         }
+
+        public override Note NewInstance()
+        {
+            Note result = new Hold(this);
+            return result;
+        }
     }
 }

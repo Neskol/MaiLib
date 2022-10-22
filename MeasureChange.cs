@@ -68,6 +68,12 @@
             return result;
         }
 
+        public override Note NewInstance()
+        {
+            Note result = new MeasureChange(this);
+            return result;
+        }
+
         public override string NoteGenre => "MEASURE";
 
         public override bool IsNote => false;

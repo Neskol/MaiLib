@@ -1,4 +1,6 @@
-﻿namespace MaiLib
+﻿using System.Diagnostics.Contracts;
+
+namespace MaiLib
 {
     /// <summary>
     /// BPMChange note for Simai
@@ -102,6 +104,12 @@
                     }
                 }
             }
+            return result;
+        }
+
+        public override Note NewInstance()
+        {
+            Note result = new BPMChange(this);
             return result;
         }
 

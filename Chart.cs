@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -424,16 +425,23 @@ namespace MaiLib
                                     x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.WaitTimeStamp;
                                 }
-                                if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
-                                {
-                                    x.SlideStart = lastNote;
-                                    lastNote.ConsecutiveSlide = x;
-                                }
+                                // if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
+                                // {
+                                //     x.SlideStart = lastNote;
+                                //     lastNote.ConsecutiveSlide = x;
+                                // }
                                 if (delay > this.TotalDelay)
                                 {
                                     this.totalDelay = delay;
                                     //Console.WriteLine("New delay: "+delay);
                                     //Console.WriteLine(x.Compose(1));
+                                }
+                                if (x.SlideStart==null)
+                                {
+                                    Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
+                                    Console.WriteLine(x.Compose(1));
+                                    Console.WriteLine("This slide has start: " + (x.SlideStart == null));
+                                    throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
                                 }
                                 break;
                             default:
@@ -446,11 +454,9 @@ namespace MaiLib
                         //    lastNote.Next = x.Prev;
                         //}
                         //else
-                        {
-                            lastNote.Next = x;
-                            x.Prev = lastNote;
-                        }
-                        x.Prev.Next = x;
+                        // // lastNote.Next = x;
+                        // // x.Prev = lastNote;
+                        // // x.Prev.Next = x;
                         //if ((!x.NoteGenre.Equals("SLIDE")) && x.Prev.NoteType.Equals("STR")&&x.Prev.ConsecutiveSlide == null)
                         //{
                         //    Console.WriteLine("Found NSS");
@@ -461,7 +467,6 @@ namespace MaiLib
                         //    lastNote.NoteType = "NSS";
                         //    x.Prev.NoteType = "NSS";
                         //}
-                        lastNote.Next = x;
                         bar.Add(x);
                         if (!x.NoteGenre.Equals("SLIDE"))
                         {
@@ -497,6 +502,38 @@ namespace MaiLib
         /// </summary>
         /// <returns>String of chart compiled</returns>
         public abstract string Compose();
+
+        /// <summary>
+        /// Check if all of the slide starts were in the notes
+        /// </summary>
+        public void CheckSlideStart()
+        {
+            List<Note> adjusted = new();
+            Note previousSlideStart = new Rest();
+            foreach(Note x in this.Notes)
+            {
+                if (x.NoteGenre.Equals("SLIDE_START"))
+                {
+                    previousSlideStart = x;
+                }
+                if (x.NoteGenre.Equals("SLIDE"))
+                {
+                    if (x.SlideStart != null && !x.SlideStart.Equals(previousSlideStart))
+                    {
+                        adjusted.Add(x.SlideStart);
+                    }
+                    else if (x.SlideStart == null)
+                    {
+                        Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
+                        Console.WriteLine(x.Compose(1));
+                        Console.WriteLine("This slide has start: " + (x.SlideStart == null));
+                        throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
+                    }
+                }
+                adjusted.Add(x);
+            }
+            this.Notes = new(adjusted);
+        }
 
         /// <summary>
         /// Override and compose with given arrays
@@ -609,6 +646,7 @@ namespace MaiLib
                 //Set condition to write rest if appropriate
                 writeRest = true;
                 //Add Appropriate note into each set
+                Note lastNote = new Rest();
                 foreach (Note x in bar)
                 {
                     if ((x.Tick == i) && x.IsNote && !(x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
@@ -627,6 +665,8 @@ namespace MaiLib
                             eachSet.Add(x);
                             //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                             writeRest = false;
+                            x.Prev = lastNote;
+                            lastNote.Next = x;
                         }
                     }
                     else if ((x.Tick == i) && x.IsNote && (x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
@@ -641,7 +681,13 @@ namespace MaiLib
                             touchEachSet.Add(x);
                             //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                             writeRest = false;
+                            x.Prev = lastNote;
+                            lastNote.Next = x;
                         }
+                    }
+                    if (!x.NoteSpecificType.Equals("BPM"))
+                    {
+                        lastNote = x.NewInstance();
                     }
                 }
                 //Searching for BPM change. If find one, get into front.

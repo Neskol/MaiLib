@@ -54,6 +54,12 @@
             return "";
         }
 
+        public override Note NewInstance()
+        {
+            Note result = new Rest(this);
+            return result;
+        }
+
         public override string NoteGenre => "REST";
 
         public override bool IsNote => false;

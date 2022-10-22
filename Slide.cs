@@ -211,5 +211,10 @@
 
         public override string NoteSpecificType => "SLIDE";
 
+        public override Note NewInstance()
+        {
+            Note result = new Slide(this);
+            return result;
+        }
     }
 }
