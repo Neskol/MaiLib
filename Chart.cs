@@ -607,6 +607,8 @@ namespace MaiLib
             List<Note> result = new List<Note>();
             bool writeRest = true;
             result.Add(bar[0]);
+            int numberNstAdded = 0;
+            List<Note> addedNstList = new();
             for (int i = 0; i < 384; i += 384 / minimalQuaver)
             {
                 //Separate Touch and others to prevent ordering issue
@@ -636,6 +638,8 @@ namespace MaiLib
                                 if (x.SlideStart != null && !eachSet.Contains(x.SlideStart))
                                 {
                                     eachSet.Add(x.SlideStart);
+                                    numberNstAdded++;
+                                    addedNstList.Add(x.SlideStart);
                                 }
                                 else
                                 {
