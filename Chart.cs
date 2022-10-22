@@ -533,6 +533,7 @@ namespace MaiLib
                 adjusted.Add(x);
             }
             this.Notes = new(adjusted);
+            this.Update();
         }
 
         /// <summary>
