@@ -134,17 +134,17 @@ namespace MaiLib
                             result += ",";
                             break;
                     }
-                    if (x.NoteGenre.Equals("SLIDE"))
-                    {
-                        if (x.SlideStart==null)
-                        {
-                            x.SlideStart = new Tap("NST",x.Bar,x.Tick,x.Key);
-                        }
-                    }
-                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&(!lastNote.NoteGenre.Equals("SLIDE")||lastNote.NoteGenre.Equals("SLIDE")&&lastNote.TickStamp!=x.TickStamp&&!lastNote.Key.Equals(x)))
-                    {
-                        result += x.SlideStart.Compose(0);
-                    }
+                    // if (x.NoteGenre.Equals("SLIDE"))
+                    // {
+                    //     if (x.SlideStart==null)
+                    //     {
+                    //         x.SlideStart = new Tap("NST",x.Bar,x.Tick,x.Key);
+                    //     }
+                    // }
+                    // if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&(!lastNote.NoteGenre.Equals("SLIDE")||lastNote.NoteGenre.Equals("SLIDE")&&lastNote.TickStamp!=x.TickStamp&&!lastNote.Key.Equals(x)))
+                    // {
+                    //     result += x.SlideStart.Compose(0);
+                    // }
                     result += x.Compose(0);
                     lastNote = x;
                     if (x.NoteType.Equals("SLIDE_START")&&x.ConsecutiveSlide == null)

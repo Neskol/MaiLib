@@ -424,10 +424,17 @@ namespace MaiLib
                                     x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.WaitTimeStamp;
                                 }
-                                if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
+                                if ((lastNote.NoteSpecificType.Equals("SLIDE_START") || lastNote.NoteSpecificType.Equals("SLIDE")) && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
                                 {
                                     x.SlideStart = lastNote;
                                     lastNote.ConsecutiveSlide = x;
+                                }
+                                if (x.NoteGenre.Equals("SLIDE"))
+                                {
+                                    if (x.SlideStart == null)
+                                    {
+                                        x.SlideStart = new Tap("NST", x.Bar, x.Tick, x.Key);
+                                    }
                                 }
                                 if (delay > this.TotalDelay)
                                 {
@@ -624,6 +631,19 @@ namespace MaiLib
                         }
                         else
                         {
+                            if (x.NoteGenre.Equals("SLIDE"))
+                            {
+                                if (x.SlideStart != null && !eachSet.Contains(x.SlideStart))
+                                {
+                                    eachSet.Add(x.SlideStart);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The Slide Note: " + x.Compose(1));
+                                    Console.WriteLine("The start is present : " + (x.SlideStart != null).ToString());
+                                    throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
+                                }
+                            }
                             eachSet.Add(x);
                             //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                             writeRest = false;
@@ -945,7 +965,7 @@ namespace MaiLib
                 {
                     Note copy;
                     switch (x.NoteGenre)
-                    {                    
+                    {
                         case "TAP":
                         case "SLIDE_START":
                             copy = new Tap(x);
