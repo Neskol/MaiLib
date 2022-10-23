@@ -50,8 +50,8 @@
 
         public override string Compose(int format)
         {
-            //return "r_" + this.Tick;
-            return "";
+            return "r_" + this.Tick;
+            // return "";
         }
 
         public override Note NewInstance()
