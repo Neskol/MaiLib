@@ -309,13 +309,16 @@ namespace MaiLib
         /// </summary>
         public virtual void Update()
         {
+            this.CheckSlideStart(); //Add all NSTs back to the chart
             this.StoredChart = new List<List<Note>>();
             int maxBar = 0;
             double timeStamp = 0.0;
             if (notes.Count > 0)
             {
-                maxBar = notes[notes.Count - 1].Bar;
+                maxBar = notes[notes.Count - 1].Bar; //Iterate to get the last note's bar as Max Bar
             }
+
+            //Iterate over bar
             for (int i = 0; i <= maxBar; i++)
             {
                 List<Note> bar = new List<Note>();
@@ -327,7 +330,7 @@ namespace MaiLib
                 {
                     if (x.Bar == i)
                     {
-                        bar.Add(x);
+                        bar.Add(x); //Extract the first BPM change in bar to the beginning of the bar
                     }
                 }
                 foreach (Note x in this.Notes)
@@ -534,7 +537,6 @@ namespace MaiLib
                 adjusted.Add(x);
             }
             this.Notes = new(adjusted);
-            this.Update();
         }
 
         /// <summary>

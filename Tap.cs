@@ -139,18 +139,18 @@
         public override string Compose(int format)
         {
             string result = "";
-            // if (format == 1 && !(this.NoteType.Equals("TTP")) && !((this.NoteType.Equals("NST"))||this.NoteType.Equals("NSS")))
-            // {
-            //     result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
-            // }
-            // else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
-            // {
-            //     result = ""; //NST and NSS is just a place holder for slide
-            // }
-            if (format == 1 && !this.NoteType.Equals("TTP"))
+            if (format == 1 && !(this.NoteType.Equals("TTP")) && !((this.NoteType.Equals("NST"))||this.NoteType.Equals("NSS")))
             {
                 result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
             }
+            else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
+            {
+                result = ""; //NST and NSS is just a place holder for slide
+            }
+            // if (format == 1 && !this.NoteType.Equals("TTP"))
+            // {
+            //     result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
+            // }
             else if (format == 1 && this.NoteType.Equals("TTP"))
             {
                 result = this.NoteType + "\t" +
