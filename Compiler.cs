@@ -35,6 +35,11 @@ namespace MaiLib
         private string globalSep;
 
         /// <summary>
+        /// Stores the rotate dictionary
+        /// </summary>
+        private Dictionary<string, string> rotateDictionary= new Dictionary<string, string> { { "17", "UpsideDown" },{"305","LeftToRight"},{ "417","Clockwise90"} };
+
+        /// <summary>
         /// Access the path separator
         /// </summary>
         public string GlobalSep
@@ -89,6 +94,22 @@ namespace MaiLib
         public string[] Difficulty
         {
             get { return difficulty; }
+        }
+
+        /// <summary>
+        /// Access the rotate dictionary
+        /// </summary>
+        /// <value>Key: Music ID in Digits; Value: Rotate Parameter</value>
+        public Dictionary<string,string> RotateDictionary
+        {
+            get
+            {
+                return this.rotateDictionary;
+            }
+            set
+            {
+                this.rotateDictionary = value;
+            }
         }
 
 
@@ -215,6 +236,39 @@ namespace MaiLib
                 throw new NullReferenceException("This compiler has empty chat list!");
             }
             result += "(" + this.information["Music ID"] + ")" + this.information["Name"] + ", " + this.information["Genre"] + ", ";
+            if (!this.Information["Easy"].Equals(""))
+            {
+                result += this.Information["Easy"] + "/";
+            }
+            if (!this.Information["Basic"].Equals(""))
+            {
+                result += this.Information["Basic"];
+            }
+            else result += "-";
+            if (!this.Information["Advance"].Equals(""))
+            {
+                result += "/" + this.Information["Advance"];
+            }
+            else result += "-";
+            if (!this.Information["Expert"].Equals(""))
+            {
+                result += "/" + this.Information["Expert"];
+            }
+            else result += "-";
+            if (!this.Information["Master"].Equals(""))
+            {
+                result += "/" + this.Information["Master"];
+            }
+            else result += "-";
+            if (!this.Information["Remaster"].Equals(""))
+            {
+                result += "/" + this.Information["Remaster"];
+            }
+            else result += "-";
+            if (!this.Information["Utage"].Equals(""))
+            {
+                result += "\\" + this.Information["Remaster"];
+            }
 
             return result;
         }
