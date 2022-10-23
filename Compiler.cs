@@ -37,7 +37,7 @@ namespace MaiLib
         /// <summary>
         /// Stores the rotate dictionary
         /// </summary>
-        private Dictionary<string, string> rotateDictionary= new Dictionary<string, string> { { "17", "UpsideDown" },{"305","LeftToRight"},{ "417","Clockwise90"} };
+        private Dictionary<string, string> rotateDictionary= new Dictionary<string, string> { { "17", "UpSideDown" },{"305","LeftToRight"},{ "417","Clockwise90"} };
 
         /// <summary>
         /// Access the path separator
