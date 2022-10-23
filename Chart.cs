@@ -514,13 +514,14 @@ namespace MaiLib
             {
                 if (x.NoteGenre.Equals("SLIDE_START"))
                 {
-                    previousSlideStart = x;
+                    previousSlideStart = new Tap(x);
                 }
                 if (x.NoteGenre.Equals("SLIDE"))
                 {
-                    if (x.SlideStart != null && !x.SlideStart.Equals(previousSlideStart))
+                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST"))
                     {
                         adjusted.Add(x.SlideStart);
+                        previousSlideStart = new Tap(x.SlideStart);
                     }
                     else if (x.SlideStart == null)
                     {
