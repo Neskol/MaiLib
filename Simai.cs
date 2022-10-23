@@ -188,7 +188,7 @@ namespace MaiLib
                     Console.WriteLine("Notes in bar: " + bar[0].Bar);
                     foreach (Note x in bar)
                     {
-                        x.Compose(1);
+                        Console.WriteLine(x.Compose(1));
                     }
                     Console.WriteLine("Expected comma number: " + currentQuaver);
                     Console.WriteLine("Actual comma number: " + commaCompiled);
