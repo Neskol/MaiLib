@@ -12,7 +12,7 @@ namespace MaiLib
      /// Stores difficulty keywords
      /// </summary>
      /// <value>Difficulty</value>
-        public static readonly string[] difficulty = {"Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
+        public static readonly string[] difficulty = { "Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
 
         /// <summary>
         /// Stores chart collections
@@ -37,7 +37,7 @@ namespace MaiLib
         /// <summary>
         /// Stores the rotate dictionary
         /// </summary>
-        private Dictionary<string, string> rotateDictionary= new Dictionary<string, string> { { "17", "UpSideDown" },{"305","LeftToRight"},{ "417","Clockwise90"} };
+        private Dictionary<string, string> rotateDictionary = new Dictionary<string, string> { { "17", "UpSideDown" }, { "305", "LeftToRight" }, { "417", "Clockwise90" } };
 
         /// <summary>
         /// Access the path separator
@@ -87,7 +87,7 @@ namespace MaiLib
             get { return this.musicXml; }
             set { this.musicXml = value; }
         }
-        
+
         /// <summary>
         /// Access difficulty;
         /// </summary>
@@ -100,7 +100,7 @@ namespace MaiLib
         /// Access the rotate dictionary
         /// </summary>
         /// <value>Key: Music ID in Digits; Value: Rotate Parameter</value>
-        public Dictionary<string,string> RotateDictionary
+        public Dictionary<string, string> RotateDictionary
         {
             get
             {
@@ -219,6 +219,16 @@ namespace MaiLib
             }
             else if (isUtage)
             {
+                Note? firstNote;
+                bool foundFirstNote = false;
+                for (int i = this.charts.Count; i >= 0 && !foundFirstNote; i++)
+                {
+                    if (this.charts[i] != null)
+                    {
+                        firstNote = this.charts[i].FirstNote;
+                        foundFirstNote = true;
+                    }
+                }
                 return this.charts[0].FirstNote ?? throw new NullReferenceException("Null first note: utage chart is invalid");
             }
             else throw new NullReferenceException("This compiler contains invalid Master Chart and is not Utage Chart: no first note is returned");
@@ -245,7 +255,7 @@ namespace MaiLib
                 result += this.Information["Basic"];
             }
             else result += "-";
-            if (!this.Information["Advance"].Equals(""))
+            if (!this.Information["Advanced"].Equals(""))
             {
                 result += "/" + this.Information["Advance"];
             }
