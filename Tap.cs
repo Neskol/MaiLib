@@ -143,9 +143,13 @@
             // {
             //     result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
             // }
-            else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
+            // else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
+            // {
+            //     result = ""; //NST and NSS is just a place holder for slide
+            // }
+            if (format == 1 && !this.NoteType.Equals("TTP"))
             {
-                result = ""; //NST and NSS is just a place holder for slide
+                result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
             }
             else if (format == 1 && this.NoteType.Equals("TTP"))
             {
