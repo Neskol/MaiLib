@@ -257,7 +257,7 @@ namespace MaiLib
             else result += "-";
             if (!this.Information["Advanced"].Equals(""))
             {
-                result += "/" + this.Information["Advance"];
+                result += "/" + this.Information["Advanced"];
             }
             else result += "-";
             if (!this.Information["Expert"].Equals(""))
