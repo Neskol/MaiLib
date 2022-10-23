@@ -133,7 +133,7 @@ namespace MaiLib
                             {
                                 result += "*";
                             }
-                            else if (x.IsNote && lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                            else if (x.IsNote && lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Bar!=lastNote.Bar && x.Tick!=lastNote.Tick&& !x.NoteGenre.Equals("BPM"))
                             {
                                 result += ",";
                             }
