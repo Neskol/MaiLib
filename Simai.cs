@@ -159,7 +159,7 @@ namespace MaiLib
                     // }
                     result += x.Compose(0);
                     lastNote = x;
-                    if (x.NoteType.Equals("SLIDE_START")&&x.ConsecutiveSlide == null)
+                    if (x.NoteGenre.Equals("SLIDE_START")&&x.ConsecutiveSlide == null)
                     {
                         result += "$";
                     }
