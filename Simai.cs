@@ -122,7 +122,11 @@ namespace MaiLib
                             {
                                 result += "/";
                             }
-                            else result += ",";
+                            else if (x.IsNote && (x.NoteSpecificType.Equals("SLIDE")) && x.Tick != lastNote.Tick && x.Bar != lastNote.Bar && !x.NoteGenre.Equals("BPM"))
+                            {
+                                result += ",";
+                            }
+                            else throw new NotSupportedException("This shall not happen!");
                             break;
                         case "SLIDE":
                             if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
@@ -133,11 +137,11 @@ namespace MaiLib
                             {
                                 result += "*";
                             }
-                            else if (x.IsNote && !lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Bar!=lastNote.Bar && x.Tick!=lastNote.Tick&& !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += ",";
-                            }
-                            // else throw new NotSupportedException("This condition shall not happen!");
+                            // else if (x.IsNote && !lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Bar!=lastNote.Bar && x.Tick!=lastNote.Tick&& !x.NoteGenre.Equals("BPM"))
+                            // {
+                            //     result += ",";
+                            // }
+                            else result += ",";
                             break;
                         default:
                             result += ",";
