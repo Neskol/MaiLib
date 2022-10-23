@@ -277,7 +277,7 @@ namespace MaiLib
             else result += "-";
             if (!this.Information["Utage"].Equals(""))
             {
-                result += "\\" + this.Information["Remaster"];
+                result += "\\" + this.Information["Utage"];
             }
 
             return result;
