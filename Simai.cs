@@ -118,7 +118,7 @@ namespace MaiLib
                             // {
                             //     result += ",";
                             // }
-                            if (x.IsNote && ( x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
+                            if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
                             {
                                 result += "/";
                             }
