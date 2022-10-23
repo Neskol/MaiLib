@@ -126,7 +126,7 @@ namespace MaiLib
                             {
                                 result += ",";
                             }
-                            else throw new NotSupportedException("This shall not happen!");
+                            // else throw new NotSupportedException("This shall not happen!");
                             break;
                         case "SLIDE":
                             if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
