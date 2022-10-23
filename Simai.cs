@@ -138,6 +138,11 @@ namespace MaiLib
                                 result += ",";
                                 commaCompiled++;
                             }
+                            else if (x.NoteGenre.Equals("REST"))
+                            {
+                                result += ",";
+                                commaCompiled++;
+                            }
                             break;
                         case "SLIDE":
                             if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
