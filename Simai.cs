@@ -106,18 +106,18 @@ namespace MaiLib
                             else result += ",";
                             break;
                         case "SLIDE_START":
-                            if (lastNote.ConsecutiveSlide == null)
-                            {
-                                result += "$";
-                            }
-                            if (x.IsNote && (!x.NoteGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "/";
-                            }
-                            else if (x.NoteGenre != "SLIDE"||lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
-                            {
-                                result += ",";
-                            }
+                            // if (lastNote.ConsecutiveSlide == null)
+                            // {
+                            //     result += "$";
+                            // }
+                            // if (x.IsNote && (!x.NoteGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                            // {
+                            //     result += "/";
+                            // }
+                            // else if (x.NoteGenre != "SLIDE"||lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
+                            // {
+                            //     result += ",";
+                            // }
                             break;
                         case "SLIDE":
                             if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
@@ -134,17 +134,17 @@ namespace MaiLib
                             result += ",";
                             break;
                     }
-                    if (x.NoteGenre.Equals("SLIDE"))
-                    {
-                        if (x.SlideStart==null)
-                        {
-                            x.SlideStart = new Tap("NST",x.Bar,x.Tick,x.Key);
-                        }
-                    }
-                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&(!lastNote.NoteGenre.Equals("SLIDE")||lastNote.NoteGenre.Equals("SLIDE")&&lastNote.TickStamp!=x.TickStamp&&!lastNote.Key.Equals(x)))
-                    {
-                        result += x.SlideStart.Compose(0);
-                    }
+                    // if (x.NoteGenre.Equals("SLIDE"))
+                    // {
+                    //     if (x.SlideStart==null)
+                    //     {
+                    //         x.SlideStart = new Tap("NST",x.Bar,x.Tick,x.Key);
+                    //     }
+                    // }
+                    // if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&(!lastNote.NoteGenre.Equals("SLIDE")||lastNote.NoteGenre.Equals("SLIDE")&&lastNote.TickStamp!=x.TickStamp&&!lastNote.Key.Equals(x)))
+                    // {
+                    //     result += x.SlideStart.Compose(0);
+                    // }
                     result += x.Compose(0);
                     lastNote = x;
                     if (x.NoteType.Equals("SLIDE_START")&&x.ConsecutiveSlide == null)
