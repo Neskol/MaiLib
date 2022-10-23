@@ -133,7 +133,11 @@ namespace MaiLib
                             {
                                 result += "*";
                             }
-                            else result += ",";
+                            else if (x.IsNote && lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                            {
+                                result += ",";
+                            }
+                            else throw new NotSupportedException("This condition shall not happen!");
                             break;
                         default:
                             result += ",";
