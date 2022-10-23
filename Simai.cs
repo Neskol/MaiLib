@@ -137,7 +137,7 @@ namespace MaiLib
                             {
                                 result += ",";
                             }
-                            else throw new NotSupportedException("This condition shall not happen!");
+                            // else throw new NotSupportedException("This condition shall not happen!");
                             break;
                         default:
                             result += ",";
