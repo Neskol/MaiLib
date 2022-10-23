@@ -181,18 +181,19 @@ namespace MaiLib
                     //    result+="("+ x.Bar + "_" + x.Tick + ")";
                     //}
                 }
+                result += ",\n";
+                commaCompiled++;
                 if (commaCompiled != currentQuaver)
                 {
-                    Console.WriteLine("Notes in bar: "+bar[0].Bar);
+                    Console.WriteLine("Notes in bar: " + bar[0].Bar);
                     foreach (Note x in bar)
                     {
                         x.Compose(1);
                     }
                     Console.WriteLine("Expected comma number: " + currentQuaver);
-                    Console.WriteLine("Actual comma number: "+commaCompiled);
-                    throw new NullReferenceException("COMMA COMPILED MISMATCH IN BAR "+ bar[0].Bar);
+                    Console.WriteLine("Actual comma number: " + commaCompiled);
+                    throw new NullReferenceException("COMMA COMPILED MISMATCH IN BAR " + bar[0].Bar);
                 }
-                result += ",\n";
             }
             //if (delayBar>0)
             //{
