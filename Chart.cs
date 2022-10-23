@@ -521,7 +521,7 @@ namespace MaiLib
                 }
                 if (x.NoteGenre.Equals("SLIDE"))
                 {
-                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST"))
+                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&!adjusted.Contains(x.SlideStart))
                     {
                         adjusted.Add(x.SlideStart);
                         previousSlideStart = new Tap(x.SlideStart);
