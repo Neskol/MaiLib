@@ -50,14 +50,20 @@
 
         public override string Compose(int format)
         {
-            //return "r_" + this.Tick;
+            // return "r_" + this.Tick;
             return "";
+        }
+
+        public override Note NewInstance()
+        {
+            Note result = new Rest(this);
+            return result;
         }
 
         public override string NoteGenre => "REST";
 
         public override bool IsNote => false;
 
-        public override string NoteSpecificType => "REST";
+        public override string NoteSpecificGenre => "REST";
     }
 }

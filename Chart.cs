@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -308,13 +309,16 @@ namespace MaiLib
         /// </summary>
         public virtual void Update()
         {
+            this.CheckSlideStart(); //Add all NSTs back to the chart
             this.StoredChart = new List<List<Note>>();
             int maxBar = 0;
             double timeStamp = 0.0;
             if (notes.Count > 0)
             {
-                maxBar = notes[notes.Count - 1].Bar;
+                maxBar = notes[notes.Count - 1].Bar; //Iterate to get the last note's bar as Max Bar
             }
+
+            //Iterate over bar
             for (int i = 0; i <= maxBar; i++)
             {
                 List<Note> bar = new List<Note>();
@@ -326,7 +330,7 @@ namespace MaiLib
                 {
                     if (x.Bar == i)
                     {
-                        bar.Add(x);
+                        bar.Add(x); //Extract the first BPM change in bar to the beginning of the bar
                     }
                 }
                 foreach (Note x in this.Notes)
@@ -349,7 +353,7 @@ namespace MaiLib
                         // Console.WriteLine("This note contains "+x.BPMChangeNotes.Count+" BPM notes");
                         //Console.WriteLine(GetNoteDetail(this.bpmChanges, x));
                         int delay = x.Bar * 384 + x.Tick + x.WaitLength + x.LastLength;
-                        switch (x.NoteSpecificType)
+                        switch (x.NoteSpecificGenre)
                         {
                             case "BPM":
                                 currentBPM = x.BPM;
@@ -360,7 +364,7 @@ namespace MaiLib
                                 break;
                             case "TAP":
                                 this.tapNumber++;
-                                if (x.NoteSpecificType.Equals("XTP"))
+                                if (x.NoteSpecificGenre.Equals("XTP"))
                                 {
                                     this.isDxChart = false;
                                 }
@@ -424,16 +428,23 @@ namespace MaiLib
                                     x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.WaitTimeStamp;
                                 }
-                                if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
-                                {
-                                    x.SlideStart = lastNote;
-                                    lastNote.ConsecutiveSlide = x;
-                                }
+                                // if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
+                                // {
+                                //     x.SlideStart = lastNote;
+                                //     lastNote.ConsecutiveSlide = x;
+                                // }
                                 if (delay > this.TotalDelay)
                                 {
                                     this.totalDelay = delay;
                                     //Console.WriteLine("New delay: "+delay);
                                     //Console.WriteLine(x.Compose(1));
+                                }
+                                if (x.SlideStart == null)
+                                {
+                                    Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
+                                    Console.WriteLine(x.Compose(1));
+                                    Console.WriteLine("This slide has start: " + (x.SlideStart == null));
+                                    throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
                                 }
                                 break;
                             default:
@@ -446,11 +457,9 @@ namespace MaiLib
                         //    lastNote.Next = x.Prev;
                         //}
                         //else
-                        {
-                            lastNote.Next = x;
-                            x.Prev = lastNote;
-                        }
-                        x.Prev.Next = x;
+                        // // lastNote.Next = x;
+                        // // x.Prev = lastNote;
+                        // // x.Prev.Next = x;
                         //if ((!x.NoteGenre.Equals("SLIDE")) && x.Prev.NoteType.Equals("STR")&&x.Prev.ConsecutiveSlide == null)
                         //{
                         //    Console.WriteLine("Found NSS");
@@ -461,7 +470,6 @@ namespace MaiLib
                         //    lastNote.NoteType = "NSS";
                         //    x.Prev.NoteType = "NSS";
                         //}
-                        lastNote.Next = x;
                         bar.Add(x);
                         if (!x.NoteGenre.Equals("SLIDE"))
                         {
@@ -497,6 +505,39 @@ namespace MaiLib
         /// </summary>
         /// <returns>String of chart compiled</returns>
         public abstract string Compose();
+
+        /// <summary>
+        /// Check if all of the slide starts were in the notes
+        /// </summary>
+        public void CheckSlideStart()
+        {
+            List<Note> adjusted = new();
+            Note previousSlideStart = new Rest();
+            foreach (Note x in this.Notes)
+            {
+                if (x.NoteGenre.Equals("SLIDE_START"))
+                {
+                    previousSlideStart = new Tap(x);
+                }
+                if (x.NoteGenre.Equals("SLIDE"))
+                {
+                    if (x.SlideStart != null && x.SlideStart.NoteType.Equals("NST") && !adjusted.Contains(x.SlideStart))
+                    {
+                        adjusted.Add(x.SlideStart);
+                        previousSlideStart = new Tap(x.SlideStart);
+                    }
+                    else if (x.SlideStart == null)
+                    {
+                        Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
+                        Console.WriteLine(x.Compose(1));
+                        Console.WriteLine("This slide has start: " + (x.SlideStart == null));
+                        throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
+                    }
+                }
+                adjusted.Add(x);
+            }
+            this.Notes = new(adjusted);
+        }
 
         /// <summary>
         /// Override and compose with given arrays
@@ -609,11 +650,12 @@ namespace MaiLib
                 //Set condition to write rest if appropriate
                 writeRest = true;
                 //Add Appropriate note into each set
+                Note lastNote = new Rest();
                 foreach (Note x in bar)
                 {
                     if ((x.Tick == i) && x.IsNote && !(x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
                     {
-                        if (x.NoteSpecificType.Equals("BPM"))
+                        if (x.NoteSpecificGenre.Equals("BPM"))
                         {
                             bpm = x;
                             //List<Note> tempSet = new List<Note>();
@@ -627,11 +669,13 @@ namespace MaiLib
                             eachSet.Add(x);
                             //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                             writeRest = false;
+                            x.Prev = lastNote;
+                            lastNote.Next = x;
                         }
                     }
                     else if ((x.Tick == i) && x.IsNote && (x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
                     {
-                        if (x.NoteSpecificType.Equals("BPM"))
+                        if (x.NoteSpecificGenre.Equals("BPM"))
                         {
                             bpm = x;
                             //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
@@ -641,7 +685,13 @@ namespace MaiLib
                             touchEachSet.Add(x);
                             //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                             writeRest = false;
+                            x.Prev = lastNote;
+                            lastNote.Next = x;
                         }
+                    }
+                    if (!x.NoteSpecificGenre.Equals("BPM"))
+                    {
+                        lastNote = x.NewInstance();
                     }
                 }
                 //Searching for BPM change. If find one, get into front.
@@ -881,7 +931,7 @@ namespace MaiLib
         {
             string result = "";
             result += inTake.Compose(1) + "\n";
-            result += "This is a " + inTake.NoteSpecificType + " note,\n";
+            result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
             result += "This note has overall tick of " + inTake.TickStamp + ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";
             if (inTake.NoteGenre.Equals("SLIDE"))
             {
@@ -945,7 +995,7 @@ namespace MaiLib
                 {
                     Note copy;
                     switch (x.NoteGenre)
-                    {                    
+                    {
                         case "TAP":
                         case "SLIDE_START":
                             copy = new Tap(x);

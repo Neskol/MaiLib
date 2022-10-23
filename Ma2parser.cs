@@ -84,7 +84,7 @@ namespace MaiLib
                         //     }
                         // }
                         bpmChanges.Add(candidate);
-                        bpmChanges.Update();        
+                        bpmChanges.Update();
                     }
                     else if (isMET)
                     {
@@ -112,7 +112,7 @@ namespace MaiLib
             foreach (Note note in notes)
             {
                 note.BPMChangeNotes = bpmChanges.ChangeNotes;
-                if (bpmChanges.ChangeNotes.Count>0 && note.BPMChangeNotes.Count == 0)
+                if (bpmChanges.ChangeNotes.Count > 0 && note.BPMChangeNotes.Count == 0)
                 {
                     throw new IndexOutOfRangeException("BPM COUNT DISAGREE");
                 }
@@ -167,7 +167,7 @@ namespace MaiLib
             if (isTap)
             {
                 result = TapOfToken(token);
-                if (result.NoteSpecificType.Equals("SLIDE_START"))
+                if (result.NoteSpecificGenre.Equals("SLIDE_START"))
                 {
                     PreviousSlideStart = (Tap)result;
                 }
@@ -228,7 +228,7 @@ namespace MaiLib
                 }
                 else if (isSlide)
                 {
-                    result = SlideOfToken(token, bar, tick,PreviousSlideStart, bpm);
+                    result = SlideOfToken(token, bar, tick, PreviousSlideStart, bpm);
                 }
             }
             if (result.Tick == 384)
@@ -334,13 +334,13 @@ namespace MaiLib
             string[] candidate = token.Split('\t');
             int bar = int.Parse(candidate[(int)StdParam.Bar]);
             int tick = int.Parse(candidate[(int)StdParam.Tick]);
-            if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam])||PreviousSlideStart.Bar!=bar || PreviousSlideStart.Tick!=tick)
+            if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam]) || PreviousSlideStart.Bar != bar || PreviousSlideStart.Tick != tick)
             {
                 //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
                 //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
                 //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
                 //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
-                PreviousSlideStart = new Tap("NST",bar,tick, candidate[(int)StdParam.KeyOrParam]);
+                PreviousSlideStart = new Tap("NST", bar, tick, candidate[(int)StdParam.KeyOrParam]);
             }
             Slide result = new Slide(candidate[(int)StdParam.Type],
                         bar,
@@ -351,7 +351,7 @@ namespace MaiLib
                         candidate[(int)StdParam.EndKey]);
             result.SlideStart = PreviousSlideStart;
             PreviousSlideStart.ConsecutiveSlide = result;
-            return result ;
+            return result;
         }
 
 

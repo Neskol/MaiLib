@@ -178,11 +178,11 @@
             if (result == Int32.Parse(x.Key) + 1 || (result == Int32.Parse(x.EndKey) + 1))
             {
                 //Deal with result;
-                if (result>4)
+                if (result > 4)
                 {
                     result -= 4;
                 }
-                else if (result<=4)
+                else if (result <= 4)
                 {
                     result += 4;
                 }
@@ -209,7 +209,12 @@
 
         public override bool IsNote => true;
 
-        public override string NoteSpecificType => "SLIDE";
+        public override string NoteSpecificGenre => "SLIDE";
 
+        public override Note NewInstance()
+        {
+            Note result = new Slide(this);
+            return result;
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace MaiLib
      /// Stores difficulty keywords
      /// </summary>
      /// <value>Difficulty</value>
-        public static readonly string[] difficulty = {"Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
+        public static readonly string[] difficulty = { "Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
 
         /// <summary>
         /// Stores chart collections
@@ -33,6 +33,11 @@ namespace MaiLib
         /// Stores the path separator
         /// </summary>
         private string globalSep;
+
+        /// <summary>
+        /// Stores the rotate dictionary
+        /// </summary>
+        private Dictionary<string, string> rotateDictionary = new Dictionary<string, string> { { "17", "UpSideDown" }, { "305", "LeftToRight" }, { "417", "Clockwise90" } };
 
         /// <summary>
         /// Access the path separator
@@ -82,13 +87,29 @@ namespace MaiLib
             get { return this.musicXml; }
             set { this.musicXml = value; }
         }
-        
+
         /// <summary>
         /// Access difficulty;
         /// </summary>
         public string[] Difficulty
         {
             get { return difficulty; }
+        }
+
+        /// <summary>
+        /// Access the rotate dictionary
+        /// </summary>
+        /// <value>Key: Music ID in Digits; Value: Rotate Parameter</value>
+        public Dictionary<string, string> RotateDictionary
+        {
+            get
+            {
+                return this.rotateDictionary;
+            }
+            set
+            {
+                this.rotateDictionary = value;
+            }
         }
 
 
@@ -198,6 +219,16 @@ namespace MaiLib
             }
             else if (isUtage)
             {
+                Note? firstNote;
+                bool foundFirstNote = false;
+                for (int i = this.charts.Count; i >= 0 && !foundFirstNote; i++)
+                {
+                    if (this.charts[i] != null)
+                    {
+                        firstNote = this.charts[i].FirstNote;
+                        foundFirstNote = true;
+                    }
+                }
                 return this.charts[0].FirstNote ?? throw new NullReferenceException("Null first note: utage chart is invalid");
             }
             else throw new NullReferenceException("This compiler contains invalid Master Chart and is not Utage Chart: no first note is returned");
@@ -215,6 +246,39 @@ namespace MaiLib
                 throw new NullReferenceException("This compiler has empty chat list!");
             }
             result += "(" + this.information["Music ID"] + ")" + this.information["Name"] + ", " + this.information["Genre"] + ", ";
+            if (!this.Information["Easy"].Equals(""))
+            {
+                result += this.Information["Easy"] + "/";
+            }
+            if (!this.Information["Basic"].Equals(""))
+            {
+                result += this.Information["Basic"];
+            }
+            else result += "-";
+            if (!this.Information["Advanced"].Equals(""))
+            {
+                result += "/" + this.Information["Advanced"];
+            }
+            else result += "-";
+            if (!this.Information["Expert"].Equals(""))
+            {
+                result += "/" + this.Information["Expert"];
+            }
+            else result += "-";
+            if (!this.Information["Master"].Equals(""))
+            {
+                result += "/" + this.Information["Master"];
+            }
+            else result += "-";
+            if (!this.Information["Remaster"].Equals(""))
+            {
+                result += "/" + this.Information["Remaster"];
+            }
+            else result += "-";
+            if (!this.Information["Utage"].Equals(""))
+            {
+                result += "\\" + this.Information["Utage"];
+            }
 
             return result;
         }

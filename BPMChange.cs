@@ -1,4 +1,6 @@
-﻿namespace MaiLib
+﻿using System.Diagnostics.Contracts;
+
+namespace MaiLib
 {
     /// <summary>
     /// BPMChange note for Simai
@@ -78,7 +80,7 @@
 
         public override bool IsNote => true;
 
-        public override string NoteSpecificType => "BPM";
+        public override string NoteSpecificGenre => "BPM";
 
         public override bool Equals(object? obj)
         {
@@ -87,7 +89,7 @@
             {
                 result = true;
             }
-            else if (this!=null && obj != null)
+            else if (this != null && obj != null)
             {
                 BPMChange candidate = (BPMChange)obj;
                 if (this.GetHashCode() == candidate.GetHashCode())
@@ -102,6 +104,12 @@
                     }
                 }
             }
+            return result;
+        }
+
+        public override Note NewInstance()
+        {
+            Note result = new BPMChange(this);
             return result;
         }
 

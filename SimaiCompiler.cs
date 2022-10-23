@@ -77,9 +77,24 @@ namespace MaiLib
             Charts = new List<Chart>();
             this.MusicXml = new XmlInformation(location);
             this.Information = MusicXml.Information;
+            bool rotate = false;
+            string rotateParameter = "";
+            foreach (KeyValuePair<string,string> pair in this.RotateDictionary)
+            {
+                if (this.MusicXml.TrackID.Equals(pair.Key))
+                {
+                    rotateParameter = pair.Value;
+                    rotate = true;
+                }
+            }
             foreach (string ma2file in ma2files)
             {
-                Charts.Add(new Ma2(ma2file));
+                Ma2 chartCandidate = new Ma2(ma2file);
+                if (rotate)
+                {
+                    chartCandidate.RotateNotes(rotateParameter);
+                }
+                Charts.Add(chartCandidate);
             }
 
             List<string> ma2List = new List<string>();

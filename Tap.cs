@@ -26,7 +26,7 @@
         /// </summary>
         public Tap()
         {
-            this.touchSize="M1";
+            this.touchSize = "M1";
             this.Update();
         }
 
@@ -67,7 +67,7 @@
             this.touchSize = touchSize;
             this.Update();
         }
-        
+
         /// <summary>
         /// Construct a Tap note form another note
         /// </summary>
@@ -121,7 +121,7 @@
         public string TouchSize
         {
             get { return this.touchSize; }
-            set {  this.touchSize = value; }
+            set { this.touchSize = value; }
         }
 
         public override bool CheckValidity()
@@ -139,13 +139,17 @@
         public override string Compose(int format)
         {
             string result = "";
-            if (format == 1 && !(this.NoteType.Equals("TTP")) && !((this.NoteType.Equals("NST"))||this.NoteType.Equals("NSS")))
+            // if (format == 1 && !(this.NoteType.Equals("TTP")) && !((this.NoteType.Equals("NST"))||this.NoteType.Equals("NSS")))
+            // {
+            //     result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
+            // }
+            // else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
+            // {
+            //     result = ""; //NST and NSS is just a place holder for slide
+            // }
+            if (format == 1 && !this.NoteType.Equals("TTP"))
             {
                 result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
-            }
-            else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
-            {
-                result = ""; //NST and NSS is just a place holder for slide
             }
             else if (format == 1 && this.NoteType.Equals("TTP"))
             {
@@ -182,9 +186,6 @@
                     case "NST":
                         result += (Int32.Parse(this.Key) + 1).ToString() + "!";
                         break;
-                    case "NSS":
-                        result += (Int32.Parse(this.Key) + 1).ToString() + "$";
-                        break;
                     case "TTP":
                         result += this.Key.ToCharArray()[1] + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString());
                         if (this.SpecialEffect == 1)
@@ -192,6 +193,10 @@
                             result += "f";
                         }
                         break;
+                }
+                if (this.NoteSpecificGenre.Equals("SLIDE_START") && this.ConsecutiveSlide == null)
+                {
+                    result += "$";
                 }
                 //result += "_" + this.Tick;
             }
@@ -204,15 +209,16 @@
         {
             get
             {
-                if (this.NoteType.Equals("NST"))
-                {
-                    return false;
-                }
-                else return true;
+                // if (this.NoteType.Equals("NST"))
+                // {
+                //     return false;
+                // }
+                // else return true;
+                return true;
             }
         }
 
-        public override string NoteSpecificType
+        public override string NoteSpecificGenre
         {
             get
             {
@@ -250,6 +256,12 @@
 
                 return result;
             }
+        }
+
+        public override Note NewInstance()
+        {
+            Note result = new Tap(this);
+            return result;
         }
     }
 }
