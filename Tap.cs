@@ -208,11 +208,12 @@
         {
             get
             {
-                if (this.NoteType.Equals("NST"))
-                {
-                    return false;
-                }
-                else return true;
+                // if (this.NoteType.Equals("NST"))
+                // {
+                //     return false;
+                // }
+                // else return true;
+                return true;
             }
         }
 
