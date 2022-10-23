@@ -353,7 +353,7 @@ namespace MaiLib
                         // Console.WriteLine("This note contains "+x.BPMChangeNotes.Count+" BPM notes");
                         //Console.WriteLine(GetNoteDetail(this.bpmChanges, x));
                         int delay = x.Bar * 384 + x.Tick + x.WaitLength + x.LastLength;
-                        switch (x.NoteSpecificType)
+                        switch (x.NoteSpecificGenre)
                         {
                             case "BPM":
                                 currentBPM = x.BPM;
@@ -364,7 +364,7 @@ namespace MaiLib
                                 break;
                             case "TAP":
                                 this.tapNumber++;
-                                if (x.NoteSpecificType.Equals("XTP"))
+                                if (x.NoteSpecificGenre.Equals("XTP"))
                                 {
                                     this.isDxChart = false;
                                 }
@@ -439,7 +439,7 @@ namespace MaiLib
                                     //Console.WriteLine("New delay: "+delay);
                                     //Console.WriteLine(x.Compose(1));
                                 }
-                                if (x.SlideStart==null)
+                                if (x.SlideStart == null)
                                 {
                                     Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
                                     Console.WriteLine(x.Compose(1));
@@ -513,7 +513,7 @@ namespace MaiLib
         {
             List<Note> adjusted = new();
             Note previousSlideStart = new Rest();
-            foreach(Note x in this.Notes)
+            foreach (Note x in this.Notes)
             {
                 if (x.NoteGenre.Equals("SLIDE_START"))
                 {
@@ -521,7 +521,7 @@ namespace MaiLib
                 }
                 if (x.NoteGenre.Equals("SLIDE"))
                 {
-                    if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&!adjusted.Contains(x.SlideStart))
+                    if (x.SlideStart != null && x.SlideStart.NoteType.Equals("NST") && !adjusted.Contains(x.SlideStart))
                     {
                         adjusted.Add(x.SlideStart);
                         previousSlideStart = new Tap(x.SlideStart);
@@ -655,7 +655,7 @@ namespace MaiLib
                 {
                     if ((x.Tick == i) && x.IsNote && !(x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
                     {
-                        if (x.NoteSpecificType.Equals("BPM"))
+                        if (x.NoteSpecificGenre.Equals("BPM"))
                         {
                             bpm = x;
                             //List<Note> tempSet = new List<Note>();
@@ -675,7 +675,7 @@ namespace MaiLib
                     }
                     else if ((x.Tick == i) && x.IsNote && (x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
                     {
-                        if (x.NoteSpecificType.Equals("BPM"))
+                        if (x.NoteSpecificGenre.Equals("BPM"))
                         {
                             bpm = x;
                             //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
@@ -689,7 +689,7 @@ namespace MaiLib
                             lastNote.Next = x;
                         }
                     }
-                    if (!x.NoteSpecificType.Equals("BPM"))
+                    if (!x.NoteSpecificGenre.Equals("BPM"))
                     {
                         lastNote = x.NewInstance();
                     }
@@ -931,7 +931,7 @@ namespace MaiLib
         {
             string result = "";
             result += inTake.Compose(1) + "\n";
-            result += "This is a " + inTake.NoteSpecificType + " note,\n";
+            result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
             result += "This note has overall tick of " + inTake.TickStamp + ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";
             if (inTake.NoteGenre.Equals("SLIDE"))
             {
@@ -995,7 +995,7 @@ namespace MaiLib
                 {
                     Note copy;
                     switch (x.NoteGenre)
-                    {                    
+                    {
                         case "TAP":
                         case "SLIDE_START":
                             copy = new Tap(x);

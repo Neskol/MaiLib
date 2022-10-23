@@ -80,7 +80,7 @@ namespace MaiLib
 
         public override bool IsNote => true;
 
-        public override string NoteSpecificType => "BPM";
+        public override string NoteSpecificGenre => "BPM";
 
         public override bool Equals(object? obj)
         {
@@ -89,7 +89,7 @@ namespace MaiLib
             {
                 result = true;
             }
-            else if (this!=null && obj != null)
+            else if (this != null && obj != null)
             {
                 BPMChange candidate = (BPMChange)obj;
                 if (this.GetHashCode() == candidate.GetHashCode())

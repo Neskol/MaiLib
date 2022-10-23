@@ -293,9 +293,13 @@ namespace MaiLib
         /// </summary>
         public int TickStamp
         {
-            get { this.tickStamp = this.tick + this.bar * 384;
-                return this.tickStamp; }
-            set {
+            get
+            {
+                this.tickStamp = this.tick + this.bar * 384;
+                return this.tickStamp;
+            }
+            set
+            {
                 this.bar = value / 384;
                 this.tick = value % 384;
             }
@@ -541,7 +545,7 @@ namespace MaiLib
         /// Return this.SpecificType
         /// </summary>
         /// <returns>string of specific genre (specific type of Tap, Slide, etc.)</returns>
-        public abstract string NoteSpecificType { get; }
+        public abstract string NoteSpecificGenre { get; }
 
         /// <summary>
         /// Return this.noteGenre
@@ -613,7 +617,7 @@ namespace MaiLib
             }
             else
             {
-                if (this.NoteSpecificType.Equals("BPM"))
+                if (this.NoteSpecificGenre.Equals("BPM"))
                 {
                     result = -1;
                 }
@@ -1132,7 +1136,7 @@ namespace MaiLib
                         }
                         break;
                     default:
-                            throw new NotImplementedException("METHOD SPECIFIED INVALID. EXPECT: Clockwise90, Clockwise180, Counterclockwise90, Counterclockwise180, UpSideDown, LeftToRight");
+                        throw new NotImplementedException("METHOD SPECIFIED INVALID. EXPECT: Clockwise90, Clockwise180, Counterclockwise90, Counterclockwise180, UpSideDown, LeftToRight");
                 }
             }
             this.Update();

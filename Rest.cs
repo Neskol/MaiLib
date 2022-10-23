@@ -64,6 +64,6 @@
 
         public override bool IsNote => false;
 
-        public override string NoteSpecificType => "REST";
+        public override string NoteSpecificGenre => "REST";
     }
 }

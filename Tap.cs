@@ -26,7 +26,7 @@
         /// </summary>
         public Tap()
         {
-            this.touchSize="M1";
+            this.touchSize = "M1";
             this.Update();
         }
 
@@ -67,7 +67,7 @@
             this.touchSize = touchSize;
             this.Update();
         }
-        
+
         /// <summary>
         /// Construct a Tap note form another note
         /// </summary>
@@ -121,7 +121,7 @@
         public string TouchSize
         {
             get { return this.touchSize; }
-            set {  this.touchSize = value; }
+            set { this.touchSize = value; }
         }
 
         public override bool CheckValidity()
@@ -186,9 +186,6 @@
                     case "NST":
                         result += (Int32.Parse(this.Key) + 1).ToString() + "!";
                         break;
-                    case "NSS":
-                        result += (Int32.Parse(this.Key) + 1).ToString() + "$";
-                        break;
                     case "TTP":
                         result += this.Key.ToCharArray()[1] + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString());
                         if (this.SpecialEffect == 1)
@@ -196,6 +193,10 @@
                             result += "f";
                         }
                         break;
+                }
+                if (this.NoteSpecificGenre.Equals("SLIDE_START") && this.ConsecutiveSlide == null)
+                {
+                    result += "$";
                 }
                 //result += "_" + this.Tick;
             }
@@ -217,7 +218,7 @@
             }
         }
 
-        public override string NoteSpecificType
+        public override string NoteSpecificGenre
         {
             get
             {

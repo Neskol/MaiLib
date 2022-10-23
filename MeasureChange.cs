@@ -4,7 +4,7 @@
     /// Defines measure change note that indicates a measure change in bar.
     /// </summary>
     public class MeasureChange : Note
-    {        
+    {
         private int quaver;
 
         /// <summary>
@@ -30,7 +30,7 @@
             this.quaver = quaver;
             this.Update();
         }
-        
+
         /// <summary>
         /// Construct measureChange from another takeIn
         /// </summary>
@@ -54,7 +54,7 @@
 
         public override bool CheckValidity()
         {
-            return this.quaver>0;
+            return this.quaver > 0;
         }
 
         public override string Compose(int format)
@@ -78,6 +78,6 @@
 
         public override bool IsNote => false;
 
-        public override string NoteSpecificType => "MEASURE";
+        public override string NoteSpecificGenre => "MEASURE";
     }
 }

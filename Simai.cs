@@ -70,7 +70,7 @@ namespace MaiLib
             List<Note> firstBpm = new List<Note>();
             foreach (Note bpm in this.Notes)
             {
-                if (bpm.NoteSpecificType.Equals("BPM"))
+                if (bpm.NoteSpecificGenre.Equals("BPM"))
                 {
                     firstBpm.Add(bpm);
                 }
@@ -82,28 +82,39 @@ namespace MaiLib
             foreach (List<Note> bar in this.StoredChart)
             {
                 Note lastNote = new MeasureChange();
+                int currentQuaver = 0;
+                int commaCompiled = 0;
                 //result += bar[1].Bar;
                 foreach (Note x in bar)
                 {
-                    switch (lastNote.NoteSpecificType)
+                    switch (lastNote.NoteSpecificGenre)
                     {
                         case "MEASURE":
+                            currentQuaver = (lastNote as MeasureChange ?? throw new Exception("This note is not measure change")).Quaver;
                             break;
                         case "BPM":
                             break;
                         case "TAP":
-                            if (x.IsNote && ((!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
+                            if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
                             {
                                 result += "/";
                             }
-                            else result += ",";
+                            else
+                            {
+                                result += ",";
+                                commaCompiled++;
+                            }
                             break;
                         case "HOLD":
-                            if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                            if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
                             {
                                 result += "/";
                             }
-                            else result += ",";
+                            else
+                            {
+                                result += ",";
+                                commaCompiled++;
+                            }
                             break;
                         case "SLIDE_START":
                             // if (lastNote.ConsecutiveSlide == null)
@@ -118,21 +129,22 @@ namespace MaiLib
                             // {
                             //     result += ",";
                             // }
-                            if (x.IsNote && ((!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
+                            if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
                             {
                                 result += "/";
                             }
-                            else if (x.IsNote && !x.NoteSpecificType.Equals("SLIDE") && !x.NoteGenre.Equals("BPM"))
+                            else if (x.IsNote && !x.NoteSpecificGenre.Equals("SLIDE") && !x.NoteGenre.Equals("BPM"))
                             {
                                 result += ",";
+                                commaCompiled++;
                             }
                             break;
                         case "SLIDE":
-                            if (x.IsNote && (!x.NoteSpecificType.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                            if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
                             {
                                 result += "/";
                             }
-                            else if (x.IsNote && x.NoteSpecificType.Equals("SLIDE") && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                            else if (x.IsNote && x.NoteSpecificGenre.Equals("SLIDE") && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
                             {
                                 result += "*";
                             }
@@ -140,10 +152,15 @@ namespace MaiLib
                             // {
                             //     result += ",";
                             // }
-                            else result += ",";
+                            else
+                            {
+                                result += ",";
+                                commaCompiled++;
+                            }
                             break;
                         default:
                             result += ",";
+                            commaCompiled++;
                             break;
                     }
                     // if (x.NoteGenre.Equals("SLIDE"))
@@ -159,14 +176,21 @@ namespace MaiLib
                     // }
                     result += x.Compose(0);
                     lastNote = x;
-                    if (x.NoteSpecificType.Equals("SLIDE_START")&&x.ConsecutiveSlide == null)
-                    {
-                        result += "$";
-                    }
                     //if (x.NoteGenre().Equals("BPM"))
                     //{
                     //    result+="("+ x.Bar + "_" + x.Tick + ")";
                     //}
+                }
+                if (commaCompiled != currentQuaver)
+                {
+                    Console.WriteLine("Notes in bar: "+bar[0].Bar);
+                    foreach (Note x in bar)
+                    {
+                        x.Compose(1);
+                    }
+                    Console.WriteLine("Expected comma number: " + currentQuaver);
+                    Console.WriteLine("Actual comma number: "+commaCompiled);
+                    throw new NullReferenceException("COMMA COMPILED MISMATCH IN BAR "+ bar[0].Bar);
                 }
                 result += ",\n";
             }
