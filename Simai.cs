@@ -190,6 +190,7 @@ namespace MaiLib
                     {
                         Console.WriteLine(x.Compose(1));
                     }
+                    Console.WriteLine(result);
                     Console.WriteLine("Expected comma number: " + currentQuaver);
                     Console.WriteLine("Actual comma number: " + commaCompiled);
                     throw new NullReferenceException("COMMA COMPILED MISMATCH IN BAR " + bar[0].Bar);
