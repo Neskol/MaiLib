@@ -145,9 +145,9 @@ namespace MaiLib
                     beginning += "SD\n";
                 }
                 beginning += "&version=" + this.MusicXml.TrackVersion + "\n";
-                beginning += "&chartconverter=Neskol\n";
-                beginning += "&chartconverttool=MaichartConverter\n";
-                beginning += "&chartconverttoolversion=1.0.3.0\n";
+                beginning += "&ChartConverter=Neskol\n";
+                beginning += "&ChartConvertTool=MaichartConverter\n";
+                beginning += "&ChartConvertToolVersion=1.0.4.0\n";
                 beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
                 beginning += "\n";
 
@@ -252,7 +252,10 @@ namespace MaiLib
             beginning += "&genre=" + this.Information.GetValueOrDefault("Genre") + "\n";
             beginning += "&cabinet=SD";
             beginning += "&version=" + this.MusicXml.TrackVersion + "\n";
-            beginning += "&chartconverter=Neskol\n";
+            beginning += "&ChartConverter=Neskol\n";
+            beginning += "&ChartConvertTool=MaichartConverter\n";
+            beginning += "&ChartConvertToolVersion=1.0.4.0\n";
+            beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
             beginning += "\n";
 
             int defaultChartIndex = 7;
