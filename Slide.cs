@@ -60,6 +60,8 @@
             this.TickBPMDisagree = inTake.TickBPMDisagree;
             this.BPM = inTake.BPM;
             this.BPMChangeNotes = inTake.BPMChangeNotes;
+            this.SlideStart = inTake.SlideStart;
+            this.ConsecutiveSlide = inTake.ConsecutiveSlide;
         }
 
         public override bool CheckValidity()

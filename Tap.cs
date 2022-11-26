@@ -93,6 +93,7 @@
             this.TickBPMDisagree = inTake.TickBPMDisagree;
             this.BPM = inTake.BPM;
             this.BPMChangeNotes = inTake.BPMChangeNotes;
+            this.ConsecutiveSlide = inTake.ConsecutiveSlide;
             if (inTake.NoteGenre == "TAP")
             {
                 this.touchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
