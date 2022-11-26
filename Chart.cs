@@ -1021,11 +1021,11 @@ namespace MaiLib
                             copy = new Tap(x);
                             copy.Bar += overallTick / 384;
                             copy.Tick += overallTick % 384;
-                            if (copy.ConsecutiveSlide!=null)
-                            {
-                                copy.ConsecutiveSlide.Bar += overallTick / 384;
-                                copy.ConsecutiveSlide.Tick += overallTick % 384;
-                            }
+                            // if (copy.ConsecutiveSlide!=null)
+                            // {
+                            //     copy.ConsecutiveSlide.Bar += overallTick / 384;
+                            //     copy.ConsecutiveSlide.Tick += overallTick % 384;
+                            // }
                             copy.Update();
                             break;
                         case "HOLD":
@@ -1038,16 +1038,16 @@ namespace MaiLib
                             copy = new Slide(x);
                             copy.Bar += overallTick / 384;
                             copy.Tick += overallTick % 384;
-                            if (copy.SlideStart != null)
-                            {
-                                copy.SlideStart.Bar += overallTick / 384;
-                                copy.SlideStart.Tick += overallTick % 384;
-                            }
-                            if (copy.ConsecutiveSlide != null)
-                            {
-                                copy.ConsecutiveSlide.Bar += overallTick / 384;
-                                copy.ConsecutiveSlide.Tick += overallTick % 384;
-                            }
+                            // if (copy.SlideStart != null)
+                            // {
+                            //     copy.SlideStart.Bar += overallTick / 384;
+                            //     copy.SlideStart.Tick += overallTick % 384;
+                            // }
+                            // if (copy.ConsecutiveSlide != null)
+                            // {
+                            //     copy.ConsecutiveSlide.Bar += overallTick / 384;
+                            //     copy.ConsecutiveSlide.Tick += overallTick % 384;
+                            // }
                             copy.Update();
                             break;
                         case "BPM":
