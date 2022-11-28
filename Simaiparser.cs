@@ -54,17 +54,20 @@ public class SimaiParser : IParser
 
                 if (containsBPM)
                 {
-                    string bpmCandidate = eachNote.Replace("(", "").Replace(")", "");
-                    noteCandidate = new BPMChange(bar, tick, Double.Parse(bpmCandidate));
+                    // string bpmCandidate = eachNote.Replace("(", "").Replace(")", "");
+                    // noteCandidate = new BPMChange(bar, tick, Double.Parse(bpmCandidate));
+                    noteCandidate.Bar = bar;
+                    noteCandidate.Tick = tick;
                     //notes.Add(changeNote);
                     currentBPM = noteCandidate.BPM;
                     bpmChanges.Add((BPMChange)noteCandidate);
                 }
                 else if (containsMeasure)
                 {
-                    string quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
-                    tickStep = MaximumDefinition / Int32.Parse(quaverCandidate);
-                    MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
+                    
+                    // string quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
+                    // tickStep = MaximumDefinition / Int32.Parse(quaverCandidate);
+                    // MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
                     //notes.Add(changeNote);
                 }
 
