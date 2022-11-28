@@ -460,8 +460,10 @@ public class SimaiParser : IParser
     {
         bool isBreak = token.Contains("b");
         bool isEXTap = token.Contains("x");
-        bool isTouch = token.Contains("B") ||
+        bool isTouch = token.Contains("A") || 
+        token.Contains("B") ||
         token.Contains("C") ||
+        token.Contains("D") ||
         token.Contains("E") ||
         token.Contains("F");
         Tap result = new Tap();
