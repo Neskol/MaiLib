@@ -65,8 +65,8 @@ public class SimaiParser : IParser
                 else if (containsMeasure)
                 {
                     
-                    // string quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
-                    // tickStep = MaximumDefinition / Int32.Parse(quaverCandidate);
+                    string quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
+                    tickStep = MaximumDefinition / Int32.Parse(quaverCandidate);
                     // MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
                     //notes.Add(changeNote);
                 }
