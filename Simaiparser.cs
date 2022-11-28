@@ -52,26 +52,26 @@ public class SimaiParser : IParser
                 bool containsBPM = noteCandidate.NoteSpecificGenre.Equals("BPM");
                 bool containsMeasure = noteCandidate.NoteSpecificGenre.Equals("MEASURE");
 
-                if (containsBPM)
-                {
-                    string bpmCandidate = eachNote.Replace("(", "").Replace(")", "");
-                    noteCandidate = new BPMChange(bar, tick, Double.Parse(bpmCandidate));
-                    //notes.Add(changeNote);
-                    currentBPM = noteCandidate.BPM;
-                    bpmChanges.Add((BPMChange)noteCandidate);
-                }
-                else if (containsMeasure)
-                {
-                    string quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
-                    tickStep = MaximumDefinition / Int32.Parse(quaverCandidate);
-                    MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
-                    //notes.Add(changeNote);
-                }
+                // if (containsBPM)
+                // {
+                //     string bpmCandidate = eachNote.Replace("(", "").Replace(")", "");
+                //     noteCandidate = new BPMChange(bar, tick, Double.Parse(bpmCandidate));
+                //     //notes.Add(changeNote);
+                //     currentBPM = noteCandidate.BPM;
+                //     bpmChanges.Add((BPMChange)noteCandidate);
+                // }
+                // else if (containsMeasure)
+                // {
+                //     string quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
+                //     tickStep = MaximumDefinition / Int32.Parse(quaverCandidate);
+                //     MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
+                //     //notes.Add(changeNote);
+                // }
 
-                else /*if (currentBPM > 0.0)*/
-                {
+                // else /*if (currentBPM > 0.0)*/
+                // {
                     notes.Add(noteCandidate);
-                }
+                // }
             }
 
 
