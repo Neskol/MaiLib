@@ -14,7 +14,7 @@
 
 ## Additional notice for Simai compatability
 - As always, I think Simai is a language more focusing on charting rather than interpreting. I still have no idea why there is still no UI-based charting tool but let everyone learn this full-of-compromise language, especially after Festival added new features. This made interpreting Simai a PAIN since the idea how it converts between ticks and times are vague and unreasonable.
-- For example, it defines a Slide note will have a wait time of 1 quaver after its start tap. If your Slide starts longer or shorter than 1 quaver of current BPM, you will have to 1) change the BPM for this specific Slide or 2) define the time by [wait time##last time] - and calculating that is extremely time consuming when converting tick to time.
+- For example, it defines a Slide note will have a wait time of 1 beat or one 1/4 note (or crotchet for music community) after its start tap. If your Slide starts longer or shorter than 1 quaver of current BPM, you will have to 1) change the BPM for this specific Slide or 2) define the time by [wait time##last time] - and calculating that is extremely time consuming when converting tick to time.
 - I hope someone could develop a better language than Simai as a intermediate language between coding and charting. Thank you.
 
 ### Parameters notice
