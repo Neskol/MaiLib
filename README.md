@@ -1,7 +1,7 @@
 # MaiLib
 
 ## A library for processing maimai charts
-> One demo implementation is MaichartConverter to convert between Simai and Ma2. Please see [MaiLib](https://github.com/Neskol/MaiLib) for more information.
+> One demo implementation is MaichartConverter to convert between Simai and Ma2. Please see [MaichartConverter](https://github.com/Neskol/MaichartConverter) for more information.
 
 ### Build
     git clone
