@@ -49,17 +49,58 @@ namespace MaiLib
         /// </summary>
         private Note? firstNote;
 
+        /// <summary>
+        /// The definition of this chart
+        /// </summary>
+        private int definition = 384;
+
         //Defines 
+        /// <summary>
+        /// The basic unit of maimai chart
+        /// </summary>
+        /// <value>Unit score</value>
         private int[] unitScore = { 500, 1000, 1500, 2500 };
+
+        /// <summary>
+        /// The total achievement of this chart; to be updated
+        /// </summary>
         private int achievement = 0;
+
+        /// <summary>
+        /// The total delay of holds behind final note; to be updated
+        /// </summary>
         private int totalDelay = 0;
+
+        /// <summary>
+        /// Stored chart in structure of bar of notes
+        /// </summary>
         private List<List<Note>> chart;
+
+        /// <summary>
+        /// Stored the information of this chart, if any
+        /// </summary>
         private Dictionary<string, string> information;
+
+        /// <summary>
+        /// Allowed TAP notes
+        /// </summary>
+        /// <value>TAP defs</value>
         private readonly string[] TapTypes = { "TAP", "STR", "TTP", "XTP", "XST" };
+
+        /// <summary>
+        /// Allowed HOLD notes
+        /// </summary>
+        /// <value>HOLD defs</value>
         private readonly string[] HoldTypes = { "HLD", "THO", "XHO" };
+
+        /// <summary>
+        /// Allowed SLIDE notes
+        /// </summary>
+        /// <value>SLIDE defs</value>
         private readonly string[] SlideTypes = { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
 
-        ///Theoretical Rating = (Difference in 100-down and Max score)/100-down
+        //Theoretical Rating = (Difference in 100-down and Max score)/100-down
+
         /// <summary>
         /// Access to Notes
         /// </summary>
@@ -290,9 +331,16 @@ namespace MaiLib
         }
 
         /// <summary>
-        /// Empty constructor
+        /// Access the definition of this chart, default by 384
         /// </summary>
-        public Chart()
+        /// <value>this.chartDefinition</value>
+        public int Definition
+        {get; set; }
+
+    /// <summary>
+    /// Empty constructor
+    /// </summary>
+    public Chart()
         {
             this.notes = new List<Note>();
             this.bpmChanges = new BPMChanges();
@@ -300,6 +348,7 @@ namespace MaiLib
             this.chart = new List<List<Note>>();
             this.information = new Dictionary<string, string>();
             this.isDxChart = false;
+            this.definition = 384;
         }
 
         public abstract bool CheckValidity();
@@ -352,7 +401,7 @@ namespace MaiLib
                         //x.Update();
                         // Console.WriteLine("This note contains "+x.BPMChangeNotes.Count+" BPM notes");
                         //Console.WriteLine(GetNoteDetail(this.bpmChanges, x));
-                        int delay = x.Bar * 384 + x.Tick + x.WaitLength + x.LastLength;
+                        int delay = x.Bar * definition + x.Tick + x.WaitLength + x.LastLength;
                         switch (x.NoteSpecificGenre)
                         {
                             case "BPM":
@@ -489,13 +538,13 @@ namespace MaiLib
             }
             //Console.WriteLine("TOTAL DELAY: "+this.TotalDelay);
             //Console.WriteLine("TOTAL COUNT: "+ this.chart.Count * 384);
-            if (this.totalDelay < this.chart.Count * 384)
+            if (this.totalDelay < this.chart.Count * definition)
             {
                 this.totalDelay = 0;
             }
             else
             {
-                this.totalDelay -= this.chart.Count * 384;
+                this.totalDelay -= this.chart.Count * definition;
             }
             this.totalNoteNumber += (this.tapNumber + this.holdNumber + this.slideNumber);
         }
