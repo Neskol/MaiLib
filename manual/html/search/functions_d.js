@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['update_0',['Update',['../class_mai_lib_1_1_b_p_m_changes.html#a0fb34d08f80a551c4e6cb7de7191ea5c',1,'MaiLib.BPMChanges.Update()'],['../class_mai_lib_1_1_chart.html#a7cb4b824ded6941348dd021445096503',1,'MaiLib.Chart.Update()'],['../interface_mai_lib_1_1_i_chart.html#a9124e4135182c4c2f5ade3ebe14e512c',1,'MaiLib.IChart.Update()'],['../interface_mai_lib_1_1_i_note.html#abfc6926b276598f9724a547245d118f1',1,'MaiLib.INote.Update()'],['../class_mai_lib_1_1_measure_changes.html#a7bc23c3e23cdb4fa165faaefa6d14ca1',1,'MaiLib.MeasureChanges.Update()'],['../class_mai_lib_1_1_note.html#a163be75a5c2847c3ea09c3cdd50a2f64',1,'MaiLib.Note.Update()'],['../class_mai_lib_1_1_track_information.html#a879f0520004112f7e52f18eee96b8160',1,'MaiLib.TrackInformation.Update()'],['../class_mai_lib_1_1_x_mai_l.html#a40fcea53c56aeb06566e6875813a9c17',1,'MaiLib.XMaiL.Update()'],['../class_mai_lib_1_1_xml_information.html#a9c943de86ffcc9917870d187f0708efa',1,'MaiLib.XmlInformation.Update()']]],
-  ['updatefrompath_1',['UpdateFromPath',['../class_mai_lib_1_1_simai_tokenizer.html#a27341673e00019ef886bd6bba5e0e625',1,'MaiLib::SimaiTokenizer']]],
-  ['updatefromtext_2',['UpdateFromText',['../class_mai_lib_1_1_simai_tokenizer.html#addd70be0acb4f633e8c2dcc4ed3f981d',1,'MaiLib::SimaiTokenizer']]]
-];
