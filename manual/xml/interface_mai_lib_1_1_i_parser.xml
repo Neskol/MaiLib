@@ -1,0 +1,563 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="interface_mai_lib_1_1_i_parser" kind="interface" language="C#" prot="public">
+    <compoundname>MaiLib::IParser</compoundname>
+    <derivedcompoundref refid="class_mai_lib_1_1_ma2_parser" prot="public" virt="non-virtual">MaiLib.Ma2Parser</derivedcompoundref>
+    <derivedcompoundref refid="class_mai_lib_1_1_simai_parser" prot="public" virt="non-virtual">MaiLib.SimaiParser</derivedcompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1a7397c6029763efea5e6d7bfbbe680237" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_chart" kindref="compound">Chart</ref></type>
+        <definition>Chart MaiLib.IParser.ChartOfToken</definition>
+        <argsstring>(string[] token)</argsstring>
+        <name>ChartOfToken</name>
+        <qualifiedname>MaiLib.IParser.ChartOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1abc9e7e6d2c82f50a0faa63417fece990">ChartOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1a75daa422a02846657dc667def18d43a9">ChartOfToken</reimplementedby>
+        <param>
+          <type>string[]</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+<para>Return correct GoodBrother of given Token. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to intake</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Corresponding GoodBrother</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="15" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1a69565d533484688cb37fa379a30cd74f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_b_p_m_changes" kindref="compound">BPMChanges</ref></type>
+        <definition>BPMChanges MaiLib.IParser.BPMChangesOfToken</definition>
+        <argsstring>(string token)</argsstring>
+        <name>BPMChangesOfToken</name>
+        <qualifiedname>MaiLib.IParser.BPMChangesOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a4b665f09edf08588ef870152de63a8fe">BPMChangesOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1ae561ab49360dfaef3824f290b28ab0f3">BPMChangesOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+<para>Return correct BPMChanges of given Token. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to intake</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Corresponding BPMChanges</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="22" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1a26298c2b3e13bf4d10797d7dca85536f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_measure_changes" kindref="compound">MeasureChanges</ref></type>
+        <definition>MeasureChanges MaiLib.IParser.MeasureChangesOfToken</definition>
+        <argsstring>(string token)</argsstring>
+        <name>MeasureChangesOfToken</name>
+        <qualifiedname>MaiLib.IParser.MeasureChangesOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a7489fd251adbb1c29516f30bfd79060c">MeasureChangesOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1af0ac35fa8697947dfb333ce79e6b730b">MeasureChangesOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+<para>Return corresponding MeasureChanges. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Intake token</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Corresponding measure change</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="29" column="31"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1af5c4e69e3586219305610dec5c615aab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_note" kindref="compound">Note</ref></type>
+        <definition>Note MaiLib.IParser.NoteOfToken</definition>
+        <argsstring>(string token)</argsstring>
+        <name>NoteOfToken</name>
+        <qualifiedname>MaiLib.IParser.NoteOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a267475f0098390f3993cbd12a50b7cdb">NoteOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1a34e13e65ff9befef8e3910514ef68cd9">NoteOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+<para>Return a specific note of given Token. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to take in</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Specific Note</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="36" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1aa00014e1766f8a715678d6e32202295e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_note" kindref="compound">Note</ref></type>
+        <definition>Note MaiLib.IParser.NoteOfToken</definition>
+        <argsstring>(string token, int bar, int tick, double bpm)</argsstring>
+        <name>NoteOfToken</name>
+        <qualifiedname>MaiLib.IParser.NoteOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a947cf5c0d98e6d703be31fbd694eba41">NoteOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1af494dd884247e91c65dc226d82a4c06f">NoteOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>bar</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>tick</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>bpm</declname>
+        </param>
+        <briefdescription>
+<para>Return a specific note of given Token. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to take in</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bar</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tick</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bpm</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Specific Note</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="46" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1a7b2bc1759b335897908867a41e399c51" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Tap</type>
+        <definition>Tap MaiLib.IParser.TapOfToken</definition>
+        <argsstring>(string token, int bar, int tick, double bpm)</argsstring>
+        <name>TapOfToken</name>
+        <qualifiedname>MaiLib.IParser.TapOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a60dd6e2818dfdcd6935455561409ca96">TapOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1a5ef9810c4ab7c4ceff8933801c533095">TapOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>bar</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>tick</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>bpm</declname>
+        </param>
+        <briefdescription>
+<para>Return correct Tap note. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to take in</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bar of this note</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tick</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Tick of this note</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bpm</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>BPM of this note</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Specific Tap</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="56" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1a1163c855f762043eb410fd3996a289b8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Tap</type>
+        <definition>Tap MaiLib.IParser.TapOfToken</definition>
+        <argsstring>(string token)</argsstring>
+        <name>TapOfToken</name>
+        <qualifiedname>MaiLib.IParser.TapOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a34934530f7447c9f475636896b2c7a87">TapOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1a4a8433f4671f204952d5f6af2ff114a9">TapOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+<para>Return correct Tap note. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to take in</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Specific Tap</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="63" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1afc6fe47a6933b1e9777a92714f6ccd73" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_hold" kindref="compound">Hold</ref></type>
+        <definition>Hold MaiLib.IParser.HoldOfToken</definition>
+        <argsstring>(string token, int bar, int tick, double bpm)</argsstring>
+        <name>HoldOfToken</name>
+        <qualifiedname>MaiLib.IParser.HoldOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a6c6f8470763f5802f96b8d603aac709a">HoldOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1af36d079d0d484536180da3158d75889a">HoldOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>bar</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>tick</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>bpm</declname>
+        </param>
+        <briefdescription>
+<para>Return correct Hold note. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to take in</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bar of this note</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tick</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Tick of this note</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bpm</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>BPM of this note</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Specific Hold Note</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="74" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1aefa441cce2d816c6e1931ab37ccad78b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_hold" kindref="compound">Hold</ref></type>
+        <definition>Hold MaiLib.IParser.HoldOfToken</definition>
+        <argsstring>(string token)</argsstring>
+        <name>HoldOfToken</name>
+        <qualifiedname>MaiLib.IParser.HoldOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a63b991f61fdc89273f93ec0752898f8a">HoldOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1a3e1f7b490fe5ceda9e7b60bfd52a1c8b">HoldOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+<para>Return correct Hold note. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to take in</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Specific Hold Note</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="81" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1a75ddea307290beeda5d26c7bed59c4e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_slide" kindref="compound">Slide</ref></type>
+        <definition>Slide MaiLib.IParser.SlideOfToken</definition>
+        <argsstring>(string token, int bar, int tick, Note slideStart, double bpm)</argsstring>
+        <name>SlideOfToken</name>
+        <qualifiedname>MaiLib.IParser.SlideOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a7662ce67879ceeb260f336ace04ff5ae">SlideOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1a2ec28e7a8e35d34bf176488015193dea">SlideOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>bar</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>tick</declname>
+        </param>
+        <param>
+          <type><ref refid="class_mai_lib_1_1_note" kindref="compound">Note</ref></type>
+          <declname>slideStart</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>bpm</declname>
+        </param>
+        <briefdescription>
+<para>Return correct Slide note. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to take in</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bar of this note</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tick</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Tick of this note</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>slideStart</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The start note of this slide</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bpm</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>BPM of this note</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Specific Slide Note</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="93" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_parser_1a407ca986cb0dd62a934ce3e8a168d70d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="class_mai_lib_1_1_slide" kindref="compound">Slide</ref></type>
+        <definition>Slide MaiLib.IParser.SlideOfToken</definition>
+        <argsstring>(string token)</argsstring>
+        <name>SlideOfToken</name>
+        <qualifiedname>MaiLib.IParser.SlideOfToken</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_parser_1a11a29b94f872cb4c4e363a35ab3a8cd3">SlideOfToken</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_parser_1ae1d8931d0947aef4466818cf36b9b340">SlideOfToken</reimplementedby>
+        <param>
+          <type>string</type>
+          <declname>token</declname>
+        </param>
+        <briefdescription>
+<para>Return correct Slide note. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>token</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Token to take in</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Specific Slide Note</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/IParser.cs" line="100" column="22"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Provide interface for parsers. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>MaiLib.IParser</label>
+        <link refid="interface_mai_lib_1_1_i_parser"/>
+      </node>
+      <node id="2">
+        <label>MaiLib.Ma2Parser</label>
+        <link refid="class_mai_lib_1_1_ma2_parser"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>MaiLib.SimaiParser</label>
+        <link refid="class_mai_lib_1_1_simai_parser"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="Neskol/MaiLib/IParser.cs" line="8" column="22" bodyfile="Neskol/MaiLib/IParser.cs" bodystart="9" bodyend="102"/>
+    <listofallmembers>
+      <member refid="interface_mai_lib_1_1_i_parser_1a69565d533484688cb37fa379a30cd74f" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>BPMChangesOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1a7397c6029763efea5e6d7bfbbe680237" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>ChartOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1afc6fe47a6933b1e9777a92714f6ccd73" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>HoldOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1aefa441cce2d816c6e1931ab37ccad78b" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>HoldOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1a26298c2b3e13bf4d10797d7dca85536f" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>MeasureChangesOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1af5c4e69e3586219305610dec5c615aab" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>NoteOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1aa00014e1766f8a715678d6e32202295e" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>NoteOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1a75ddea307290beeda5d26c7bed59c4e1" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>SlideOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1a407ca986cb0dd62a934ce3e8a168d70d" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>SlideOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1a7b2bc1759b335897908867a41e399c51" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>TapOfToken</name></member>
+      <member refid="interface_mai_lib_1_1_i_parser_1a1163c855f762043eb410fd3996a289b8" prot="public" virt="non-virtual"><scope>MaiLib::IParser</scope><name>TapOfToken</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

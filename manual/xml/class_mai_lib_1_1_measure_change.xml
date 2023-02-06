@@ -1,0 +1,361 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="class_mai_lib_1_1_measure_change" kind="class" language="C#" prot="public">
+    <compoundname>MaiLib::MeasureChange</compoundname>
+    <basecompoundref refid="class_mai_lib_1_1_note" prot="public" virt="non-virtual">MaiLib.Note</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_mai_lib_1_1_measure_change_1afdf127267b76a28fca3845f521d2db83" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int MaiLib.MeasureChange.quaver</definition>
+        <argsstring></argsstring>
+        <name>quaver</name>
+        <qualifiedname>MaiLib.MeasureChange.quaver</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="8" column="21" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_mai_lib_1_1_measure_change_1a2f5bee2ceca4857f3c9a486941945a74" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>int</type>
+        <definition>int MaiLib.MeasureChange.Quaver</definition>
+        <argsstring></argsstring>
+        <name>Quaver</name>
+        <qualifiedname>MaiLib.MeasureChange.Quaver</qualifiedname>
+        <briefdescription>
+<para>Return this.quaver. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Quaver</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="50" column="20" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="51" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_measure_change_1a712f02e6ee18bf975c3e719e59ec9523" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>override string</type>
+        <definition>override string MaiLib.MeasureChange.NoteGenre</definition>
+        <argsstring></argsstring>
+        <name>NoteGenre</name>
+        <qualifiedname>MaiLib.MeasureChange.NoteGenre</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="77" column="32" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_measure_change_1aed4be4c4b422402c9e700d0fda241482" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>override bool</type>
+        <definition>override bool MaiLib.MeasureChange.IsNote</definition>
+        <argsstring></argsstring>
+        <name>IsNote</name>
+        <qualifiedname>MaiLib.MeasureChange.IsNote</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="79" column="30" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_measure_change_1aa8073c91141fa3afdb755768f72b3e32" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>override string</type>
+        <definition>override string MaiLib.MeasureChange.NoteSpecificGenre</definition>
+        <argsstring></argsstring>
+        <name>NoteSpecificGenre</name>
+        <qualifiedname>MaiLib.MeasureChange.NoteSpecificGenre</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="81" column="32" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_mai_lib_1_1_measure_change_1aa93dde90cfe7ef2f1a185badfc92665f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.MeasureChange.MeasureChange</definition>
+        <argsstring>()</argsstring>
+        <name>MeasureChange</name>
+        <qualifiedname>MaiLib.MeasureChange.MeasureChange</qualifiedname>
+        <briefdescription>
+<para>Construct Empty. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="13" column="16" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="13" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_measure_change_1a9187cd665f72aa4af0b8d002525f11f6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.MeasureChange.MeasureChange</definition>
+        <argsstring>(int bar, int tick, int quaver)</argsstring>
+        <name>MeasureChange</name>
+        <qualifiedname>MaiLib.MeasureChange.MeasureChange</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>bar</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>tick</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>quaver</declname>
+        </param>
+        <briefdescription>
+<para>Construct BPMChange with given bar, tick, BPM. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bar</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>tick</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Tick</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>Quaver</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Quaver</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="26" column="16" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="26" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_measure_change_1a176d35e5b73c7654d2853f2afc287c83" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.MeasureChange.MeasureChange</definition>
+        <argsstring>(MeasureChange takeIn)</argsstring>
+        <name>MeasureChange</name>
+        <qualifiedname>MaiLib.MeasureChange.MeasureChange</qualifiedname>
+        <param>
+          <type><ref refid="class_mai_lib_1_1_measure_change" kindref="compound">MeasureChange</ref></type>
+          <declname>takeIn</declname>
+        </param>
+        <briefdescription>
+<para>Construct measureChange from another takeIn. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>takeIn</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Another measure change note</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="38" column="16" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="38" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_measure_change_1a5ffa741d327b41e714ac5e62cbc26cb2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>override bool</type>
+        <definition>override bool MaiLib.MeasureChange.CheckValidity</definition>
+        <argsstring>()</argsstring>
+        <name>CheckValidity</name>
+        <qualifiedname>MaiLib.MeasureChange.CheckValidity</qualifiedname>
+        <reimplements refid="class_mai_lib_1_1_note_1aa6bf8e7d6d7da1cbb72c1823fd26a7ba">CheckValidity</reimplements>
+        <briefdescription>
+<para>See if current note has all information needed. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True if qualified, false otherwise</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="55" column="30" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="55" bodyend="58"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_measure_change_1a1c99e63af55c6fd3b5e77e3d1bfaf949" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>override string</type>
+        <definition>override string MaiLib.MeasureChange.Compose</definition>
+        <argsstring>(int format)</argsstring>
+        <name>Compose</name>
+        <qualifiedname>MaiLib.MeasureChange.Compose</qualifiedname>
+        <reimplements refid="class_mai_lib_1_1_note_1a51b9c57b063ae0f39afa9e5e4d1d7cf7">Compose</reimplements>
+        <param>
+          <type>int</type>
+          <declname>format</declname>
+        </param>
+        <briefdescription>
+<para>Convert note to string for writing. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>format</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>0 if Simai, 1 if Ma2</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="60" column="32" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="60" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_measure_change_1aa8e174d7f3ed1f895e75a98e7357a701" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>override <ref refid="class_mai_lib_1_1_note" kindref="compound">Note</ref></type>
+        <definition>override Note MaiLib.MeasureChange.NewInstance</definition>
+        <argsstring>()</argsstring>
+        <name>NewInstance</name>
+        <qualifiedname>MaiLib.MeasureChange.NewInstance</qualifiedname>
+        <reimplements refid="class_mai_lib_1_1_note_1ab660e145f99b086197a9e725d68f12d6">NewInstance</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/MeasureChange.cs" line="71" column="30" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="71" bodyend="75"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Defines measure change note that indicates a measure change in bar. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="5">
+        <label>IComparable</label>
+      </node>
+      <node id="3">
+        <label>IEquatable&lt; Note &gt;</label>
+      </node>
+      <node id="4">
+        <label>INote</label>
+        <link refid="interface_mai_lib_1_1_i_note"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.MeasureChange</label>
+        <link refid="class_mai_lib_1_1_measure_change"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>Note</label>
+        <link refid="class_mai_lib_1_1_note"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="5">
+        <label>IComparable</label>
+      </node>
+      <node id="3">
+        <label>IEquatable&lt; Note &gt;</label>
+      </node>
+      <node id="4">
+        <label>INote</label>
+        <link refid="interface_mai_lib_1_1_i_note"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.MeasureChange</label>
+        <link refid="class_mai_lib_1_1_measure_change"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>Note</label>
+        <link refid="class_mai_lib_1_1_note"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="Neskol/MaiLib/MeasureChange.cs" line="6" column="11" bodyfile="Neskol/MaiLib/MeasureChange.cs" bodystart="7" bodyend="82"/>
+    <listofallmembers>
+      <member refid="class_mai_lib_1_1_note_1a0354b2b7d0a4fa8fa0406a3651034b41" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Bar</name></member>
+      <member refid="class_mai_lib_1_1_note_1ab50fc72781bfd8173feab554b2ab2087" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>BPM</name></member>
+      <member refid="class_mai_lib_1_1_note_1ac9aaff07cd74d47631c865df65236f01" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>BPMChangeNotes</name></member>
+      <member refid="class_mai_lib_1_1_note_1a1d68357c317c3740f1579c64d8eb8f20" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>CalculatedLastTime</name></member>
+      <member refid="class_mai_lib_1_1_note_1a4e13d186c98826aba27d8e0cb0450e43" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>CalculatedWaitTime</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1a5ffa741d327b41e714ac5e62cbc26cb2" prot="public" virt="virtual"><scope>MaiLib::MeasureChange</scope><name>CheckValidity</name></member>
+      <member refid="class_mai_lib_1_1_note_1a5ea76787c2ae2e78258162f662ee4954" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>CompareTo</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1a1c99e63af55c6fd3b5e77e3d1bfaf949" prot="public" virt="virtual"><scope>MaiLib::MeasureChange</scope><name>Compose</name></member>
+      <member refid="class_mai_lib_1_1_note_1ab6209810248333d7cf09eed0925eb053" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>ConsecutiveSlide</name></member>
+      <member refid="class_mai_lib_1_1_note_1a0a52510f6b2da779cc3febe37d5860e2" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Delayed</name></member>
+      <member refid="class_mai_lib_1_1_note_1ade6118b22af7628d3ed3cebc58cc4e82" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>EndKey</name></member>
+      <member refid="class_mai_lib_1_1_note_1a57eda0d466107d09e9dbdfc07a663626" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>EndKeyNum</name></member>
+      <member refid="class_mai_lib_1_1_note_1af715932b438e65b85b1a9950b0562110" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Equals</name></member>
+      <member refid="class_mai_lib_1_1_note_1a1f798264554830f91f24610ef53ae6ff" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>FixedLastLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1a3f62d32a58d32c270eb41590feff8cac" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>FixedTick</name></member>
+      <member refid="class_mai_lib_1_1_note_1a6502825657156c8865ce1b1efe9ba426" prot="public" virt="virtual"><scope>MaiLib::MeasureChange</scope><name>Flip</name></member>
+      <member refid="class_mai_lib_1_1_note_1a5ae1c7a0a87b8f1a4a0d3e45a1ff010d" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>GenerateAppropriateLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1ac1ee7c68616e125b00622d9a173c8489" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>GenerateAppropriateLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1aae4cd6b1cd86c0d147972be1f5eeaeed" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>GetBPMTimeUnit</name></member>
+      <member refid="class_mai_lib_1_1_note_1a02fec2d573834a2bdc310a07ed5ed9c4" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>GetTimeStamp</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1aed4be4c4b422402c9e700d0fda241482" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>IsNote</name></member>
+      <member refid="class_mai_lib_1_1_note_1ae93ef9ee5987428ab77603867d3ed864" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Key</name></member>
+      <member refid="class_mai_lib_1_1_note_1a508897f0ba5f3882ad9f22878b3d026b" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>KeyGroup</name></member>
+      <member refid="class_mai_lib_1_1_note_1a2716fbd88bcf9f653237736a70044fdb" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>KeyNum</name></member>
+      <member refid="class_mai_lib_1_1_note_1ad2c15248a6056b5df20faa524bff2544" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>LastLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1a8f95a5eba8666e9e69fc0ea0a3362ab7" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>LastTickStamp</name></member>
+      <member refid="class_mai_lib_1_1_note_1a820aaaebbd70488e54ce46e67efc05db" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>LastTimeStamp</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1aa93dde90cfe7ef2f1a185badfc92665f" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>MeasureChange</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1a9187cd665f72aa4af0b8d002525f11f6" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>MeasureChange</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1a176d35e5b73c7654d2853f2afc287c83" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>MeasureChange</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1aa8e174d7f3ed1f895e75a98e7357a701" prot="public" virt="virtual"><scope>MaiLib::MeasureChange</scope><name>NewInstance</name></member>
+      <member refid="class_mai_lib_1_1_note_1a587a20d9e404128d63a823dd45f4df94" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Next</name></member>
+      <member refid="class_mai_lib_1_1_note_1a83cea301f05d1472ce9025e1a52ca215" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Note</name></member>
+      <member refid="class_mai_lib_1_1_note_1a298b576e4a74c6e089674034584aeadf" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Note</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1a712f02e6ee18bf975c3e719e59ec9523" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>NoteGenre</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1aa8073c91141fa3afdb755768f72b3e32" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>NoteSpecificGenre</name></member>
+      <member refid="class_mai_lib_1_1_note_1a90afb1539eca823acbb3074b58993156" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>NoteType</name></member>
+      <member refid="class_mai_lib_1_1_note_1a85d838dc162ac1664a7beca68ed7c357" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Prev</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1a2f5bee2ceca4857f3c9a486941945a74" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Quaver</name></member>
+      <member refid="class_mai_lib_1_1_measure_change_1afdf127267b76a28fca3845f521d2db83" prot="private" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>quaver</name></member>
+      <member refid="class_mai_lib_1_1_note_1a8904f085e381cbbaa748fde6ff06c7cb" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>ReplaceBPMChanges</name></member>
+      <member refid="class_mai_lib_1_1_note_1aead3f3ce08eac1cebf93bfe989f069d2" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>ReplaceBPMChanges</name></member>
+      <member refid="class_mai_lib_1_1_note_1a0950c4cea5e76073fa34f6dd3d1a2b78" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>SlideStart</name></member>
+      <member refid="class_mai_lib_1_1_note_1aa670c5a13ce0eded4efa1a36562dbb4d" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Tick</name></member>
+      <member refid="class_mai_lib_1_1_note_1a4ea181a572b4bc92b13ad92d09d17bd9" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>TickBPMDisagree</name></member>
+      <member refid="class_mai_lib_1_1_note_1a0090ff7f63e26d2ed22cd773fad30fd9" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>TickStamp</name></member>
+      <member refid="class_mai_lib_1_1_note_1a3f0febfc9510008ee8e9c2e785ac0f4f" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>TickTimeStamp</name></member>
+      <member refid="class_mai_lib_1_1_note_1a163be75a5c2847c3ea09c3cdd50a2f64" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>Update</name></member>
+      <member refid="class_mai_lib_1_1_note_1a72ead97a0e2b721894195e5e78e832a9" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>WaitLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1afe37adaf36feb16c9e3894b42454099c" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>WaitTickStamp</name></member>
+      <member refid="class_mai_lib_1_1_note_1a67f6d9761077f599e75bb9cbaa601d05" prot="public" virt="non-virtual"><scope>MaiLib::MeasureChange</scope><name>WaitTimeStamp</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

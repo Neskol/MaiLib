@@ -1,0 +1,452 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_mai_lib_1_1_simai" xml:lang="en-US">
+<title>MaiLib.Simai Class Reference</title>
+<indexterm><primary>MaiLib.Simai</primary></indexterm>
+<para>Inheritance diagram for MaiLib.Simai:    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="class_mai_lib_1_1_simai.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_mai_lib_1_1_simai_1ac568638f326b2cf5b8bbbf3c4ef07084">Simai</link> ()</para>
+
+<para>Empty constructor. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_simai_1a342137d148f7b05e70bd8e5a8e5e3954">Simai</link> (string location)</para>
+
+<para>Constructs Simai chart directly from path specified. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_simai_1adc7f3970a7a2c72eb7b54b997965179d">Simai</link> (List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; notes, <link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> bpmChanges, <link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link> measureChanges)</para>
+
+<para>Construct Simai from given parameters. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_simai_1a5a1334e0f662539c5e4759b3e5c423ba">Simai</link> (<link linkend="_class_mai_lib_1_1_chart">Chart</link> takenIn)</para>
+</listitem>
+            <listitem><para>override string <link linkend="_class_mai_lib_1_1_simai_1ad3f9f102b7d484b865e3b9513a5eaae2">Compose</link> ()</para>
+
+<para>Compose chart in appropriate result. </para>
+</listitem>
+            <listitem><para>override bool <link linkend="_class_mai_lib_1_1_simai_1abd7fc5db57bd6768c4b8b85620293b7c">CheckValidity</link> ()</para>
+
+<para>Check if this chart is valid. </para>
+</listitem>
+            <listitem><para>override string <link linkend="_class_mai_lib_1_1_simai_1a8038d960496d0e2bd8cea2b9df5358d6">Compose</link> (<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> bpm, <link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link> measure)</para>
+
+<para>Reconstruct the chart with given arrays. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Public Member Functions inherited from <link linkend="_class_mai_lib_1_1_chart">MaiLib.Chart</link>        <itemizedlist>
+            <listitem><para><link linkend="_class_mai_lib_1_1_chart_1ae40f0f7c3204cdf2764de19613e9f2c0">Chart</link> ()</para>
+
+<para>Empty constructor. </para>
+</listitem>
+            <listitem><para>abstract bool <link linkend="_class_mai_lib_1_1_chart_1a24a2ddf0d5764aadfb9ad4dff61ae4ba">CheckValidity</link> ()</para>
+
+<para>Check if this chart is valid. </para>
+</listitem>
+            <listitem><para>virtual void <link linkend="_class_mai_lib_1_1_chart_1a7cb4b824ded6941348dd021445096503">Update</link> ()</para>
+
+<para>Update properties in Good Brother for exporting. </para>
+</listitem>
+            <listitem><para>abstract string <link linkend="_class_mai_lib_1_1_chart_1a8721d4107a720b19b2c5545f0edbef01">Compose</link> ()</para>
+
+<para>Compose chart in appropriate result. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_chart_1ab0c006dc1841c80fe7cda829a9f86af4">CheckSlideStart</link> ()</para>
+
+<para>Check if all of the slide starts were in the notes. </para>
+</listitem>
+            <listitem><para>abstract string <link linkend="_class_mai_lib_1_1_chart_1a812c2d3fafeb12a1eac8f9d2f74a533d">Compose</link> (<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> bpm, <link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link> measure)</para>
+
+<para>Override and compose with given arrays. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_chart_1a71d7a0e92f11e27ae3645966df9a9ce0">TakeInformation</link> (Dictionary&lt; string, string &gt; information)</para>
+
+<para>Take in and replace the current information. </para>
+</listitem>
+            <listitem><para>double <link linkend="_class_mai_lib_1_1_chart_1a97e094b052c92767d6f9e3e6c9e22a99">GetTimeStamp</link> (int bar, int tick)</para>
+
+<para>Get appropriate time stamp of given tick. </para>
+</listitem>
+            <listitem><para>double <link linkend="_class_mai_lib_1_1_chart_1a387b82b715f80cb22fe332134dfd5d57">GetTimeStamp</link> (int overallTick)</para>
+
+<para>Give time stamp given overall tick. </para>
+</listitem>
+            <listitem><para>double <link linkend="_class_mai_lib_1_1_chart_1a46dbd5ab73d9114bbe0e415a9a8be2b1">GetBPMByTick</link> (int overallTick)</para>
+
+<para>Return the BPM at certain tick. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_mai_lib_1_1_chart_1adb762e3e3097e5970438fab7147d2928">HasBPMChangeInBetween</link> (int startTick, int endTick)</para>
+
+<para>Determine if there are BPM change in between ticks. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_chart_1a6190d29123e5766dc3e92ced077832cd">ShiftByOffset</link> (int overallTick)</para>
+
+<para>Shift the chart notes by defined overall tick. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_chart_1a3430a13901df368d8235aea76793e17e">ShiftByOffset</link> (int bar, int tick)</para>
+
+<para>Shift the chart notes by defined overall tick. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_chart_1ab51aa728afccb1a2af2f285f38b4a64d">RotateNotes</link> (string method)</para>
+
+<para>Rotate the notes by specified method. </para>
+</listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_interface_mai_lib_1_1_i_chart_1a9124e4135182c4c2f5ade3ebe14e512c">Update</link> ()</para>
+
+<para>Updates all information. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_interface_mai_lib_1_1_i_chart_1ab377ec3aa9607b5e63ef2d986fdf45bb">CheckValidity</link> ()</para>
+
+<para>Check if this chart is valid. </para>
+</listitem>
+            <listitem><para>string <link linkend="_interface_mai_lib_1_1_i_chart_1a60914b01b3ff92fb490a30fa1f8388e2">Compose</link> ()</para>
+
+<para>Export this Good Brother. </para>
+</listitem>
+            <listitem><para>void <link linkend="_interface_mai_lib_1_1_i_chart_1a0bbf3f61adb0f8c200e717671a96f2b6">ShiftByOffset</link> (int overallTick)</para>
+
+<para>Shift the chart notes by defined overall tick. </para>
+</listitem>
+            <listitem><para>void <link linkend="_interface_mai_lib_1_1_i_chart_1ad0da4fb4c8554c0e07291ca1b028329d">ShiftByOffset</link> (int bar, int tick)</para>
+
+<para>Shift the chart notes by defined overall tick. </para>
+</listitem>
+            <listitem><para>void <link linkend="_interface_mai_lib_1_1_i_chart_1af091191ffbc4fae800197964e0f7a3c0">RotateNotes</link> (string method)</para>
+
+<para>Rotate the notes by specified method. </para>
+</listitem>
+            <listitem><para>double <link linkend="_interface_mai_lib_1_1_i_chart_1a300fae8a8444a5314dc8eab652d0fd81">GetTimeStamp</link> (int bar, int tick)</para>
+
+<para>Get appropriate time stamp of given tick. </para>
+</listitem>
+        </itemizedlist>
+<simplesect>
+    <title>Additional Inherited Members    </title>
+Static Public Member Functions inherited from <link linkend="_class_mai_lib_1_1_chart">MaiLib.Chart</link>        <itemizedlist>
+            <listitem><para>static int <link linkend="_class_mai_lib_1_1_chart_1a2d6be14511650d8e2c51b0101288797c">CalculateLeastMeasure</link> (List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; bar)</para>
+
+<para>Return the least none 0 measure of bar. </para>
+</listitem>
+            <listitem><para>static int <link linkend="_class_mai_lib_1_1_chart_1a2be24869fba6508efab7920d32831653">RealNoteNumber</link> (List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653">Bar</link>)</para>
+
+<para>Return note number except Rest, BPM and Measure. </para>
+</listitem>
+            <listitem><para>static bool <link linkend="_class_mai_lib_1_1_chart_1a3e92802706592214749d7d77d0594106">ContainNotes</link> (List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653">Bar</link>)</para>
+
+<para>Judges if this bar contains notes. </para>
+</listitem>
+            <listitem><para>static int <link linkend="_class_mai_lib_1_1_chart_1afce9f50e60b35092a955953e87aac8ae">CalculateQuaver</link> (int length)</para>
+
+<para>Generate appropriate length for hold and slide. </para>
+</listitem>
+            <listitem><para>static List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; <link linkend="_class_mai_lib_1_1_chart_1ae4db3ec85fdfa9993a3931c838e44967">FinishBar</link> (List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; bar, List&lt; <link linkend="_class_mai_lib_1_1_b_p_m_change">BPMChange</link> &gt; bpmChanges, int barNumber, int minimalQuaver)</para>
+
+<para>Finish Bar writing byu adding specific rest note in between. </para>
+</listitem>
+            <listitem><para>static int <link linkend="_class_mai_lib_1_1_chart_1afb0d825c838c1ae16a1fe08d38cabd46">GCD</link> (int a, int b)</para>
+
+<para>Return GCD of A and B. </para>
+</listitem>
+            <listitem><para>static bool <link linkend="_class_mai_lib_1_1_chart_1a9801eed737a6546794f7585eff838563">IsPrime</link> (int number)</para>
+
+<para>Return if this is a prime (1 counts) </para>
+</listitem>
+            <listitem><para>static double <link linkend="_class_mai_lib_1_1_chart_1a045524af8a9e0c8d28e67c1c75c2463a">GetTimeStamp</link> (<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> bpmChanges, int overallTick)</para>
+
+<para>Give time stamp given overall tick. </para>
+</listitem>
+            <listitem><para>static double <link linkend="_class_mai_lib_1_1_chart_1afd6070cce9947d515ba3c1ff4b8bc754">GetBPMTimeUnit</link> (double bpm)</para>
+
+<para>Return BPM tick unit of given bpm. </para>
+</listitem>
+            <listitem><para>static string <link linkend="_class_mai_lib_1_1_chart_1a74f8d7936f2d7264ec320ba292a5375f">GetNoteDetail</link> (<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> bpmChanges, <link linkend="_class_mai_lib_1_1_note">Note</link> inTake)</para>
+
+<para>For debug use: print out the note&apos;s time stamp in given bpm changes. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Properties inherited from <link linkend="_class_mai_lib_1_1_chart">MaiLib.Chart</link>        <itemizedlist>
+            <listitem><para>List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; <link linkend="_class_mai_lib_1_1_chart_1a097673d87437b40fa1e537aee31f5027">Notes</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to Notes. </para>
+</listitem>
+            <listitem><para>List&lt; List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; &gt; <link linkend="_class_mai_lib_1_1_chart_1a7ebf2ca619175ab423cc7f28f48b6eb1">StoredChart</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Returns this.Chart. aka List of bars. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> <link linkend="_class_mai_lib_1_1_chart_1a214f4fbd3255e38722b79c826f0a6f6f">BPMChanges</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to BPM Changes. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link> <link linkend="_class_mai_lib_1_1_chart_1ac5aa7741c3bbc8b765ee1f72df64c200">MeasureChanges</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to Measure Changes. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1abe8c93962fc19004d449d9e7c3ae922b">TapNumber</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to Tap Number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1adb370295002d3ccb69166835da9cf15e">BreakNumber</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to Break Number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1a0c38f0821fa17e71241b1eb9cc820ea1">HoldNumber</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to Hold Number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1a61431b59f9cb028c07150e071848a960">SlideNumber</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to Slide Number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1a90f3f25ed181d5c4aa17c461c6b78923">TouchNumber</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to Touch Number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1a3a3b6c560ec65a27b1a4f5a1dd6e9fb9">ThoNumber</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to Touch Hold Number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1a2b2fdda4926a0d0dd8fd7285fdbf0510">TotalNoteNumber</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Access to the total note number. </para>
+</listitem>
+            <listitem><para>int[] <link linkend="_class_mai_lib_1_1_chart_1a88ec62135bd8b4c74a0e41a62bb81a5e">UnitScore</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Access to Unit Score. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1a7739f094aa7c4dc178e77719dcd3617e">Achievement</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access to theoretical Achievement. </para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1a24bc12c7a3a865fffec0f84379bad3de">TotalDelay</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Return the total delayed value of this Chart. </para>
+</listitem>
+            <listitem><para>Dictionary&lt; string, string &gt; <link linkend="_class_mai_lib_1_1_chart_1a6f19b3e20979061bb5a1121e8530028b">Information</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Return Information. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_mai_lib_1_1_chart_1a68a3904b9cf4f7ded0ea1fa1c6c8a40b">IsDXChart</link><computeroutput> [get, set]</computeroutput>
+</para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_note">Note</link>? <link linkend="_class_mai_lib_1_1_chart_1a5b97aabb984691057352038dd6df8770">FirstNote</link><computeroutput> [get, set]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>int <link linkend="_class_mai_lib_1_1_chart_1a04c1336727a09012958a449fd2e31416">Definition</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access the definition of this chart, default by 384. </para>
+</listitem>
+        </itemizedlist>
+<section>
+<title>Detailed Description</title>
+<para>
+Definition at line <link linkend="__simai_8cs_source_1l00005">5</link> of file <link linkend="__simai_8cs_source">Simai.cs</link>.</para>
+</section>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_simai_1ac568638f326b2cf5b8bbbf3c4ef07084"/><section>
+    <title>Simai()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>Simai</primary><secondary>MaiLib.Simai</secondary></indexterm>
+<indexterm><primary>MaiLib.Simai</primary><secondary>Simai</secondary></indexterm>
+<para><computeroutput>MaiLib.Simai.Simai ( )</computeroutput></para><para>
+
+<para>Empty constructor. </para>
+</para>
+<para>
+Definition at line <link linkend="__simai_8cs_source_1l00010">10</link> of file <link linkend="__simai_8cs_source">Simai.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_1a342137d148f7b05e70bd8e5a8e5e3954"/><section>
+    <title>Simai()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>Simai</primary><secondary>MaiLib.Simai</secondary></indexterm>
+<indexterm><primary>MaiLib.Simai</primary><secondary>Simai</secondary></indexterm>
+<para><computeroutput>MaiLib.Simai.Simai (string location)</computeroutput></para><para>
+
+<para>Constructs Simai chart directly from path specified. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>location</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__simai_8cs_source_1l00023">23</link> of file <link linkend="__simai_8cs_source">Simai.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_1adc7f3970a7a2c72eb7b54b997965179d"/><section>
+    <title>Simai()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>Simai</primary><secondary>MaiLib.Simai</secondary></indexterm>
+<indexterm><primary>MaiLib.Simai</primary><secondary>Simai</secondary></indexterm>
+<para><computeroutput>MaiLib.Simai.Simai (List&lt; <link linkend="_class_mai_lib_1_1_note">Note</link> &gt; notes, <link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> bpmChanges, <link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link> measureChanges)</computeroutput></para><para>
+
+<para>Construct Simai from given parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>notes</entry><entry>
+<para>Notes to take in</para>
+</entry>
+                            </row>
+                            <row>
+<entry>bpmChanges</entry><entry>
+<para>BPM change to take in</para>
+</entry>
+                            </row>
+                            <row>
+<entry>measureChanges</entry><entry>
+<para>Measure change to take in</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__simai_8cs_source_1l00041">41</link> of file <link linkend="__simai_8cs_source">Simai.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_1a5a1334e0f662539c5e4759b3e5c423ba"/><section>
+    <title>Simai()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>Simai</primary><secondary>MaiLib.Simai</secondary></indexterm>
+<indexterm><primary>MaiLib.Simai</primary><secondary>Simai</secondary></indexterm>
+<para><computeroutput>MaiLib.Simai.Simai (<link linkend="_class_mai_lib_1_1_chart">Chart</link> takenIn)</computeroutput></para><para>
+Definition at line <link linkend="__simai_8cs_source_1l00051">51</link> of file <link linkend="__simai_8cs_source">Simai.cs</link>.</para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_simai_1abd7fc5db57bd6768c4b8b85620293b7c"/><section>
+    <title>CheckValidity()</title>
+<indexterm><primary>CheckValidity</primary><secondary>MaiLib.Simai</secondary></indexterm>
+<indexterm><primary>MaiLib.Simai</primary><secondary>CheckValidity</secondary></indexterm>
+<para><computeroutput>override bool MaiLib.Simai.CheckValidity ( )<computeroutput>[virtual]</computeroutput></computeroutput></para><para>
+
+<para>Check if this chart is valid. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para></para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_class_mai_lib_1_1_chart_1a24a2ddf0d5764aadfb9ad4dff61ae4ba">MaiLib.Chart</link>.</para>
+<para>
+Definition at line <link linkend="__simai_8cs_source_1l00216">216</link> of file <link linkend="__simai_8cs_source">Simai.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_1ad3f9f102b7d484b865e3b9513a5eaae2"/><section>
+    <title>Compose()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>Compose</primary><secondary>MaiLib.Simai</secondary></indexterm>
+<indexterm><primary>MaiLib.Simai</primary><secondary>Compose</secondary></indexterm>
+<para><computeroutput>override string MaiLib.Simai.Compose ( )<computeroutput>[virtual]</computeroutput></computeroutput></para><para>
+
+<para>Compose chart in appropriate result. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>String of chart compiled</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_class_mai_lib_1_1_chart_1a8721d4107a720b19b2c5545f0edbef01">MaiLib.Chart</link>.</para>
+<para>
+Definition at line <link linkend="__simai_8cs_source_1l00061">61</link> of file <link linkend="__simai_8cs_source">Simai.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_1a8038d960496d0e2bd8cea2b9df5358d6"/><section>
+    <title>Compose()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>Compose</primary><secondary>MaiLib.Simai</secondary></indexterm>
+<indexterm><primary>MaiLib.Simai</primary><secondary>Compose</secondary></indexterm>
+<para><computeroutput>override string MaiLib.Simai.Compose (<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> bpm, <link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link> measure)<computeroutput>[virtual]</computeroutput></computeroutput></para><para>
+
+<para>Reconstruct the chart with given arrays. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>bpm</entry><entry>
+<para>New BPM Changes</para>
+</entry>
+                            </row>
+                            <row>
+<entry>measure</entry><entry>
+<para>New Measure Changes</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>New Composed Chart</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_class_mai_lib_1_1_chart_1a812c2d3fafeb12a1eac8f9d2f74a533d">MaiLib.Chart</link>.</para>
+<para>
+Definition at line <link linkend="__simai_8cs_source_1l00229">229</link> of file <link linkend="__simai_8cs_source">Simai.cs</link>.</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+Neskol/MaiLib/<link linkend="__simai_8cs">Simai.cs</link></section>
+</section>

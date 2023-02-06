@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__track_information_8cs" xml:lang="en-US">
+<title>Neskol/MaiLib/TrackInformation.cs File Reference</title>
+<indexterm><primary>Neskol/MaiLib/TrackInformation.cs</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_track_information">MaiLib.TrackInformation</link></para>
+
+<para>Use xml to store track information. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Namespaces    </title>
+        <itemizedlist>
+            <listitem><para>namespace <link linkend="_namespace_mai_lib">MaiLib</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

@@ -1,0 +1,505 @@
+\hypertarget{class_mai_lib_1_1_simai_parser}{}\doxysection{Mai\+Lib.\+Simai\+Parser Class Reference}
+\label{class_mai_lib_1_1_simai_parser}\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+
+
+Parse charts in Simai format.  
+
+
+Inheritance diagram for Mai\+Lib.\+Simai\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_mai_lib_1_1_simai_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a6a0167580c4073983421a40e0cf68ccb}{Simai\+Parser}} ()
+\begin{DoxyCompactList}\small\item\em Constructor of simaiparser. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_ae561ab49360dfaef3824f290b28ab0f3}{BPMChanges\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Parse BPM change notes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a75daa422a02846657dc667def18d43a9}{Chart\+Of\+Token}} (string\mbox{[}$\,$\mbox{]} tokens)
+\begin{DoxyCompactList}\small\item\em Return correct Good\+Brother of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_af36d079d0d484536180da3158d75889a}{Hold\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Hold note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a3e1f7b490fe5ceda9e7b60bfd52a1c8b}{Hold\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Hold note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_af0ac35fa8697947dfb333ce79e6b730b}{Measure\+Changes\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return corresponding Measure\+Changes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a34e13e65ff9befef8e3910514ef68cd9}{Note\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return a specific note of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_af494dd884247e91c65dc226d82a4c06f}{Note\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return a specific note of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a2ec28e7a8e35d34bf176488015193dea}{Slide\+Of\+Token}} (string token, int bar, int tick, \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} slide\+Start, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Slide note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_ae1d8931d0947aef4466818cf36b9b340}{Slide\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Slide note. \end{DoxyCompactList}\item 
+Tap \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a5ef9810c4ab7c4ceff8933801c533095}{Tap\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Tap note. \end{DoxyCompactList}\item 
+Tap \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a4a8433f4671f204952d5f6af2ff114a9}{Tap\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Tap note. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a7397c6029763efea5e6d7bfbbe680237}{Chart\+Of\+Token}} (string\mbox{[}$\,$\mbox{]} token)
+\begin{DoxyCompactList}\small\item\em Return correct Good\+Brother of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a69565d533484688cb37fa379a30cd74f}{BPMChanges\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct BPMChanges of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a26298c2b3e13bf4d10797d7dca85536f}{Measure\+Changes\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return corresponding Measure\+Changes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_af5c4e69e3586219305610dec5c615aab}{Note\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return a specific note of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_aa00014e1766f8a715678d6e32202295e}{Note\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return a specific note of given Token. \end{DoxyCompactList}\item 
+Tap \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a7b2bc1759b335897908867a41e399c51}{Tap\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Tap note. \end{DoxyCompactList}\item 
+Tap \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a1163c855f762043eb410fd3996a289b8}{Tap\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Tap note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_afc6fe47a6933b1e9777a92714f6ccd73}{Hold\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Hold note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_aefa441cce2d816c6e1931ab37ccad78b}{Hold\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Hold note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a75ddea307290beeda5d26c7bed59c4e1}{Slide\+Of\+Token}} (string token, int bar, int tick, \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} slide\+Start, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Slide note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a407ca986cb0dd62a934ce3e8a168d70d}{Slide\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Slide note. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_ad59f30b47d5cc9441f5eecc0f2bf7c63}{Each\+Group\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Deal with old, out-\/fashioned and illogical Simai Each Groups. \end{DoxyCompactList}\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a108147df5f8ab1e8c9f6d01acc1e25d1}{Extract\+Parentheses}} (string token)
+\begin{DoxyCompactList}\small\item\em Deal with annoying and vigours Parentheses grammar of Simai. \end{DoxyCompactList}\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_aab4033133697dfa038a550fa22725c5d}{Extract\+Each\+Slides}} (string token)
+\begin{DoxyCompactList}\small\item\em Deal with annoying and vigours Slide grammar of Simai. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a7053d1ff5b56e1869f341ed7da060ca4}{Maximum\+Definition}} = 384
+\begin{DoxyCompactList}\small\item\em The maximum definition of a chart. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Parse charts in Simai format. 
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00009}{9}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a6a0167580c4073983421a40e0cf68ccb}\label{class_mai_lib_1_1_simai_parser_a6a0167580c4073983421a40e0cf68ccb}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!SimaiParser@{SimaiParser}}
+\index{SimaiParser@{SimaiParser}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{SimaiParser()}{SimaiParser()}}
+{\footnotesize\ttfamily Mai\+Lib.\+Simai\+Parser.\+Simai\+Parser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor of simaiparser. 
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00021}{21}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_ae561ab49360dfaef3824f290b28ab0f3}\label{class_mai_lib_1_1_simai_parser_ae561ab49360dfaef3824f290b28ab0f3}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!BPMChangesOfToken@{BPMChangesOfToken}}
+\index{BPMChangesOfToken@{BPMChangesOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{BPMChangesOfToken()}{BPMChangesOfToken()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} Mai\+Lib.\+Simai\+Parser.\+BPMChanges\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Parse BPM change notes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & The parsed set of BPM change\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error\+: simai does not have this variable
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a69565d533484688cb37fa379a30cd74f}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00031}{31}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a75daa422a02846657dc667def18d43a9}\label{class_mai_lib_1_1_simai_parser_a75daa422a02846657dc667def18d43a9}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!ChartOfToken@{ChartOfToken}}
+\index{ChartOfToken@{ChartOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{ChartOfToken()}{ChartOfToken()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}} Mai\+Lib.\+Simai\+Parser.\+Chart\+Of\+Token (\begin{DoxyParamCaption}\item[{string\mbox{[}$\,$\mbox{]}}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct Good\+Brother of given Token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to intake\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Corresponding Good\+Brother
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a7397c6029763efea5e6d7bfbbe680237}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00036}{36}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_ad59f30b47d5cc9441f5eecc0f2bf7c63}\label{class_mai_lib_1_1_simai_parser_ad59f30b47d5cc9441f5eecc0f2bf7c63}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!EachGroupOfToken@{EachGroupOfToken}}
+\index{EachGroupOfToken@{EachGroupOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{EachGroupOfToken()}{EachGroupOfToken()}}
+{\footnotesize\ttfamily static List$<$ string $>$ Mai\+Lib.\+Simai\+Parser.\+Each\+Group\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Deal with old, out-\/fashioned and illogical Simai Each Groups. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Tokens that potentially contains each Groups\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of strings that is composed with single note.
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00527}{527}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_aab4033133697dfa038a550fa22725c5d}\label{class_mai_lib_1_1_simai_parser_aab4033133697dfa038a550fa22725c5d}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!ExtractEachSlides@{ExtractEachSlides}}
+\index{ExtractEachSlides@{ExtractEachSlides}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{ExtractEachSlides()}{ExtractEachSlides()}}
+{\footnotesize\ttfamily static List$<$ string $>$ Mai\+Lib.\+Simai\+Parser.\+Extract\+Each\+Slides (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Deal with annoying and vigours Slide grammar of Simai. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token that potentially contains multiple slide note\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A list of slides extracts each note
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00641}{641}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a108147df5f8ab1e8c9f6d01acc1e25d1}\label{class_mai_lib_1_1_simai_parser_a108147df5f8ab1e8c9f6d01acc1e25d1}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!ExtractParentheses@{ExtractParentheses}}
+\index{ExtractParentheses@{ExtractParentheses}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{ExtractParentheses()}{ExtractParentheses()}}
+{\footnotesize\ttfamily static List$<$ string $>$ Mai\+Lib.\+Simai\+Parser.\+Extract\+Parentheses (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Deal with annoying and vigours Parentheses grammar of Simai. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token that potentially contains multiple slide note\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A list of strings extracts each note
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00587}{587}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a3e1f7b490fe5ceda9e7b60bfd52a1c8b}\label{class_mai_lib_1_1_simai_parser_a3e1f7b490fe5ceda9e7b60bfd52a1c8b}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!HoldOfToken@{HoldOfToken}}
+\index{HoldOfToken@{HoldOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{HoldOfToken()}{HoldOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} Mai\+Lib.\+Simai\+Parser.\+Hold\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct Hold note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Hold Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_aefa441cce2d816c6e1931ab37ccad78b}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00152}{152}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_af36d079d0d484536180da3158d75889a}\label{class_mai_lib_1_1_simai_parser_af36d079d0d484536180da3158d75889a}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!HoldOfToken@{HoldOfToken}}
+\index{HoldOfToken@{HoldOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{HoldOfToken()}{HoldOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} Mai\+Lib.\+Simai\+Parser.\+Hold\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token,  }\item[{int}]{bar,  }\item[{int}]{tick,  }\item[{double}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Return correct Hold note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+{\em bar} & Bar of this note\\
+\hline
+{\em tick} & Tick of this note\\
+\hline
+{\em bpm} & BPM of this note\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Hold Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_afc6fe47a6933b1e9777a92714f6ccd73}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00092}{92}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_af0ac35fa8697947dfb333ce79e6b730b}\label{class_mai_lib_1_1_simai_parser_af0ac35fa8697947dfb333ce79e6b730b}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!MeasureChangesOfToken@{MeasureChangesOfToken}}
+\index{MeasureChangesOfToken@{MeasureChangesOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{MeasureChangesOfToken()}{MeasureChangesOfToken()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} Mai\+Lib.\+Simai\+Parser.\+Measure\+Changes\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return corresponding Measure\+Changes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Intake token\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Corresponding measure change
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a26298c2b3e13bf4d10797d7dca85536f}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00157}{157}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a34e13e65ff9befef8e3910514ef68cd9}\label{class_mai_lib_1_1_simai_parser_a34e13e65ff9befef8e3910514ef68cd9}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!NoteOfToken@{NoteOfToken}}
+\index{NoteOfToken@{NoteOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{NoteOfToken()}{NoteOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} Mai\+Lib.\+Simai\+Parser.\+Note\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return a specific note of given Token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_af5c4e69e3586219305610dec5c615aab}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00162}{162}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_af494dd884247e91c65dc226d82a4c06f}\label{class_mai_lib_1_1_simai_parser_af494dd884247e91c65dc226d82a4c06f}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!NoteOfToken@{NoteOfToken}}
+\index{NoteOfToken@{NoteOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{NoteOfToken()}{NoteOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} Mai\+Lib.\+Simai\+Parser.\+Note\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token,  }\item[{int}]{bar,  }\item[{int}]{tick,  }\item[{double}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Return a specific note of given Token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+{\em bar} & \\
+\hline
+{\em tick} & \\
+\hline
+{\em bpm} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_aa00014e1766f8a715678d6e32202295e}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00210}{210}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_ae1d8931d0947aef4466818cf36b9b340}\label{class_mai_lib_1_1_simai_parser_ae1d8931d0947aef4466818cf36b9b340}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!SlideOfToken@{SlideOfToken}}
+\index{SlideOfToken@{SlideOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{SlideOfToken()}{SlideOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} Mai\+Lib.\+Simai\+Parser.\+Slide\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct Slide note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Slide Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a407ca986cb0dd62a934ce3e8a168d70d}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00454}{454}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a2ec28e7a8e35d34bf176488015193dea}\label{class_mai_lib_1_1_simai_parser_a2ec28e7a8e35d34bf176488015193dea}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!SlideOfToken@{SlideOfToken}}
+\index{SlideOfToken@{SlideOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{SlideOfToken()}{SlideOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} Mai\+Lib.\+Simai\+Parser.\+Slide\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token,  }\item[{int}]{bar,  }\item[{int}]{tick,  }\item[{\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}}]{slide\+Start,  }\item[{double}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Return correct Slide note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+{\em bar} & Bar of this note\\
+\hline
+{\em tick} & Tick of this note\\
+\hline
+{\em slide\+Start} & The start note of this slide\\
+\hline
+{\em bpm} & BPM of this note\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Slide Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a75ddea307290beeda5d26c7bed59c4e1}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00261}{261}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a4a8433f4671f204952d5f6af2ff114a9}\label{class_mai_lib_1_1_simai_parser_a4a8433f4671f204952d5f6af2ff114a9}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!TapOfToken@{TapOfToken}}
+\index{TapOfToken@{TapOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{TapOfToken()}{TapOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Tap Mai\+Lib.\+Simai\+Parser.\+Tap\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct Tap note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Tap
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a1163c855f762043eb410fd3996a289b8}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00517}{517}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a5ef9810c4ab7c4ceff8933801c533095}\label{class_mai_lib_1_1_simai_parser_a5ef9810c4ab7c4ceff8933801c533095}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!TapOfToken@{TapOfToken}}
+\index{TapOfToken@{TapOfToken}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{TapOfToken()}{TapOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Tap Mai\+Lib.\+Simai\+Parser.\+Tap\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token,  }\item[{int}]{bar,  }\item[{int}]{tick,  }\item[{double}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Return correct Tap note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+{\em bar} & Bar of this note\\
+\hline
+{\em tick} & Tick of this note\\
+\hline
+{\em bpm} & BPM of this note\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Tap
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a7b2bc1759b335897908867a41e399c51}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00459}{459}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_simai_parser_a7053d1ff5b56e1869f341ed7da060ca4}\label{class_mai_lib_1_1_simai_parser_a7053d1ff5b56e1869f341ed7da060ca4}} 
+\index{MaiLib.SimaiParser@{MaiLib.SimaiParser}!MaximumDefinition@{MaximumDefinition}}
+\index{MaximumDefinition@{MaximumDefinition}!MaiLib.SimaiParser@{MaiLib.SimaiParser}}
+\doxysubsubsection{\texorpdfstring{MaximumDefinition}{MaximumDefinition}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Simai\+Parser.\+Maximum\+Definition = 384\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The maximum definition of a chart. 
+
+
+
+Definition at line \mbox{\hyperlink{_simaiparser_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_simaiparser_8cs_source}{Simaiparser.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Neskol/\+Mai\+Lib/\mbox{\hyperlink{_simaiparser_8cs}{Simaiparser.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_mai_lib_1_1_simai_tokenizer" xml:lang="en-US">
+<title>MaiLib.SimaiTokenizer Class Reference</title>
+<indexterm><primary>MaiLib.SimaiTokenizer</primary></indexterm>
+<para>
+
+<para>Tokenize input file into tokens that parser can read. </para>
+ 
+</para>
+<para>Inheritance diagram for MaiLib.SimaiTokenizer:    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="class_mai_lib_1_1_simai_tokenizer.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_mai_lib_1_1_simai_tokenizer_1a15f73680dbe11eb6cebe24210535fd1e">SimaiTokenizer</link> ()</para>
+
+<para>Constructs a tokenizer. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_simai_tokenizer_1addd70be0acb4f633e8c2dcc4ed3f981d">UpdateFromText</link> (string input)</para>
+
+<para>Update candidates from texts specified. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_simai_tokenizer_1a27341673e00019ef886bd6bba5e0e625">UpdateFromPath</link> (string path)</para>
+
+<para>Update candidates from texts specified. </para>
+</listitem>
+            <listitem><para>string[] <link linkend="_class_mai_lib_1_1_simai_tokenizer_1afd239f9eb4e9aebcc0240d5dc795f6fe">Tokens</link> (string location)</para>
+
+<para>Intake files and return tokens. </para>
+</listitem>
+            <listitem><para>string[] <link linkend="_class_mai_lib_1_1_simai_tokenizer_1a324525f0269d16007993214f40298110">TokensFromText</link> (string text)</para>
+
+<para>Intake files and return tokens. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+        <itemizedlist>
+            <listitem><para>string[] <link linkend="_interface_mai_lib_1_1_i_tokenizer_1a36ba40088fe7fe4fa4b8401cedeb7643">Tokens</link> (string location)</para>
+
+<para>Intake files and return tokens. </para>
+</listitem>
+            <listitem><para>string[] <link linkend="_interface_mai_lib_1_1_i_tokenizer_1ad87a5402aa6b4e445615967853c80eb1">TokensFromText</link> (string text)</para>
+
+<para>Intake files and return tokens. </para>
+</listitem>
+        </itemizedlist>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>Dictionary&lt; string, string[]&gt; <link linkend="_class_mai_lib_1_1_simai_tokenizer_1ab9ed4e016680959cdf01cdeb1b6fd053">ChartCandidates</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Access the chart candidates. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Tokenize input file into tokens that parser can read. </para>
+<para>
+Definition at line <link linkend="__simai_tokenizer_8cs_source_1l00011">11</link> of file <link linkend="__simai_tokenizer_8cs_source">SimaiTokenizer.cs</link>.</para>
+</section>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_simai_tokenizer_1a15f73680dbe11eb6cebe24210535fd1e"/><section>
+    <title>SimaiTokenizer()</title>
+<indexterm><primary>SimaiTokenizer</primary><secondary>MaiLib.SimaiTokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiTokenizer</primary><secondary>SimaiTokenizer</secondary></indexterm>
+<para><computeroutput>MaiLib.SimaiTokenizer.SimaiTokenizer ( )</computeroutput></para><para>
+
+<para>Constructs a tokenizer. </para>
+</para>
+<para>
+Definition at line <link linkend="__simai_tokenizer_8cs_source_1l00026">26</link> of file <link linkend="__simai_tokenizer_8cs_source">SimaiTokenizer.cs</link>.</para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_simai_tokenizer_1afd239f9eb4e9aebcc0240d5dc795f6fe"/><section>
+    <title>Tokens()</title>
+<indexterm><primary>Tokens</primary><secondary>MaiLib.SimaiTokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiTokenizer</primary><secondary>Tokens</secondary></indexterm>
+<para><computeroutput>string[] MaiLib.SimaiTokenizer.Tokens (string location)</computeroutput></para><para>
+
+<para>Intake files and return tokens. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>location</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Tokens from file specified</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_interface_mai_lib_1_1_i_tokenizer_1a36ba40088fe7fe4fa4b8401cedeb7643">MaiLib.ITokenizer</link>.</para>
+<para>
+Definition at line <link linkend="__simai_tokenizer_8cs_source_1l00224">224</link> of file <link linkend="__simai_tokenizer_8cs_source">SimaiTokenizer.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_tokenizer_1a324525f0269d16007993214f40298110"/><section>
+    <title>TokensFromText()</title>
+<indexterm><primary>TokensFromText</primary><secondary>MaiLib.SimaiTokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiTokenizer</primary><secondary>TokensFromText</secondary></indexterm>
+<para><computeroutput>string[] MaiLib.SimaiTokenizer.TokensFromText (string text)</computeroutput></para><para>
+
+<para>Intake files and return tokens. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>text</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Tokens from text specified</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_interface_mai_lib_1_1_i_tokenizer_1ad87a5402aa6b4e445615967853c80eb1">MaiLib.ITokenizer</link>.</para>
+<para>
+Definition at line <link linkend="__simai_tokenizer_8cs_source_1l00237">237</link> of file <link linkend="__simai_tokenizer_8cs_source">SimaiTokenizer.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_tokenizer_1a27341673e00019ef886bd6bba5e0e625"/><section>
+    <title>UpdateFromPath()</title>
+<indexterm><primary>UpdateFromPath</primary><secondary>MaiLib.SimaiTokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiTokenizer</primary><secondary>UpdateFromPath</secondary></indexterm>
+<para><computeroutput>void MaiLib.SimaiTokenizer.UpdateFromPath (string path)</computeroutput></para><para>
+
+<para>Update candidates from texts specified. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>path</entry><entry>
+<para>Location of text to be tokenized</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__simai_tokenizer_8cs_source_1l00213">213</link> of file <link linkend="__simai_tokenizer_8cs_source">SimaiTokenizer.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_tokenizer_1addd70be0acb4f633e8c2dcc4ed3f981d"/><section>
+    <title>UpdateFromText()</title>
+<indexterm><primary>UpdateFromText</primary><secondary>MaiLib.SimaiTokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiTokenizer</primary><secondary>UpdateFromText</secondary></indexterm>
+<para><computeroutput>void MaiLib.SimaiTokenizer.UpdateFromText (string input)</computeroutput></para><para>
+
+<para>Update candidates from texts specified. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>input</entry><entry>
+<para>Text to be tokenized</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__simai_tokenizer_8cs_source_1l00045">45</link> of file <link linkend="__simai_tokenizer_8cs_source">SimaiTokenizer.cs</link>.</para>
+</section>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_simai_tokenizer_1ab9ed4e016680959cdf01cdeb1b6fd053"/><section>
+    <title>ChartCandidates</title>
+<indexterm><primary>ChartCandidates</primary><secondary>MaiLib.SimaiTokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiTokenizer</primary><secondary>ChartCandidates</secondary></indexterm>
+<para><computeroutput>Dictionary&lt;string, string[]&gt; MaiLib.SimaiTokenizer.ChartCandidates<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>Access the chart candidates. </para>
+</para>
+<para>
+Definition at line <link linkend="__simai_tokenizer_8cs_source_1l00035">35</link> of file <link linkend="__simai_tokenizer_8cs_source">SimaiTokenizer.cs</link>.</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+Neskol/MaiLib/<link linkend="__simai_tokenizer_8cs">SimaiTokenizer.cs</link></section>
+</section>

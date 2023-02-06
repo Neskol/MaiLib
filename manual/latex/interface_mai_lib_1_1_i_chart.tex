@@ -1,0 +1,169 @@
+\hypertarget{interface_mai_lib_1_1_i_chart}{}\doxysection{Mai\+Lib.\+IChart Interface Reference}
+\label{interface_mai_lib_1_1_i_chart}\index{MaiLib.IChart@{MaiLib.IChart}}
+
+
+Provide interface for charts.  
+
+
+Inheritance diagram for Mai\+Lib.\+IChart\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{interface_mai_lib_1_1_i_chart}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a9124e4135182c4c2f5ade3ebe14e512c}{Update}} ()
+\begin{DoxyCompactList}\small\item\em Updates all information. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_ab377ec3aa9607b5e63ef2d986fdf45bb}{Check\+Validity}} ()
+\begin{DoxyCompactList}\small\item\em Check if this chart is valid. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a60914b01b3ff92fb490a30fa1f8388e2}{Compose}} ()
+\begin{DoxyCompactList}\small\item\em Export this Good Brother. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a0bbf3f61adb0f8c200e717671a96f2b6}{Shift\+By\+Offset}} (int overall\+Tick)
+\begin{DoxyCompactList}\small\item\em Shift the chart notes by defined overall tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_ad0da4fb4c8554c0e07291ca1b028329d}{Shift\+By\+Offset}} (int bar, int tick)
+\begin{DoxyCompactList}\small\item\em Shift the chart notes by defined overall tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_af091191ffbc4fae800197964e0f7a3c0}{Rotate\+Notes}} (string method)
+\begin{DoxyCompactList}\small\item\em Rotate the notes by specified method. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a300fae8a8444a5314dc8eab652d0fd81}{Get\+Time\+Stamp}} (int bar, int tick)
+\begin{DoxyCompactList}\small\item\em Get appropriate time stamp of given tick. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provide interface for charts. 
+
+Definition at line \mbox{\hyperlink{_i_chart_8cs_source_l00006}{6}} of file \mbox{\hyperlink{_i_chart_8cs_source}{IChart.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_chart_ab377ec3aa9607b5e63ef2d986fdf45bb}\label{interface_mai_lib_1_1_i_chart_ab377ec3aa9607b5e63ef2d986fdf45bb}} 
+\index{MaiLib.IChart@{MaiLib.IChart}!CheckValidity@{CheckValidity}}
+\index{CheckValidity@{CheckValidity}!MaiLib.IChart@{MaiLib.IChart}}
+\doxysubsubsection{\texorpdfstring{CheckValidity()}{CheckValidity()}}
+{\footnotesize\ttfamily bool Mai\+Lib.\+IChart.\+Check\+Validity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if this chart is valid. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_chart_a24a2ddf0d5764aadfb9ad4dff61ae4ba}{Mai\+Lib.\+Chart}}, \mbox{\hyperlink{class_mai_lib_1_1_ma2_af6c726c84c93dddaa2463df262f23fcd}{Mai\+Lib.\+Ma2}}, \mbox{\hyperlink{class_mai_lib_1_1_simai_abd7fc5db57bd6768c4b8b85620293b7c}{Mai\+Lib.\+Simai}}, and \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_a38546ac7bf57a9ad796b8978bf5a45b4}{Mai\+Lib.\+XMaiL}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_chart_a60914b01b3ff92fb490a30fa1f8388e2}\label{interface_mai_lib_1_1_i_chart_a60914b01b3ff92fb490a30fa1f8388e2}} 
+\index{MaiLib.IChart@{MaiLib.IChart}!Compose@{Compose}}
+\index{Compose@{Compose}!MaiLib.IChart@{MaiLib.IChart}}
+\doxysubsubsection{\texorpdfstring{Compose()}{Compose()}}
+{\footnotesize\ttfamily string Mai\+Lib.\+IChart.\+Compose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Export this Good Brother. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_chart_a8721d4107a720b19b2c5545f0edbef01}{Mai\+Lib.\+Chart}}, \mbox{\hyperlink{class_mai_lib_1_1_chart_pack_a653d1a1afb90e8343b30a2adfaac3b2b}{Mai\+Lib.\+Chart\+Pack}}, \mbox{\hyperlink{class_mai_lib_1_1_ma2_a230dc740665afdf2a1f011abfefb4ba5}{Mai\+Lib.\+Ma2}}, \mbox{\hyperlink{class_mai_lib_1_1_simai_ad3f9f102b7d484b865e3b9513a5eaae2}{Mai\+Lib.\+Simai}}, and \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_af55039abe693e63b35b69f20717f0917}{Mai\+Lib.\+XMaiL}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_chart_a300fae8a8444a5314dc8eab652d0fd81}\label{interface_mai_lib_1_1_i_chart_a300fae8a8444a5314dc8eab652d0fd81}} 
+\index{MaiLib.IChart@{MaiLib.IChart}!GetTimeStamp@{GetTimeStamp}}
+\index{GetTimeStamp@{GetTimeStamp}!MaiLib.IChart@{MaiLib.IChart}}
+\doxysubsubsection{\texorpdfstring{GetTimeStamp()}{GetTimeStamp()}}
+{\footnotesize\ttfamily double Mai\+Lib.\+IChart.\+Get\+Time\+Stamp (\begin{DoxyParamCaption}\item[{int}]{bar,  }\item[{int}]{tick }\end{DoxyParamCaption})}
+
+
+
+Get appropriate time stamp of given tick. 
+
+\begin{DoxyReturn}{Returns}
+Time stamp of bar and note
+\end{DoxyReturn}
+$<$requires$>$this.\+bpm\+Changes!=null$<$/requires$>$ 
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{Mai\+Lib.\+Chart}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_chart_af091191ffbc4fae800197964e0f7a3c0}\label{interface_mai_lib_1_1_i_chart_af091191ffbc4fae800197964e0f7a3c0}} 
+\index{MaiLib.IChart@{MaiLib.IChart}!RotateNotes@{RotateNotes}}
+\index{RotateNotes@{RotateNotes}!MaiLib.IChart@{MaiLib.IChart}}
+\doxysubsubsection{\texorpdfstring{RotateNotes()}{RotateNotes()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+IChart.\+Rotate\+Notes (\begin{DoxyParamCaption}\item[{string}]{method }\end{DoxyParamCaption})}
+
+
+
+Rotate the notes by specified method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em method} & Clockwise90, Clockwise 180, Counterclockwise90, Counterclockwise 180, Up\+Side\+Down, Left\+To\+Right\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_chart_ab51aa728afccb1a2af2f285f38b4a64d}{Mai\+Lib.\+Chart}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_chart_ad0da4fb4c8554c0e07291ca1b028329d}\label{interface_mai_lib_1_1_i_chart_ad0da4fb4c8554c0e07291ca1b028329d}} 
+\index{MaiLib.IChart@{MaiLib.IChart}!ShiftByOffset@{ShiftByOffset}}
+\index{ShiftByOffset@{ShiftByOffset}!MaiLib.IChart@{MaiLib.IChart}}
+\doxysubsubsection{\texorpdfstring{ShiftByOffset()}{ShiftByOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Mai\+Lib.\+IChart.\+Shift\+By\+Offset (\begin{DoxyParamCaption}\item[{int}]{bar,  }\item[{int}]{tick }\end{DoxyParamCaption})}
+
+
+
+Shift the chart notes by defined overall tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bar} & Bar to add for offset\\
+\hline
+{\em tick} & Tick to add for offset\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_chart_a3430a13901df368d8235aea76793e17e}{Mai\+Lib.\+Chart}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_chart_a0bbf3f61adb0f8c200e717671a96f2b6}\label{interface_mai_lib_1_1_i_chart_a0bbf3f61adb0f8c200e717671a96f2b6}} 
+\index{MaiLib.IChart@{MaiLib.IChart}!ShiftByOffset@{ShiftByOffset}}
+\index{ShiftByOffset@{ShiftByOffset}!MaiLib.IChart@{MaiLib.IChart}}
+\doxysubsubsection{\texorpdfstring{ShiftByOffset()}{ShiftByOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Mai\+Lib.\+IChart.\+Shift\+By\+Offset (\begin{DoxyParamCaption}\item[{int}]{overall\+Tick }\end{DoxyParamCaption})}
+
+
+
+Shift the chart notes by defined overall tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em overall\+Tick} & Tick to add for offset\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_chart_a6190d29123e5766dc3e92ced077832cd}{Mai\+Lib.\+Chart}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_chart_a9124e4135182c4c2f5ade3ebe14e512c}\label{interface_mai_lib_1_1_i_chart_a9124e4135182c4c2f5ade3ebe14e512c}} 
+\index{MaiLib.IChart@{MaiLib.IChart}!Update@{Update}}
+\index{Update@{Update}!MaiLib.IChart@{MaiLib.IChart}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+IChart.\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates all information. 
+
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Mai\+Lib.\+Chart}}, and \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_a40fcea53c56aeb06566e6875813a9c17}{Mai\+Lib.\+XMaiL}}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Neskol/\+Mai\+Lib/\mbox{\hyperlink{_i_chart_8cs}{IChart.\+cs}}\end{DoxyCompactItemize}

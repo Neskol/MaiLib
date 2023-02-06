@@ -1,0 +1,946 @@
+\hypertarget{_chart_8cs_source}{}\doxysection{Chart.\+cs}
+\label{_chart_8cs_source}\index{Neskol/MaiLib/Chart.cs@{Neskol/MaiLib/Chart.cs}}
+\mbox{\hyperlink{_chart_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00001}00001\ \textcolor{keyword}{using\ }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00002}00002\ \textcolor{keyword}{using\ }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00003}00003\ \textcolor{keyword}{using\ }System.Globalization;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00004}00004\ \textcolor{keyword}{using\ }System.Runtime.CompilerServices;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00005}00005\ \textcolor{keyword}{using\ }System.Xml;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00007}00007\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_mai_lib}{MaiLib}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00013}\mbox{\hyperlink{class_mai_lib_1_1_chart}{00013}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{abstract}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}}\ :\ \mbox{\hyperlink{interface_mai_lib_1_1_i_chart}{IChart}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00014}00014\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Stores\ all\ notes}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00016}00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<Note>\ notes;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Stores\ definitions\ of\ BPM\ Changes}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}\ bpmChanges;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Stores\ definitions\ of\ Measure\ Changes}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}\ measureChanges;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ totalNoteNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Counts\ number\ of\ Tap}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ tapNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Counts\ number\ of\ Break}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ breakNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Counts\ number\ of\ Hold}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ holdNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00035}00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Counts\ number\ of\ Slide}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ slideNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Counts\ number\ of\ Touch}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ touchNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Counts\ number\ of\ Touch\ Hold}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ thoNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Defines\ if\ the\ chart\ is\ DX\ chart}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{bool}\ isDxChart;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}?\ firstNote;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ definition\ =\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Defines\ }}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00062}00062\ \textcolor{comment}{}\ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}[]\ unitScore\ =\ \{\ 500,\ 1000,\ 1500,\ 2500\ \};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ achievement\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ totalDelay\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<List<Note>>\ chart;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ Dictionary<string,\ string>\ information;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ readonly\ \textcolor{keywordtype}{string}[]\ TapTypes\ =\ \{\ \textcolor{stringliteral}{"{}TAP"{}},\ \textcolor{stringliteral}{"{}STR"{}},\ \textcolor{stringliteral}{"{}TTP"{}},\ \textcolor{stringliteral}{"{}XTP"{}},\ \textcolor{stringliteral}{"{}XST"{}}\ \};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ readonly\ \textcolor{keywordtype}{string}[]\ HoldTypes\ =\ \{\ \textcolor{stringliteral}{"{}HLD"{}},\ \textcolor{stringliteral}{"{}THO"{}},\ \textcolor{stringliteral}{"{}XHO"{}}\ \};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ readonly\ \textcolor{keywordtype}{string}[]\ SlideTypes\ =\ \{\ \textcolor{stringliteral}{"{}SI\_"{}},\ \textcolor{stringliteral}{"{}SV\_"{}},\ \textcolor{stringliteral}{"{}SF\_"{}},\ \textcolor{stringliteral}{"{}SCL"{}},\ \textcolor{stringliteral}{"{}SCR"{}},\ \textcolor{stringliteral}{"{}SUL"{}},\ \textcolor{stringliteral}{"{}SUR"{}},\ \textcolor{stringliteral}{"{}SLL"{}},\ \textcolor{stringliteral}{"{}SLR"{}},\ \textcolor{stringliteral}{"{}SXL"{}},\ \textcolor{stringliteral}{"{}SXR"{}},\ \textcolor{stringliteral}{"{}SSL"{}},\ \textcolor{stringliteral}{"{}SSR"{}}\ \};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Theoretical\ Rating\ =\ (Difference\ in\ 100-\/down\ and\ Max\ score)/100-\/down}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00107}\mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{00107}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ List<Note>\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00108}00108\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.notes;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.notes\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00117}00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00123}\mbox{\hyperlink{class_mai_lib_1_1_chart_a7ebf2ca619175ab423cc7f28f48b6eb1}{00123}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ List<List<Note>>\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a7ebf2ca619175ab423cc7f28f48b6eb1}{StoredChart}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00124}00124\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.chart;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.chart\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00133}00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00138}\mbox{\hyperlink{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}{00138}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}\ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00139}00139\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.bpmChanges;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.bpmChanges\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00148}00148\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00153}\mbox{\hyperlink{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}{00153}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00154}00154\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.measureChanges;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.measureChanges\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00163}00163\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00168}\mbox{\hyperlink{class_mai_lib_1_1_chart_abe8c93962fc19004d449d9e7c3ae922b}{00168}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_abe8c93962fc19004d449d9e7c3ae922b}{TapNumber}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00169}00169\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.tapNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.tapNumber\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00178}00178\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00183}\mbox{\hyperlink{class_mai_lib_1_1_chart_adb370295002d3ccb69166835da9cf15e}{00183}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_adb370295002d3ccb69166835da9cf15e}{BreakNumber}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00184}00184\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.breakNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.breakNumber\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00193}00193\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00198}\mbox{\hyperlink{class_mai_lib_1_1_chart_a0c38f0821fa17e71241b1eb9cc820ea1}{00198}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a0c38f0821fa17e71241b1eb9cc820ea1}{HoldNumber}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00199}00199\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.holdNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.holdNumber\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00208}00208\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00213}\mbox{\hyperlink{class_mai_lib_1_1_chart_a61431b59f9cb028c07150e071848a960}{00213}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a61431b59f9cb028c07150e071848a960}{SlideNumber}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00214}00214\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.slideNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.slideNumber\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00223}00223\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00228}\mbox{\hyperlink{class_mai_lib_1_1_chart_a90f3f25ed181d5c4aa17c461c6b78923}{00228}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a90f3f25ed181d5c4aa17c461c6b78923}{TouchNumber}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00229}00229\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.touchNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.touchNumber\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00238}00238\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00239}00239\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00243}\mbox{\hyperlink{class_mai_lib_1_1_chart_a3a3b6c560ec65a27b1a4f5a1dd6e9fb9}{00243}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a3a3b6c560ec65a27b1a4f5a1dd6e9fb9}{ThoNumber}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00244}00244\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.thoNumber;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.thoNumber\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00253}00253\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00258}\mbox{\hyperlink{class_mai_lib_1_1_chart_a2b2fdda4926a0d0dd8fd7285fdbf0510}{00258}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a2b2fdda4926a0d0dd8fd7285fdbf0510}{TotalNoteNumber}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00259}00259\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}\ \{\ \textcolor{keywordflow}{return}\ this.totalNoteNumber;\ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00261}00261\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00266}\mbox{\hyperlink{class_mai_lib_1_1_chart_a88ec62135bd8b4c74a0e41a62bb81a5e}{00266}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}[]\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a88ec62135bd8b4c74a0e41a62bb81a5e}{UnitScore}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00267}00267\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.unitScore;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00272}00272\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00277}\mbox{\hyperlink{class_mai_lib_1_1_chart_a7739f094aa7c4dc178e77719dcd3617e}{00277}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a7739f094aa7c4dc178e77719dcd3617e}{Achievement}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00278}00278\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.achievement;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.achievement\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00287}00287\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00293}\mbox{\hyperlink{class_mai_lib_1_1_chart_a24bc12c7a3a865fffec0f84379bad3de}{00293}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a24bc12c7a3a865fffec0f84379bad3de}{TotalDelay}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00294}00294\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.totalDelay;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.totalDelay\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00303}00303\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00304}00304\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00309}\mbox{\hyperlink{class_mai_lib_1_1_chart_a6f19b3e20979061bb5a1121e8530028b}{00309}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ Dictionary<string,\ string>\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a6f19b3e20979061bb5a1121e8530028b}{Information}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00310}00310\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this.information;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.information\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00319}00319\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00320}00320\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00321}\mbox{\hyperlink{class_mai_lib_1_1_chart_a68a3904b9cf4f7ded0ea1fa1c6c8a40b}{00321}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a68a3904b9cf4f7ded0ea1fa1c6c8a40b}{IsDXChart}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00322}00322\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}\ =>\ this.isDxChart;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}\ =>\ this.isDxChart\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00325}00325\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00326}00326\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00327}\mbox{\hyperlink{class_mai_lib_1_1_chart_a5b97aabb984691057352038dd6df8770}{00327}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}?\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a5b97aabb984691057352038dd6df8770}{FirstNote}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00328}00328\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}\ =>\ this.firstNote;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{set}\ =>\ this.firstNote\ =\ value;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00331}00331\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00337}\mbox{\hyperlink{class_mai_lib_1_1_chart_a04c1336727a09012958a449fd2e31416}{00337}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a04c1336727a09012958a449fd2e31416}{Definition}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00338}00338\ \ \ \ \ \ \ \ \ \{\textcolor{keyword}{get};\ \textcolor{keyword}{set};\ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00339}00339\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00343}\mbox{\hyperlink{class_mai_lib_1_1_chart_ae40f0f7c3204cdf2764de19613e9f2c0}{00343}}\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_ae40f0f7c3204cdf2764de19613e9f2c0}{Chart}}()}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00344}00344\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ this.notes\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ this.bpmChanges\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}{BPMChanges}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ this.measureChanges\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}{MeasureChanges}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ this.chart\ =\ \textcolor{keyword}{new}\ List<List<Note>>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ this.information\ =\ \textcolor{keyword}{new}\ Dictionary<string,\ string>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ this.isDxChart\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ this.definition\ =\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00352}00352\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00353}00353\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00354}\mbox{\hyperlink{class_mai_lib_1_1_chart_a24a2ddf0d5764aadfb9ad4dff61ae4ba}{00354}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{abstract}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a24a2ddf0d5764aadfb9ad4dff61ae4ba}{CheckValidity}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00355}00355\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00359}\mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{00359}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}}()}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00360}00360\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00361}00361\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_ab0c006dc1841c80fe7cda829a9f86af4}{CheckSlideStart}}();\ \textcolor{comment}{//Add\ all\ NSTs\ back\ to\ the\ chart}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ \ \ this.StoredChart\ =\ \textcolor{keyword}{new}\ List<List<Note>>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maxBar\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ timeStamp\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (notes.Count\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maxBar\ =\ notes[notes.Count\ -\/\ 1].Bar;\ \textcolor{comment}{//Iterate\ to\ get\ the\ last\ note's\ bar\ as\ Max\ Bar}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Iterate\ over\ bar}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <=\ maxBar;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ bar\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}}\ noteChange\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ currentBPM\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[0].BPM;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ lastNote\ =\ \textcolor{keyword}{new}\ Rest();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ realLastNote\ =\ \textcolor{keyword}{new}\ Rest();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}}\ x\ \textcolor{keywordflow}{in}\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0354b2b7d0a4fa8fa0406a3651034b41}{Bar}}\ ==\ i)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bar.Add(x);\ \textcolor{comment}{//Extract\ the\ first\ BPM\ change\ in\ bar\ to\ the\ beginning\ of\ the\ bar}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a5b97aabb984691057352038dd6df8770}{FirstNote}}\ ==\ \textcolor{keyword}{null}\ \&\&\ !(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}BPM"{}})\ ||\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}MEASURE"{}})))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.FirstNote\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Console.WriteLine(x.Compose(0));}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x.BPMChangeNotes\ =\ this.bpmChanges.ChangeNotes;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x.Update();}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x.TickTimeStamp\ =\ this.GetTimeStamp(x.TickStamp);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x.WaitTimeStamp\ =\ this.GetTimeStamp(x.WaitTickStamp);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x.LastTimeStamp\ =\ this.GetTimeStamp(x.LastTickStamp);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0354b2b7d0a4fa8fa0406a3651034b41}{Bar}}\ ==\ i)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x.ReplaceBPMChanges(this.bpmChanges);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x.BPMChangeNotes\ =\ this.bpmChanges.ChangeNotes;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x.Update();}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Console.WriteLine("{}This\ note\ contains\ "{}+x.BPMChangeNotes.Count+"{}\ BPM\ notes"{});}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine(GetNoteDetail(this.bpmChanges,\ x));}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ delay\ =\ x.Bar\ *\ definition\ +\ x.Tick\ +\ x.WaitLength\ +\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_ad2c15248a6056b5df20faa524bff2544}{LastLength}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change_aaa8459a27781d9afce9952d07063da6d}{NoteSpecificGenre}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}BPM"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentBPM\ =\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_ab50fc72781bfd8173feab554b2ab2087}{BPM}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00410}00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}MEASURE"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}REST"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}TAP"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.tapNumber++;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change_aaa8459a27781d9afce9952d07063da6d}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}XTP"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.isDxChart\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}TTP"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00421}00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.touchNumber++;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.isDxChart\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}BRK"{}})\ ||\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}BST"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.breakNumber++;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}HOLD"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.holdNumber++;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.TickBPMDisagree\ =\ (\mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}})\ !=\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a8f95a5eba8666e9e69fc0ea0a3362ab7}{LastTickStamp}})\ ||\ \mbox{\hyperlink{class_mai_lib_1_1_chart_adb762e3e3097e5970438fab7147d2928}{HasBPMChangeInBetween}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}},\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a8f95a5eba8666e9e69fc0ea0a3362ab7}{LastTickStamp}}));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a163be75a5c2847c3ea09c3cdd50a2f64}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a3f0febfc9510008ee8e9c2e785ac0f4f}{TickTimeStamp}}\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.TickTimeStamp\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a1d68357c317c3740f1579c64d8eb8f20}{CalculatedLastTime}}\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.LastTimeStamp\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a8f95a5eba8666e9e69fc0ea0a3362ab7}{LastTickStamp}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.CalculatedLastTime\ =\ x.LastTimeStamp\ -\/\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a3f0febfc9510008ee8e9c2e785ac0f4f}{TickTimeStamp}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.FixedLastLength\ =\ (int)(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a1d68357c317c3740f1579c64d8eb8f20}{CalculatedLastTime}}\ /\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{GetBPMTimeUnit}}(\mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}})));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (delay\ >\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a24bc12c7a3a865fffec0f84379bad3de}{TotalDelay}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.totalDelay\ =\ delay;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}New\ delay:\ "{}\ +\ delay);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine(x.Compose(1));}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}THO"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.thoNumber++;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.isDxChart\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}SLIDE\_START"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.tapNumber++;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}SLIDE"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.slideNumber++;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.TickBPMDisagree\ =\ (\mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}})\ !=\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_afe37adaf36feb16c9e3894b42454099c}{WaitTickStamp}})\ ||}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_afe37adaf36feb16c9e3894b42454099c}{WaitTickStamp}})\ !=\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a8f95a5eba8666e9e69fc0ea0a3362ab7}{LastTickStamp}})\ ||}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}})\ !=\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a8f95a5eba8666e9e69fc0ea0a3362ab7}{LastTickStamp}})\ ||}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_chart_adb762e3e3097e5970438fab7147d2928}{HasBPMChangeInBetween}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}},\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_afe37adaf36feb16c9e3894b42454099c}{WaitTickStamp}}));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a163be75a5c2847c3ea09c3cdd50a2f64}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a3f0febfc9510008ee8e9c2e785ac0f4f}{TickTimeStamp}}\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.TickTimeStamp\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a4e13d186c98826aba27d8e0cb0450e43}{CalculatedWaitTime}}\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.WaitTimeStamp\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_afe37adaf36feb16c9e3894b42454099c}{WaitTickStamp}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.CalculatedWaitTime\ =\ x.WaitTimeStamp\ -\/\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a3f0febfc9510008ee8e9c2e785ac0f4f}{TickTimeStamp}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a1d68357c317c3740f1579c64d8eb8f20}{CalculatedLastTime}}\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.LastTimeStamp\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a8f95a5eba8666e9e69fc0ea0a3362ab7}{LastTickStamp}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.CalculatedLastTime\ =\ x.LastTimeStamp\ -\/\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a67f6d9761077f599e75bb9cbaa601d05}{WaitTimeStamp}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00479}00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (lastNote.NoteSpecificType.Equals("{}SLIDE\_START"{})\ \&\&\ (lastNote.Bar\ ==\ x.Bar\ \&\&\ lastNote.Tick\ ==\ x.Tick\ \&\&\ lastNote.Key.Equals(x.Key)))}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ x.SlideStart\ =\ lastNote;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ lastNote.ConsecutiveSlide\ =\ x;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (delay\ >\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a24bc12c7a3a865fffec0f84379bad3de}{TotalDelay}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00487}00487\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.totalDelay\ =\ delay;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}New\ delay:\ "{}+delay);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine(x.Compose(1));}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}}\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(\textcolor{stringliteral}{"{}A\ SLIDE\ WITHOUT\ START\ WAS\ FOUND"{}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(x.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change_afbc89c48eeb067f7fc294e28562d451f}{Compose}}(1));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(\textcolor{stringliteral}{"{}This\ slide\ has\ start:\ "{}}\ +\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}}\ ==\ \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{keyword}{new}\ NullReferenceException(\textcolor{stringliteral}{"{}A\ SLIDE\ WITHOUT\ START\ WAS\ FOUND"{}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.BPM\ =\ currentBPM;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (x.NoteGenre.Equals("{}SLIDE"{})\ \&\&\ !lastNote.NoteSpecificType.Equals("{}SLIDE\_START"{}))}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ x.Prev\ =\ new\ Tap("{}NST"{},\ x.Bar,\ x.Tick,\ x.Key);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ lastNote.Next\ =\ x.Prev;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ //\ lastNote.Next\ =\ x;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ //\ x.Prev\ =\ lastNote;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ //\ x.Prev.Next\ =\ x;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ ((!x.NoteGenre.Equals("{}SLIDE"{}))\ \&\&\ x.Prev.NoteType.Equals("{}STR"{})\&\&x.Prev.ConsecutiveSlide\ ==\ null)}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ Console.WriteLine("{}Found\ NSS"{});}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00515}00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ Console.WriteLine("{}This\ note's\ note\ type:\ "{}\ +\ x.NoteType);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ Console.WriteLine(x.Compose(1));}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ Console.WriteLine("{}Prev\ note's\ note\ type:\ "{}\ +\ x.Prev.NoteType);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ Console.WriteLine(x.Prev.Compose(1));}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ lastNote.NoteType\ =\ "{}NSS"{};}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ x.Prev.NoteType\ =\ "{}NSS"{};}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bar.Add(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!x.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change_a6d46dc88e124ddcfa84d14e5c6230474}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lastNote\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ realLastNote\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ timeStamp\ +=\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a3f0febfc9510008ee8e9c2e785ac0f4f}{TickTimeStamp}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00531}00531\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ afterBar\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ afterBar.Add(\textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_change}{MeasureChange}}(i,\ 0,\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afce9f50e60b35092a955953e87aac8ae}{CalculateQuaver}}(\mbox{\hyperlink{class_mai_lib_1_1_chart_a2d6be14511650d8e2c51b0101288797c}{CalculateLeastMeasure}}(bar))));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine();}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}In\ bar\ "{}+i+"{},\ LeastMeasure\ is\ "{}+\ CalculateLeastMeasure(bar)+"{},\ so\ quaver\ will\ be\ "{}+\ CalculateQuaver(CalculateLeastMeasure(bar)));}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ afterBar.AddRange(bar);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.chart.Add(\mbox{\hyperlink{class_mai_lib_1_1_chart_ae4db3ec85fdfa9993a3931c838e44967}{FinishBar}}(afterBar,\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}},\ i,\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afce9f50e60b35092a955953e87aac8ae}{CalculateQuaver}}(\mbox{\hyperlink{class_mai_lib_1_1_chart_a2d6be14511650d8e2c51b0101288797c}{CalculateLeastMeasure}}(bar))));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}TOTAL\ DELAY:\ "{}+this.TotalDelay);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}TOTAL\ COUNT:\ "{}+\ this.chart.Count\ *\ 384);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this.totalDelay\ <\ this.chart.Count\ *\ definition)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.totalDelay\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.totalDelay\ -\/=\ this.chart.Count\ *\ definition;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ this.totalNoteNumber\ +=\ (this.tapNumber\ +\ this.holdNumber\ +\ this.slideNumber);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00550}00550\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00551}00551\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00556}\mbox{\hyperlink{class_mai_lib_1_1_chart_a8721d4107a720b19b2c5545f0edbef01}{00556}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{abstract}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a8721d4107a720b19b2c5545f0edbef01}{Compose}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00557}00557\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00561}\mbox{\hyperlink{class_mai_lib_1_1_chart_ab0c006dc1841c80fe7cda829a9f86af4}{00561}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_ab0c006dc1841c80fe7cda829a9f86af4}{CheckSlideStart}}()}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00562}00562\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00563}00563\ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ adjusted\ =\ \textcolor{keyword}{new}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00564}00564\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ previousSlideStart\ =\ \textcolor{keyword}{new}\ Rest();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00565}00565\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00566}00566\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00567}00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00568}00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00569}00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}}\ !=\ \textcolor{keyword}{null}\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}}.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}NST"{}})\ \&\&\ !adjusted.Contains(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00570}00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00571}00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adjusted.Add(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00572}00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ previousSlideStart\ =\ \textcolor{keyword}{new}\ Tap(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00573}00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00574}00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}}\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00575}00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00576}00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(\textcolor{stringliteral}{"{}A\ SLIDE\ WITHOUT\ START\ WAS\ FOUND"{}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00577}00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a51b9c57b063ae0f39afa9e5e4d1d7cf7}{Compose}}(1));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00578}00578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(\textcolor{stringliteral}{"{}This\ slide\ has\ start:\ "{}}\ +\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0950c4cea5e76073fa34f6dd3d1a2b78}{SlideStart}}\ ==\ \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00579}00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{keyword}{new}\ NullReferenceException(\textcolor{stringliteral}{"{}A\ SLIDE\ WITHOUT\ START\ WAS\ FOUND"{}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00580}00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00581}00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00582}00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE\_START"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00583}00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00584}00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adjusted.Add(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00585}00585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00586}00586\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00587}00587\ \ \ \ \ \ \ \ \ \ \ \ \ this.Notes\ =\ \textcolor{keyword}{new}(adjusted);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00588}00588\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00589}00589\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00596}\mbox{\hyperlink{class_mai_lib_1_1_chart_a812c2d3fafeb12a1eac8f9d2f74a533d}{00596}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{abstract}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a812c2d3fafeb12a1eac8f9d2f74a533d}{Compose}}(\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}\ bpm,\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}\ measure);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00597}00597\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00603}\mbox{\hyperlink{class_mai_lib_1_1_chart_a2d6be14511650d8e2c51b0101288797c}{00603}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a2d6be14511650d8e2c51b0101288797c}{CalculateLeastMeasure}}(List<Note>\ bar)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00604}00604\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00605}00605\ \ \ \ \ \ \ \ \ \ \ \ \ List<int>\ startTimeList\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00606}00606\ \ \ \ \ \ \ \ \ \ \ \ \ startTimeList.Add(0);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00607}00607\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ bar)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00608}00608\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00609}00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!startTimeList.Contains(x.\mbox{\hyperlink{class_mai_lib_1_1_note_aa670c5a13ce0eded4efa1a36562dbb4d}{Tick}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00610}00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00611}00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ startTimeList.Add(x.\mbox{\hyperlink{class_mai_lib_1_1_note_aa670c5a13ce0eded4efa1a36562dbb4d}{Tick}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00612}00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00615}00615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine(x.Compose(0));}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00616}00616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00617}00617\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00618}00618\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (startTimeList[startTimeList.Count\ -\/\ 1]\ !=\ 384)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00619}00619\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00620}00620\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ startTimeList.Add(384);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ List<int>\ intervalCandidates\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00623}00623\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ minimalInterval\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}{GCD}}(startTimeList[0],\ startTimeList[1]);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00624}00624\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ startTimeList.Count;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00625}00625\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00626}00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ minimalInterval\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}{GCD}}(minimalInterval,\ startTimeList[i]);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00628}00628\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ minimalInterval;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00629}00629\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00630}00630\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00636}\mbox{\hyperlink{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}{00636}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}{RealNoteNumber}}(List<Note>\ \mbox{\hyperlink{namespace_mai_lib_adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653}{Bar}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00637}00637\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ \mbox{\hyperlink{namespace_mai_lib_adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653}{Bar}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00640}00640\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00641}00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result++;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00644}00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00645}00645\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00646}00646\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00647}00647\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00648}00648\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00654}\mbox{\hyperlink{class_mai_lib_1_1_chart_a3e92802706592214749d7d77d0594106}{00654}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a3e92802706592214749d7d77d0594106}{ContainNotes}}(List<Note>\ \mbox{\hyperlink{namespace_mai_lib_adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653}{Bar}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00655}00655\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00656}00656\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ result\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ \mbox{\hyperlink{namespace_mai_lib_adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653}{Bar}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00659}00659\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ result\ ||\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00660}00660\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00661}00661\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00662}00662\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00663}00663\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00669}\mbox{\hyperlink{class_mai_lib_1_1_chart_afce9f50e60b35092a955953e87aac8ae}{00669}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afce9f50e60b35092a955953e87aac8ae}{CalculateQuaver}}(\textcolor{keywordtype}{int}\ length)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00670}00670\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00671}00671\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ result\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00672}00672\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ definition\ =\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ divisor\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}{GCD}}(definition,\ length);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ quaver\ =\ definition\ /\ divisor,\ beat\ =\ length\ /\ divisor;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00675}00675\ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ quaver;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00676}00676\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00677}00677\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00678}00678\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00687}\mbox{\hyperlink{class_mai_lib_1_1_chart_ae4db3ec85fdfa9993a3931c838e44967}{00687}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ List<Note>\ \mbox{\hyperlink{class_mai_lib_1_1_chart_ae4db3ec85fdfa9993a3931c838e44967}{FinishBar}}(List<Note>\ bar,\ List<BPMChange>\ bpmChanges,\ \textcolor{keywordtype}{int}\ barNumber,\ \textcolor{keywordtype}{int}\ minimalQuaver)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00688}00688\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00689}00689\ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ result\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00690}00690\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ writeRest\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00691}00691\ \ \ \ \ \ \ \ \ \ \ \ \ result.Add(bar[0]);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00692}00692\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 384;\ i\ +=\ 384\ /\ minimalQuaver)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00693}00693\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00694}00694\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Separate\ Touch\ and\ others\ to\ prevent\ ordering\ issue}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00695}00695\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ bpm\ =\ \textcolor{keyword}{new}\ Rest();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00696}00696\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ eachSet\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00697}00697\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ touchEachSet\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00698}00698\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Set\ condition\ to\ write\ rest\ if\ appropriate}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00699}00699\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writeRest\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00700}00700\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Add\ Appropriate\ note\ into\ each\ set}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00701}00701\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ lastNote\ =\ \textcolor{keyword}{new}\ Rest();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00702}00702\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ bar)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00703}00703\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00704}00704\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((x.\mbox{\hyperlink{class_mai_lib_1_1_note_aa670c5a13ce0eded4efa1a36562dbb4d}{Tick}}\ ==\ i)\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}}\ \&\&\ !(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}TTP"{}})\ ||\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}THO"{}})))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00705}00705\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00706}00706\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00707}00707\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00708}00708\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bpm\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00709}00709\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//List<Note>\ tempSet\ =\ new\ List<Note>();}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00710}00710\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//tempSet.Add(x);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00711}00711\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//tempSet.AddRange(eachSet);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00712}00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//eachSet=tempSet;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00713}00713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}A\ note\ was\ found\ at\ tick\ "{}\ +\ i\ +\ "{}\ of\ bar\ "{}\ +\ barNumber\ +\ "{},\ it\ is\ "{}+x.NoteType);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00714}00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00716}00716\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00717}00717\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eachSet.Add(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00718}00718\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}A\ note\ was\ found\ at\ tick\ "{}\ +\ i\ +\ "{}\ of\ bar\ "{}\ +\ barNumber\ +\ "{},\ it\ is\ "{}+x.NoteType);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00719}00719\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writeRest\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00720}00720\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.Prev\ =\ lastNote;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00721}00721\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lastNote.Next\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00722}00722\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00723}00723\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00724}00724\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ ((x.\mbox{\hyperlink{class_mai_lib_1_1_note_aa670c5a13ce0eded4efa1a36562dbb4d}{Tick}}\ ==\ i)\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}}\ \&\&\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}TTP"{}})\ ||\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}THO"{}})))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00725}00725\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00726}00726\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00727}00727\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00728}00728\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bpm\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00729}00729\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}A\ note\ was\ found\ at\ tick\ "{}\ +\ i\ +\ "{}\ of\ bar\ "{}\ +\ barNumber\ +\ "{},\ it\ is\ "{}+x.NoteType);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00730}00730\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00731}00731\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00732}00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00733}00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ touchEachSet.Add(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00734}00734\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}A\ note\ was\ found\ at\ tick\ "{}\ +\ i\ +\ "{}\ of\ bar\ "{}\ +\ barNumber\ +\ "{},\ it\ is\ "{}+x.NoteType);}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00735}00735\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writeRest\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00736}00736\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.Prev\ =\ lastNote;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00737}00737\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lastNote.Next\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00738}00738\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00739}00739\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00740}00740\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00741}00741\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00742}00742\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lastNote\ =\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_ab660e145f99b086197a9e725d68f12d6}{NewInstance}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00743}00743\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00744}00744\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00745}00745\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Searching\ for\ BPM\ change.\ If\ find\ one,\ get\ into\ front.}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00746}00746\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bpm.BPM\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00747}00747\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00748}00748\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ adjusted\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00749}00749\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adjusted.Add(bpm);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00750}00750\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adjusted.AddRange(touchEachSet);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00751}00751\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adjusted.AddRange(eachSet);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00752}00752\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eachSet\ =\ adjusted;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00753}00753\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00754}00754\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00755}00755\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00756}00756\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ adjusted\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00757}00757\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adjusted.AddRange(touchEachSet);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00758}00758\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adjusted.AddRange(eachSet);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00759}00759\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eachSet\ =\ adjusted;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00760}00760\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00761}00761\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (writeRest)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00762}00762\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00763}00763\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine("{}There\ is\ no\ note\ at\ tick\ "{}\ +\ i\ +\ "{}\ of\ bar\ "{}\ +\ barNumber\ +\ "{},\ Adding\ one"{});}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00764}00764\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eachSet.Add(\textcolor{keyword}{new}\ Rest(\textcolor{stringliteral}{"{}RST"{}},\ barNumber,\ i));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00765}00765\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00766}00766\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.AddRange(eachSet);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00767}00767\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00768}00768\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}{RealNoteNumber}}(result)\ !=\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}{RealNoteNumber}}(bar))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00769}00769\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00770}00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ error\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00771}00771\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error\ +=\ (\textcolor{stringliteral}{"{}Bar\ notes\ not\ match\ in\ bar:\ "{}}\ +\ barNumber)\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00772}00772\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error\ +=\ (\textcolor{stringliteral}{"{}Expected:\ "{}}\ +\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}{RealNoteNumber}}(bar))\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00773}00773\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ bar)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00774}00774\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00775}00775\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error\ +=\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a51b9c57b063ae0f39afa9e5e4d1d7cf7}{Compose}}(1))\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00776}00776\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00777}00777\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error\ +=\ (\textcolor{stringliteral}{"{}\(\backslash\)nActual:\ "{}}\ +\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}{RealNoteNumber}}(result))\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00778}00778\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ y\ \textcolor{keywordflow}{in}\ result)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00779}00779\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00780}00780\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error\ +=\ (y.\mbox{\hyperlink{class_mai_lib_1_1_note_a51b9c57b063ae0f39afa9e5e4d1d7cf7}{Compose}}(1))\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00781}00781\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00782}00782\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(error);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00783}00783\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{keyword}{new}\ Exception(\textcolor{stringliteral}{"{}NOTE\ NUMBER\ IS\ NOT\ MATCHING"{}});}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00784}00784\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00785}00785\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasFirstBPMChange\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00786}00786\ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ changedResult\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00787}00787\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ potentialFirstChange\ =\ \textcolor{keyword}{new}\ Rest();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00788}00788\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00789}00789\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ !hasFirstBPMChange\ \&\&\ i\ <\ result.Count();\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00790}00790\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00791}00791\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result[i].NoteGenre.Equals(\textcolor{stringliteral}{"{}BPM"{}})\ \&\&\ result[i].Tick\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00792}00792\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00793}00793\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ changedResult.Add(result[i]);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00794}00794\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ potentialFirstChange\ =\ result[i];}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00795}00795\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hasFirstBPMChange\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00796}00796\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00797}00797\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00798}00798\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hasFirstBPMChange)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00799}00799\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00800}00800\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result.Remove(potentialFirstChange);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00801}00801\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ changedResult.AddRange(result);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00802}00802\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ changedResult;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00803}00803\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00804}00804\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00805}00805\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00806}00806\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00807}00807\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00808}00808\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00815}\mbox{\hyperlink{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}{00815}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}{GCD}}(\textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00816}00816\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00817}00817\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ b\ ==\ 0\ ?\ a\ :\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}{GCD}}(b,\ a\ \%\ b);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00818}00818\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00819}00819\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00825}\mbox{\hyperlink{class_mai_lib_1_1_chart_a9801eed737a6546794f7585eff838563}{00825}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a9801eed737a6546794f7585eff838563}{IsPrime}}(\textcolor{keywordtype}{int}\ number)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00826}00826\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00827}00827\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (number\ <\ 1)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00828}00828\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (number\ ==\ 2)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00829}00829\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (number\ \%\ 2\ ==\ 0)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00830}00830\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00831}00831\ \ \ \ \ \ \ \ \ \ \ \ \ var\ boundary\ =\ (int)Math.Floor(Math.Sqrt(number));}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00832}00832\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00833}00833\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 3;\ i\ <=\ boundary;\ i\ +=\ 2)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00834}00834\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (number\ \%\ i\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00835}00835\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00836}00836\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00837}00837\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00838}00838\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00839}00839\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00844}\mbox{\hyperlink{class_mai_lib_1_1_chart_a71d7a0e92f11e27ae3645966df9a9ce0}{00844}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a71d7a0e92f11e27ae3645966df9a9ce0}{TakeInformation}}(Dictionary<string,\ string>\ information)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00845}00845\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00846}00846\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (KeyValuePair<string,\ string>\ x\ \textcolor{keywordflow}{in}\ information)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00847}00847\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00848}00848\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this.information.Add(x.\mbox{\hyperlink{class_mai_lib_1_1_note_ae93ef9ee5987428ab77603867d3ed864}{Key}},\ x.Value);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00849}00849\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00850}00850\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00851}00851\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00852}\mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{00852}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(\textcolor{keywordtype}{int}\ bar,\ \textcolor{keywordtype}{int}\ tick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00853}00853\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00854}00854\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ result\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00855}00855\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ overallTick\ =\ bar\ *\ 384\ +\ tick;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00856}00856\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (overallTick\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00857}00857\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00858}00858\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maximumBPMIndex\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00859}00859\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}.Count;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00860}00860\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00861}00861\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i].TickStamp\ <=\ overallTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00862}00862\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00863}00863\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maximumBPMIndex\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00864}00864\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00865}00865\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00866}00866\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (maximumBPMIndex\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00867}00867\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00868}00868\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ 60\ /\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[0].BPM\ *\ 4\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00869}00869\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00870}00870\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00871}00871\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00872}00872\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ maximumBPMIndex;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00873}00873\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00874}00874\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ previousTickTimeUnit\ =\ 60\ /\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i\ -\/\ 1].BPM\ *\ 4\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00875}00875\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ (this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i].TickStamp\ -\/\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i\ -\/\ 1].TickStamp)\ *\ previousTickTimeUnit;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00876}00876\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00877}00877\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ tickTimeUnit\ =\ 60\ /\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[maximumBPMIndex].BPM\ *\ 4\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00878}00878\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ (overallTick\ -\/\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[maximumBPMIndex].TickStamp)\ *\ tickTimeUnit;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00879}00879\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00880}00880\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00881}00881\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00882}00882\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00883}00883\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00889}\mbox{\hyperlink{class_mai_lib_1_1_chart_a387b82b715f80cb22fe332134dfd5d57}{00889}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a387b82b715f80cb22fe332134dfd5d57}{GetTimeStamp}}(\textcolor{keywordtype}{int}\ overallTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00890}00890\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00891}00891\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ result\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00892}00892\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (overallTick\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00893}00893\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00894}00894\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ foundMax\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00895}00895\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maximumBPMIndex\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00896}00896\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.BPMChanges.ChangeNotes.Count\ \&\&\ !foundMax;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00897}00897\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00898}00898\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i].TickStamp\ <=\ overallTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00899}00899\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00900}00900\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maximumBPMIndex\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00901}00901\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00902}00902\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00903}00903\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00904}00904\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ foundMax\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00905}00905\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00906}00906\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00907}00907\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (maximumBPMIndex\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00908}00908\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00909}00909\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{GetBPMTimeUnit}}(this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[0].BPM)\ *\ overallTick;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00910}00910\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00911}00911\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00912}00912\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00913}00913\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ maximumBPMIndex;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00914}00914\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00915}00915\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ previousTickTimeUnit\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{GetBPMTimeUnit}}(this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i\ -\/\ 1].BPM);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00916}00916\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ (this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i].TickStamp\ -\/\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i\ -\/\ 1].TickStamp)\ *\ previousTickTimeUnit;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00917}00917\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00918}00918\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ tickTimeUnit\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{GetBPMTimeUnit}}(this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[maximumBPMIndex].BPM);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00919}00919\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ (overallTick\ -\/\ this.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[maximumBPMIndex].TickStamp)\ *\ tickTimeUnit;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00920}00920\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00921}00921\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00922}00922\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00923}00923\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00924}00924\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00930}\mbox{\hyperlink{class_mai_lib_1_1_chart_a045524af8a9e0c8d28e67c1c75c2463a}{00930}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a045524af8a9e0c8d28e67c1c75c2463a}{GetTimeStamp}}(\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}\ bpmChanges,\ \textcolor{keywordtype}{int}\ overallTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00931}00931\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00932}00932\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ result\ =\ 0.0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00933}00933\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (overallTick\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00934}00934\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00935}00935\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maximumBPMIndex\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00936}00936\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}.Count;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00937}00937\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00938}00938\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i].TickStamp\ <=\ overallTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00939}00939\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00940}00940\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maximumBPMIndex\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00941}00941\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00942}00942\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00943}00943\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (maximumBPMIndex\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00944}00944\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00945}00945\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{GetBPMTimeUnit}}(bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[0].BPM)\ *\ overallTick;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00946}00946\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00947}00947\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00948}00948\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00949}00949\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ maximumBPMIndex;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00950}00950\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00951}00951\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ previousTickTimeUnit\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{GetBPMTimeUnit}}(bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i\ -\/\ 1].BPM);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00952}00952\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ (bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i].TickStamp\ -\/\ bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i\ -\/\ 1].TickStamp)\ *\ previousTickTimeUnit;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00953}00953\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00954}00954\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ tickTimeUnit\ =\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{GetBPMTimeUnit}}(bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[maximumBPMIndex].BPM);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00955}00955\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ (overallTick\ -\/\ bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[maximumBPMIndex].TickStamp)\ *\ tickTimeUnit;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00956}00956\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00957}00957\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00958}00958\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00959}00959\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00960}00960\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00966}\mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{00966}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{GetBPMTimeUnit}}(\textcolor{keywordtype}{double}\ bpm)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00967}00967\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00968}00968\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ result\ =\ 60\ /\ bpm\ *\ 4\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00969}00969\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00970}00970\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00971}00971\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00978}\mbox{\hyperlink{class_mai_lib_1_1_chart_a74f8d7936f2d7264ec320ba292a5375f}{00978}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a74f8d7936f2d7264ec320ba292a5375f}{GetNoteDetail}}(\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}\ bpmChanges,\ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ inTake)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00979}00979\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00980}00980\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ result\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00981}00981\ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ inTake.\mbox{\hyperlink{class_mai_lib_1_1_note_a51b9c57b063ae0f39afa9e5e4d1d7cf7}{Compose}}(1)\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00982}00982\ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}This\ is\ a\ "{}}\ +\ inTake.NoteSpecificGenre\ +\ \textcolor{stringliteral}{"{}\ note,\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00983}00983\ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}This\ note\ has\ overall\ tick\ of\ "{}}\ +\ inTake.TickStamp\ +\ \textcolor{stringliteral}{"{},\ and\ therefor,\ the\ tick\ time\ stamp\ shall\ be\ "{}}\ +\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(bpmChanges,\ inTake.\mbox{\hyperlink{class_mai_lib_1_1_note_a0090ff7f63e26d2ed22cd773fad30fd9}{TickStamp}})\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00984}00984\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (inTake.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}}))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00985}00985\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00986}00986\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}This\ note\ has\ wait\ length\ of\ "{}}\ +\ inTake.WaitLength\ +\ \textcolor{stringliteral}{"{},\ and\ therefor,\ its\ wait\ tick\ stamp\ is\ "{}}\ +\ inTake.WaitTickStamp\ +\ \textcolor{stringliteral}{"{}\ with\ wait\ time\ stamp\ of\ "{}}\ +\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(bpmChanges,\ inTake.\mbox{\hyperlink{class_mai_lib_1_1_note_afe37adaf36feb16c9e3894b42454099c}{WaitTickStamp}})\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00987}00987\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}This\ note\ has\ last\ length\ of\ "{}}\ +\ inTake.LastLength\ +\ \textcolor{stringliteral}{"{},\ and\ therefor,\ its\ last\ tick\ stamp\ is\ "{}}\ +\ inTake.LastTickStamp\ +\ \textcolor{stringliteral}{"{}\ with\ last\ time\ stamp\ of\ "{}}\ +\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{GetTimeStamp}}(bpmChanges,\ inTake.\mbox{\hyperlink{class_mai_lib_1_1_note_a8f95a5eba8666e9e69fc0ea0a3362ab7}{LastTickStamp}})\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00988}00988\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00989}00989\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00990}00990\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00991}00991\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00997}\mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{00997}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{GetBPMByTick}}(\textcolor{keywordtype}{int}\ overallTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00998}00998\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l00999}00999\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ result\ =\ this.bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[0].BPM;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01000}01000\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (overallTick\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01001}01001\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01002}01002\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maximumBPMIndex\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01003}01003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}.Count;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01004}01004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01005}01005\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this.bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i].TickStamp\ <=\ overallTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01006}01006\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01007}01007\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ maximumBPMIndex\ =\ i;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01008}01008\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01009}01009\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01010}01010\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ this.bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[maximumBPMIndex].BPM;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01011}01011\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01012}01012\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01013}01013\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01014}01014\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01015}01015\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01022}\mbox{\hyperlink{class_mai_lib_1_1_chart_adb762e3e3097e5970438fab7147d2928}{01022}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_adb762e3e3097e5970438fab7147d2928}{HasBPMChangeInBetween}}(\textcolor{keywordtype}{int}\ startTick,\ \textcolor{keywordtype}{int}\ endTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01023}01023\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01024}01024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ result\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01025}01025\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01026}01026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this.bpmChanges.ChangeNotes.Count\ \&\&\ !result;\ i++)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01027}01027\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01028}01028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this.bpmChanges.\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{ChangeNotes}}[i].TickStamp\ >\ startTick\ \&\&\ \textcolor{keyword}{this}.bpmChanges.ChangeNotes[i].TickStamp\ <\ endTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01029}01029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01030}01030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01031}01031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01032}01032\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01033}01033\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01034}01034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01035}01035\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01036}01036\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01037}\mbox{\hyperlink{class_mai_lib_1_1_chart_a6190d29123e5766dc3e92ced077832cd}{01037}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a6190d29123e5766dc3e92ced077832cd}{ShiftByOffset}}(\textcolor{keywordtype}{int}\ overallTick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01038}01038\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01039}01039\ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ updatedNotes\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01040}01040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01041}01041\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01042}01042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}BPM"{}})\ ||\ !x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}MEASURE"{}})\ ||\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a90afb1539eca823acbb3074b58993156}{NoteType}}.Equals(\textcolor{stringliteral}{"{}BPM"{}})\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0354b2b7d0a4fa8fa0406a3651034b41}{Bar}}\ !=\ 0\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_aa670c5a13ce0eded4efa1a36562dbb4d}{Tick}}\ !=\ 0)\ ||\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}MEASURE"{}})\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a0354b2b7d0a4fa8fa0406a3651034b41}{Bar}}\ !=\ 0\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_aa670c5a13ce0eded4efa1a36562dbb4d}{Tick}}\ !=\ 0))}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01043}01043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01044}01044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ copy;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01045}01045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01046}01046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01047}01047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}TAP"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01048}01048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}SLIDE\_START"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01049}01049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy\ =\ \textcolor{keyword}{new}\ Tap(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01050}01050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Bar\ +=\ overallTick\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01051}01051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Tick\ +=\ overallTick\ \%\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01052}01052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (copy.ConsecutiveSlide!=null)}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01053}01053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01054}01054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ copy.ConsecutiveSlide.Bar\ +=\ overallTick\ /\ 384;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01055}01055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ copy.ConsecutiveSlide.Tick\ +=\ overallTick\ \%\ 384;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01056}01056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01057}01057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.\mbox{\hyperlink{class_mai_lib_1_1_note_a163be75a5c2847c3ea09c3cdd50a2f64}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01058}01058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01059}01059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}HOLD"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01060}01060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}}(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01061}01061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Bar\ +=\ overallTick\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01062}01062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Tick\ +=\ overallTick\ \%\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01063}01063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.\mbox{\hyperlink{class_mai_lib_1_1_note_a163be75a5c2847c3ea09c3cdd50a2f64}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01064}01064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01065}01065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}SLIDE"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01066}01066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}}(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01067}01067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Bar\ +=\ overallTick\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01068}01068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Tick\ +=\ overallTick\ \%\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01069}01069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (copy.SlideStart\ !=\ null)}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01070}01070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01071}01071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ copy.SlideStart.Bar\ +=\ overallTick\ /\ 384;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01072}01072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ copy.SlideStart.Tick\ +=\ overallTick\ \%\ 384;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01073}01073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01074}01074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (copy.ConsecutiveSlide\ !=\ null)}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01075}01075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01076}01076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ copy.ConsecutiveSlide.Bar\ +=\ overallTick\ /\ 384;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01077}01077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ copy.ConsecutiveSlide.Tick\ +=\ overallTick\ \%\ 384;}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01078}01078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01079}01079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.\mbox{\hyperlink{class_mai_lib_1_1_note_a163be75a5c2847c3ea09c3cdd50a2f64}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01080}01080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01081}01081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}BPM"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01082}01082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}}(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01083}01083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Bar\ +=\ overallTick\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01084}01084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Tick\ +=\ overallTick\ \%\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01085}01085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.\mbox{\hyperlink{class_mai_lib_1_1_note_a163be75a5c2847c3ea09c3cdd50a2f64}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01086}01086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01087}01087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}MEASURE"{}}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01088}01088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_change}{MeasureChange}}((\mbox{\hyperlink{class_mai_lib_1_1_measure_change}{MeasureChange}})x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01089}01089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Bar\ +=\ overallTick\ /\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01090}01090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.Tick\ +=\ overallTick\ \%\ 384;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01091}01091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy.\mbox{\hyperlink{class_mai_lib_1_1_note_a163be75a5c2847c3ea09c3cdd50a2f64}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01092}01092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01093}01093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01094}01094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ copy\ =\ \textcolor{keyword}{new}\ Rest();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01095}01095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01096}01096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01097}01097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ updatedNotes.Add(copy);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01098}01098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01099}01099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01100}01100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01101}01101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ updatedNotes.Add(x);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01102}01102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01103}01103\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01104}01104\ \ \ \ \ \ \ \ \ \ \ \ \ this.Notes\ =\ \textcolor{keyword}{new}\ List<Note>(updatedNotes);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01105}01105\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01106}01106\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01107}01107\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01108}\mbox{\hyperlink{class_mai_lib_1_1_chart_a3430a13901df368d8235aea76793e17e}{01108}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a3430a13901df368d8235aea76793e17e}{ShiftByOffset}}(\textcolor{keywordtype}{int}\ bar,\ \textcolor{keywordtype}{int}\ tick)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01109}01109\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01110}01110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ overallTick\ =\ bar\ *\ 384\ +\ tick;}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01111}01111\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a6190d29123e5766dc3e92ced077832cd}{ShiftByOffset}}(overallTick);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01112}01112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01113}01113\ }
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01114}\mbox{\hyperlink{class_mai_lib_1_1_chart_ab51aa728afccb1a2af2f285f38b4a64d}{01114}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_ab51aa728afccb1a2af2f285f38b4a64d}{RotateNotes}}(\textcolor{keywordtype}{string}\ method)}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01115}01115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01116}01116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}})}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01117}01117\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01118}01118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a6502825657156c8865ce1b1efe9ba426}{Flip}}(method);}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01119}01119\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01120}01120\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01121}01121\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01122}01122\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_chart_8cs_source_l01123}01123\ \}}
+
+\end{DoxyCode}

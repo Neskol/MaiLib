@@ -1,0 +1,135 @@
+\hypertarget{interface_mai_lib_1_1_i_note}{}\doxysection{Mai\+Lib.\+INote Interface Reference}
+\label{interface_mai_lib_1_1_i_note}\index{MaiLib.INote@{MaiLib.INote}}
+
+
+Provide interface and basic functions for Notes.  
+
+
+Inheritance diagram for Mai\+Lib.\+INote\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.692308cm]{interface_mai_lib_1_1_i_note}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{interface_mai_lib_1_1_i_note_a1dfbb03e78cfcc5a17dfa79ad024dd1f}{Compose}} (int format)
+\begin{DoxyCompactList}\small\item\em Convert note to string for writing. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{interface_mai_lib_1_1_i_note_a8fc8a0d5073d015c22ad4aeea8d40451}{Check\+Validity}} ()
+\begin{DoxyCompactList}\small\item\em See if current note has all information needed. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{interface_mai_lib_1_1_i_note_abfc6926b276598f9724a547245d118f1}{Update}} ()
+\begin{DoxyCompactList}\small\item\em Updates this note instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_note_a72d02afdde5dedc5aa215824ee8b43b6}{Flip}} (string method)
+\begin{DoxyCompactList}\small\item\em Flip the note according to the method specified. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{interface_mai_lib_1_1_i_note_a137de1db8d9089f0f693ce0cc05c6e11}{Get\+Time\+Stamp}} (int overall\+Tick)
+\begin{DoxyCompactList}\small\item\em Give time stamp given overall tick. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provide interface and basic functions for Notes. 
+
+Definition at line \mbox{\hyperlink{_i_note_8cs_source_l00006}{6}} of file \mbox{\hyperlink{_i_note_8cs_source}{INote.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_note_a8fc8a0d5073d015c22ad4aeea8d40451}\label{interface_mai_lib_1_1_i_note_a8fc8a0d5073d015c22ad4aeea8d40451}} 
+\index{MaiLib.INote@{MaiLib.INote}!CheckValidity@{CheckValidity}}
+\index{CheckValidity@{CheckValidity}!MaiLib.INote@{MaiLib.INote}}
+\doxysubsubsection{\texorpdfstring{CheckValidity()}{CheckValidity()}}
+{\footnotesize\ttfamily bool Mai\+Lib.\+INote.\+Check\+Validity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+See if current note has all information needed. 
+
+\begin{DoxyReturn}{Returns}
+True if qualified, false otherwise
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change_aa80062f63868f2d4bf81fefa68e4ce94}{Mai\+Lib.\+BPMChange}}, \mbox{\hyperlink{class_mai_lib_1_1_hold_a42a427bbd7b55b46754d1d5aaffc994b}{Mai\+Lib.\+Hold}}, \mbox{\hyperlink{class_mai_lib_1_1_measure_change_a5ffa741d327b41e714ac5e62cbc26cb2}{Mai\+Lib.\+Measure\+Change}}, \mbox{\hyperlink{class_mai_lib_1_1_note_aa6bf8e7d6d7da1cbb72c1823fd26a7ba}{Mai\+Lib.\+Note}}, and \mbox{\hyperlink{class_mai_lib_1_1_slide_a2b48a3c33b0260ef0c700b6462b674fe}{Mai\+Lib.\+Slide}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_note_a1dfbb03e78cfcc5a17dfa79ad024dd1f}\label{interface_mai_lib_1_1_i_note_a1dfbb03e78cfcc5a17dfa79ad024dd1f}} 
+\index{MaiLib.INote@{MaiLib.INote}!Compose@{Compose}}
+\index{Compose@{Compose}!MaiLib.INote@{MaiLib.INote}}
+\doxysubsubsection{\texorpdfstring{Compose()}{Compose()}}
+{\footnotesize\ttfamily string Mai\+Lib.\+INote.\+Compose (\begin{DoxyParamCaption}\item[{int}]{format }\end{DoxyParamCaption})}
+
+
+
+Convert note to string for writing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & 0 if Simai, 1 if Ma2\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change_afbc89c48eeb067f7fc294e28562d451f}{Mai\+Lib.\+BPMChange}}, \mbox{\hyperlink{class_mai_lib_1_1_hold_a18e2b9e7fc7062497140d137ae5876e7}{Mai\+Lib.\+Hold}}, \mbox{\hyperlink{class_mai_lib_1_1_measure_change_a1c99e63af55c6fd3b5e77e3d1bfaf949}{Mai\+Lib.\+Measure\+Change}}, \mbox{\hyperlink{class_mai_lib_1_1_note_a51b9c57b063ae0f39afa9e5e4d1d7cf7}{Mai\+Lib.\+Note}}, and \mbox{\hyperlink{class_mai_lib_1_1_slide_a2b67d472cb7304c4726d942a538edc13}{Mai\+Lib.\+Slide}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_note_a72d02afdde5dedc5aa215824ee8b43b6}\label{interface_mai_lib_1_1_i_note_a72d02afdde5dedc5aa215824ee8b43b6}} 
+\index{MaiLib.INote@{MaiLib.INote}!Flip@{Flip}}
+\index{Flip@{Flip}!MaiLib.INote@{MaiLib.INote}}
+\doxysubsubsection{\texorpdfstring{Flip()}{Flip()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+INote.\+Flip (\begin{DoxyParamCaption}\item[{string}]{method }\end{DoxyParamCaption})}
+
+
+
+Flip the note according to the method specified. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em method} & Up\+Side\+Down, Left\+To\+Right, Clockwise90/180, Counterclockwise90/180\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_note_a6502825657156c8865ce1b1efe9ba426}{Mai\+Lib.\+Note}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_note_a137de1db8d9089f0f693ce0cc05c6e11}\label{interface_mai_lib_1_1_i_note_a137de1db8d9089f0f693ce0cc05c6e11}} 
+\index{MaiLib.INote@{MaiLib.INote}!GetTimeStamp@{GetTimeStamp}}
+\index{GetTimeStamp@{GetTimeStamp}!MaiLib.INote@{MaiLib.INote}}
+\doxysubsubsection{\texorpdfstring{GetTimeStamp()}{GetTimeStamp()}}
+{\footnotesize\ttfamily double Mai\+Lib.\+INote.\+Get\+Time\+Stamp (\begin{DoxyParamCaption}\item[{int}]{overall\+Tick }\end{DoxyParamCaption})}
+
+
+
+Give time stamp given overall tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em overall\+Tick} & Note.\+Bar$\ast$384+\+Note.Tick\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Appropriate time stamp in seconds
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_note_a02fec2d573834a2bdc310a07ed5ed9c4}{Mai\+Lib.\+Note}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_note_abfc6926b276598f9724a547245d118f1}\label{interface_mai_lib_1_1_i_note_abfc6926b276598f9724a547245d118f1}} 
+\index{MaiLib.INote@{MaiLib.INote}!Update@{Update}}
+\index{Update@{Update}!MaiLib.INote@{MaiLib.INote}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily bool Mai\+Lib.\+INote.\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates this note instance. 
+
+\begin{DoxyReturn}{Returns}
+True if Calculated Times is defined, false otherwise
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_note_a163be75a5c2847c3ea09c3cdd50a2f64}{Mai\+Lib.\+Note}}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Neskol/\+Mai\+Lib/\mbox{\hyperlink{_i_note_8cs}{INote.\+cs}}\end{DoxyCompactItemize}

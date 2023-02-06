@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_mai_lib_1_1_measure_changes" xml:lang="en-US">
+<title>MaiLib.MeasureChanges Class Reference</title>
+<indexterm><primary>MaiLib.MeasureChanges</primary></indexterm>
+<para>
+
+<para>Store measure change notes in a chart. </para>
+ 
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_mai_lib_1_1_measure_changes_1ac589446cf1108de036fdcf6f594a4d72">MeasureChanges</link> ()</para>
+
+<para>Construct an empty Measure Change. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_measure_changes_1a089390f57270e80254a0e8b29ab52a86">MeasureChanges</link> (<link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link> takeIn)</para>
+
+<para>Construct Measure Change with existing one. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_measure_changes_1a45443bc629c31b85bf292dcc28948cf2">MeasureChanges</link> (int initialQuaver, int initialBeat)</para>
+
+<para>Take in initial quavers and beats, incase MET_CHANGE is not specified. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_measure_changes_1ac975c70ee2d86a089c52e43c091f4291">MeasureChanges</link> (List&lt; int &gt; bar, List&lt; int &gt; tick, List&lt; int &gt; quavers, List&lt; int &gt; beats)</para>
+
+<para>Construct a measure of given beats. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_measure_changes_1aeb76df02bf4918cd354944eb89c023c3">Add</link> (int bar, int tick, int quavers, int beats)</para>
+
+<para>Add new measure changes to MeasureChanges. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_mai_lib_1_1_measure_changes_1a2c035ef447867dad827e642c1820f0f8">CheckValidity</link> ()</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_mai_lib_1_1_measure_changes_1a7c6936ba52d572d6412a79d503ba5a94">Compose</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_measure_changes_1a7bc23c3e23cdb4fa165faaefa6d14ca1">Update</link> ()</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Properties    </title>
+        <itemizedlist>
+            <listitem><para>List&lt; int &gt; <link linkend="_class_mai_lib_1_1_measure_changes_1a331edfaf199866f86246546f4bab50e0">Bar</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Return this.Bar. </para>
+</listitem>
+            <listitem><para>List&lt; int &gt; <link linkend="_class_mai_lib_1_1_measure_changes_1a25fc3b1cf5e0c3ae09f96195e4c40da5">Tick</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Return this.Tick. </para>
+</listitem>
+            <listitem><para>List&lt; int &gt; <link linkend="_class_mai_lib_1_1_measure_changes_1a336ab254badf283ef4fa7f088d92f04d">Quavers</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Return this.Quavers. </para>
+</listitem>
+            <listitem><para>List&lt; int &gt; <link linkend="_class_mai_lib_1_1_measure_changes_1a6a5ba801a227665926200baf0bee594c">Beats</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Return this.Beats. </para>
+</listitem>
+            <listitem><para>List&lt; <link linkend="_class_mai_lib_1_1_measure_change">MeasureChange</link> &gt; <link linkend="_class_mai_lib_1_1_measure_changes_1a8754ef92a91eef9c2b566beb2a66c6bd">ChangeNotes</link><computeroutput> [get]</computeroutput>
+</para>
+</listitem>
+            <listitem><para>string <link linkend="_class_mai_lib_1_1_measure_changes_1ac1b94bf7b40b4ee30533e15c4fc0e207">InitialChange</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Return first definitions. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Store measure change notes in a chart. </para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00006">6</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1ac589446cf1108de036fdcf6f594a4d72"/><section>
+    <title>MeasureChanges()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>MeasureChanges</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>MeasureChanges</secondary></indexterm>
+<para><computeroutput>MaiLib.MeasureChanges.MeasureChanges ( )</computeroutput></para><para>
+
+<para>Construct an empty Measure Change. </para>
+</para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00019">19</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a089390f57270e80254a0e8b29ab52a86"/><section>
+    <title>MeasureChanges()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>MeasureChanges</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>MeasureChanges</secondary></indexterm>
+<para><computeroutput>MaiLib.MeasureChanges.MeasureChanges (<link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link> takeIn)</computeroutput></para><para>
+
+<para>Construct Measure Change with existing one. </para>
+</para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00031">31</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a45443bc629c31b85bf292dcc28948cf2"/><section>
+    <title>MeasureChanges()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>MeasureChanges</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>MeasureChanges</secondary></indexterm>
+<para><computeroutput>MaiLib.MeasureChanges.MeasureChanges (int initialQuaver, int initialBeat)</computeroutput></para><para>
+
+<para>Take in initial quavers and beats, incase MET_CHANGE is not specified. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>initialQuaver</entry><entry>
+<para>Initial Quaver</para>
+</entry>
+                            </row>
+                            <row>
+<entry>initialBeat</entry><entry>
+<para>Initial Beat</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00045">45</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1ac975c70ee2d86a089c52e43c091f4291"/><section>
+    <title>MeasureChanges()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>MeasureChanges</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>MeasureChanges</secondary></indexterm>
+<para><computeroutput>MaiLib.MeasureChanges.MeasureChanges (List&lt; int &gt; bar, List&lt; int &gt; tick, List&lt; int &gt; quavers, List&lt; int &gt; beats)</computeroutput></para><para>
+
+<para>Construct a measure of given beats. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>bar</entry><entry></entry>
+                            </row>
+                            <row>
+<entry>tick</entry><entry></entry>
+                            </row>
+                            <row>
+<entry>quavers</entry><entry></entry>
+                            </row>
+                            <row>
+<entry>beats</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00063">63</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1aeb76df02bf4918cd354944eb89c023c3"/><section>
+    <title>Add()</title>
+<indexterm><primary>Add</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>Add</secondary></indexterm>
+<para><computeroutput>void MaiLib.MeasureChanges.Add (int bar, int tick, int quavers, int beats)</computeroutput></para><para>
+
+<para>Add new measure changes to MeasureChanges. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>bar</entry><entry>
+<para>Bar which changes</para>
+</entry>
+                            </row>
+                            <row>
+<entry>tick</entry><entry>
+<para>Tick which changes</para>
+</entry>
+                            </row>
+                            <row>
+<entry>quavers</entry><entry>
+<para>Quavers which changes</para>
+</entry>
+                            </row>
+                            <row>
+<entry>beats</entry><entry>
+<para>Beat which changes</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00120">120</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a2c035ef447867dad827e642c1820f0f8"/><section>
+    <title>CheckValidity()</title>
+<indexterm><primary>CheckValidity</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>CheckValidity</secondary></indexterm>
+<para><computeroutput>bool MaiLib.MeasureChanges.CheckValidity ( )</computeroutput></para><para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00139">139</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a7c6936ba52d572d6412a79d503ba5a94"/><section>
+    <title>Compose()</title>
+<indexterm><primary>Compose</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>Compose</secondary></indexterm>
+<para><computeroutput>string MaiLib.MeasureChanges.Compose ( )</computeroutput></para><para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00148">148</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a7bc23c3e23cdb4fa165faaefa6d14ca1"/><section>
+    <title>Update()</title>
+<indexterm><primary>Update</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>Update</secondary></indexterm>
+<para><computeroutput>void MaiLib.MeasureChanges.Update ( )</computeroutput></para><para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00165">165</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+</section>
+<section>
+<title>Property Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a331edfaf199866f86246546f4bab50e0"/><section>
+    <title>Bar</title>
+<indexterm><primary>Bar</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>Bar</secondary></indexterm>
+<para><computeroutput>List&lt;int&gt; MaiLib.MeasureChanges.Bar<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>Return this.Bar. </para>
+</para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00077">77</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a6a5ba801a227665926200baf0bee594c"/><section>
+    <title>Beats</title>
+<indexterm><primary>Beats</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>Beats</secondary></indexterm>
+<para><computeroutput>List&lt;int&gt; MaiLib.MeasureChanges.Beats<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>Return this.Beats. </para>
+</para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00101">101</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a8754ef92a91eef9c2b566beb2a66c6bd"/><section>
+    <title>ChangeNotes</title>
+<indexterm><primary>ChangeNotes</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>ChangeNotes</secondary></indexterm>
+<para><computeroutput>List&lt;<link linkend="_class_mai_lib_1_1_measure_change">MeasureChange</link>&gt; MaiLib.MeasureChanges.ChangeNotes<computeroutput>[get]</computeroutput></computeroutput></para><para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00106">106</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1ac1b94bf7b40b4ee30533e15c4fc0e207"/><section>
+    <title>InitialChange</title>
+<indexterm><primary>InitialChange</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>InitialChange</secondary></indexterm>
+<para><computeroutput>string MaiLib.MeasureChanges.InitialChange<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>Return first definitions. </para>
+</para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00131">131</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a336ab254badf283ef4fa7f088d92f04d"/><section>
+    <title>Quavers</title>
+<indexterm><primary>Quavers</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>Quavers</secondary></indexterm>
+<para><computeroutput>List&lt;int&gt; MaiLib.MeasureChanges.Quavers<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>Return this.Quavers. </para>
+</para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00093">93</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_measure_changes_1a25fc3b1cf5e0c3ae09f96195e4c40da5"/><section>
+    <title>Tick</title>
+<indexterm><primary>Tick</primary><secondary>MaiLib.MeasureChanges</secondary></indexterm>
+<indexterm><primary>MaiLib.MeasureChanges</primary><secondary>Tick</secondary></indexterm>
+<para><computeroutput>List&lt;int&gt; MaiLib.MeasureChanges.Tick<computeroutput>[get]</computeroutput></computeroutput></para><para>
+
+<para>Return this.Tick. </para>
+</para>
+<para>
+Definition at line <link linkend="__measure_changes_8cs_source_1l00085">85</link> of file <link linkend="__measure_changes_8cs_source">MeasureChanges.cs</link>.</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+Neskol/MaiLib/<link linkend="__measure_changes_8cs">MeasureChanges.cs</link></section>
+</section>

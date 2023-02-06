@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="namespace_mai_lib" kind="namespace" language="C#">
+    <compoundname>MaiLib</compoundname>
+    <innerclass refid="class_mai_lib_1_1_b_p_m_change" prot="public">MaiLib::BPMChange</innerclass>
+    <innerclass refid="class_mai_lib_1_1_b_p_m_changes" prot="public">MaiLib::BPMChanges</innerclass>
+    <innerclass refid="class_mai_lib_1_1_chart" prot="public">MaiLib::Chart</innerclass>
+    <innerclass refid="class_mai_lib_1_1_chart_pack" prot="public">MaiLib::ChartPack</innerclass>
+    <innerclass refid="class_mai_lib_1_1_compiler" prot="public">MaiLib::Compiler</innerclass>
+    <innerclass refid="class_mai_lib_1_1_hold" prot="public">MaiLib::Hold</innerclass>
+    <innerclass refid="interface_mai_lib_1_1_i_chart" prot="public">MaiLib::IChart</innerclass>
+    <innerclass refid="interface_mai_lib_1_1_i_compiler" prot="public">MaiLib::ICompiler</innerclass>
+    <innerclass refid="interface_mai_lib_1_1_i_note" prot="public">MaiLib::INote</innerclass>
+    <innerclass refid="interface_mai_lib_1_1_i_parser" prot="public">MaiLib::IParser</innerclass>
+    <innerclass refid="interface_mai_lib_1_1_i_tokenizer" prot="public">MaiLib::ITokenizer</innerclass>
+    <innerclass refid="interface_mai_lib_1_1_i_xml_utility" prot="package">MaiLib::IXmlUtility</innerclass>
+    <innerclass refid="class_mai_lib_1_1_ma2" prot="public">MaiLib::Ma2</innerclass>
+    <innerclass refid="class_mai_lib_1_1_ma2_parser" prot="public">MaiLib::Ma2Parser</innerclass>
+    <innerclass refid="class_mai_lib_1_1_ma2_tokenizer" prot="public">MaiLib::Ma2Tokenizer</innerclass>
+    <innerclass refid="class_mai_lib_1_1_measure_change" prot="public">MaiLib::MeasureChange</innerclass>
+    <innerclass refid="class_mai_lib_1_1_measure_changes" prot="public">MaiLib::MeasureChanges</innerclass>
+    <innerclass refid="class_mai_lib_1_1_note" prot="public">MaiLib::Note</innerclass>
+    <innerclass refid="class_mai_lib_1_1_rest" prot="package">MaiLib::Rest</innerclass>
+    <innerclass refid="class_mai_lib_1_1_simai" prot="public">MaiLib::Simai</innerclass>
+    <innerclass refid="class_mai_lib_1_1_simai_compiler" prot="public">MaiLib::SimaiCompiler</innerclass>
+    <innerclass refid="class_mai_lib_1_1_simai_parser" prot="public">MaiLib::SimaiParser</innerclass>
+    <innerclass refid="class_mai_lib_1_1_simai_tokenizer" prot="public">MaiLib::SimaiTokenizer</innerclass>
+    <innerclass refid="class_mai_lib_1_1_slide" prot="public">MaiLib::Slide</innerclass>
+    <innerclass refid="class_mai_lib_1_1_track_information" prot="public">MaiLib::TrackInformation</innerclass>
+    <innerclass refid="class_mai_lib_1_1_x_mai_l" prot="public">MaiLib::XMaiL</innerclass>
+    <innerclass refid="class_mai_lib_1_1_xml_information" prot="public">MaiLib::XmlInformation</innerclass>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>StdParam</name>
+        <qualifiedname>MaiLib.StdParam</qualifiedname>
+        <enumvalue id="namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21aa1fa27779242b4902f7ae3bdd5c6d508" prot="public">
+          <name>Type</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653" prot="public">
+          <name>Bar</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a0b3516a5bbb77566f904f9d3877f4710" prot="public">
+          <name>Tick</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a3abff32d98bbe945bbc59b5e5728a99b" prot="public">
+          <name>KeyOrParam</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a8be52214132d104bf047755b568b5843" prot="public">
+          <name>WaitTimeOrParam</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21ae7237116218f2c9b98efba91ccea22aa" prot="public">
+          <name>LastTime</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a617f2190b4cbbcddaea9d201ddc88a7b" prot="public">
+          <name>EndKey</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Give enums of parameters of Standard Keys. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Ma2parser.cs" line="8" column="11" bodyfile="Neskol/MaiLib/Ma2parser.cs" bodystart="8" bodyend="8"/>
+      </memberdef>
+      <memberdef kind="enum" id="namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>DxParam</name>
+        <qualifiedname>MaiLib.DxParam</qualifiedname>
+        <enumvalue id="namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1aa1fa27779242b4902f7ae3bdd5c6d508" prot="public">
+          <name>Type</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1addc35f88fa71b6ef142ae61f35364653" prot="public">
+          <name>Bar</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a0b3516a5bbb77566f904f9d3877f4710" prot="public">
+          <name>Tick</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a897356954c2cd3d41b221e3f24f99bba" prot="public">
+          <name>Key</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1ae8a888c2915b1b51dc586d8f14909670" prot="public">
+          <name>KeyGroupOrLastTime</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a980a3d4f9be49bbf8d3051f7be1e826b" prot="public">
+          <name>SpecialEffect</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a06a8d9bbf1191bfd207c85908da28e3d" prot="public">
+          <name>NoteSize</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Give enums of parameters of Deluxe Keys. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Ma2parser.cs" line="12" column="11" bodyfile="Neskol/MaiLib/Ma2parser.cs" bodystart="12" bodyend="12"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Neskol/MaiLib/BPMChange.cs" line="3" column="1"/>
+  </compounddef>
+</doxygen>

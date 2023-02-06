@@ -1,0 +1,408 @@
+\hypertarget{class_mai_lib_1_1_ma2_parser}{}\doxysection{Mai\+Lib.\+Ma2\+Parser Class Reference}
+\label{class_mai_lib_1_1_ma2_parser}\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+
+
+Parses ma2 file into Ma2 chart format.  
+
+
+Inheritance diagram for Mai\+Lib.\+Ma2\+Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_mai_lib_1_1_ma2_parser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a3887e3ab0226b399b916ffdab2f5cbe8}{Ma2\+Parser}} ()
+\begin{DoxyCompactList}\small\item\em Empty constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_abc9e7e6d2c82f50a0faa63417fece990}{Chart\+Of\+Token}} (string\mbox{[}$\,$\mbox{]} token)
+\begin{DoxyCompactList}\small\item\em Return correct Good\+Brother of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a4b665f09edf08588ef870152de63a8fe}{BPMChanges\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct BPMChanges of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a7489fd251adbb1c29516f30bfd79060c}{Measure\+Changes\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return corresponding Measure\+Changes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a267475f0098390f3993cbd12a50b7cdb}{Note\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return a specific note of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a947cf5c0d98e6d703be31fbd694eba41}{Note\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return a specific note of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a6c6f8470763f5802f96b8d603aac709a}{Hold\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Hold note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a63b991f61fdc89273f93ec0752898f8a}{Hold\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Hold note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a7662ce67879ceeb260f336ace04ff5ae}{Slide\+Of\+Token}} (string token, int bar, int tick, \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} slide\+Start, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Slide note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a11a29b94f872cb4c4e363a35ab3a8cd3}{Slide\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Slide note. \end{DoxyCompactList}\item 
+Tap \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a60dd6e2818dfdcd6935455561409ca96}{Tap\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Tap note. \end{DoxyCompactList}\item 
+Tap \mbox{\hyperlink{class_mai_lib_1_1_ma2_parser_a34934530f7447c9f475636896b2c7a87}{Tap\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Tap note. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a7397c6029763efea5e6d7bfbbe680237}{Chart\+Of\+Token}} (string\mbox{[}$\,$\mbox{]} token)
+\begin{DoxyCompactList}\small\item\em Return correct Good\+Brother of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a69565d533484688cb37fa379a30cd74f}{BPMChanges\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct BPMChanges of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a26298c2b3e13bf4d10797d7dca85536f}{Measure\+Changes\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return corresponding Measure\+Changes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_af5c4e69e3586219305610dec5c615aab}{Note\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return a specific note of given Token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_aa00014e1766f8a715678d6e32202295e}{Note\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return a specific note of given Token. \end{DoxyCompactList}\item 
+Tap \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a7b2bc1759b335897908867a41e399c51}{Tap\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Tap note. \end{DoxyCompactList}\item 
+Tap \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a1163c855f762043eb410fd3996a289b8}{Tap\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Tap note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_afc6fe47a6933b1e9777a92714f6ccd73}{Hold\+Of\+Token}} (string token, int bar, int tick, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Hold note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_aefa441cce2d816c6e1931ab37ccad78b}{Hold\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Hold note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a75ddea307290beeda5d26c7bed59c4e1}{Slide\+Of\+Token}} (string token, int bar, int tick, \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} slide\+Start, double bpm)
+\begin{DoxyCompactList}\small\item\em Return correct Slide note. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a407ca986cb0dd62a934ce3e8a168d70d}{Slide\+Of\+Token}} (string token)
+\begin{DoxyCompactList}\small\item\em Return correct Slide note. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Parses ma2 file into Ma2 chart format. 
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a3887e3ab0226b399b916ffdab2f5cbe8}\label{class_mai_lib_1_1_ma2_parser_a3887e3ab0226b399b916ffdab2f5cbe8}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!Ma2Parser@{Ma2Parser}}
+\index{Ma2Parser@{Ma2Parser}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{Ma2Parser()}{Ma2Parser()}}
+{\footnotesize\ttfamily Mai\+Lib.\+Ma2\+Parser.\+Ma2\+Parser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Empty constructor. 
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00022}{22}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a4b665f09edf08588ef870152de63a8fe}\label{class_mai_lib_1_1_ma2_parser_a4b665f09edf08588ef870152de63a8fe}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!BPMChangesOfToken@{BPMChangesOfToken}}
+\index{BPMChangesOfToken@{BPMChangesOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{BPMChangesOfToken()}{BPMChangesOfToken()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} Mai\+Lib.\+Ma2\+Parser.\+BPMChanges\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct BPMChanges of given Token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to intake\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Corresponding BPMChanges
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a69565d533484688cb37fa379a30cd74f}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00128}{128}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_abc9e7e6d2c82f50a0faa63417fece990}\label{class_mai_lib_1_1_ma2_parser_abc9e7e6d2c82f50a0faa63417fece990}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!ChartOfToken@{ChartOfToken}}
+\index{ChartOfToken@{ChartOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{ChartOfToken()}{ChartOfToken()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}} Mai\+Lib.\+Ma2\+Parser.\+Chart\+Of\+Token (\begin{DoxyParamCaption}\item[{string\mbox{[}$\,$\mbox{]}}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct Good\+Brother of given Token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to intake\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Corresponding Good\+Brother
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a7397c6029763efea5e6d7bfbbe680237}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00027}{27}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a63b991f61fdc89273f93ec0752898f8a}\label{class_mai_lib_1_1_ma2_parser_a63b991f61fdc89273f93ec0752898f8a}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!HoldOfToken@{HoldOfToken}}
+\index{HoldOfToken@{HoldOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{HoldOfToken()}{HoldOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} Mai\+Lib.\+Ma2\+Parser.\+Hold\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct Hold note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Hold Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_aefa441cce2d816c6e1931ab37ccad78b}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00275}{275}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a6c6f8470763f5802f96b8d603aac709a}\label{class_mai_lib_1_1_ma2_parser_a6c6f8470763f5802f96b8d603aac709a}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!HoldOfToken@{HoldOfToken}}
+\index{HoldOfToken@{HoldOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{HoldOfToken()}{HoldOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_hold}{Hold}} Mai\+Lib.\+Ma2\+Parser.\+Hold\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token,  }\item[{int}]{bar,  }\item[{int}]{tick,  }\item[{double}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Return correct Hold note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+{\em bar} & Bar of this note\\
+\hline
+{\em tick} & Tick of this note\\
+\hline
+{\em bpm} & BPM of this note\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Hold Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_afc6fe47a6933b1e9777a92714f6ccd73}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00242}{242}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a7489fd251adbb1c29516f30bfd79060c}\label{class_mai_lib_1_1_ma2_parser_a7489fd251adbb1c29516f30bfd79060c}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!MeasureChangesOfToken@{MeasureChangesOfToken}}
+\index{MeasureChangesOfToken@{MeasureChangesOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{MeasureChangesOfToken()}{MeasureChangesOfToken()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} Mai\+Lib.\+Ma2\+Parser.\+Measure\+Changes\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return corresponding Measure\+Changes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Intake token\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Corresponding measure change
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a26298c2b3e13bf4d10797d7dca85536f}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00133}{133}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a267475f0098390f3993cbd12a50b7cdb}\label{class_mai_lib_1_1_ma2_parser_a267475f0098390f3993cbd12a50b7cdb}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!NoteOfToken@{NoteOfToken}}
+\index{NoteOfToken@{NoteOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{NoteOfToken()}{NoteOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} Mai\+Lib.\+Ma2\+Parser.\+Note\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return a specific note of given Token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_af5c4e69e3586219305610dec5c615aab}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00138}{138}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a947cf5c0d98e6d703be31fbd694eba41}\label{class_mai_lib_1_1_ma2_parser_a947cf5c0d98e6d703be31fbd694eba41}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!NoteOfToken@{NoteOfToken}}
+\index{NoteOfToken@{NoteOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{NoteOfToken()}{NoteOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} Mai\+Lib.\+Ma2\+Parser.\+Note\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token,  }\item[{int}]{bar,  }\item[{int}]{tick,  }\item[{double}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Return a specific note of given Token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+{\em bar} & \\
+\hline
+{\em tick} & \\
+\hline
+{\em bpm} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_aa00014e1766f8a715678d6e32202295e}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00192}{192}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a11a29b94f872cb4c4e363a35ab3a8cd3}\label{class_mai_lib_1_1_ma2_parser_a11a29b94f872cb4c4e363a35ab3a8cd3}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!SlideOfToken@{SlideOfToken}}
+\index{SlideOfToken@{SlideOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{SlideOfToken()}{SlideOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} Mai\+Lib.\+Ma2\+Parser.\+Slide\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct Slide note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Slide Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a407ca986cb0dd62a934ce3e8a168d70d}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00332}{332}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a7662ce67879ceeb260f336ace04ff5ae}\label{class_mai_lib_1_1_ma2_parser_a7662ce67879ceeb260f336ace04ff5ae}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!SlideOfToken@{SlideOfToken}}
+\index{SlideOfToken@{SlideOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{SlideOfToken()}{SlideOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_slide}{Slide}} Mai\+Lib.\+Ma2\+Parser.\+Slide\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token,  }\item[{int}]{bar,  }\item[{int}]{tick,  }\item[{\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}}]{slide\+Start,  }\item[{double}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Return correct Slide note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+{\em bar} & Bar of this note\\
+\hline
+{\em tick} & Tick of this note\\
+\hline
+{\em slide\+Start} & The start note of this slide\\
+\hline
+{\em bpm} & BPM of this note\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Slide Note
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a75ddea307290beeda5d26c7bed59c4e1}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00307}{307}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a34934530f7447c9f475636896b2c7a87}\label{class_mai_lib_1_1_ma2_parser_a34934530f7447c9f475636896b2c7a87}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!TapOfToken@{TapOfToken}}
+\index{TapOfToken@{TapOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{TapOfToken()}{TapOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Tap Mai\+Lib.\+Ma2\+Parser.\+Tap\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token }\end{DoxyParamCaption})}
+
+
+
+Return correct Tap note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Tap
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a1163c855f762043eb410fd3996a289b8}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00390}{390}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_ma2_parser_a60dd6e2818dfdcd6935455561409ca96}\label{class_mai_lib_1_1_ma2_parser_a60dd6e2818dfdcd6935455561409ca96}} 
+\index{MaiLib.Ma2Parser@{MaiLib.Ma2Parser}!TapOfToken@{TapOfToken}}
+\index{TapOfToken@{TapOfToken}!MaiLib.Ma2Parser@{MaiLib.Ma2Parser}}
+\doxysubsubsection{\texorpdfstring{TapOfToken()}{TapOfToken()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Tap Mai\+Lib.\+Ma2\+Parser.\+Tap\+Of\+Token (\begin{DoxyParamCaption}\item[{string}]{token,  }\item[{int}]{bar,  }\item[{int}]{tick,  }\item[{double}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Return correct Tap note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Token to take in\\
+\hline
+{\em bar} & Bar of this note\\
+\hline
+{\em tick} & Tick of this note\\
+\hline
+{\em bpm} & BPM of this note\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Specific Tap
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_parser_a7b2bc1759b335897908867a41e399c51}{Mai\+Lib.\+IParser}}.
+
+
+
+Definition at line \mbox{\hyperlink{_ma2parser_8cs_source_l00358}{358}} of file \mbox{\hyperlink{_ma2parser_8cs_source}{Ma2parser.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Neskol/\+Mai\+Lib/\mbox{\hyperlink{_ma2parser_8cs}{Ma2parser.\+cs}}\end{DoxyCompactItemize}

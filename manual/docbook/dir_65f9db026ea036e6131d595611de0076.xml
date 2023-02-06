@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dir_65f9db026ea036e6131d595611de0076" xml:lang="en-US">
+<title>Neskol/MaiLib Directory Reference</title>
+<indexterm><primary>Neskol/MaiLib Directory Reference</primary></indexterm>
+<simplesect>
+    <title>Directories    </title>
+        <itemizedlist>
+            <listitem><para>directory <link linkend="_dir_c8f4a1a39fa2a7c1f402f24fe625b851">obj</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Files    </title>
+        <itemizedlist>
+            <listitem><para>file <link linkend="__b_p_m_change_8cs">BPMChange.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__b_p_m_changes_8cs">BPMChanges.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__chart_8cs">Chart.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__chart_pack_8cs">ChartPack.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__compiler_8cs">Compiler.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__hold_8cs">Hold.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__i_chart_8cs">IChart.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__i_compiler_8cs">ICompiler.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__i_note_8cs">INote.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__i_parser_8cs">IParser.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__i_tokenizer_8cs">ITokenizer.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__i_xml_utility_8cs">IXmlUtility.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__ma2_8cs">Ma2.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__ma2parser_8cs">Ma2parser.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__ma2_tokenizer_8cs">Ma2Tokenizer.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__measure_change_8cs">MeasureChange.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__measure_changes_8cs">MeasureChanges.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__note_8cs">Note.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__rest_8cs">Rest.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__simai_8cs">Simai.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__simai_compiler_8cs">SimaiCompiler.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__simaiparser_8cs">Simaiparser.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__simai_tokenizer_8cs">SimaiTokenizer.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__slide_8cs">Slide.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__tap_8cs">Tap.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__track_information_8cs">TrackInformation.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__x_mai_l_8cs">XMaiL.cs</link></para>
+</listitem>
+            <listitem><para>file <link linkend="__xml_information_8cs">XmlInformation.cs</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+</section>

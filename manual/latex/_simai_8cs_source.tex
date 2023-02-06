@@ -1,0 +1,231 @@
+\hypertarget{_simai_8cs_source}{}\doxysection{Simai.\+cs}
+\label{_simai_8cs_source}\index{Neskol/MaiLib/Simai.cs@{Neskol/MaiLib/Simai.cs}}
+\mbox{\hyperlink{_simai_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00001}00001\ \textcolor{keyword}{using\ }System.Net.Http.Headers;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00003}00003\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_mai_lib}{MaiLib}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00004}00004\ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00005}\mbox{\hyperlink{class_mai_lib_1_1_simai}{00005}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mai_lib_1_1_simai}{Simai}}\ :\ \mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00006}00006\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00010}\mbox{\hyperlink{class_mai_lib_1_1_simai_ac568638f326b2cf5b8bbbf3c4ef07084}{00010}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_ac568638f326b2cf5b8bbbf3c4ef07084}{Simai}}()}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00011}00011\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ this.Notes\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ this.BPMChanges\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}{BPMChanges}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ this.MeasureChanges\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}{MeasureChanges}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ this.StoredChart\ =\ \textcolor{keyword}{new}\ List<List<Note>>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ this.Information\ =\ \textcolor{keyword}{new}\ Dictionary<string,\ string>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00017}00017\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00023}\mbox{\hyperlink{class_mai_lib_1_1_simai_a342137d148f7b05e70bd8e5a8e5e3954}{00023}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_a342137d148f7b05e70bd8e5a8e5e3954}{Simai}}(\textcolor{keywordtype}{string}\ location)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00024}00024\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}[]\ tokens\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_tokenizer}{SimaiTokenizer}}().\mbox{\hyperlink{class_mai_lib_1_1_simai_tokenizer_afd239f9eb4e9aebcc0240d5dc795f6fe}{Tokens}}(location);}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}}\ chart\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_parser}{SimaiParser}}().\mbox{\hyperlink{class_mai_lib_1_1_simai_parser_a75daa422a02846657dc667def18d43a9}{ChartOfToken}}(tokens);}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ this.Notes\ =\ \textcolor{keyword}{new}\ List<Note>(chart.\mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}});}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ this.BPMChanges\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}{BPMChanges}}(chart.\mbox{\hyperlink{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}{BPMChanges}});}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ this.MeasureChanges\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}{MeasureChanges}}(chart.\mbox{\hyperlink{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}{MeasureChanges}});}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ this.StoredChart\ =\ \textcolor{keyword}{new}\ List<List<Note>>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ this.Information\ =\ \textcolor{keyword}{new}\ Dictionary<string,\ string>(chart.\mbox{\hyperlink{class_mai_lib_1_1_chart_a6f19b3e20979061bb5a1121e8530028b}{Information}});}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00033}00033\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00041}\mbox{\hyperlink{class_mai_lib_1_1_simai_adc7f3970a7a2c72eb7b54b997965179d}{00041}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_adc7f3970a7a2c72eb7b54b997965179d}{Simai}}(List<Note>\ notes,\ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}\ bpmChanges,\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}\ measureChanges)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00042}00042\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ this.Notes\ =\ notes;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ this.BPMChanges\ =\ bpmChanges;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ this.MeasureChanges\ =\ measureChanges;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ this.StoredChart\ =\ \textcolor{keyword}{new}\ List<List<Note>>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ this.Information\ =\ \textcolor{keyword}{new}\ Dictionary<string,\ string>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00049}00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00051}\mbox{\hyperlink{class_mai_lib_1_1_simai_a5a1334e0f662539c5e4759b3e5c423ba}{00051}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_a5a1334e0f662539c5e4759b3e5c423ba}{Simai}}(\mbox{\hyperlink{class_mai_lib_1_1_chart}{Chart}}\ takenIn)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00052}00052\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ this.Notes\ =\ takenIn.\mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ this.BPMChanges\ =\ takenIn.\mbox{\hyperlink{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}{BPMChanges}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ this.MeasureChanges\ =\ takenIn.\mbox{\hyperlink{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}{MeasureChanges}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ this.StoredChart\ =\ \textcolor{keyword}{new}\ List<List<Note>>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ this.Information\ =\ \textcolor{keyword}{new}\ Dictionary<string,\ string>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00061}\mbox{\hyperlink{class_mai_lib_1_1_simai_ad3f9f102b7d484b865e3b9513a5eaae2}{00061}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{override}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_ad3f9f102b7d484b865e3b9513a5eaae2}{Compose}}()}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00062}00062\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ result\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ delayBar\ =\ (this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a24bc12c7a3a865fffec0f84379bad3de}{TotalDelay}})\ /\ 384\ +\ 2;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Console.WriteLine(chart.Compose());}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//foreach\ (BPMChange\ x\ in\ chart.BPMChanges.ChangeNotes)}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ Console.WriteLine("{}BPM\ Change\ verified\ in\ "{}\ +\ x.Bar\ +\ "{}\ "{}\ +\ x.Tick\ +\ "{}\ of\ BPM"{}\ +\ x.BPM);}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ List<Note>\ firstBpm\ =\ \textcolor{keyword}{new}\ List<Note>();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ bpm\ \textcolor{keywordflow}{in}\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}})}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bpm.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ firstBpm.Add(bpm);}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (firstBpm.Count\ >\ 1)}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ chart.Chart[0][0]\ =\ firstBpm[1];}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (List<Note>\ bar\ \textcolor{keywordflow}{in}\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a7ebf2ca619175ab423cc7f28f48b6eb1}{StoredChart}})}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ lastNote\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_change}{MeasureChange}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ currentQuaver\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ commaCompiled\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//result\ +=\ bar[1].Bar;}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ bar)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (lastNote.NoteSpecificGenre)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}MEASURE"{}}:}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentQuaver\ =\ (lastNote\ as\ \mbox{\hyperlink{class_mai_lib_1_1_measure_change}{MeasureChange}}\ ??\ \textcolor{keywordflow}{throw}\ \textcolor{keyword}{new}\ Exception(\textcolor{stringliteral}{"{}This\ note\ is\ not\ measure\ change"{}})).Quaver;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}BPM"{}}:}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}TAP"{}}:}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}}\ \&\&\ ((!x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}}))\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_aa670c5a13ce0eded4efa1a36562dbb4d}{Tick}}\ ==\ lastNote.Tick\ \&\&\ !x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}})))}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ commaCompiled++;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}HOLD"{}}:}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}}\ \&\&\ (!x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}}))\ \&\&\ x.Tick\ ==\ lastNote.Tick\ \&\&\ !x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ commaCompiled++;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}SLIDE\_START"{}}:}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (lastNote.ConsecutiveSlide\ ==\ null)}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ result\ +=\ "{}\$"{};}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (x.IsNote\ \&\&\ (!x.NoteGenre.Equals("{}SLIDE"{}))\ \&\&\ x.Tick\ ==\ lastNote.Tick\ \&\&\ !x.NoteGenre.Equals("{}BPM"{}))}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ result\ +=\ "{}/"{};}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ else\ if\ (x.NoteGenre\ !=\ "{}SLIDE"{}||lastNote.Bar!=x.Bar\ ||\ lastNote.Tick!=x.Tick)}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ result\ +=\ "{},"{};}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}}\ \&\&\ ((!x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}}))\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_aa670c5a13ce0eded4efa1a36562dbb4d}{Tick}}\ ==\ lastNote.Tick\ \&\&\ !x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}})))}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}}\ \&\&\ !x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}})\ \&\&\ !x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ commaCompiled++;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}REST"{}}))}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ commaCompiled++;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{stringliteral}{"{}SLIDE"{}}:}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}}\ \&\&\ (!x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}}))\ \&\&\ x.Tick\ ==\ lastNote.Tick\ \&\&\ !x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{class_mai_lib_1_1_note_aefeeb281fea94b7d5ec0915a7ae8bd52}{IsNote}}\ \&\&\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a15f933472746a63f10ccef80e1b77af7}{NoteSpecificGenre}}.Equals(\textcolor{stringliteral}{"{}SLIDE"{}})\ \&\&\ x.Tick\ ==\ lastNote.Tick\ \&\&\ !x.\mbox{\hyperlink{class_mai_lib_1_1_note_a063916711e5248bc74f7cefdb6f39e6b}{NoteGenre}}.Equals(\textcolor{stringliteral}{"{}BPM"{}}))}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}*"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ else\ if\ (x.IsNote\ \&\&\ !lastNote.NoteSpecificType.Equals("{}SLIDE\_START"{})\&\&\ x.Bar!=lastNote.Bar\ \&\&\ x.Tick!=lastNote.Tick\&\&\ !x.NoteGenre.Equals("{}BPM"{}))}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ result\ +=\ "{},"{};}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ commaCompiled++;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ commaCompiled++;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (x.NoteGenre.Equals("{}SLIDE"{}))}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (x.SlideStart==null)}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ x.SlideStart\ =\ new\ Tap("{}NST"{},x.Bar,x.Tick,x.Key);}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (x.SlideStart!=null\&\&x.SlideStart.NoteType.Equals("{}NST"{})\&\&(!lastNote.NoteGenre.Equals("{}SLIDE"{})||lastNote.NoteGenre.Equals("{}SLIDE"{})\&\&lastNote.TickStamp!=x.TickStamp\&\&!lastNote.Key.Equals(x)))}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ result\ +=\ x.SlideStart.Compose(0);}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ x.\mbox{\hyperlink{class_mai_lib_1_1_note_a51b9c57b063ae0f39afa9e5e4d1d7cf7}{Compose}}(0);}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lastNote\ =\ x;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (x.NoteGenre().Equals("{}BPM"{}))}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ result+="{}("{}+\ x.Bar\ +\ "{}\_"{}\ +\ x.Tick\ +\ "{})"{};}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{},\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ commaCompiled++;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (commaCompiled\ !=\ currentQuaver)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(\textcolor{stringliteral}{"{}Notes\ in\ bar:\ "{}}\ +\ bar[0].\mbox{\hyperlink{namespace_mai_lib_adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653}{Bar}});}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}\ x\ \textcolor{keywordflow}{in}\ bar)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(x.\mbox{\hyperlink{class_mai_lib_1_1_note_a51b9c57b063ae0f39afa9e5e4d1d7cf7}{Compose}}(1));}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(result);}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(\textcolor{stringliteral}{"{}Expected\ comma\ number:\ "{}}\ +\ currentQuaver);}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Console.WriteLine(\textcolor{stringliteral}{"{}Actual\ comma\ number:\ "{}}\ +\ commaCompiled);}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \textcolor{keyword}{new}\ NullReferenceException(\textcolor{stringliteral}{"{}COMMA\ COMPILED\ MISMATCH\ IN\ BAR\ "{}}\ +\ bar[0].\mbox{\hyperlink{namespace_mai_lib_adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653}{Bar}});}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (delayBar>0)}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ Console.WriteLine("{}TOTAL\ DELAYED\ BAR:\ "{}+delayBar);}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ delayBar\ +\ 1;\ i++)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}\{1\},\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}E\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00214}00214\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00216}\mbox{\hyperlink{class_mai_lib_1_1_simai_abd7fc5db57bd6768c4b8b85620293b7c}{00216}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{override}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_abd7fc5db57bd6768c4b8b85620293b7c}{CheckValidity}}()}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00217}00217\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ result\ =\ \textcolor{keyword}{this}\ ==\ \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Not\ yet\ implemented}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00221}00221\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00229}\mbox{\hyperlink{class_mai_lib_1_1_simai_a8038d960496d0e2bd8cea2b9df5358d6}{00229}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{override}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_mai_lib_1_1_simai_a8038d960496d0e2bd8cea2b9df5358d6}{Compose}}(\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}\ bpm,\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}\ measure)}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00230}00230\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}\ sourceBPM\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}{BPMChanges}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}\ sourceMeasures\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}{MeasureChanges}};}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ this.BPMChanges\ =\ bpm;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ this.MeasureChanges\ =\ measure;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ result\ =\ this.\mbox{\hyperlink{class_mai_lib_1_1_simai_ad3f9f102b7d484b865e3b9513a5eaae2}{Compose}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ this.BPMChanges\ =\ sourceBPM;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ this.MeasureChanges\ =\ sourceMeasures;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ this.\mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00242}00242\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00243}00243\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_simai_8cs_source_l00244}00244\ \}}
+
+\end{DoxyCode}

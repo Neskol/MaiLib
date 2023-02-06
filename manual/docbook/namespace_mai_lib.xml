@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_namespace_mai_lib" xml:lang="en-US">
+<title>MaiLib Namespace Reference</title>
+<indexterm><primary>MaiLib</primary></indexterm>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_b_p_m_change">BPMChange</link></para>
+
+<para>BPMChange note for Simai. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_chart">Chart</link></para>
+
+<para>A class holding notes and information to form a chart. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_chart_pack">ChartPack</link></para>
+
+<para>Construct a collection to store charts in relate of SD and DX. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_compiler">Compiler</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_hold">Hold</link></para>
+
+<para>Constructs Hold Note. </para>
+</listitem>
+            <listitem><para>interface <link linkend="_interface_mai_lib_1_1_i_chart">IChart</link></para>
+
+<para>Provide interface for charts. </para>
+</listitem>
+            <listitem><para>interface <link linkend="_interface_mai_lib_1_1_i_compiler">ICompiler</link></para>
+
+<para>Provide interface for Compilers. </para>
+</listitem>
+            <listitem><para>interface <link linkend="_interface_mai_lib_1_1_i_note">INote</link></para>
+
+<para>Provide interface and basic functions for Notes. </para>
+</listitem>
+            <listitem><para>interface <link linkend="_interface_mai_lib_1_1_i_parser">IParser</link></para>
+
+<para>Provide interface for parsers. </para>
+</listitem>
+            <listitem><para>interface <link linkend="_interface_mai_lib_1_1_i_tokenizer">ITokenizer</link></para>
+
+<para>Intake files and tokenize. </para>
+</listitem>
+            <listitem><para>interface <emphasis role="strong">IXmlUtility</emphasis></para>
+
+<para>Provide handful methods for Xml. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_ma2">Ma2</link></para>
+
+<para>Implementation of chart in ma2 format. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_ma2_parser">Ma2Parser</link></para>
+
+<para>Parses ma2 file into Ma2 chart format. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_ma2_tokenizer">Ma2Tokenizer</link></para>
+
+<para>Tokenizer of ma2 file. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_measure_change">MeasureChange</link></para>
+
+<para>Defines measure change note that indicates a measure change in bar. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link></para>
+
+<para>Store measure change notes in a chart. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_note">Note</link></para>
+
+<para>Basic note. </para>
+</listitem>
+            <listitem><para>class <emphasis role="strong">Rest</emphasis></para>
+
+<para>Construct Rest Note solely for Simai. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_simai">Simai</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_simai_compiler">SimaiCompiler</link></para>
+
+<para>Compile various Ma2 Charts. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_simai_parser">SimaiParser</link></para>
+
+<para>Parse charts in Simai format. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_simai_tokenizer">SimaiTokenizer</link></para>
+
+<para>Tokenize input file into tokens that parser can read. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_slide">Slide</link></para>
+
+<para>Construct a Slide note (With START!) </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_track_information">TrackInformation</link></para>
+
+<para>Use xml to store track information. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_x_mai_l">XMaiL</link></para>
+
+<para>Using xml to store maicharts. </para>
+</listitem>
+            <listitem><para>class <link linkend="_class_mai_lib_1_1_xml_information">XmlInformation</link></para>
+
+<para>Using Xml to store trackInformation. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21">StdParam</link> { <?linebreak?><link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21aa1fa27779242b4902f7ae3bdd5c6d508">Type</link>
+, <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653">Bar</link>
+, <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a0b3516a5bbb77566f904f9d3877f4710">Tick</link>
+, <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a3abff32d98bbe945bbc59b5e5728a99b">KeyOrParam</link>
+, <?linebreak?><link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a8be52214132d104bf047755b568b5843">WaitTimeOrParam</link>
+, <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21ae7237116218f2c9b98efba91ccea22aa">LastTime</link>
+, <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a617f2190b4cbbcddaea9d201ddc88a7b">EndKey</link>
+ }</para>
+
+<para>Give enums of parameters of Standard Keys. </para>
+</listitem>
+            <listitem><para>enum <link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1">DxParam</link> { <?linebreak?><link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1aa1fa27779242b4902f7ae3bdd5c6d508">Type</link>
+, <link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1addc35f88fa71b6ef142ae61f35364653">Bar</link>
+, <link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a0b3516a5bbb77566f904f9d3877f4710">Tick</link>
+, <link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a897356954c2cd3d41b221e3f24f99bba">Key</link>
+, <?linebreak?><link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1ae8a888c2915b1b51dc586d8f14909670">KeyGroupOrLastTime</link>
+, <link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a980a3d4f9be49bbf8d3051f7be1e826b">SpecialEffect</link>
+, <link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a06a8d9bbf1191bfd207c85908da28e3d">NoteSize</link>
+ }</para>
+
+<para>Give enums of parameters of Deluxe Keys. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1"/><section>
+    <title>DxParam</title>
+<indexterm><primary>DxParam</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>DxParam</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1">MaiLib.DxParam</link></computeroutput></para><para>
+
+<para>Give enums of parameters of Deluxe Keys. </para>
+</para>
+<informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>Type</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>Type</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1aa1fa27779242b4902f7ae3bdd5c6d508"/>Type</entry><entry></entry></row><row><entry><indexterm><primary>Bar</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>Bar</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1addc35f88fa71b6ef142ae61f35364653"/>Bar</entry><entry></entry></row><row><entry><indexterm><primary>Tick</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>Tick</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a0b3516a5bbb77566f904f9d3877f4710"/>Tick</entry><entry></entry></row><row><entry><indexterm><primary>Key</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>Key</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a897356954c2cd3d41b221e3f24f99bba"/>Key</entry><entry></entry></row><row><entry><indexterm><primary>KeyGroupOrLastTime</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>KeyGroupOrLastTime</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1ae8a888c2915b1b51dc586d8f14909670"/>KeyGroupOrLastTime</entry><entry></entry></row><row><entry><indexterm><primary>SpecialEffect</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>SpecialEffect</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a980a3d4f9be49bbf8d3051f7be1e826b"/>SpecialEffect</entry><entry></entry></row><row><entry><indexterm><primary>NoteSize</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>NoteSize</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1a517cfc2afaaee150626216dfa2b629b1a06a8d9bbf1191bfd207c85908da28e3d"/>NoteSize</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line <link linkend="__ma2parser_8cs_source_1l00012">12</link> of file <link linkend="__ma2parser_8cs_source">Ma2parser.cs</link>.</para>
+</section>
+<anchor xml:id="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21"/><section>
+    <title>StdParam</title>
+<indexterm><primary>StdParam</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>StdParam</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21">MaiLib.StdParam</link></computeroutput></para><para>
+
+<para>Give enums of parameters of Standard Keys. </para>
+</para>
+<informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>Type</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>Type</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21aa1fa27779242b4902f7ae3bdd5c6d508"/>Type</entry><entry></entry></row><row><entry><indexterm><primary>Bar</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>Bar</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653"/>Bar</entry><entry></entry></row><row><entry><indexterm><primary>Tick</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>Tick</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a0b3516a5bbb77566f904f9d3877f4710"/>Tick</entry><entry></entry></row><row><entry><indexterm><primary>KeyOrParam</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>KeyOrParam</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a3abff32d98bbe945bbc59b5e5728a99b"/>KeyOrParam</entry><entry></entry></row><row><entry><indexterm><primary>WaitTimeOrParam</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>WaitTimeOrParam</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a8be52214132d104bf047755b568b5843"/>WaitTimeOrParam</entry><entry></entry></row><row><entry><indexterm><primary>LastTime</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>LastTime</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21ae7237116218f2c9b98efba91ccea22aa"/>LastTime</entry><entry></entry></row><row><entry><indexterm><primary>EndKey</primary><secondary>MaiLib</secondary></indexterm>
+<indexterm><primary>MaiLib</primary><secondary>EndKey</secondary></indexterm>
+<anchor xml:id="_namespace_mai_lib_1adb5e6f6beeec05fe18aebc928e2f1c21a617f2190b4cbbcddaea9d201ddc88a7b"/>EndKey</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line <link linkend="__ma2parser_8cs_source_1l00008">8</link> of file <link linkend="__ma2parser_8cs_source">Ma2parser.cs</link>.</para>
+</section>
+</section>
+</section>

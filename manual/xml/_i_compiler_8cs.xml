@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="_i_compiler_8cs" kind="file" language="C#">
+    <compoundname>ICompiler.cs</compoundname>
+    <innerclass refid="interface_mai_lib_1_1_i_compiler" prot="public">MaiLib::ICompiler</innerclass>
+    <innernamespace refid="namespace_mai_lib">MaiLib</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespace_mai_lib" kindref="compound">MaiLib</ref></highlight></codeline>
+<codeline lineno="2"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="6" refid="interface_mai_lib_1_1_i_compiler" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">interface<sp/></highlight><highlight class="normal"><ref refid="interface_mai_lib_1_1_i_compiler" kindref="compound">ICompiler</ref></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="12" refid="interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47" kindref="member">TakeInformation</ref>(Dictionary&lt;string,<sp/>string&gt;<sp/>information);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18" refid="interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99" kindref="member">Compose</ref>();</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24" refid="interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6" kindref="member">CheckValidity</ref>();</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="26"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="Neskol/MaiLib/ICompiler.cs"/>
+  </compounddef>
+</doxygen>

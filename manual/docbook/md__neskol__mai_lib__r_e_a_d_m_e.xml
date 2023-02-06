@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_md__neskol__mai_lib__r_e_a_d_m_e" xml:lang="en-US">
+<section xml:id="_md__neskol__mai_lib__r_e_a_d_m_e_1autotoc_md1">
+<title>A library for processing maimai charts</title>
+
+<para><blockquote>
+<para>&#8205;One demo implementation is MaichartConverter to convert between Simai and Ma2. Please see <link xlink:href="https://github.com/Neskol/MaichartConverter">MaichartConverter</link> for more information. </para>
+</blockquote></para>
+<section xml:id="_md__neskol__mai_lib__r_e_a_d_m_e_1autotoc_md2">
+<title>Build</title>
+
+<para>git clone dotnet build </para>
+</section>
+<section xml:id="_md__neskol__mai_lib__r_e_a_d_m_e_1autotoc_md3">
+<title>Usage</title>
+
+<para><itemizedlist>
+<listitem>
+<para>The basic parts of this is <computeroutput>Chart</computeroutput> - you could use this to construct different charts.</para>
+</listitem><listitem>
+<para>This library follows Tokenizer - Parser - Compiler format to process files and uses Abstract Syntax Tree for grammer decomposing when implementing Simai and Ma2 format support. If you were to extend format supporting, make sure you also implement your Tokenizer, Parser, and Compiler, and make them follow Interface <computeroutput>ITokenizer</computeroutput>, <computeroutput>IParser</computeroutput>, and <computeroutput>ICompiler</computeroutput>.</para>
+</listitem><listitem>
+<para>The <computeroutput>Chart</computeroutput> base class is a intermediate format to achieve inter-format compatability. If you are adding a new format, be sure to also create a class implementing this base class. The <computeroutput>Chart</computeroutput> class has already implemented the functions you need for a maimai chart, and you only need to implement several abstract method in this class to fit with your format.</para>
+</listitem><listitem>
+<para>Then, you could create a maimai chart instance in your code. For example, creating a Ma2 chart could be done by <computeroutput>Chart ma2Chart = new Ma2();</computeroutput></para>
+</listitem></itemizedlist>
+</para>
+</section>
+</section>
+<section xml:id="_md__neskol__mai_lib__r_e_a_d_m_e_1autotoc_md4">
+<title>Additional notice for Simai compatability</title>
+
+<para><itemizedlist>
+<listitem>
+<para>As always, I think Simai is a language more focusing on charting rather than interpreting. I still have no idea why there is still no UI-based charting tool but let everyone learn this full-of-compromise language, especially after Festival added new features. This made interpreting Simai a PAIN since the idea how it converts between ticks and times are vague and unreasonable.</para>
+</listitem><listitem>
+<para>For example, it defines a Slide note will have a wait time of 1 beat or one 1/4 note (or crotchet for music community) after its start tap. If your Slide starts longer or shorter than 1 quaver of current BPM, you will have to 1) change the BPM for this specific Slide or 2) define the time by [wait time##last time] - and calculating that is extremely time consuming when converting tick to time.</para>
+</listitem><listitem>
+<para>I hope someone could develop a better language than Simai as a intermediate language between coding and charting. Thank you.</para>
+</listitem></itemizedlist>
+</para>
+<section xml:id="_md__neskol__mai_lib__r_e_a_d_m_e_1autotoc_md5">
+<title>Parameters notice</title>
+
+<para><itemizedlist>
+<listitem>
+<para>music files should be named musicxxxxxx.mp3 which xxxxxx matches the music id specified in music.xml in each a000 folder, and compensate 0s at the front to 6 digits</para>
+</listitem><listitem>
+<para>bga files should be named xxxxxx.mp4 which matches the music id specified in music.xml in each a000 folder, and compensate 0s at the front to 6 digits</para>
+</listitem><listitem>
+<para>image folder should be structured in image/Texture2D/ and the files should start with UI_Jacket_xxxxxx.jpg which xxxxxx matches the music id specified in music.xml in each a000 folder, and compensate 0s at the front to 6 digits</para>
+</listitem><listitem>
+<para>All of the rules specified above is in convenience for you to directly use after you obtain data from considerable ways</para>
+</listitem><listitem>
+<para>The difficulty parameter is listed 0-4 as Basic to Re:Master. In <link linkend="_namespace_mai_lib">MaiLib</link> I specified rules for Easy and Utage but it takes times for me to figure it out, or you could implement on you own referring <link linkend="_namespace_mai_lib">MaiLib</link> code</para>
+</listitem><listitem>
+<para>All of the path should end with path separator like &quot;/&quot; or &quot;\&quot;. You cannot include quote signs in the path.
+- If you have difficulty using the commands, please refer VSCode launch.json where I included several examples
+- The whole program was planned to convert from ma2 to simai initially and all other features were developed after that, so there is a HUGE amount of compromises in code design which made it hard to read (but works so far). It would be most kind of you if you would like to help me fixing that
+
+@subsection autotoc_md6 Disclaimer
+- Copyrights of the works belong to each individual right holders. This tool is purely used as non-commercial and study purpose. You should find your way for any resource might be used and properly use at your own risk.
+- If you would like to use the parser in your project, please refer &lt;a href=&quot;<link xlink:href="https://github.com/Neskol/MaiLib">https://github.com/Neskol/MaiLib</link>&quot; &gt;<link linkend="_namespace_mai_lib">MaiLib</link> and hopefully that helps! </para>
+</listitem></itemizedlist>
+</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,319 @@
+.TH "MaiLib.Compiler" 3 "Sun Feb 5 2023" "Version 1.0.4.0" "MaiLib" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MaiLib.Compiler
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBMaiLib\&.ICompiler\fP\&.
+.PP
+Inherited by \fBMaiLib\&.SimaiCompiler\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCompiler\fP (string location, string targetLocation)"
+.br
+.RI "Construct compiler of a single song\&. "
+.ti -1c
+.RI "\fBCompiler\fP ()"
+.br
+.RI "Empty constructor\&. "
+.ti -1c
+.RI "bool \fBCheckValidity\fP ()"
+.br
+.RI "Check if the chart given is valid to print\&. "
+.ti -1c
+.RI "abstract string \fBCompose\fP ()"
+.br
+.RI "Compose given chart to specific format\&. "
+.ti -1c
+.RI "abstract string \fBCompose\fP (\fBChart\fP chart)"
+.br
+.RI "Return compose of specified chart\&. "
+.ti -1c
+.RI "abstract string \fBCompose\fP (bool isUtage, List< string > ma2files)"
+.br
+.RI "Compose utage charts\&. "
+.ti -1c
+.RI "void \fBTakeInformation\fP (Dictionary< string, string > information)"
+.br
+.RI "Intake information to compile data\&. "
+.ti -1c
+.RI "\fBBPMChanges\fP \fBSymbolicBPMTable\fP ()"
+.br
+.RI "Return the chart bpm change table of MaiCompiler\&. "
+.ti -1c
+.RI "\fBNote\fP \fBSymbolicFirstNote\fP (bool isUtage)"
+.br
+.RI "Return the first note of master chart\&. "
+.ti -1c
+.RI "string \fBGenerateOneLineSummary\fP ()"
+.br
+.RI "Generate one line summary of this track with ID, name, genre and difficulty\&. "
+.in -1c
+.in +1c
+.ti -1c
+.RI "void \fBTakeInformation\fP (Dictionary< string, string > information)"
+.br
+.RI "Intake information to compile data\&. "
+.ti -1c
+.RI "string \fBCompose\fP ()"
+.br
+.RI "Compose given chart to specific format\&. "
+.ti -1c
+.RI "bool \fBCheckValidity\fP ()"
+.br
+.RI "Check if the chart given is valid to print\&. "
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static readonly string[] \fBdifficulty\fP = { 'Easy', 'Basic', 'Advanced', 'Expert', 'Master', 'Remaster', 'Utage' }"
+.br
+.RI "Stores difficulty keywords\&. "
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBGlobalSep\fP\fC [get]\fP"
+.br
+.RI "Access the path separator\&. "
+.ti -1c
+.RI "List< string > \fBCompiledChart\fP\fC [get, set]\fP"
+.br
+.RI "Stores the information of Compiled Chart\&. "
+.ti -1c
+.RI "List< \fBChart\fP > \fBCharts\fP\fC [get, set]\fP"
+.br
+.RI "Access stored charts\&. "
+.ti -1c
+.RI "Dictionary< string, string > \fBInformation\fP\fC [get, set]\fP"
+.br
+.RI "Access global information\&. "
+.ti -1c
+.RI "\fBXmlInformation\fP \fBMusicXml\fP\fC [get, set]\fP"
+.br
+.RI "Access read in music XML file\&. "
+.ti -1c
+.RI "string[] \fBDifficulty\fP\fC [get]\fP"
+.br
+.RI "Access difficulty;\&. "
+.ti -1c
+.RI "Dictionary< string, string > \fBRotateDictionary\fP\fC [get, set]\fP"
+.br
+.RI "Access the rotate dictionary\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB10\fP of file \fBCompiler\&.cs\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "MaiLib\&.Compiler\&.Compiler (string location, string targetLocation)"
+
+.PP
+Construct compiler of a single song\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIlocation\fP Folder
+.br
+\fItargetLocation\fP Output folder
+.RE
+.PP
+
+.PP
+Definition at line \fB122\fP of file \fBCompiler\&.cs\fP\&.
+.SS "MaiLib\&.Compiler\&.Compiler ()"
+
+.PP
+Empty constructor\&. 
+.PP
+Definition at line \fB143\fP of file \fBCompiler\&.cs\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "bool MaiLib\&.Compiler\&.CheckValidity ()"
+
+.PP
+Check if the chart given is valid to print\&. 
+.PP
+\fBReturns\fP
+.RS 4
+True if valid, false otherwise
+.RE
+.PP
+
+.PP
+Implements \fBMaiLib\&.ICompiler\fP\&.
+.PP
+Definition at line \fB159\fP of file \fBCompiler\&.cs\fP\&.
+.SS "abstract string MaiLib\&.Compiler\&.Compose ()\fC [pure virtual]\fP"
+
+.PP
+Compose given chart to specific format\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Corresponding chart
+.RE
+.PP
+
+.PP
+Implements \fBMaiLib\&.ICompiler\fP\&.
+.PP
+Implemented in \fBMaiLib\&.SimaiCompiler\fP\&.
+.SS "abstract string MaiLib\&.Compiler\&.Compose (bool isUtage, List< string > ma2files)\fC [pure virtual]\fP"
+
+.PP
+Compose utage charts\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIisUtage\fP switch to produce utage
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Corresponding utage chart
+.RE
+.PP
+
+.PP
+Implemented in \fBMaiLib\&.SimaiCompiler\fP\&.
+.SS "abstract string MaiLib\&.Compiler\&.Compose (\fBChart\fP chart)\fC [pure virtual]\fP"
+
+.PP
+Return compose of specified chart\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchart\fP Chart to compose
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Maidata of specified chart WITHOUT headers
+.RE
+.PP
+
+.PP
+Implemented in \fBMaiLib\&.SimaiCompiler\fP\&.
+.SS "string MaiLib\&.Compiler\&.GenerateOneLineSummary ()"
+
+.PP
+Generate one line summary of this track with ID, name, genre and difficulty\&. 
+.PP
+\fBReturns\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+Definition at line \fB241\fP of file \fBCompiler\&.cs\fP\&.
+.SS "\fBBPMChanges\fP MaiLib\&.Compiler\&.SymbolicBPMTable ()"
+
+.PP
+Return the chart bpm change table of MaiCompiler\&. 
+.PP
+\fBReturns\fP
+.RS 4
+First BPM change table of this\&.charts
+.RE
+.PP
+
+.PP
+Definition at line \fB194\fP of file \fBCompiler\&.cs\fP\&.
+.SS "\fBNote\fP MaiLib\&.Compiler\&.SymbolicFirstNote (bool isUtage)"
+
+.PP
+Return the first note of master chart\&. 
+.PP
+\fBReturns\fP
+.RS 4
+The first note of the master chart, or first note of the Utage chart if isUtage is turned true
+.RE
+.PP
+\fBExceptions\fP
+.RS 4
+\fISystem\&.NullReferenceException\fP Throws null reference exception if the chart does not exist
+.RE
+.PP
+
+.PP
+Definition at line \fB214\fP of file \fBCompiler\&.cs\fP\&.
+.SS "void MaiLib\&.Compiler\&.TakeInformation (Dictionary< string, string > information)"
+
+.PP
+Intake information to compile data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIinformation\fP TakeInformation to provide
+.RE
+.PP
+
+.PP
+Implements \fBMaiLib\&.ICompiler\fP\&.
+.PP
+Definition at line \fB185\fP of file \fBCompiler\&.cs\fP\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "readonly string [] MaiLib\&.Compiler\&.difficulty = { 'Easy', 'Basic', 'Advanced', 'Expert', 'Master', 'Remaster', 'Utage' }\fC [static]\fP"
+
+.PP
+Stores difficulty keywords\&. Difficulty
+.PP
+Definition at line \fB15\fP of file \fBCompiler\&.cs\fP\&.
+.SH "Property Documentation"
+.PP 
+.SS "List<\fBChart\fP> MaiLib\&.Compiler\&.Charts\fC [get]\fP, \fC [set]\fP"
+
+.PP
+Access stored charts\&. 
+.PP
+Definition at line \fB67\fP of file \fBCompiler\&.cs\fP\&.
+.SS "List<string> MaiLib\&.Compiler\&.CompiledChart\fC [get]\fP, \fC [set]\fP"
+
+.PP
+Stores the information of Compiled Chart\&. 
+.PP
+Definition at line \fB58\fP of file \fBCompiler\&.cs\fP\&.
+.SS "string [] MaiLib\&.Compiler\&.Difficulty\fC [get]\fP"
+
+.PP
+Access difficulty;\&. 
+.PP
+Definition at line \fB94\fP of file \fBCompiler\&.cs\fP\&.
+.SS "string MaiLib\&.Compiler\&.GlobalSep\fC [get]\fP"
+
+.PP
+Access the path separator\&. 
+.PP
+Definition at line \fB45\fP of file \fBCompiler\&.cs\fP\&.
+.SS "Dictionary<string, string> MaiLib\&.Compiler\&.Information\fC [get]\fP, \fC [set]\fP"
+
+.PP
+Access global information\&. 
+.PP
+Definition at line \fB76\fP of file \fBCompiler\&.cs\fP\&.
+.SS "\fBXmlInformation\fP MaiLib\&.Compiler\&.MusicXml\fC [get]\fP, \fC [set]\fP"
+
+.PP
+Access read in music XML file\&. 
+.PP
+Definition at line \fB85\fP of file \fBCompiler\&.cs\fP\&.
+.SS "Dictionary<string, string> MaiLib\&.Compiler\&.RotateDictionary\fC [get]\fP, \fC [set]\fP"
+
+.PP
+Access the rotate dictionary\&. Key: Music ID in Digits; Value: Rotate Parameter
+.PP
+Definition at line \fB103\fP of file \fBCompiler\&.cs\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MaiLib from the source code\&.

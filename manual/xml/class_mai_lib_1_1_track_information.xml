@@ -1,0 +1,848 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="class_mai_lib_1_1_track_information" kind="class" language="C#" prot="public" abstract="yes">
+    <compoundname>MaiLib::TrackInformation</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">MaiLib.IXmlUtility</basecompoundref>
+    <derivedcompoundref refid="class_mai_lib_1_1_xml_information" prot="public" virt="non-virtual">MaiLib.XmlInformation</derivedcompoundref>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1acbc3367c065b8d5c09d09ebb7c21a035" prot="public" static="yes" mutable="no">
+        <type>readonly string[]</type>
+        <definition>readonly string [] MaiLib.TrackInformation.level</definition>
+        <argsstring></argsstring>
+        <name>level</name>
+        <qualifiedname>MaiLib.TrackInformation.level</qualifiedname>
+        <initializer>= { &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;7+&quot;, &quot;8&quot;, &quot;8+&quot;, &quot;9&quot;, &quot;9+&quot;, &quot;10&quot;, &quot;10+&quot;, &quot;11&quot;, &quot;11+&quot;, &quot;12&quot;, &quot;12+&quot;, &quot;13&quot;, &quot;13+&quot;, &quot;14&quot;, &quot;14+&quot;, &quot;15&quot;, &quot;15+&quot; }</initializer>
+        <briefdescription>
+<para>Stores proper difficulties. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>1-15 Maimai level</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="16" column="39" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1ab3d47f46a35045cef10330022c577865" prot="public" static="yes" mutable="no">
+        <type>readonly string[]</type>
+        <definition>readonly string [] MaiLib.TrackInformation.difficulty</definition>
+        <argsstring></argsstring>
+        <name>difficulty</name>
+        <qualifiedname>MaiLib.TrackInformation.difficulty</qualifiedname>
+        <initializer>= { &quot;Basic&quot;, &quot;Advance&quot;, &quot;Expert&quot;, &quot;Master&quot;, &quot;Remaster&quot;, &quot;Utage&quot;, &quot;Easy&quot; }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="18" column="39" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a511f8348a7079403b8f9ddfe6316ea87" prot="public" static="yes" mutable="no">
+        <type>readonly string[]</type>
+        <definition>readonly string [] MaiLib.TrackInformation.addVersion</definition>
+        <argsstring></argsstring>
+        <name>addVersion</name>
+        <qualifiedname>MaiLib.TrackInformation.addVersion</qualifiedname>
+        <initializer>= { &quot;Ver1.00.00&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="20" column="39" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a696b34aa330a65f41352300761a7a70f" prot="public" static="yes" mutable="no">
+        <type>readonly string[]</type>
+        <definition>readonly string [] MaiLib.TrackInformation.genre</definition>
+        <argsstring></argsstring>
+        <name>genre</name>
+        <qualifiedname>MaiLib.TrackInformation.genre</qualifiedname>
+        <initializer>= { &quot;東方Project&quot;, &quot;maimai&quot; }</initializer>
+        <briefdescription>
+<para>Stores the genre name used in information. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>103 = Touhou, 105 = maimai</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="26" column="39" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1af23312148a60e4fa86b521aa16a66211" prot="public" static="yes" mutable="no">
+        <type>readonly string[]</type>
+        <definition>readonly string [] MaiLib.TrackInformation.version</definition>
+        <argsstring></argsstring>
+        <name>version</name>
+        <qualifiedname>MaiLib.TrackInformation.version</qualifiedname>
+        <initializer>= { &quot;maimai&quot;, &quot;maimai PLUS&quot;, &quot;maimai GreeN&quot;, &quot;maimai GreeN PLUS&quot;, &quot;maimai ORANGE&quot;, &quot;maimai ORANGE PLUS&quot;, &quot;maimai PiNK&quot;, &quot;maimai PiNK PLUS&quot;, &quot;maimai MURASAKi&quot;, &quot;maimai MURASAKi PLUS&quot;, &quot;maimai MiLK&quot;, &quot;maimai MiLK PLUS&quot;, &quot;maimai FiNALE&quot;, &quot;maimai DX&quot;, &quot;maimai DX PLUS&quot;, &quot;maimai DX Splash&quot;, &quot;maimai DX Splash PLUS&quot;, &quot;maimai DX UNiVERSE&quot;, &quot;maimai DX UNiVERSE PLUS&quot; }</initializer>
+        <briefdescription>
+<para>Stores prover maimai versions. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Version name of each generation of Maimai</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="32" column="39" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1af1a7ad9fc78e056c3948dbda529505fe" prot="public" static="yes" mutable="no">
+        <type>readonly string[]</type>
+        <definition>readonly string [] MaiLib.TrackInformation.shortVersion</definition>
+        <argsstring></argsstring>
+        <name>shortVersion</name>
+        <qualifiedname>MaiLib.TrackInformation.shortVersion</qualifiedname>
+        <initializer>= { &quot;maimai&quot;, &quot;PLUS&quot;, &quot;GreeN&quot;, &quot;GreeN PLUS&quot;, &quot;ORANGE&quot;, &quot;ORANGE PLUS&quot;, &quot;PiNK&quot;, &quot;PiNK PLUS&quot;, &quot;MURASAKi&quot;, &quot;MURASAKi PLUS&quot;, &quot;MiLK&quot;, &quot;MiLK PLUS&quot;, &quot;FiNALE&quot;, &quot;DX&quot;, &quot;DX PLUS&quot;, &quot;DX Splash&quot;, &quot;DX Splash PLUS&quot;, &quot;DX UNiVERSE&quot;, &quot;DX UNiVERSE PLUS&quot; }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="34" column="39" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a8acb25e8b9f13a35b362c60cb53eb5e6" prot="public" static="yes" mutable="no">
+        <type>string[]</type>
+        <definition>string [] MaiLib.TrackInformation.versionArray</definition>
+        <argsstring></argsstring>
+        <name>versionArray</name>
+        <qualifiedname>MaiLib.TrackInformation.versionArray</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="36" column="30" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a30ab3fc9c6baa30405117eba14e12c08" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.netOpenNameDic</definition>
+        <argsstring></argsstring>
+        <name>netOpenNameDic</name>
+        <qualifiedname>MaiLib.TrackInformation.netOpenNameDic</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="292" column="34" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="292" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a74fcaf8c3d20c7794bdc57e13f49e23f" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.releaseTagNameDic</definition>
+        <argsstring></argsstring>
+        <name>releaseTagNameDic</name>
+        <qualifiedname>MaiLib.TrackInformation.releaseTagNameDic</qualifiedname>
+        <initializer>= new Dictionary&lt;string, string&gt;{
+{&quot;1&quot;, &quot;Ver1.00.00&quot;},
+{&quot;501&quot;, &quot;Ver1.05.00&quot;},
+{&quot;1001&quot;, &quot;Ver1.10.00&quot;},
+{&quot;1501&quot;, &quot;Ver1.15.00&quot;},
+{&quot;2001&quot;, &quot;Ver1.20.00&quot;},
+{&quot;2501&quot;, &quot;Ver1.25.00&quot;},
+}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="374" column="34" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="374" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1ace4d15ef48c152032f4e49ae7f08fe8e" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.rightsInfoDic</definition>
+        <argsstring></argsstring>
+        <name>rightsInfoDic</name>
+        <qualifiedname>MaiLib.TrackInformation.rightsInfoDic</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="382" column="34" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="382" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a8bf39d942efe72f558cf35bb3acb8289" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.artistNameDic</definition>
+        <argsstring></argsstring>
+        <name>artistNameDic</name>
+        <qualifiedname>MaiLib.TrackInformation.artistNameDic</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="515" column="34" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="515" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a6033eb230ae721061292a3185d8c79e7" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.addVersionDic</definition>
+        <argsstring></argsstring>
+        <name>addVersionDic</name>
+        <qualifiedname>MaiLib.TrackInformation.addVersionDic</qualifiedname>
+        <initializer>= new Dictionary&lt;string, string&gt;{
+{&quot;0&quot;, &quot;maimai&quot;},
+{&quot;1&quot;, &quot;maimaiPLUS&quot;},
+{&quot;2&quot;, &quot;GreeN&quot;},
+{&quot;3&quot;, &quot;GreeNPLUS&quot;},
+{&quot;4&quot;, &quot;ORANGE&quot;},
+{&quot;5&quot;, &quot;ORANGEPLUS&quot;},
+{&quot;6&quot;, &quot;PiNK&quot;},
+{&quot;7&quot;, &quot;PiNKPLUS&quot;},
+{&quot;8&quot;, &quot;MURASAKi&quot;},
+{&quot;9&quot;, &quot;MURASAKiPLUS&quot;},
+{&quot;10&quot;, &quot;MiLK&quot;},
+{&quot;11&quot;, &quot;MiLKPLUS&quot;},
+{&quot;12&quot;, &quot;FiNALE&quot;},
+{&quot;13&quot;, &quot;maimaDX&quot;},
+{&quot;14&quot;, &quot;maimaDXPLUS&quot;},
+{&quot;15&quot;, &quot;Splash&quot;},
+{&quot;16&quot;, &quot;SplashPLUS&quot;},
+{&quot;17&quot;, &quot;UNiVERSE&quot;},
+{&quot;18&quot;, &quot;UNiVERSEPLUS&quot;},
+}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1234" column="34" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1234" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a6669da2a32dcfcbc9629331101d99761" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.eventNameDic</definition>
+        <argsstring></argsstring>
+        <name>eventNameDic</name>
+        <qualifiedname>MaiLib.TrackInformation.eventNameDic</qualifiedname>
+        <initializer>= new Dictionary&lt;string, string&gt;{
+{&quot;1&quot;, &quot;無期限常時解放&quot;},
+{&quot;21091621&quot;, &quot;210916_02_1&quot;},
+{&quot;21111225&quot;, &quot;211112_02_5&quot;},
+{&quot;22011422&quot;, &quot;220114_02_2&quot;},
+{&quot;22030321&quot;, &quot;220303_02_1&quot;},
+{&quot;22032421&quot;, &quot;220324_02_1&quot;},
+{&quot;22040121&quot;, &quot;220401_02_1&quot;},
+{&quot;22040821&quot;, &quot;220408_02_1&quot;},
+{&quot;22041521&quot;, &quot;220415_02_1&quot;},
+{&quot;22041522&quot;, &quot;220415_02_2&quot;},
+{&quot;22042821&quot;, &quot;220428_02_1&quot;},
+{&quot;22042822&quot;, &quot;220428_02_2&quot;},
+}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1255" column="34" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1255" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1ae359250ba13c83b77c7545aec965adfc" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.subEventNameDic</definition>
+        <argsstring></argsstring>
+        <name>subEventNameDic</name>
+        <qualifiedname>MaiLib.TrackInformation.subEventNameDic</qualifiedname>
+        <initializer>= new Dictionary&lt;string, string&gt;{
+{&quot;0&quot;, &quot;解放なし&quot;},
+{&quot;1&quot;, &quot;無期限常時解放&quot;},
+{&quot;22032421&quot;, &quot;220324_02_1&quot;},
+}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1269" column="34" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1269" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1ae664a03204aa951394efc062f8674343" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.notesDesignerDic</definition>
+        <argsstring></argsstring>
+        <name>notesDesignerDic</name>
+        <qualifiedname>MaiLib.TrackInformation.notesDesignerDic</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1274" column="34" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1274" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a702f5810a4a78e3bab380f00bfa1334f" prot="private" static="no" mutable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.information</definition>
+        <argsstring></argsstring>
+        <name>information</name>
+        <qualifiedname>MaiLib.TrackInformation.information</qualifiedname>
+        <briefdescription>
+<para>Set of track information stored. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1371" column="28" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1371" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_track_information_1a7760603ac6583faf324692c2e0c86cba" prot="private" static="no" mutable="no">
+        <type>XmlDocument</type>
+        <definition>XmlDocument MaiLib.TrackInformation.takeInValue</definition>
+        <argsstring></argsstring>
+        <name>takeInValue</name>
+        <qualifiedname>MaiLib.TrackInformation.takeInValue</qualifiedname>
+        <briefdescription>
+<para>Internal stored information set. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1376" column="29" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1376" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1a40313e4e0ab822735ae2d9c5ffffb178" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackName</definition>
+        <argsstring></argsstring>
+        <name>TrackName</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackName</qualifiedname>
+        <briefdescription>
+<para>Return the track name. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackName</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1509" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1510" bodyend="1513"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1afc67dbfa0522889a3328169b02b91fdc" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackSortName</definition>
+        <argsstring></argsstring>
+        <name>TrackSortName</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackSortName</qualifiedname>
+        <briefdescription>
+<para>Return the sort name (basically English or Katakana) </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.SortName</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1519" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1520" bodyend="1523"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1af951ce58d285ac8a5870c23e8fe980a6" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackID</definition>
+        <argsstring></argsstring>
+        <name>TrackID</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackID</qualifiedname>
+        <briefdescription>
+<para>Return the track ID (4 digit, having 00 for SD 01 for DX) </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackID</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1529" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1530" bodyend="1533"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1ae6901ed016f3f1b049daf0fb955ed2df" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackGenre</definition>
+        <argsstring></argsstring>
+        <name>TrackGenre</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackGenre</qualifiedname>
+        <briefdescription>
+<para>Return the track genre (By default cabinet 6 categories) </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackGenre</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1539" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1540" bodyend="1543"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1a0a8f69ce445f9eb7709080570e30d159" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackBPM</definition>
+        <argsstring></argsstring>
+        <name>TrackBPM</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackBPM</qualifiedname>
+        <briefdescription>
+<para>Return the track global BPM. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackBPM</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1549" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1550" bodyend="1553"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1adcea7cd6aee16a6b44efe4d635038ef1" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackComposer</definition>
+        <argsstring></argsstring>
+        <name>TrackComposer</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackComposer</qualifiedname>
+        <briefdescription>
+<para>Return the track composer. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackComposer</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1559" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1560" bodyend="1563"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1a2c4aa9563d252768bafca68a08b499b7" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackSymbolicLevel</definition>
+        <argsstring></argsstring>
+        <name>TrackSymbolicLevel</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackSymbolicLevel</qualifiedname>
+        <briefdescription>
+<para>Return the most representative level of the track = set by default master. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackLevel</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1569" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1570" bodyend="1607"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1a3f7338cbe50cf3a7daccab3955ef6b78" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string[]</type>
+        <definition>string [] MaiLib.TrackInformation.TrackLevels</definition>
+        <argsstring></argsstring>
+        <name>TrackLevels</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackLevels</qualifiedname>
+        <briefdescription>
+<para>Return track levels by [Easy, Basic, Advance, Expert, Master, Remaster, Utage]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1612" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1613" bodyend="1635"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1ab67766915f0eb59f06b8fadaebd0f7dd" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string[]</type>
+        <definition>string [] MaiLib.TrackInformation.TrackDecimalLevels</definition>
+        <argsstring></argsstring>
+        <name>TrackDecimalLevels</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackDecimalLevels</qualifiedname>
+        <briefdescription>
+<para>Return track decimal levels by [Easy, Basic, Advance, Expert, Master, Remaster, Utage] * Utage returns utage level. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1640" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1641" bodyend="1663"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1a85712e801552890f9bbcc72a7a359177" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.DXChartTrackPathSuffix</definition>
+        <argsstring></argsstring>
+        <name>DXChartTrackPathSuffix</name>
+        <qualifiedname>MaiLib.TrackInformation.DXChartTrackPathSuffix</qualifiedname>
+        <briefdescription>
+<para>Return the suffix of Track title for export. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackSubstituteName&quot;_DX&quot; if is DX chart</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1669" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1670" bodyend="1678"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1a8d024106709ceb0d873a6210ea785cf1" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.StandardDeluxePrefix</definition>
+        <argsstring></argsstring>
+        <name>StandardDeluxePrefix</name>
+        <qualifiedname>MaiLib.TrackInformation.StandardDeluxePrefix</qualifiedname>
+        <briefdescription>
+<para>Returns if the track is Standard or Deluxe. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>SD if standard, DX if deluxe</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1684" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1685" bodyend="1693"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1ac70ef12216b3cfede5eb78ea91001e64" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.StandardDeluxeSuffix</definition>
+        <argsstring></argsstring>
+        <name>StandardDeluxeSuffix</name>
+        <qualifiedname>MaiLib.TrackInformation.StandardDeluxeSuffix</qualifiedname>
+        <briefdescription>
+<para>Title suffix for better distinguish. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>[SD] if Standard and [DX] if Deluxe</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1699" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1700" bodyend="1705"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1ac81aa2e67e1a4c2c42c5d25e80bca5b8" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>bool</type>
+        <definition>bool MaiLib.TrackInformation.IsDXChart</definition>
+        <argsstring></argsstring>
+        <name>IsDXChart</name>
+        <qualifiedname>MaiLib.TrackInformation.IsDXChart</qualifiedname>
+        <briefdescription>
+<para>See if the chart is DX chart. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>True if is DX, false if SD</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1711" column="21" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1712" bodyend="1718"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1a44f77f0e3d8b6898f1350751d5f61c1e" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackVersion</definition>
+        <argsstring></argsstring>
+        <name>TrackVersion</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackVersion</qualifiedname>
+        <briefdescription>
+<para>Return this.TrackVersion. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackVersion</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1735" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1736" bodyend="1744"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1adf852d73f7f45f7c858189ca44262906" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>string</type>
+        <definition>string MaiLib.TrackInformation.TrackVersionNumber</definition>
+        <argsstring></argsstring>
+        <name>TrackVersionNumber</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackVersionNumber</qualifiedname>
+        <briefdescription>
+<para>Return this.TrackVersionNumber. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TrackVersionNumber</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1750" column="23" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1751" bodyend="1759"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1a132e36ac4af1f628dbfc6f2163343357" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>XmlDocument</type>
+        <definition>XmlDocument MaiLib.TrackInformation.TakeInValue</definition>
+        <argsstring></argsstring>
+        <name>TakeInValue</name>
+        <qualifiedname>MaiLib.TrackInformation.TakeInValue</qualifiedname>
+        <briefdescription>
+<para>Give access to TakeInValue if necessary. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.TakeInValue as XMLDocument</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1765" column="28" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1766" bodyend="1769"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_track_information_1adcaf647c20f72d7b58d122443dab8ced" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="yes" privatesettable="no" protectedsettable="no">
+        <type>Dictionary&lt; string, string &gt;</type>
+        <definition>Dictionary&lt;string, string&gt; MaiLib.TrackInformation.Information</definition>
+        <argsstring></argsstring>
+        <name>Information</name>
+        <qualifiedname>MaiLib.TrackInformation.Information</qualifiedname>
+        <briefdescription>
+<para>Give access to this.Information. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>this.Information as Dictionary</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1775" column="27" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1776" bodyend="1779"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_mai_lib_1_1_track_information_1a9cb9fd4cc0f1b1f2c63f09f87821f72d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.TrackInformation.TrackInformation</definition>
+        <argsstring>()</argsstring>
+        <name>TrackInformation</name>
+        <qualifiedname>MaiLib.TrackInformation.TrackInformation</qualifiedname>
+        <briefdescription>
+<para>Empty constructor. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1381" column="16" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1381" bodyend="1387"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_track_information_1af05fb6fef6e83623100535d15b798814" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void MaiLib.TrackInformation.FormatInformation</definition>
+        <argsstring>()</argsstring>
+        <name>FormatInformation</name>
+        <qualifiedname>MaiLib.TrackInformation.FormatInformation</qualifiedname>
+        <briefdescription>
+<para>Add in necessary nodes in information. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1416" column="21" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1416" bodyend="1457"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_track_information_1a3287749fbd92748d1057e60b38546209" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void MaiLib.TrackInformation.FormatDummyInformation</definition>
+        <argsstring>()</argsstring>
+        <name>FormatDummyInformation</name>
+        <qualifiedname>MaiLib.TrackInformation.FormatDummyInformation</qualifiedname>
+        <briefdescription>
+<para>Add in necessary nodes in information for dummy chart. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1462" column="21" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1462" bodyend="1503"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_track_information_1ae8bc2fbcda6b3f95aa3d4baaff982659" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>XmlNodeList</type>
+        <definition>XmlNodeList MaiLib.TrackInformation.GetMatchNodes</definition>
+        <argsstring>(string name)</argsstring>
+        <name>GetMatchNodes</name>
+        <qualifiedname>MaiLib.TrackInformation.GetMatchNodes</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Return the XML node that has same name with. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1725" column="28" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1725" bodyend="1729"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_track_information_1a123ebc559b693a7b882ef91e6e13b4f7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void MaiLib.TrackInformation.Save</definition>
+        <argsstring>(string location)</argsstring>
+        <name>Save</name>
+        <qualifiedname>MaiLib.TrackInformation.Save</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>location</declname>
+        </param>
+        <briefdescription>
+<para>Save the information to given path. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>location</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Path to save the information</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1785" column="21" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1785" bodyend="1788"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_track_information_1a879f0520004112f7e52f18eee96b8160" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>abstract void</type>
+        <definition>abstract void MaiLib.TrackInformation.Update</definition>
+        <argsstring>()</argsstring>
+        <name>Update</name>
+        <qualifiedname>MaiLib.TrackInformation.Update</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_xml_information_1a9c943de86ffcc9917870d187f0708efa">Update</reimplementedby>
+        <briefdescription>
+<para>Update information. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1793" column="30"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_mai_lib_1_1_track_information_1a507b73e496dac767e83cac63876675b1" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string MaiLib.TrackInformation.CompensateZero</definition>
+        <argsstring>(string intake)</argsstring>
+        <name>CompensateZero</name>
+        <qualifiedname>MaiLib.TrackInformation.CompensateZero</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>intake</declname>
+        </param>
+        <briefdescription>
+<para>Compensate 0 for music IDs. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>intake</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Music ID</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0..+#Music ID and |Music ID|==6</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1800" column="30" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1800" bodyend="1815"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_track_information_1ab4f5ab4471644bb6e109fc3797ce5928" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string MaiLib.TrackInformation.CompensateShortZero</definition>
+        <argsstring>(string intake)</argsstring>
+        <name>CompensateShortZero</name>
+        <qualifiedname>MaiLib.TrackInformation.CompensateShortZero</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>intake</declname>
+        </param>
+        <briefdescription>
+<para>Compensate 0 for short music IDs. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>intake</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Music ID</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0..+#Music ID and |Music ID|==4</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/TrackInformation.cs" line="1822" column="30" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="1822" bodyend="1837"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Use xml to store track information. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>IXmlUtility</label>
+      </node>
+      <node id="1">
+        <label>MaiLib.TrackInformation</label>
+        <link refid="class_mai_lib_1_1_track_information"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>MaiLib.XmlInformation</label>
+        <link refid="class_mai_lib_1_1_xml_information"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>IXmlUtility</label>
+      </node>
+      <node id="1">
+        <label>MaiLib.TrackInformation</label>
+        <link refid="class_mai_lib_1_1_track_information"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="Neskol/MaiLib/TrackInformation.cs" line="10" column="21" bodyfile="Neskol/MaiLib/TrackInformation.cs" bodystart="11" bodyend="1838"/>
+    <listofallmembers>
+      <member refid="class_mai_lib_1_1_track_information_1a511f8348a7079403b8f9ddfe6316ea87" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>addVersion</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a6033eb230ae721061292a3185d8c79e7" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>addVersionDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a8bf39d942efe72f558cf35bb3acb8289" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>artistNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ab4f5ab4471644bb6e109fc3797ce5928" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>CompensateShortZero</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a507b73e496dac767e83cac63876675b1" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>CompensateZero</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ab3d47f46a35045cef10330022c577865" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>difficulty</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a85712e801552890f9bbcc72a7a359177" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>DXChartTrackPathSuffix</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a6669da2a32dcfcbc9629331101d99761" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>eventNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a3287749fbd92748d1057e60b38546209" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>FormatDummyInformation</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1af05fb6fef6e83623100535d15b798814" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>FormatInformation</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a696b34aa330a65f41352300761a7a70f" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>genre</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ae8bc2fbcda6b3f95aa3d4baaff982659" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>GetMatchNodes</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1adcaf647c20f72d7b58d122443dab8ced" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>Information</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a702f5810a4a78e3bab380f00bfa1334f" prot="private" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>information</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ac81aa2e67e1a4c2c42c5d25e80bca5b8" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>IsDXChart</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1acbc3367c065b8d5c09d09ebb7c21a035" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>level</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a30ab3fc9c6baa30405117eba14e12c08" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>netOpenNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ae664a03204aa951394efc062f8674343" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>notesDesignerDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a74fcaf8c3d20c7794bdc57e13f49e23f" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>releaseTagNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ace4d15ef48c152032f4e49ae7f08fe8e" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>rightsInfoDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a123ebc559b693a7b882ef91e6e13b4f7" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>Save</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1af1a7ad9fc78e056c3948dbda529505fe" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>shortVersion</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a8d024106709ceb0d873a6210ea785cf1" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>StandardDeluxePrefix</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ac70ef12216b3cfede5eb78ea91001e64" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>StandardDeluxeSuffix</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ae359250ba13c83b77c7545aec965adfc" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>subEventNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a7760603ac6583faf324692c2e0c86cba" prot="private" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>takeInValue</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a132e36ac4af1f628dbfc6f2163343357" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TakeInValue</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a0a8f69ce445f9eb7709080570e30d159" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackBPM</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1adcea7cd6aee16a6b44efe4d635038ef1" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackComposer</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ab67766915f0eb59f06b8fadaebd0f7dd" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackDecimalLevels</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ae6901ed016f3f1b049daf0fb955ed2df" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackGenre</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1af951ce58d285ac8a5870c23e8fe980a6" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackID</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a9cb9fd4cc0f1b1f2c63f09f87821f72d" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackInformation</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a3f7338cbe50cf3a7daccab3955ef6b78" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackLevels</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a40313e4e0ab822735ae2d9c5ffffb178" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackName</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1afc67dbfa0522889a3328169b02b91fdc" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackSortName</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a2c4aa9563d252768bafca68a08b499b7" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackSymbolicLevel</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a44f77f0e3d8b6898f1350751d5f61c1e" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackVersion</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1adf852d73f7f45f7c858189ca44262906" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>TrackVersionNumber</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a879f0520004112f7e52f18eee96b8160" prot="public" virt="pure-virtual"><scope>MaiLib::TrackInformation</scope><name>Update</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1af23312148a60e4fa86b521aa16a66211" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>version</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a8acb25e8b9f13a35b362c60cb53eb5e6" prot="public" virt="non-virtual"><scope>MaiLib::TrackInformation</scope><name>versionArray</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

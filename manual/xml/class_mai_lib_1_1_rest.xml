@@ -1,0 +1,307 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="class_mai_lib_1_1_rest" kind="class" language="C#" prot="package">
+    <compoundname>MaiLib::Rest</compoundname>
+    <basecompoundref refid="class_mai_lib_1_1_note" prot="public" virt="non-virtual">MaiLib.Note</basecompoundref>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_mai_lib_1_1_rest_1a7b630e426bf1db956ce34fc7d485b732" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>override string</type>
+        <definition>override string MaiLib.Rest.NoteGenre</definition>
+        <argsstring></argsstring>
+        <name>NoteGenre</name>
+        <qualifiedname>MaiLib.Rest.NoteGenre</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="63" column="32" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_rest_1a59edd6593d59fafe3877191cb79615fb" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>override bool</type>
+        <definition>override bool MaiLib.Rest.IsNote</definition>
+        <argsstring></argsstring>
+        <name>IsNote</name>
+        <qualifiedname>MaiLib.Rest.IsNote</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="65" column="30" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_mai_lib_1_1_rest_1aae6e0728e3d67f948940074b17d4062e" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>override string</type>
+        <definition>override string MaiLib.Rest.NoteSpecificGenre</definition>
+        <argsstring></argsstring>
+        <name>NoteSpecificGenre</name>
+        <qualifiedname>MaiLib.Rest.NoteSpecificGenre</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="67" column="32" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_mai_lib_1_1_rest_1a2580d7d88a97e539d0409c9f99785c2d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.Rest.Rest</definition>
+        <argsstring>()</argsstring>
+        <name>Rest</name>
+        <qualifiedname>MaiLib.Rest.Rest</qualifiedname>
+        <briefdescription>
+<para>Construct empty. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="12" column="16" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="12" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_rest_1aae36c5038c84912f96efd2ce9b7ed71a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.Rest.Rest</definition>
+        <argsstring>(string noteType, int bar, int startTime)</argsstring>
+        <name>Rest</name>
+        <qualifiedname>MaiLib.Rest.Rest</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>noteType</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>bar</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>startTime</declname>
+        </param>
+        <briefdescription>
+<para>Construct Rest Note with given information. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>noteType</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Note Type to take in</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bar</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bar to take in</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>startTime</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Start to take in</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="26" column="16" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="26" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_rest_1a4ad908a6b2a491a31de764285326d2f9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.Rest.Rest</definition>
+        <argsstring>(Note n)</argsstring>
+        <name>Rest</name>
+        <qualifiedname>MaiLib.Rest.Rest</qualifiedname>
+        <param>
+          <type><ref refid="class_mai_lib_1_1_note" kindref="compound">Note</ref></type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+<para>Construct with Note provided. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>n</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Note to take in</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="38" column="16" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="38" bodyend="45"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_rest_1a0c419aaba2b1bceed2d0199bf8796025" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override bool</type>
+        <definition>override bool MaiLib.Rest.CheckValidity</definition>
+        <argsstring>()</argsstring>
+        <name>CheckValidity</name>
+        <qualifiedname>MaiLib.Rest.CheckValidity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="46" column="30" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="46" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_rest_1a2a63d115cadf1a01ca7cf576789e11fb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override string</type>
+        <definition>override string MaiLib.Rest.Compose</definition>
+        <argsstring>(int format)</argsstring>
+        <name>Compose</name>
+        <qualifiedname>MaiLib.Rest.Compose</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>format</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="51" column="32" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="51" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_rest_1a17a4bad0f67d433025e0ae693da3c9b1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override <ref refid="class_mai_lib_1_1_note" kindref="compound">Note</ref></type>
+        <definition>override Note MaiLib.Rest.NewInstance</definition>
+        <argsstring>()</argsstring>
+        <name>NewInstance</name>
+        <qualifiedname>MaiLib.Rest.NewInstance</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Rest.cs" line="57" column="30" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="57" bodyend="61"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Construct Rest Note solely for Simai. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="5">
+        <label>IComparable</label>
+      </node>
+      <node id="3">
+        <label>IEquatable&lt; Note &gt;</label>
+      </node>
+      <node id="4">
+        <label>INote</label>
+        <link refid="interface_mai_lib_1_1_i_note"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.Rest</label>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>Note</label>
+        <link refid="class_mai_lib_1_1_note"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="5">
+        <label>IComparable</label>
+      </node>
+      <node id="3">
+        <label>IEquatable&lt; Note &gt;</label>
+      </node>
+      <node id="4">
+        <label>INote</label>
+        <link refid="interface_mai_lib_1_1_i_note"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.Rest</label>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>Note</label>
+        <link refid="class_mai_lib_1_1_note"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="Neskol/MaiLib/Rest.cs" line="6" column="13" bodyfile="Neskol/MaiLib/Rest.cs" bodystart="7" bodyend="68"/>
+    <listofallmembers>
+      <member refid="class_mai_lib_1_1_note_1a0354b2b7d0a4fa8fa0406a3651034b41" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Bar</name></member>
+      <member refid="class_mai_lib_1_1_note_1ab50fc72781bfd8173feab554b2ab2087" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>BPM</name></member>
+      <member refid="class_mai_lib_1_1_note_1ac9aaff07cd74d47631c865df65236f01" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>BPMChangeNotes</name></member>
+      <member refid="class_mai_lib_1_1_note_1a1d68357c317c3740f1579c64d8eb8f20" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>CalculatedLastTime</name></member>
+      <member refid="class_mai_lib_1_1_note_1a4e13d186c98826aba27d8e0cb0450e43" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>CalculatedWaitTime</name></member>
+      <member refid="class_mai_lib_1_1_rest_1a0c419aaba2b1bceed2d0199bf8796025" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>CheckValidity</name></member>
+      <member refid="class_mai_lib_1_1_note_1a5ea76787c2ae2e78258162f662ee4954" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>CompareTo</name></member>
+      <member refid="class_mai_lib_1_1_rest_1a2a63d115cadf1a01ca7cf576789e11fb" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Compose</name></member>
+      <member refid="class_mai_lib_1_1_note_1ab6209810248333d7cf09eed0925eb053" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>ConsecutiveSlide</name></member>
+      <member refid="class_mai_lib_1_1_note_1a0a52510f6b2da779cc3febe37d5860e2" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Delayed</name></member>
+      <member refid="class_mai_lib_1_1_note_1ade6118b22af7628d3ed3cebc58cc4e82" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>EndKey</name></member>
+      <member refid="class_mai_lib_1_1_note_1a57eda0d466107d09e9dbdfc07a663626" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>EndKeyNum</name></member>
+      <member refid="class_mai_lib_1_1_note_1af715932b438e65b85b1a9950b0562110" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Equals</name></member>
+      <member refid="class_mai_lib_1_1_note_1a1f798264554830f91f24610ef53ae6ff" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>FixedLastLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1a3f62d32a58d32c270eb41590feff8cac" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>FixedTick</name></member>
+      <member refid="class_mai_lib_1_1_note_1a6502825657156c8865ce1b1efe9ba426" prot="public" virt="virtual"><scope>MaiLib::Rest</scope><name>Flip</name></member>
+      <member refid="class_mai_lib_1_1_note_1a5ae1c7a0a87b8f1a4a0d3e45a1ff010d" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>GenerateAppropriateLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1ac1ee7c68616e125b00622d9a173c8489" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>GenerateAppropriateLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1aae4cd6b1cd86c0d147972be1f5eeaeed" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>GetBPMTimeUnit</name></member>
+      <member refid="class_mai_lib_1_1_note_1a02fec2d573834a2bdc310a07ed5ed9c4" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>GetTimeStamp</name></member>
+      <member refid="class_mai_lib_1_1_rest_1a59edd6593d59fafe3877191cb79615fb" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>IsNote</name></member>
+      <member refid="class_mai_lib_1_1_note_1ae93ef9ee5987428ab77603867d3ed864" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Key</name></member>
+      <member refid="class_mai_lib_1_1_note_1a508897f0ba5f3882ad9f22878b3d026b" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>KeyGroup</name></member>
+      <member refid="class_mai_lib_1_1_note_1a2716fbd88bcf9f653237736a70044fdb" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>KeyNum</name></member>
+      <member refid="class_mai_lib_1_1_note_1ad2c15248a6056b5df20faa524bff2544" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>LastLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1a8f95a5eba8666e9e69fc0ea0a3362ab7" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>LastTickStamp</name></member>
+      <member refid="class_mai_lib_1_1_note_1a820aaaebbd70488e54ce46e67efc05db" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>LastTimeStamp</name></member>
+      <member refid="class_mai_lib_1_1_rest_1a17a4bad0f67d433025e0ae693da3c9b1" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>NewInstance</name></member>
+      <member refid="class_mai_lib_1_1_note_1a587a20d9e404128d63a823dd45f4df94" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Next</name></member>
+      <member refid="class_mai_lib_1_1_note_1a83cea301f05d1472ce9025e1a52ca215" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Note</name></member>
+      <member refid="class_mai_lib_1_1_note_1a298b576e4a74c6e089674034584aeadf" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Note</name></member>
+      <member refid="class_mai_lib_1_1_rest_1a7b630e426bf1db956ce34fc7d485b732" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>NoteGenre</name></member>
+      <member refid="class_mai_lib_1_1_rest_1aae6e0728e3d67f948940074b17d4062e" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>NoteSpecificGenre</name></member>
+      <member refid="class_mai_lib_1_1_note_1a90afb1539eca823acbb3074b58993156" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>NoteType</name></member>
+      <member refid="class_mai_lib_1_1_note_1a85d838dc162ac1664a7beca68ed7c357" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Prev</name></member>
+      <member refid="class_mai_lib_1_1_note_1a8904f085e381cbbaa748fde6ff06c7cb" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>ReplaceBPMChanges</name></member>
+      <member refid="class_mai_lib_1_1_note_1aead3f3ce08eac1cebf93bfe989f069d2" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>ReplaceBPMChanges</name></member>
+      <member refid="class_mai_lib_1_1_rest_1a2580d7d88a97e539d0409c9f99785c2d" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Rest</name></member>
+      <member refid="class_mai_lib_1_1_rest_1aae36c5038c84912f96efd2ce9b7ed71a" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Rest</name></member>
+      <member refid="class_mai_lib_1_1_rest_1a4ad908a6b2a491a31de764285326d2f9" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Rest</name></member>
+      <member refid="class_mai_lib_1_1_note_1a0950c4cea5e76073fa34f6dd3d1a2b78" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>SlideStart</name></member>
+      <member refid="class_mai_lib_1_1_note_1aa670c5a13ce0eded4efa1a36562dbb4d" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Tick</name></member>
+      <member refid="class_mai_lib_1_1_note_1a4ea181a572b4bc92b13ad92d09d17bd9" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>TickBPMDisagree</name></member>
+      <member refid="class_mai_lib_1_1_note_1a0090ff7f63e26d2ed22cd773fad30fd9" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>TickStamp</name></member>
+      <member refid="class_mai_lib_1_1_note_1a3f0febfc9510008ee8e9c2e785ac0f4f" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>TickTimeStamp</name></member>
+      <member refid="class_mai_lib_1_1_note_1a163be75a5c2847c3ea09c3cdd50a2f64" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>Update</name></member>
+      <member refid="class_mai_lib_1_1_note_1a72ead97a0e2b721894195e5e78e832a9" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>WaitLength</name></member>
+      <member refid="class_mai_lib_1_1_note_1afe37adaf36feb16c9e3894b42454099c" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>WaitTickStamp</name></member>
+      <member refid="class_mai_lib_1_1_note_1a67f6d9761077f599e75bb9cbaa601d05" prot="public" virt="non-virtual"><scope>MaiLib::Rest</scope><name>WaitTimeStamp</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

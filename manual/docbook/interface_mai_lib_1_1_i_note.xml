@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_interface_mai_lib_1_1_i_note" xml:lang="en-US">
+<title>MaiLib.INote Interface Reference</title>
+<indexterm><primary>MaiLib.INote</primary></indexterm>
+<para>
+
+<para>Provide interface and basic functions for Notes. </para>
+ 
+</para>
+<para>Inheritance diagram for MaiLib.INote:    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="interface_mai_lib_1_1_i_note.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_interface_mai_lib_1_1_i_note_1a1dfbb03e78cfcc5a17dfa79ad024dd1f">Compose</link> (int format)</para>
+
+<para>Convert note to string for writing. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_interface_mai_lib_1_1_i_note_1a8fc8a0d5073d015c22ad4aeea8d40451">CheckValidity</link> ()</para>
+
+<para>See if current note has all information needed. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_interface_mai_lib_1_1_i_note_1abfc6926b276598f9724a547245d118f1">Update</link> ()</para>
+
+<para>Updates this note instance. </para>
+</listitem>
+            <listitem><para>void <link linkend="_interface_mai_lib_1_1_i_note_1a72d02afdde5dedc5aa215824ee8b43b6">Flip</link> (string method)</para>
+
+<para>Flip the note according to the method specified. </para>
+</listitem>
+            <listitem><para>double <link linkend="_interface_mai_lib_1_1_i_note_1a137de1db8d9089f0f693ce0cc05c6e11">GetTimeStamp</link> (int overallTick)</para>
+
+<para>Give time stamp given overall tick. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Provide interface and basic functions for Notes. </para>
+<para>
+Definition at line <link linkend="__i_note_8cs_source_1l00006">6</link> of file <link linkend="__i_note_8cs_source">INote.cs</link>.</para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_interface_mai_lib_1_1_i_note_1a8fc8a0d5073d015c22ad4aeea8d40451"/><section>
+    <title>CheckValidity()</title>
+<indexterm><primary>CheckValidity</primary><secondary>MaiLib.INote</secondary></indexterm>
+<indexterm><primary>MaiLib.INote</primary><secondary>CheckValidity</secondary></indexterm>
+<para><computeroutput>bool MaiLib.INote.CheckValidity ( )</computeroutput></para><para>
+
+<para>See if current note has all information needed. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>True if qualified, false otherwise</para>
+</formalpara>
+</para>
+<para>
+Implemented in <link linkend="_class_mai_lib_1_1_b_p_m_change_1aa80062f63868f2d4bf81fefa68e4ce94">MaiLib.BPMChange</link>, <link linkend="_class_mai_lib_1_1_hold_1a42a427bbd7b55b46754d1d5aaffc994b">MaiLib.Hold</link>, <link linkend="_class_mai_lib_1_1_measure_change_1a5ffa741d327b41e714ac5e62cbc26cb2">MaiLib.MeasureChange</link>, <link linkend="_class_mai_lib_1_1_note_1aa6bf8e7d6d7da1cbb72c1823fd26a7ba">MaiLib.Note</link>, and <link linkend="_class_mai_lib_1_1_slide_1a2b48a3c33b0260ef0c700b6462b674fe">MaiLib.Slide</link>.</para>
+</section>
+<anchor xml:id="_interface_mai_lib_1_1_i_note_1a1dfbb03e78cfcc5a17dfa79ad024dd1f"/><section>
+    <title>Compose()</title>
+<indexterm><primary>Compose</primary><secondary>MaiLib.INote</secondary></indexterm>
+<indexterm><primary>MaiLib.INote</primary><secondary>Compose</secondary></indexterm>
+<para><computeroutput>string MaiLib.INote.Compose (int format)</computeroutput></para><para>
+
+<para>Convert note to string for writing. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>format</entry><entry>
+<para>0 if Simai, 1 if Ma2</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Implemented in <link linkend="_class_mai_lib_1_1_b_p_m_change_1afbc89c48eeb067f7fc294e28562d451f">MaiLib.BPMChange</link>, <link linkend="_class_mai_lib_1_1_hold_1a18e2b9e7fc7062497140d137ae5876e7">MaiLib.Hold</link>, <link linkend="_class_mai_lib_1_1_measure_change_1a1c99e63af55c6fd3b5e77e3d1bfaf949">MaiLib.MeasureChange</link>, <link linkend="_class_mai_lib_1_1_note_1a51b9c57b063ae0f39afa9e5e4d1d7cf7">MaiLib.Note</link>, and <link linkend="_class_mai_lib_1_1_slide_1a2b67d472cb7304c4726d942a538edc13">MaiLib.Slide</link>.</para>
+</section>
+<anchor xml:id="_interface_mai_lib_1_1_i_note_1a72d02afdde5dedc5aa215824ee8b43b6"/><section>
+    <title>Flip()</title>
+<indexterm><primary>Flip</primary><secondary>MaiLib.INote</secondary></indexterm>
+<indexterm><primary>MaiLib.INote</primary><secondary>Flip</secondary></indexterm>
+<para><computeroutput>void MaiLib.INote.Flip (string method)</computeroutput></para><para>
+
+<para>Flip the note according to the method specified. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>method</entry><entry>
+<para>UpSideDown, LeftToRight, Clockwise90/180, Counterclockwise90/180</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Implemented in <link linkend="_class_mai_lib_1_1_note_1a6502825657156c8865ce1b1efe9ba426">MaiLib.Note</link>.</para>
+</section>
+<anchor xml:id="_interface_mai_lib_1_1_i_note_1a137de1db8d9089f0f693ce0cc05c6e11"/><section>
+    <title>GetTimeStamp()</title>
+<indexterm><primary>GetTimeStamp</primary><secondary>MaiLib.INote</secondary></indexterm>
+<indexterm><primary>MaiLib.INote</primary><secondary>GetTimeStamp</secondary></indexterm>
+<para><computeroutput>double MaiLib.INote.GetTimeStamp (int overallTick)</computeroutput></para><para>
+
+<para>Give time stamp given overall tick. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>overallTick</entry><entry>
+<para>Note.Bar*384+Note.Tick</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Appropriate time stamp in seconds</para>
+</formalpara>
+</para>
+<para>
+Implemented in <link linkend="_class_mai_lib_1_1_note_1a02fec2d573834a2bdc310a07ed5ed9c4">MaiLib.Note</link>.</para>
+</section>
+<anchor xml:id="_interface_mai_lib_1_1_i_note_1abfc6926b276598f9724a547245d118f1"/><section>
+    <title>Update()</title>
+<indexterm><primary>Update</primary><secondary>MaiLib.INote</secondary></indexterm>
+<indexterm><primary>MaiLib.INote</primary><secondary>Update</secondary></indexterm>
+<para><computeroutput>bool MaiLib.INote.Update ( )</computeroutput></para><para>
+
+<para>Updates this note instance. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>True if Calculated Times is defined, false otherwise</para>
+</formalpara>
+</para>
+<para>
+Implemented in <link linkend="_class_mai_lib_1_1_note_1a163be75a5c2847c3ea09c3cdd50a2f64">MaiLib.Note</link>.</para>
+</section>
+<para>
+The documentation for this interface was generated from the following file:</para>
+Neskol/MaiLib/<link linkend="__i_note_8cs">INote.cs</link></section>
+</section>

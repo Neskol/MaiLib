@@ -1,0 +1,194 @@
+\hypertarget{class_mai_lib_1_1_b_p_m_changes}{}\doxysection{Mai\+Lib.\+BPMChanges Class Reference}
+\label{class_mai_lib_1_1_b_p_m_changes}\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a3f5db5c3fd192980a82a5ae81c469002}{BPMChanges}} (List$<$ int $>$ bar, List$<$ int $>$ tick, List$<$ double $>$ bpm)
+\begin{DoxyCompactList}\small\item\em Construct with changes listed. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a5f63dc1b1868e2f72a56a9b6c23a60fa}{BPMChanges}} ()
+\begin{DoxyCompactList}\small\item\em Construct empty BPMChange List. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a66e181397cddd42a9be964a2ed5df840}{BPMChanges}} (\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} taken\+In)
+\begin{DoxyCompactList}\small\item\em Construct BPMChanges with existing one. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_aa363e2df4f91c7a6466f0c865c00e5b4}{Add}} (\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}} take\+In)
+\begin{DoxyCompactList}\small\item\em Add BPMChange to change notes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a0fb34d08f80a551c4e6cb7de7191ea5c}{Update}} ()
+\begin{DoxyCompactList}\small\item\em Compose change notes according to BPMChanges. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a678ad0e484699e57b77ac58340ecd01f}{Check\+Validity}} ()
+\begin{DoxyCompactList}\small\item\em See if the BPMChange is valid. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_af4dcd25922af722c03df24ff5571db53}{Compose}} ()
+\begin{DoxyCompactList}\small\item\em Compose BPMChanges in beginning of MA2. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}} $>$ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}{Change\+Notes}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+string \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes_acd7e1e9e39105bd55ae94b8484816e99}{Initial\+Change}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns first definitions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00006}{6}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_a3f5db5c3fd192980a82a5ae81c469002}\label{class_mai_lib_1_1_b_p_m_changes_a3f5db5c3fd192980a82a5ae81c469002}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!BPMChanges@{BPMChanges}}
+\index{BPMChanges@{BPMChanges}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{BPMChanges()}{BPMChanges()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Mai\+Lib.\+BPMChanges.\+BPMChanges (\begin{DoxyParamCaption}\item[{List$<$ int $>$}]{bar,  }\item[{List$<$ int $>$}]{tick,  }\item[{List$<$ double $>$}]{bpm }\end{DoxyParamCaption})}
+
+
+
+Construct with changes listed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bar} & Bar which contains changes\\
+\hline
+{\em tick} & Tick in bar contains changes\\
+\hline
+{\em bpm} & Specified BPM changes\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_a5f63dc1b1868e2f72a56a9b6c23a60fa}\label{class_mai_lib_1_1_b_p_m_changes_a5f63dc1b1868e2f72a56a9b6c23a60fa}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!BPMChanges@{BPMChanges}}
+\index{BPMChanges@{BPMChanges}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{BPMChanges()}{BPMChanges()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Mai\+Lib.\+BPMChanges.\+BPMChanges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Construct empty BPMChange List. 
+
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00030}{30}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_a66e181397cddd42a9be964a2ed5df840}\label{class_mai_lib_1_1_b_p_m_changes_a66e181397cddd42a9be964a2ed5df840}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!BPMChanges@{BPMChanges}}
+\index{BPMChanges@{BPMChanges}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{BPMChanges()}{BPMChanges()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Mai\+Lib.\+BPMChanges.\+BPMChanges (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}}]{taken\+In }\end{DoxyParamCaption})}
+
+
+
+Construct BPMChanges with existing one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em taken\+In} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00040}{40}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_aa363e2df4f91c7a6466f0c865c00e5b4}\label{class_mai_lib_1_1_b_p_m_changes_aa363e2df4f91c7a6466f0c865c00e5b4}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!Add@{Add}}
+\index{Add@{Add}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{Add()}{Add()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+BPMChanges.\+Add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}}}]{take\+In }\end{DoxyParamCaption})}
+
+
+
+Add BPMChange to change notes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em take\+In} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00063}{63}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_a678ad0e484699e57b77ac58340ecd01f}\label{class_mai_lib_1_1_b_p_m_changes_a678ad0e484699e57b77ac58340ecd01f}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!CheckValidity@{CheckValidity}}
+\index{CheckValidity@{CheckValidity}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{CheckValidity()}{CheckValidity()}}
+{\footnotesize\ttfamily bool Mai\+Lib.\+BPMChanges.\+Check\+Validity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+See if the BPMChange is valid. 
+
+\begin{DoxyReturn}{Returns}
+True if valid, false elsewise
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00138}{138}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_af4dcd25922af722c03df24ff5571db53}\label{class_mai_lib_1_1_b_p_m_changes_af4dcd25922af722c03df24ff5571db53}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!Compose@{Compose}}
+\index{Compose@{Compose}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{Compose()}{Compose()}}
+{\footnotesize\ttfamily string Mai\+Lib.\+BPMChanges.\+Compose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Compose BPMChanges in beginning of MA2. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00148}{148}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_a0fb34d08f80a551c4e6cb7de7191ea5c}\label{class_mai_lib_1_1_b_p_m_changes_a0fb34d08f80a551c4e6cb7de7191ea5c}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!Update@{Update}}
+\index{Update@{Update}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+BPMChanges.\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Compose change notes according to BPMChanges. 
+
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00072}{72}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}\label{class_mai_lib_1_1_b_p_m_changes_a8c8c79b566d3be88d8f316e3c7736995}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!ChangeNotes@{ChangeNotes}}
+\index{ChangeNotes@{ChangeNotes}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{ChangeNotes}{ChangeNotes}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}}$>$ Mai\+Lib.\+BPMChanges.\+Change\+Notes\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00049}{49}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_b_p_m_changes_acd7e1e9e39105bd55ae94b8484816e99}\label{class_mai_lib_1_1_b_p_m_changes_acd7e1e9e39105bd55ae94b8484816e99}} 
+\index{MaiLib.BPMChanges@{MaiLib.BPMChanges}!InitialChange@{InitialChange}}
+\index{InitialChange@{InitialChange}!MaiLib.BPMChanges@{MaiLib.BPMChanges}}
+\doxysubsubsection{\texorpdfstring{InitialChange}{InitialChange}}
+{\footnotesize\ttfamily string Mai\+Lib.\+BPMChanges.\+Initial\+Change\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Returns first definitions. 
+
+
+
+Definition at line \mbox{\hyperlink{_b_p_m_changes_8cs_source_l00099}{99}} of file \mbox{\hyperlink{_b_p_m_changes_8cs_source}{BPMChanges.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Neskol/\+Mai\+Lib/\mbox{\hyperlink{_b_p_m_changes_8cs}{BPMChanges.\+cs}}\end{DoxyCompactItemize}

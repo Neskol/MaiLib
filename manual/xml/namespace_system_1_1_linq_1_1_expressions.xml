@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="namespace_system_1_1_linq_1_1_expressions" kind="namespace" language="C#">
+    <compoundname>System::Linq::Expressions</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="Neskol/MaiLib/Ma2.cs" line="1" column="30"/>
+  </compounddef>
+</doxygen>

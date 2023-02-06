@@ -1,0 +1,353 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_mai_lib_1_1_simai_compiler" xml:lang="en-US">
+<title>MaiLib.SimaiCompiler Class Reference</title>
+<indexterm><primary>MaiLib.SimaiCompiler</primary></indexterm>
+<para>
+
+<para>Compile various Ma2 Charts. </para>
+ 
+</para>
+<para>Inheritance diagram for MaiLib.SimaiCompiler:    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="class_mai_lib_1_1_simai_compiler.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_mai_lib_1_1_simai_compiler_1ac79c0aa8d4f0ccd188a58705c5a13bed">SimaiCompiler</link> (string location, string targetLocation)</para>
+
+<para>Construct compiler of a single song. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_simai_compiler_1af3d978b7deca2ffbdea1f105de017610">SimaiCompiler</link> (string location, string targetLocation, bool forUtage)</para>
+
+<para>Construct compiler of a single song. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_simai_compiler_1a8aabc70f5c7f1c0df0e96d54372137c9">SimaiCompiler</link> ()</para>
+
+<para>Empty constructor. </para>
+</listitem>
+            <listitem><para>override string <link linkend="_class_mai_lib_1_1_simai_compiler_1aaa782911ec0cfbb86a44ed2bdf4e031f">Compose</link> ()</para>
+
+<para>Compose given chart to specific format. </para>
+</listitem>
+            <listitem><para>override string <link linkend="_class_mai_lib_1_1_simai_compiler_1a3ddf848359953a77c32ea0de78c4da44">Compose</link> (<link linkend="_class_mai_lib_1_1_chart">Chart</link> chart)</para>
+
+<para>Return compose of specified chart. </para>
+</listitem>
+            <listitem><para>override string <link linkend="_class_mai_lib_1_1_simai_compiler_1a4d40b5d2d6f8b61276331b7ef4d8170d">Compose</link> (bool isUtage, List&lt; string &gt; ma2files)</para>
+
+<para>Compose utage Charts. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Public Member Functions inherited from <link linkend="_class_mai_lib_1_1_compiler">MaiLib.Compiler</link>        <itemizedlist>
+            <listitem><para><link linkend="_class_mai_lib_1_1_compiler_1a9dad951889fd9824428b175da26652f8">Compiler</link> (string location, string targetLocation)</para>
+
+<para>Construct compiler of a single song. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_compiler_1a5319fa13b671d840e236163d08db628d">Compiler</link> ()</para>
+
+<para>Empty constructor. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_class_mai_lib_1_1_compiler_1aec1cd5d4b62f460ff08a755c9d80cd8b">CheckValidity</link> ()</para>
+
+<para>Check if the chart given is valid to print. </para>
+</listitem>
+            <listitem><para>abstract string <link linkend="_class_mai_lib_1_1_compiler_1a54e1b7c04ec645d3201da1543f5307d2">Compose</link> ()</para>
+
+<para>Compose given chart to specific format. </para>
+</listitem>
+            <listitem><para>abstract string <link linkend="_class_mai_lib_1_1_compiler_1a48fbf2690a8f88520c41aa9c71d629a6">Compose</link> (<link linkend="_class_mai_lib_1_1_chart">Chart</link> chart)</para>
+
+<para>Return compose of specified chart. </para>
+</listitem>
+            <listitem><para>abstract string <link linkend="_class_mai_lib_1_1_compiler_1ad91018ff82a03b125e397bfcea6b37d5">Compose</link> (bool isUtage, List&lt; string &gt; ma2files)</para>
+
+<para>Compose utage charts. </para>
+</listitem>
+            <listitem><para>void <link linkend="_class_mai_lib_1_1_compiler_1ad4fa15a9fe8bafefa4b5023dd526fa39">TakeInformation</link> (Dictionary&lt; string, string &gt; information)</para>
+
+<para>Intake information to compile data. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link> <link linkend="_class_mai_lib_1_1_compiler_1a840468dbb9c3545c4f22b957a8febc38">SymbolicBPMTable</link> ()</para>
+
+<para>Return the chart bpm change table of MaiCompiler. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_note">Note</link> <link linkend="_class_mai_lib_1_1_compiler_1a86effad828d0d92b8d1159db14bacf6d">SymbolicFirstNote</link> (bool isUtage)</para>
+
+<para>Return the first note of master chart. </para>
+</listitem>
+            <listitem><para>string <link linkend="_class_mai_lib_1_1_compiler_1ad127ad65f74f7032e2098caa6d6ab2d3">GenerateOneLineSummary</link> ()</para>
+
+<para>Generate one line summary of this track with ID, name, genre and difficulty. </para>
+</listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47">TakeInformation</link> (Dictionary&lt; string, string &gt; information)</para>
+
+<para>Intake information to compile data. </para>
+</listitem>
+            <listitem><para>string <link linkend="_interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99">Compose</link> ()</para>
+
+<para>Compose given chart to specific format. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6">CheckValidity</link> ()</para>
+
+<para>Check if the chart given is valid to print. </para>
+</listitem>
+        </itemizedlist>
+<simplesect>
+    <title>Additional Inherited Members    </title>
+Static Public Attributes inherited from <link linkend="_class_mai_lib_1_1_compiler">MaiLib.Compiler</link>        <itemizedlist>
+            <listitem><para>static readonly string[] <link linkend="_class_mai_lib_1_1_compiler_1a827724d4041f2245b9402b2151229a94">difficulty</link> = { &quot;Easy&quot;, &quot;Basic&quot;, &quot;Advanced&quot;, &quot;Expert&quot;, &quot;Master&quot;, &quot;Remaster&quot;, &quot;Utage&quot; }</para>
+
+<para>Stores difficulty keywords. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Properties inherited from <link linkend="_class_mai_lib_1_1_compiler">MaiLib.Compiler</link>        <itemizedlist>
+            <listitem><para>string <link linkend="_class_mai_lib_1_1_compiler_1ac1fc8afbb98f7d381cf4bf32f08b4aac">GlobalSep</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Access the path separator. </para>
+</listitem>
+            <listitem><para>List&lt; string &gt; <link linkend="_class_mai_lib_1_1_compiler_1a91a932750272298954ebe15f63a43432">CompiledChart</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Stores the information of Compiled Chart. </para>
+</listitem>
+            <listitem><para>List&lt; <link linkend="_class_mai_lib_1_1_chart">Chart</link> &gt; <link linkend="_class_mai_lib_1_1_compiler_1a96f067a0d54a6da2f41488d5eb32c7b8">Charts</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access stored charts. </para>
+</listitem>
+            <listitem><para>Dictionary&lt; string, string &gt; <link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access global information. </para>
+</listitem>
+            <listitem><para><link linkend="_class_mai_lib_1_1_xml_information">XmlInformation</link> <link linkend="_class_mai_lib_1_1_compiler_1a3f49328b86f1f7c33df585e445cb4313">MusicXml</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access read in music XML file. </para>
+</listitem>
+            <listitem><para>string[] <link linkend="_class_mai_lib_1_1_compiler_1a0998d9858dc1d703cc2887b5bad15ea9">Difficulty</link><computeroutput> [get]</computeroutput>
+</para>
+
+<para>Access difficulty;. </para>
+</listitem>
+            <listitem><para>Dictionary&lt; string, string &gt; <link linkend="_class_mai_lib_1_1_compiler_1a24b912c3ab2534d5c449a669a0705c71">RotateDictionary</link><computeroutput> [get, set]</computeroutput>
+</para>
+
+<para>Access the rotate dictionary. </para>
+</listitem>
+        </itemizedlist>
+<section>
+<title>Detailed Description</title>
+
+<para>Compile various Ma2 Charts. </para>
+<para>
+Definition at line <link linkend="__simai_compiler_8cs_source_1l00011">11</link> of file <link linkend="__simai_compiler_8cs_source">SimaiCompiler.cs</link>.</para>
+</section>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_simai_compiler_1ac79c0aa8d4f0ccd188a58705c5a13bed"/><section>
+    <title>SimaiCompiler()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>SimaiCompiler</primary><secondary>MaiLib.SimaiCompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiCompiler</primary><secondary>SimaiCompiler</secondary></indexterm>
+<para><computeroutput>MaiLib.SimaiCompiler.SimaiCompiler (string location, string targetLocation)</computeroutput></para><para>
+
+<para>Construct compiler of a single song. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>location</entry><entry>
+<para>Folder</para>
+</entry>
+                            </row>
+                            <row>
+<entry>targetLocation</entry><entry>
+<para>Output folder</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__simai_compiler_8cs_source_1l00018">18</link> of file <link linkend="__simai_compiler_8cs_source">SimaiCompiler.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_compiler_1af3d978b7deca2ffbdea1f105de017610"/><section>
+    <title>SimaiCompiler()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>SimaiCompiler</primary><secondary>MaiLib.SimaiCompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiCompiler</primary><secondary>SimaiCompiler</secondary></indexterm>
+<para><computeroutput>MaiLib.SimaiCompiler.SimaiCompiler (string location, string targetLocation, bool forUtage)</computeroutput></para><para>
+
+<para>Construct compiler of a single song. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>location</entry><entry>
+<para>Folder</para>
+</entry>
+                            </row>
+                            <row>
+<entry>targetLocation</entry><entry>
+<para>Output folder</para>
+</entry>
+                            </row>
+                            <row>
+<entry>forUtage</entry><entry>
+<para>True if for utage</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line <link linkend="__simai_compiler_8cs_source_1l00074">74</link> of file <link linkend="__simai_compiler_8cs_source">SimaiCompiler.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_compiler_1a8aabc70f5c7f1c0df0e96d54372137c9"/><section>
+    <title>SimaiCompiler()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>SimaiCompiler</primary><secondary>MaiLib.SimaiCompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiCompiler</primary><secondary>SimaiCompiler</secondary></indexterm>
+<para><computeroutput>MaiLib.SimaiCompiler.SimaiCompiler ( )</computeroutput></para><para>
+
+<para>Empty constructor. </para>
+</para>
+<para>
+Definition at line <link linkend="__simai_compiler_8cs_source_1l00115">115</link> of file <link linkend="__simai_compiler_8cs_source">SimaiCompiler.cs</link>.</para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_simai_compiler_1aaa782911ec0cfbb86a44ed2bdf4e031f"/><section>
+    <title>Compose()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>Compose</primary><secondary>MaiLib.SimaiCompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiCompiler</primary><secondary>Compose</secondary></indexterm>
+<para><computeroutput>override string MaiLib.SimaiCompiler.Compose ( )<computeroutput>[virtual]</computeroutput></computeroutput></para><para>
+
+<para>Compose given chart to specific format. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>Corresponding chart</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_class_mai_lib_1_1_compiler_1a54e1b7c04ec645d3201da1543f5307d2">MaiLib.Compiler</link>.</para>
+<para>
+Definition at line <link linkend="__simai_compiler_8cs_source_1l00126">126</link> of file <link linkend="__simai_compiler_8cs_source">SimaiCompiler.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_compiler_1a4d40b5d2d6f8b61276331b7ef4d8170d"/><section>
+    <title>Compose()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>Compose</primary><secondary>MaiLib.SimaiCompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiCompiler</primary><secondary>Compose</secondary></indexterm>
+<para><computeroutput>override string MaiLib.SimaiCompiler.Compose (bool isUtage, List&lt; string &gt; ma2files)<computeroutput>[virtual]</computeroutput></computeroutput></para><para>
+
+<para>Compose utage Charts. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>isUtage</entry><entry>
+<para>switch to produce utage</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Corresponding utage chart</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_class_mai_lib_1_1_compiler_1ad91018ff82a03b125e397bfcea6b37d5">MaiLib.Compiler</link>.</para>
+<para>
+Definition at line <link linkend="__simai_compiler_8cs_source_1l00241">241</link> of file <link linkend="__simai_compiler_8cs_source">SimaiCompiler.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_simai_compiler_1a3ddf848359953a77c32ea0de78c4da44"/><section>
+    <title>Compose()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>Compose</primary><secondary>MaiLib.SimaiCompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.SimaiCompiler</primary><secondary>Compose</secondary></indexterm>
+<para><computeroutput>override string MaiLib.SimaiCompiler.Compose (<link linkend="_class_mai_lib_1_1_chart">Chart</link> chart)<computeroutput>[virtual]</computeroutput></computeroutput></para><para>
+
+<para>Return compose of specified chart. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>chart</entry><entry>
+<para>Chart to compose</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Maidata of specified chart WITHOUT headers</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_class_mai_lib_1_1_compiler_1a48fbf2690a8f88520c41aa9c71d629a6">MaiLib.Compiler</link>.</para>
+<para>
+Definition at line <link linkend="__simai_compiler_8cs_source_1l00231">231</link> of file <link linkend="__simai_compiler_8cs_source">SimaiCompiler.cs</link>.</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+Neskol/MaiLib/<link linkend="__simai_compiler_8cs">SimaiCompiler.cs</link></section>
+</section>

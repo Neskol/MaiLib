@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="interface_mai_lib_1_1_i_compiler" kind="interface" language="C#" prot="public">
+    <compoundname>MaiLib::ICompiler</compoundname>
+    <derivedcompoundref refid="class_mai_lib_1_1_compiler" prot="public" virt="non-virtual">MaiLib.Compiler</derivedcompoundref>
+    <derivedcompoundref refid="class_mai_lib_1_1_ma2" prot="public" virt="non-virtual">MaiLib.Ma2</derivedcompoundref>
+    <derivedcompoundref refid="class_mai_lib_1_1_x_mai_l" prot="public" virt="non-virtual">MaiLib.XMaiL</derivedcompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void MaiLib.ICompiler.TakeInformation</definition>
+        <argsstring>(Dictionary&lt; string, string &gt; information)</argsstring>
+        <name>TakeInformation</name>
+        <qualifiedname>MaiLib.ICompiler.TakeInformation</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_compiler_1ad4fa15a9fe8bafefa4b5023dd526fa39">TakeInformation</reimplementedby>
+        <param>
+          <type>Dictionary&lt; string, string &gt;</type>
+          <declname>information</declname>
+        </param>
+        <briefdescription>
+<para>Intake information to compile data. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>information</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>TakeInformation to provide</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/ICompiler.cs" line="12" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string MaiLib.ICompiler.Compose</definition>
+        <argsstring>()</argsstring>
+        <name>Compose</name>
+        <qualifiedname>MaiLib.ICompiler.Compose</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_compiler_1a54e1b7c04ec645d3201da1543f5307d2">Compose</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_1a230dc740665afdf2a1f011abfefb4ba5">Compose</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_simai_compiler_1aaa782911ec0cfbb86a44ed2bdf4e031f">Compose</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_x_mai_l_1af55039abe693e63b35b69f20717f0917">Compose</reimplementedby>
+        <briefdescription>
+<para>Compose given chart to specific format. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Corresponding chart</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/ICompiler.cs" line="18" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool MaiLib.ICompiler.CheckValidity</definition>
+        <argsstring>()</argsstring>
+        <name>CheckValidity</name>
+        <qualifiedname>MaiLib.ICompiler.CheckValidity</qualifiedname>
+        <reimplementedby refid="class_mai_lib_1_1_compiler_1aec1cd5d4b62f460ff08a755c9d80cd8b">CheckValidity</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_ma2_1af6c726c84c93dddaa2463df262f23fcd">CheckValidity</reimplementedby>
+        <reimplementedby refid="class_mai_lib_1_1_x_mai_l_1a38546ac7bf57a9ad796b8978bf5a45b4">CheckValidity</reimplementedby>
+        <briefdescription>
+<para>Check if the chart given is valid to print. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>True if valid, false otherwise</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/ICompiler.cs" line="24" column="21"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Provide interface for Compilers. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>MaiLib.ICompiler</label>
+        <link refid="interface_mai_lib_1_1_i_compiler"/>
+      </node>
+      <node id="2">
+        <label>MaiLib.Compiler</label>
+        <link refid="class_mai_lib_1_1_compiler"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>MaiLib.Ma2</label>
+        <link refid="class_mai_lib_1_1_ma2"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>MaiLib.SimaiCompiler</label>
+        <link refid="class_mai_lib_1_1_simai_compiler"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>MaiLib.XMaiL</label>
+        <link refid="class_mai_lib_1_1_x_mai_l"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="Neskol/MaiLib/ICompiler.cs" line="6" column="22" bodyfile="Neskol/MaiLib/ICompiler.cs" bodystart="7" bodyend="25"/>
+    <listofallmembers>
+      <member refid="interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6" prot="public" virt="non-virtual"><scope>MaiLib::ICompiler</scope><name>CheckValidity</name></member>
+      <member refid="interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99" prot="public" virt="non-virtual"><scope>MaiLib::ICompiler</scope><name>Compose</name></member>
+      <member refid="interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47" prot="public" virt="non-virtual"><scope>MaiLib::ICompiler</scope><name>TakeInformation</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

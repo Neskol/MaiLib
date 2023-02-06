@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__compiler_8cs_source" xml:lang="en-US">
+<title>Compiler.cs</title>
+<indexterm><primary>Neskol/MaiLib/Compiler.cs</primary></indexterm>
+Go to the documentation of this file.<programlisting linenumbering="unnumbered"><anchor xml:id="__compiler_8cs_source_1l00001"/>00001 <emphasis role="keyword">using&#32;</emphasis>System;
+<anchor xml:id="__compiler_8cs_source_1l00002"/>00002 <emphasis role="keyword">using&#32;</emphasis>System.Collections.Generic;
+<anchor xml:id="__compiler_8cs_source_1l00003"/>00003 <emphasis role="keyword">using&#32;</emphasis>System.Linq;
+<anchor xml:id="__compiler_8cs_source_1l00004"/>00004 <emphasis role="keyword">using&#32;</emphasis>System.Runtime.InteropServices;
+<anchor xml:id="__compiler_8cs_source_1l00005"/>00005 <emphasis role="keyword">using&#32;</emphasis>System.Text;
+<anchor xml:id="__compiler_8cs_source_1l00006"/>00006 <emphasis role="keyword">using&#32;</emphasis>System.Threading.Tasks;
+<anchor xml:id="__compiler_8cs_source_1l00007"/>00007 
+<anchor xml:id="__compiler_8cs_source_1l00008"/>00008 <emphasis role="keyword">namespace&#32;</emphasis><link linkend="_namespace_mai_lib">MaiLib</link>
+<anchor xml:id="__compiler_8cs_source_1l00009"/>00009 {
+<anchor xml:id="__compiler_8cs_source_1l00010"/><link linkend="_class_mai_lib_1_1_compiler">00010</link> &#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">abstract</emphasis>&#32;<emphasis role="keyword">class&#32;</emphasis><link linkend="_class_mai_lib_1_1_compiler">Compiler</link>&#32;:&#32;<link linkend="_interface_mai_lib_1_1_i_compiler">ICompiler</link>
+<anchor xml:id="__compiler_8cs_source_1l00011"/>00011 &#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00015"/><link linkend="_class_mai_lib_1_1_compiler_1a827724d4041f2245b9402b2151229a94">00015</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">static</emphasis>&#32;readonly&#32;<emphasis role="keywordtype">string</emphasis>[]&#32;<link linkend="_class_mai_lib_1_1_compiler_1a827724d4041f2245b9402b2151229a94">difficulty</link>&#32;=&#32;{&#32;<emphasis role="stringliteral">&quot;Easy&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Basic&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Advanced&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Expert&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Master&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Remaster&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Utage&quot;</emphasis>&#32;};
+<anchor xml:id="__compiler_8cs_source_1l00016"/>00016 
+<anchor xml:id="__compiler_8cs_source_1l00020"/>00020 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>&#32;List&lt;Chart&gt;&#32;charts;
+<anchor xml:id="__compiler_8cs_source_1l00021"/>00021 
+<anchor xml:id="__compiler_8cs_source_1l00025"/>00025 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>&#32;Dictionary&lt;string,&#32;string&gt;&#32;information;
+<anchor xml:id="__compiler_8cs_source_1l00026"/>00026 
+<anchor xml:id="__compiler_8cs_source_1l00030"/>00030 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>&#32;<link linkend="_class_mai_lib_1_1_xml_information">XmlInformation</link>&#32;musicXml;
+<anchor xml:id="__compiler_8cs_source_1l00031"/>00031 
+<anchor xml:id="__compiler_8cs_source_1l00035"/>00035 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>&#32;globalSep;
+<anchor xml:id="__compiler_8cs_source_1l00036"/>00036 
+<anchor xml:id="__compiler_8cs_source_1l00040"/>00040 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>&#32;Dictionary&lt;string,&#32;string&gt;&#32;rotateDictionary&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;Dictionary&lt;string,&#32;string&gt;&#32;{&#32;{&#32;<emphasis role="stringliteral">&quot;17&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;UpSideDown&quot;</emphasis>&#32;},&#32;{&#32;<emphasis role="stringliteral">&quot;305&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;LeftToRight&quot;</emphasis>&#32;},&#32;{&#32;<emphasis role="stringliteral">&quot;417&quot;</emphasis>,&#32;<emphasis role="stringliteral">&quot;Clockwise90&quot;</emphasis>&#32;}&#32;};
+<anchor xml:id="__compiler_8cs_source_1l00041"/>00041 
+<anchor xml:id="__compiler_8cs_source_1l00045"/><link linkend="_class_mai_lib_1_1_compiler_1ac1fc8afbb98f7d381cf4bf32f08b4aac">00045</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1ac1fc8afbb98f7d381cf4bf32f08b4aac">GlobalSep</link>
+<anchor xml:id="__compiler_8cs_source_1l00046"/>00046 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00047"/>00047 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">get</emphasis>&#32;{&#32;<emphasis role="keywordflow">return</emphasis>&#32;this.globalSep;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00048"/>00048 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00049"/>00049 
+<anchor xml:id="__compiler_8cs_source_1l00053"/>00053 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>&#32;List&lt;string&gt;&#32;compiledChart;
+<anchor xml:id="__compiler_8cs_source_1l00054"/>00054 
+<anchor xml:id="__compiler_8cs_source_1l00058"/><link linkend="_class_mai_lib_1_1_compiler_1a91a932750272298954ebe15f63a43432">00058</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;List&lt;string&gt;&#32;<link linkend="_class_mai_lib_1_1_compiler_1a91a932750272298954ebe15f63a43432">CompiledChart</link>
+<anchor xml:id="__compiler_8cs_source_1l00059"/>00059 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00060"/>00060 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">get</emphasis>&#32;{&#32;<emphasis role="keywordflow">return</emphasis>&#32;this.compiledChart;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00061"/>00061 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">set</emphasis>&#32;{&#32;this.compiledChart&#32;=&#32;value;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00062"/>00062 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00063"/>00063 
+<anchor xml:id="__compiler_8cs_source_1l00067"/><link linkend="_class_mai_lib_1_1_compiler_1a96f067a0d54a6da2f41488d5eb32c7b8">00067</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;List&lt;Chart&gt;&#32;<link linkend="_class_mai_lib_1_1_compiler_1a96f067a0d54a6da2f41488d5eb32c7b8">Charts</link>
+<anchor xml:id="__compiler_8cs_source_1l00068"/>00068 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00069"/>00069 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">get</emphasis>&#32;{&#32;<emphasis role="keywordflow">return</emphasis>&#32;this.charts;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00070"/>00070 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">set</emphasis>&#32;{&#32;this.charts&#32;=&#32;value;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00071"/>00071 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00072"/>00072 
+<anchor xml:id="__compiler_8cs_source_1l00076"/><link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">00076</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;Dictionary&lt;string,&#32;string&gt;&#32;<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>
+<anchor xml:id="__compiler_8cs_source_1l00077"/>00077 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00078"/>00078 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">get</emphasis>&#32;{&#32;<emphasis role="keywordflow">return</emphasis>&#32;this.information;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00079"/>00079 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">set</emphasis>&#32;{&#32;this.information&#32;=&#32;value;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00080"/>00080 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00081"/>00081 
+<anchor xml:id="__compiler_8cs_source_1l00085"/><link linkend="_class_mai_lib_1_1_compiler_1a3f49328b86f1f7c33df585e445cb4313">00085</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_xml_information">XmlInformation</link>&#32;<link linkend="_class_mai_lib_1_1_compiler_1a3f49328b86f1f7c33df585e445cb4313">MusicXml</link>
+<anchor xml:id="__compiler_8cs_source_1l00086"/>00086 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00087"/>00087 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">get</emphasis>&#32;{&#32;<emphasis role="keywordflow">return</emphasis>&#32;this.musicXml;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00088"/>00088 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">set</emphasis>&#32;{&#32;this.musicXml&#32;=&#32;value;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00089"/>00089 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00090"/>00090 
+<anchor xml:id="__compiler_8cs_source_1l00094"/><link linkend="_class_mai_lib_1_1_compiler_1a0998d9858dc1d703cc2887b5bad15ea9">00094</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>[]&#32;<link linkend="_class_mai_lib_1_1_compiler_1a0998d9858dc1d703cc2887b5bad15ea9">Difficulty</link>
+<anchor xml:id="__compiler_8cs_source_1l00095"/>00095 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00096"/>00096 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">get</emphasis>&#32;{&#32;<emphasis role="keywordflow">return</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1a827724d4041f2245b9402b2151229a94">difficulty</link>;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00097"/>00097 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00098"/>00098 
+<anchor xml:id="__compiler_8cs_source_1l00103"/><link linkend="_class_mai_lib_1_1_compiler_1a24b912c3ab2534d5c449a669a0705c71">00103</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;Dictionary&lt;string,&#32;string&gt;&#32;<link linkend="_class_mai_lib_1_1_compiler_1a24b912c3ab2534d5c449a669a0705c71">RotateDictionary</link>
+<anchor xml:id="__compiler_8cs_source_1l00104"/>00104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00105"/>00105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">get</emphasis>
+<anchor xml:id="__compiler_8cs_source_1l00106"/>00106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00107"/>00107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;this.rotateDictionary;
+<anchor xml:id="__compiler_8cs_source_1l00108"/>00108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00109"/>00109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">set</emphasis>
+<anchor xml:id="__compiler_8cs_source_1l00110"/>00110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00111"/>00111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.rotateDictionary&#32;=&#32;value;
+<anchor xml:id="__compiler_8cs_source_1l00112"/>00112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00113"/>00113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00114"/>00114 
+<anchor xml:id="__compiler_8cs_source_1l00115"/>00115 
+<anchor xml:id="__compiler_8cs_source_1l00116"/>00116 
+<anchor xml:id="__compiler_8cs_source_1l00122"/><link linkend="_class_mai_lib_1_1_compiler_1a9dad951889fd9824428b175da26652f8">00122</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1a9dad951889fd9824428b175da26652f8">Compiler</link>(<emphasis role="keywordtype">string</emphasis>&#32;location,&#32;<emphasis role="keywordtype">string</emphasis>&#32;targetLocation)
+<anchor xml:id="__compiler_8cs_source_1l00123"/>00123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00124"/>00124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;compiledChart&#32;=&#32;<emphasis role="keyword">new</emphasis>();
+<anchor xml:id="__compiler_8cs_source_1l00125"/>00125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;charts&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;List&lt;Chart&gt;();
+<anchor xml:id="__compiler_8cs_source_1l00126"/>00126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.musicXml&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<link linkend="_class_mai_lib_1_1_xml_information">XmlInformation</link>(location);
+<anchor xml:id="__compiler_8cs_source_1l00127"/>00127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;musicXml.<link linkend="_class_mai_lib_1_1_xml_information_1a9c943de86ffcc9917870d187f0708efa">Update</link>();
+<anchor xml:id="__compiler_8cs_source_1l00128"/>00128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.information&#32;=&#32;musicXml.<link linkend="_class_mai_lib_1_1_track_information_1adcaf647c20f72d7b58d122443dab8ced">Information</link>;
+<anchor xml:id="__compiler_8cs_source_1l00129"/>00129 
+<anchor xml:id="__compiler_8cs_source_1l00130"/>00130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+<anchor xml:id="__compiler_8cs_source_1l00131"/>00131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00132"/>00132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;globalSep&#32;=&#32;<emphasis role="stringliteral">&quot;\\&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00133"/>00133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00134"/>00134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+<anchor xml:id="__compiler_8cs_source_1l00135"/>00135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00136"/>00136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;globalSep&#32;=&#32;<emphasis role="stringliteral">&quot;/&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00137"/>00137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00138"/>00138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00139"/>00139 
+<anchor xml:id="__compiler_8cs_source_1l00143"/><link linkend="_class_mai_lib_1_1_compiler_1a5319fa13b671d840e236163d08db628d">00143</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1a5319fa13b671d840e236163d08db628d">Compiler</link>()
+<anchor xml:id="__compiler_8cs_source_1l00144"/>00144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00145"/>00145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;compiledChart&#32;=&#32;<emphasis role="keyword">new</emphasis>();
+<anchor xml:id="__compiler_8cs_source_1l00146"/>00146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;charts&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;List&lt;Chart&gt;();
+<anchor xml:id="__compiler_8cs_source_1l00147"/>00147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;information&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;Dictionary&lt;string,&#32;string&gt;();
+<anchor xml:id="__compiler_8cs_source_1l00148"/>00148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.musicXml&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<link linkend="_class_mai_lib_1_1_xml_information">XmlInformation</link>();
+<anchor xml:id="__compiler_8cs_source_1l00149"/>00149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+<anchor xml:id="__compiler_8cs_source_1l00150"/>00150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00151"/>00151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;globalSep&#32;=&#32;<emphasis role="stringliteral">&quot;\\&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00152"/>00152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00153"/>00153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+<anchor xml:id="__compiler_8cs_source_1l00154"/>00154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00155"/>00155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;globalSep&#32;=&#32;<emphasis role="stringliteral">&quot;/&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00156"/>00156 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00157"/>00157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00158"/>00158 
+<anchor xml:id="__compiler_8cs_source_1l00159"/><link linkend="_class_mai_lib_1_1_compiler_1aec1cd5d4b62f460ff08a755c9d80cd8b">00159</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1aec1cd5d4b62f460ff08a755c9d80cd8b">CheckValidity</link>()
+<anchor xml:id="__compiler_8cs_source_1l00160"/>00160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00161"/>00161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;result&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00162"/>00162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">foreach</emphasis>&#32;(<link linkend="_class_mai_lib_1_1_chart">Chart</link>&#32;x&#32;<emphasis role="keywordflow">in</emphasis>&#32;charts)
+<anchor xml:id="__compiler_8cs_source_1l00163"/>00163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00164"/>00164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;=&#32;result&#32;&amp;&amp;&#32;x.<link linkend="_class_mai_lib_1_1_chart_1a24a2ddf0d5764aadfb9ad4dff61ae4ba">CheckValidity</link>();
+<anchor xml:id="__compiler_8cs_source_1l00165"/>00165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00166"/>00166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+<anchor xml:id="__compiler_8cs_source_1l00167"/>00167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00168"/>00168 
+<anchor xml:id="__compiler_8cs_source_1l00169"/><link linkend="_class_mai_lib_1_1_compiler_1a54e1b7c04ec645d3201da1543f5307d2">00169</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">abstract</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1a54e1b7c04ec645d3201da1543f5307d2">Compose</link>();
+<anchor xml:id="__compiler_8cs_source_1l00170"/>00170 
+<anchor xml:id="__compiler_8cs_source_1l00176"/><link linkend="_class_mai_lib_1_1_compiler_1a48fbf2690a8f88520c41aa9c71d629a6">00176</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">abstract</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1a48fbf2690a8f88520c41aa9c71d629a6">Compose</link>(<link linkend="_class_mai_lib_1_1_chart">Chart</link>&#32;chart);
+<anchor xml:id="__compiler_8cs_source_1l00177"/>00177 
+<anchor xml:id="__compiler_8cs_source_1l00183"/><link linkend="_class_mai_lib_1_1_compiler_1ad91018ff82a03b125e397bfcea6b37d5">00183</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">abstract</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1ad91018ff82a03b125e397bfcea6b37d5">Compose</link>(<emphasis role="keywordtype">bool</emphasis>&#32;isUtage,&#32;List&lt;string&gt;&#32;ma2files);
+<anchor xml:id="__compiler_8cs_source_1l00184"/>00184 
+<anchor xml:id="__compiler_8cs_source_1l00185"/><link linkend="_class_mai_lib_1_1_compiler_1ad4fa15a9fe8bafefa4b5023dd526fa39">00185</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1ad4fa15a9fe8bafefa4b5023dd526fa39">TakeInformation</link>(Dictionary&lt;string,&#32;string&gt;&#32;information)
+<anchor xml:id="__compiler_8cs_source_1l00186"/>00186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00187"/>00187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;this.information&#32;=&#32;information;
+<anchor xml:id="__compiler_8cs_source_1l00188"/>00188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00189"/>00189 
+<anchor xml:id="__compiler_8cs_source_1l00194"/><link linkend="_class_mai_lib_1_1_compiler_1a840468dbb9c3545c4f22b957a8febc38">00194</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link>&#32;<link linkend="_class_mai_lib_1_1_compiler_1a840468dbb9c3545c4f22b957a8febc38">SymbolicBPMTable</link>()
+<anchor xml:id="__compiler_8cs_source_1l00195"/>00195 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00196"/>00196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link>&#32;bpmTable&#32;=&#32;<emphasis role="keyword">new</emphasis>&#32;<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link>();
+<anchor xml:id="__compiler_8cs_source_1l00197"/>00197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;foundTable&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00198"/>00198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;this.charts.Count&#32;&amp;&amp;&#32;!foundTable;&#32;i++)
+<anchor xml:id="__compiler_8cs_source_1l00199"/>00199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00200"/>00200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(this.charts[i]&#32;!=&#32;<emphasis role="keyword">null</emphasis>)
+<anchor xml:id="__compiler_8cs_source_1l00201"/>00201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00202"/>00202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bpmTable&#32;=&#32;this.charts[i].<link linkend="_class_mai_lib_1_1_b_p_m_changes_1a3f5db5c3fd192980a82a5ae81c469002">BPMChanges</link>;
+<anchor xml:id="__compiler_8cs_source_1l00203"/>00203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;foundTable&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00204"/>00204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00205"/>00205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00206"/>00206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;bpmTable;
+<anchor xml:id="__compiler_8cs_source_1l00207"/>00207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00208"/>00208 
+<anchor xml:id="__compiler_8cs_source_1l00214"/><link linkend="_class_mai_lib_1_1_compiler_1a86effad828d0d92b8d1159db14bacf6d">00214</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_note">Note</link>&#32;<link linkend="_class_mai_lib_1_1_compiler_1a86effad828d0d92b8d1159db14bacf6d">SymbolicFirstNote</link>(<emphasis role="keywordtype">bool</emphasis>&#32;isUtage)
+<anchor xml:id="__compiler_8cs_source_1l00215"/>00215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00216"/>00216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!isUtage)
+<anchor xml:id="__compiler_8cs_source_1l00217"/>00217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00218"/>00218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;this.charts[4].FirstNote&#32;??&#32;<emphasis role="keywordflow">throw</emphasis>&#32;<emphasis role="keyword">new</emphasis>&#32;NullReferenceException(<emphasis role="stringliteral">&quot;Null&#32;first&#32;note:&#32;master&#32;chart&#32;is&#32;invalid&quot;</emphasis>);
+<anchor xml:id="__compiler_8cs_source_1l00219"/>00219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00220"/>00220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(isUtage)
+<anchor xml:id="__compiler_8cs_source_1l00221"/>00221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00222"/>00222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_class_mai_lib_1_1_note">Note</link>?&#32;firstNote;
+<anchor xml:id="__compiler_8cs_source_1l00223"/>00223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;foundFirstNote&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00224"/>00224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;this.charts.Count;&#32;i&#32;&gt;=&#32;0&#32;&amp;&amp;&#32;!foundFirstNote;&#32;i++)
+<anchor xml:id="__compiler_8cs_source_1l00225"/>00225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00226"/>00226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(this.charts[i]&#32;!=&#32;<emphasis role="keyword">null</emphasis>)
+<anchor xml:id="__compiler_8cs_source_1l00227"/>00227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00228"/>00228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;firstNote&#32;=&#32;this.charts[i].FirstNote;
+<anchor xml:id="__compiler_8cs_source_1l00229"/>00229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;foundFirstNote&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00230"/>00230 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00231"/>00231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00232"/>00232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;this.charts[0].FirstNote&#32;??&#32;<emphasis role="keywordflow">throw</emphasis>&#32;<emphasis role="keyword">new</emphasis>&#32;NullReferenceException(<emphasis role="stringliteral">&quot;Null&#32;first&#32;note:&#32;utage&#32;chart&#32;is&#32;invalid&quot;</emphasis>);
+<anchor xml:id="__compiler_8cs_source_1l00233"/>00233 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00234"/>00234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">throw</emphasis>&#32;<emphasis role="keyword">new</emphasis>&#32;NullReferenceException(<emphasis role="stringliteral">&quot;This&#32;compiler&#32;contains&#32;invalid&#32;Master&#32;Chart&#32;and&#32;is&#32;not&#32;Utage&#32;Chart:&#32;no&#32;first&#32;note&#32;is&#32;returned&quot;</emphasis>);
+<anchor xml:id="__compiler_8cs_source_1l00235"/>00235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00236"/>00236 
+<anchor xml:id="__compiler_8cs_source_1l00241"/><link linkend="_class_mai_lib_1_1_compiler_1ad127ad65f74f7032e2098caa6d6ab2d3">00241</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>&#32;<link linkend="_class_mai_lib_1_1_compiler_1ad127ad65f74f7032e2098caa6d6ab2d3">GenerateOneLineSummary</link>()
+<anchor xml:id="__compiler_8cs_source_1l00242"/>00242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00243"/>00243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">string</emphasis>&#32;result&#32;=&#32;<emphasis role="stringliteral">&quot;&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00244"/>00244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(this.charts.Equals(<emphasis role="keyword">null</emphasis>))
+<anchor xml:id="__compiler_8cs_source_1l00245"/>00245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00246"/>00246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">throw</emphasis>&#32;<emphasis role="keyword">new</emphasis>&#32;NullReferenceException(<emphasis role="stringliteral">&quot;This&#32;compiler&#32;has&#32;empty&#32;chat&#32;list!&quot;</emphasis>);
+<anchor xml:id="__compiler_8cs_source_1l00247"/>00247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00248"/>00248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;(&quot;</emphasis>&#32;+&#32;this.information[<emphasis role="stringliteral">&quot;Music&#32;ID&quot;</emphasis>]&#32;+&#32;<emphasis role="stringliteral">&quot;)&quot;</emphasis>&#32;+&#32;this.information[<emphasis role="stringliteral">&quot;Name&quot;</emphasis>]&#32;+&#32;<emphasis role="stringliteral">&quot;,&#32;&quot;</emphasis>&#32;+&#32;this.information[<emphasis role="stringliteral">&quot;Genre&quot;</emphasis>]&#32;+&#32;<emphasis role="stringliteral">&quot;,&#32;&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00249"/>00249 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Easy&quot;</emphasis>].Equals(<emphasis role="stringliteral">&quot;&quot;</emphasis>))
+<anchor xml:id="__compiler_8cs_source_1l00250"/>00250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00251"/>00251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;+=&#32;this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Easy&quot;</emphasis>]&#32;+&#32;<emphasis role="stringliteral">&quot;/&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00252"/>00252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00253"/>00253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Basic&quot;</emphasis>].Equals(<emphasis role="stringliteral">&quot;&quot;</emphasis>))
+<anchor xml:id="__compiler_8cs_source_1l00254"/>00254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00255"/>00255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;+=&#32;this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Basic&quot;</emphasis>];
+<anchor xml:id="__compiler_8cs_source_1l00256"/>00256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00257"/>00257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00258"/>00258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Advanced&quot;</emphasis>].Equals(<emphasis role="stringliteral">&quot;&quot;</emphasis>))
+<anchor xml:id="__compiler_8cs_source_1l00259"/>00259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00260"/>00260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;/&quot;</emphasis>&#32;+&#32;this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Advanced&quot;</emphasis>];
+<anchor xml:id="__compiler_8cs_source_1l00261"/>00261 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00262"/>00262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00263"/>00263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Expert&quot;</emphasis>].Equals(<emphasis role="stringliteral">&quot;&quot;</emphasis>))
+<anchor xml:id="__compiler_8cs_source_1l00264"/>00264 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00265"/>00265 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;/&quot;</emphasis>&#32;+&#32;this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Expert&quot;</emphasis>];
+<anchor xml:id="__compiler_8cs_source_1l00266"/>00266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00267"/>00267 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00268"/>00268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Master&quot;</emphasis>].Equals(<emphasis role="stringliteral">&quot;&quot;</emphasis>))
+<anchor xml:id="__compiler_8cs_source_1l00269"/>00269 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00270"/>00270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;/&quot;</emphasis>&#32;+&#32;this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Master&quot;</emphasis>];
+<anchor xml:id="__compiler_8cs_source_1l00271"/>00271 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00272"/>00272 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00273"/>00273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Remaster&quot;</emphasis>].Equals(<emphasis role="stringliteral">&quot;&quot;</emphasis>))
+<anchor xml:id="__compiler_8cs_source_1l00274"/>00274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00275"/>00275 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;/&quot;</emphasis>&#32;+&#32;this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Remaster&quot;</emphasis>];
+<anchor xml:id="__compiler_8cs_source_1l00276"/>00276 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00277"/>00277 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;-&quot;</emphasis>;
+<anchor xml:id="__compiler_8cs_source_1l00278"/>00278 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(!this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Utage&quot;</emphasis>].Equals(<emphasis role="stringliteral">&quot;&quot;</emphasis>))
+<anchor xml:id="__compiler_8cs_source_1l00279"/>00279 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__compiler_8cs_source_1l00280"/>00280 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;+=&#32;<emphasis role="stringliteral">&quot;\\&quot;</emphasis>&#32;+&#32;this.<link linkend="_class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386">Information</link>[<emphasis role="stringliteral">&quot;Utage&quot;</emphasis>];
+<anchor xml:id="__compiler_8cs_source_1l00281"/>00281 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00282"/>00282 
+<anchor xml:id="__compiler_8cs_source_1l00283"/>00283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+<anchor xml:id="__compiler_8cs_source_1l00284"/>00284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00285"/>00285 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__compiler_8cs_source_1l00286"/>00286 }
+</programlisting></section>

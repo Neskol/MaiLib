@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__i_parser_8cs_source" xml:lang="en-US">
+<title>IParser.cs</title>
+<indexterm><primary>Neskol/MaiLib/IParser.cs</primary></indexterm>
+Go to the documentation of this file.<programlisting linenumbering="unnumbered"><anchor xml:id="__i_parser_8cs_source_1l00001"/>00001 <emphasis role="keyword">using&#32;</emphasis>System.Reflection.Emit;
+<anchor xml:id="__i_parser_8cs_source_1l00002"/>00002 
+<anchor xml:id="__i_parser_8cs_source_1l00003"/>00003 <emphasis role="keyword">namespace&#32;</emphasis><link linkend="_namespace_mai_lib">MaiLib</link>
+<anchor xml:id="__i_parser_8cs_source_1l00004"/>00004 {
+<anchor xml:id="__i_parser_8cs_source_1l00008"/><link linkend="_interface_mai_lib_1_1_i_parser">00008</link> &#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">interface&#32;</emphasis><link linkend="_interface_mai_lib_1_1_i_parser">IParser</link>
+<anchor xml:id="__i_parser_8cs_source_1l00009"/>00009 &#32;&#32;&#32;&#32;{
+<anchor xml:id="__i_parser_8cs_source_1l00015"/><link linkend="_interface_mai_lib_1_1_i_parser_1a7397c6029763efea5e6d7bfbbe680237">00015</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_chart">Chart</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1a7397c6029763efea5e6d7bfbbe680237">ChartOfToken</link>(<emphasis role="keywordtype">string</emphasis>[]&#32;token);
+<anchor xml:id="__i_parser_8cs_source_1l00016"/>00016 
+<anchor xml:id="__i_parser_8cs_source_1l00022"/><link linkend="_interface_mai_lib_1_1_i_parser_1a69565d533484688cb37fa379a30cd74f">00022</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_b_p_m_changes">BPMChanges</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1a69565d533484688cb37fa379a30cd74f">BPMChangesOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token);
+<anchor xml:id="__i_parser_8cs_source_1l00023"/>00023 
+<anchor xml:id="__i_parser_8cs_source_1l00029"/><link linkend="_interface_mai_lib_1_1_i_parser_1a26298c2b3e13bf4d10797d7dca85536f">00029</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_measure_changes">MeasureChanges</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1a26298c2b3e13bf4d10797d7dca85536f">MeasureChangesOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token);
+<anchor xml:id="__i_parser_8cs_source_1l00030"/>00030 
+<anchor xml:id="__i_parser_8cs_source_1l00036"/><link linkend="_interface_mai_lib_1_1_i_parser_1af5c4e69e3586219305610dec5c615aab">00036</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_note">Note</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1af5c4e69e3586219305610dec5c615aab">NoteOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token);
+<anchor xml:id="__i_parser_8cs_source_1l00037"/>00037 
+<anchor xml:id="__i_parser_8cs_source_1l00046"/><link linkend="_interface_mai_lib_1_1_i_parser_1aa00014e1766f8a715678d6e32202295e">00046</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_note">Note</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1aa00014e1766f8a715678d6e32202295e">NoteOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token,<emphasis role="keywordtype">int</emphasis>&#32;bar,&#32;<emphasis role="keywordtype">int</emphasis>&#32;tick,&#32;<emphasis role="keywordtype">double</emphasis>&#32;bpm);
+<anchor xml:id="__i_parser_8cs_source_1l00047"/>00047 
+<anchor xml:id="__i_parser_8cs_source_1l00056"/><link linkend="_interface_mai_lib_1_1_i_parser_1a7b2bc1759b335897908867a41e399c51">00056</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;Tap&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1a7b2bc1759b335897908867a41e399c51">TapOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token,<emphasis role="keywordtype">int</emphasis>&#32;bar,&#32;<emphasis role="keywordtype">int</emphasis>&#32;tick,&#32;<emphasis role="keywordtype">double</emphasis>&#32;bpm);
+<anchor xml:id="__i_parser_8cs_source_1l00057"/>00057 
+<anchor xml:id="__i_parser_8cs_source_1l00063"/><link linkend="_interface_mai_lib_1_1_i_parser_1a1163c855f762043eb410fd3996a289b8">00063</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;Tap&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1a1163c855f762043eb410fd3996a289b8">TapOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token);
+<anchor xml:id="__i_parser_8cs_source_1l00064"/>00064 
+<anchor xml:id="__i_parser_8cs_source_1l00065"/>00065 
+<anchor xml:id="__i_parser_8cs_source_1l00074"/><link linkend="_interface_mai_lib_1_1_i_parser_1afc6fe47a6933b1e9777a92714f6ccd73">00074</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_hold">Hold</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1afc6fe47a6933b1e9777a92714f6ccd73">HoldOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token,&#32;<emphasis role="keywordtype">int</emphasis>&#32;bar,&#32;<emphasis role="keywordtype">int</emphasis>&#32;tick,<emphasis role="keywordtype">double</emphasis>&#32;bpm);
+<anchor xml:id="__i_parser_8cs_source_1l00075"/>00075 
+<anchor xml:id="__i_parser_8cs_source_1l00081"/><link linkend="_interface_mai_lib_1_1_i_parser_1aefa441cce2d816c6e1931ab37ccad78b">00081</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_hold">Hold</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1aefa441cce2d816c6e1931ab37ccad78b">HoldOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token);
+<anchor xml:id="__i_parser_8cs_source_1l00082"/>00082 
+<anchor xml:id="__i_parser_8cs_source_1l00083"/>00083 
+<anchor xml:id="__i_parser_8cs_source_1l00093"/><link linkend="_interface_mai_lib_1_1_i_parser_1a75ddea307290beeda5d26c7bed59c4e1">00093</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_slide">Slide</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1a75ddea307290beeda5d26c7bed59c4e1">SlideOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token,<emphasis role="keywordtype">int</emphasis>&#32;bar,&#32;<emphasis role="keywordtype">int</emphasis>&#32;tick,&#32;<link linkend="_class_mai_lib_1_1_note">Note</link>&#32;slideStart,&#32;<emphasis role="keywordtype">double</emphasis>&#32;bpm);
+<anchor xml:id="__i_parser_8cs_source_1l00094"/>00094 
+<anchor xml:id="__i_parser_8cs_source_1l00100"/><link linkend="_interface_mai_lib_1_1_i_parser_1a407ca986cb0dd62a934ce3e8a168d70d">00100</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_slide">Slide</link>&#32;<link linkend="_interface_mai_lib_1_1_i_parser_1a407ca986cb0dd62a934ce3e8a168d70d">SlideOfToken</link>(<emphasis role="keywordtype">string</emphasis>&#32;token);
+<anchor xml:id="__i_parser_8cs_source_1l00101"/>00101 
+<anchor xml:id="__i_parser_8cs_source_1l00102"/>00102 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__i_parser_8cs_source_1l00103"/>00103 }
+<anchor xml:id="__i_parser_8cs_source_1l00104"/>00104 
+</programlisting></section>

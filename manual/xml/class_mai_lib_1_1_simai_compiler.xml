@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="class_mai_lib_1_1_simai_compiler" kind="class" language="C#" prot="public">
+    <compoundname>MaiLib::SimaiCompiler</compoundname>
+    <basecompoundref refid="class_mai_lib_1_1_compiler" prot="public" virt="non-virtual">MaiLib.Compiler</basecompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_compiler_1ac79c0aa8d4f0ccd188a58705c5a13bed" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.SimaiCompiler.SimaiCompiler</definition>
+        <argsstring>(string location, string targetLocation)</argsstring>
+        <name>SimaiCompiler</name>
+        <qualifiedname>MaiLib.SimaiCompiler.SimaiCompiler</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>location</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>targetLocation</declname>
+        </param>
+        <briefdescription>
+<para>Construct compiler of a single song. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>location</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Folder</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>targetLocation</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Output folder</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiCompiler.cs" line="18" column="16" bodyfile="Neskol/MaiLib/SimaiCompiler.cs" bodystart="18" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_compiler_1af3d978b7deca2ffbdea1f105de017610" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.SimaiCompiler.SimaiCompiler</definition>
+        <argsstring>(string location, string targetLocation, bool forUtage)</argsstring>
+        <name>SimaiCompiler</name>
+        <qualifiedname>MaiLib.SimaiCompiler.SimaiCompiler</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>location</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>targetLocation</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>forUtage</declname>
+        </param>
+        <briefdescription>
+<para>Construct compiler of a single song. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>location</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Folder</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>targetLocation</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Output folder</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>forUtage</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>True if for utage</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiCompiler.cs" line="74" column="16" bodyfile="Neskol/MaiLib/SimaiCompiler.cs" bodystart="74" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_compiler_1a8aabc70f5c7f1c0df0e96d54372137c9" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.SimaiCompiler.SimaiCompiler</definition>
+        <argsstring>()</argsstring>
+        <name>SimaiCompiler</name>
+        <qualifiedname>MaiLib.SimaiCompiler.SimaiCompiler</qualifiedname>
+        <briefdescription>
+<para>Empty constructor. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiCompiler.cs" line="115" column="16" bodyfile="Neskol/MaiLib/SimaiCompiler.cs" bodystart="115" bodyend="124"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_compiler_1aaa782911ec0cfbb86a44ed2bdf4e031f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>override string</type>
+        <definition>override string MaiLib.SimaiCompiler.Compose</definition>
+        <argsstring>()</argsstring>
+        <name>Compose</name>
+        <qualifiedname>MaiLib.SimaiCompiler.Compose</qualifiedname>
+        <reimplements refid="class_mai_lib_1_1_compiler_1a54e1b7c04ec645d3201da1543f5307d2">Compose</reimplements>
+        <briefdescription>
+<para>Compose given chart to specific format. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Corresponding chart</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiCompiler.cs" line="126" column="32" bodyfile="Neskol/MaiLib/SimaiCompiler.cs" bodystart="126" bodyend="224"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_compiler_1a3ddf848359953a77c32ea0de78c4da44" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>override string</type>
+        <definition>override string MaiLib.SimaiCompiler.Compose</definition>
+        <argsstring>(Chart chart)</argsstring>
+        <name>Compose</name>
+        <qualifiedname>MaiLib.SimaiCompiler.Compose</qualifiedname>
+        <reimplements refid="class_mai_lib_1_1_compiler_1a48fbf2690a8f88520c41aa9c71d629a6">Compose</reimplements>
+        <param>
+          <type><ref refid="class_mai_lib_1_1_chart" kindref="compound">Chart</ref></type>
+          <declname>chart</declname>
+        </param>
+        <briefdescription>
+<para>Return compose of specified chart. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>chart</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Chart to compose</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Maidata of specified chart WITHOUT headers</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiCompiler.cs" line="231" column="32" bodyfile="Neskol/MaiLib/SimaiCompiler.cs" bodystart="231" bodyend="234"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_compiler_1a4d40b5d2d6f8b61276331b7ef4d8170d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>override string</type>
+        <definition>override string MaiLib.SimaiCompiler.Compose</definition>
+        <argsstring>(bool isUtage, List&lt; string &gt; ma2files)</argsstring>
+        <name>Compose</name>
+        <qualifiedname>MaiLib.SimaiCompiler.Compose</qualifiedname>
+        <reimplements refid="class_mai_lib_1_1_compiler_1ad91018ff82a03b125e397bfcea6b37d5">Compose</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>isUtage</declname>
+        </param>
+        <param>
+          <type>List&lt; string &gt;</type>
+          <declname>ma2files</declname>
+        </param>
+        <briefdescription>
+<para>Compose utage Charts. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>isUtage</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>switch to produce utage</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Corresponding utage chart</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiCompiler.cs" line="241" column="32" bodyfile="Neskol/MaiLib/SimaiCompiler.cs" bodystart="241" bodyend="307"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Compile various Ma2 Charts. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>Compiler</label>
+        <link refid="class_mai_lib_1_1_compiler"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>ICompiler</label>
+        <link refid="interface_mai_lib_1_1_i_compiler"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.SimaiCompiler</label>
+        <link refid="class_mai_lib_1_1_simai_compiler"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>Compiler</label>
+        <link refid="class_mai_lib_1_1_compiler"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>ICompiler</label>
+        <link refid="interface_mai_lib_1_1_i_compiler"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.SimaiCompiler</label>
+        <link refid="class_mai_lib_1_1_simai_compiler"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="Neskol/MaiLib/SimaiCompiler.cs" line="11" column="11" bodyfile="Neskol/MaiLib/SimaiCompiler.cs" bodystart="12" bodyend="308"/>
+    <listofallmembers>
+      <member refid="class_mai_lib_1_1_compiler_1a96f067a0d54a6da2f41488d5eb32c7b8" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>Charts</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1aec1cd5d4b62f460ff08a755c9d80cd8b" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>CheckValidity</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a91a932750272298954ebe15f63a43432" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>CompiledChart</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a9dad951889fd9824428b175da26652f8" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>Compiler</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a5319fa13b671d840e236163d08db628d" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>Compiler</name></member>
+      <member refid="class_mai_lib_1_1_simai_compiler_1aaa782911ec0cfbb86a44ed2bdf4e031f" prot="public" virt="virtual"><scope>MaiLib::SimaiCompiler</scope><name>Compose</name></member>
+      <member refid="class_mai_lib_1_1_simai_compiler_1a3ddf848359953a77c32ea0de78c4da44" prot="public" virt="virtual"><scope>MaiLib::SimaiCompiler</scope><name>Compose</name></member>
+      <member refid="class_mai_lib_1_1_simai_compiler_1a4d40b5d2d6f8b61276331b7ef4d8170d" prot="public" virt="virtual"><scope>MaiLib::SimaiCompiler</scope><name>Compose</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a827724d4041f2245b9402b2151229a94" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>difficulty</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a0998d9858dc1d703cc2887b5bad15ea9" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>Difficulty</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1ad127ad65f74f7032e2098caa6d6ab2d3" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>GenerateOneLineSummary</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1ac1fc8afbb98f7d381cf4bf32f08b4aac" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>GlobalSep</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a43fadda488e89df694c62a0d8c0a5386" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>Information</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a3f49328b86f1f7c33df585e445cb4313" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>MusicXml</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a24b912c3ab2534d5c449a669a0705c71" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>RotateDictionary</name></member>
+      <member refid="class_mai_lib_1_1_simai_compiler_1ac79c0aa8d4f0ccd188a58705c5a13bed" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>SimaiCompiler</name></member>
+      <member refid="class_mai_lib_1_1_simai_compiler_1af3d978b7deca2ffbdea1f105de017610" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>SimaiCompiler</name></member>
+      <member refid="class_mai_lib_1_1_simai_compiler_1a8aabc70f5c7f1c0df0e96d54372137c9" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>SimaiCompiler</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a840468dbb9c3545c4f22b957a8febc38" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>SymbolicBPMTable</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1a86effad828d0d92b8d1159db14bacf6d" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>SymbolicFirstNote</name></member>
+      <member refid="class_mai_lib_1_1_compiler_1ad4fa15a9fe8bafefa4b5023dd526fa39" prot="public" virt="non-virtual"><scope>MaiLib::SimaiCompiler</scope><name>TakeInformation</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

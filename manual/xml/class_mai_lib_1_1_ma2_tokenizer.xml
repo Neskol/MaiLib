@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="class_mai_lib_1_1_ma2_tokenizer" kind="class" language="C#" prot="public">
+    <compoundname>MaiLib::Ma2Tokenizer</compoundname>
+    <basecompoundref refid="interface_mai_lib_1_1_i_tokenizer" prot="public" virt="non-virtual">MaiLib.ITokenizer</basecompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_mai_lib_1_1_ma2_tokenizer_1a96fff7b26802321752aa51f5e5167ca7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.Ma2Tokenizer.Ma2Tokenizer</definition>
+        <argsstring>()</argsstring>
+        <name>Ma2Tokenizer</name>
+        <qualifiedname>MaiLib.Ma2Tokenizer.Ma2Tokenizer</qualifiedname>
+        <briefdescription>
+<para>Empty Constructor. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Ma2Tokenizer.cs" line="11" column="16" bodyfile="Neskol/MaiLib/Ma2Tokenizer.cs" bodystart="11" bodyend="13"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_ma2_tokenizer_1a778fd03506c7360d3adcde7bb0384c18" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string[]</type>
+        <definition>string[] MaiLib.Ma2Tokenizer.Tokens</definition>
+        <argsstring>(string location)</argsstring>
+        <name>Tokens</name>
+        <qualifiedname>MaiLib.Ma2Tokenizer.Tokens</qualifiedname>
+        <reimplements refid="interface_mai_lib_1_1_i_tokenizer_1a36ba40088fe7fe4fa4b8401cedeb7643">Tokens</reimplements>
+        <param>
+          <type>string</type>
+          <declname>location</declname>
+        </param>
+        <briefdescription>
+<para>Intake files and return tokens. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>location</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Tokens from file specified</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Ma2Tokenizer.cs" line="15" column="23" bodyfile="Neskol/MaiLib/Ma2Tokenizer.cs" bodystart="15" bodyend="19"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_ma2_tokenizer_1a114800b90275656150560c3a8bea6d5e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string[]</type>
+        <definition>string[] MaiLib.Ma2Tokenizer.TokensFromText</definition>
+        <argsstring>(string text)</argsstring>
+        <name>TokensFromText</name>
+        <qualifiedname>MaiLib.Ma2Tokenizer.TokensFromText</qualifiedname>
+        <reimplements refid="interface_mai_lib_1_1_i_tokenizer_1ad87a5402aa6b4e445615967853c80eb1">TokensFromText</reimplements>
+        <param>
+          <type>string</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+<para>Intake files and return tokens. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Tokens from text specified</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/Ma2Tokenizer.cs" line="21" column="23" bodyfile="Neskol/MaiLib/Ma2Tokenizer.cs" bodystart="21" bodyend="25"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Tokenizer of ma2 file. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>ITokenizer</label>
+        <link refid="interface_mai_lib_1_1_i_tokenizer"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.Ma2Tokenizer</label>
+        <link refid="class_mai_lib_1_1_ma2_tokenizer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>ITokenizer</label>
+        <link refid="interface_mai_lib_1_1_i_tokenizer"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.Ma2Tokenizer</label>
+        <link refid="class_mai_lib_1_1_ma2_tokenizer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="Neskol/MaiLib/Ma2Tokenizer.cs" line="6" column="11" bodyfile="Neskol/MaiLib/Ma2Tokenizer.cs" bodystart="7" bodyend="26"/>
+    <listofallmembers>
+      <member refid="class_mai_lib_1_1_ma2_tokenizer_1a96fff7b26802321752aa51f5e5167ca7" prot="public" virt="non-virtual"><scope>MaiLib::Ma2Tokenizer</scope><name>Ma2Tokenizer</name></member>
+      <member refid="class_mai_lib_1_1_ma2_tokenizer_1a778fd03506c7360d3adcde7bb0384c18" prot="public" virt="non-virtual"><scope>MaiLib::Ma2Tokenizer</scope><name>Tokens</name></member>
+      <member refid="class_mai_lib_1_1_ma2_tokenizer_1a114800b90275656150560c3a8bea6d5e" prot="public" virt="non-virtual"><scope>MaiLib::Ma2Tokenizer</scope><name>TokensFromText</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="class_mai_lib_1_1_xml_information" kind="class" language="C#" prot="public">
+    <compoundname>MaiLib::XmlInformation</compoundname>
+    <basecompoundref refid="class_mai_lib_1_1_track_information" prot="public" virt="non-virtual">MaiLib.TrackInformation</basecompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_mai_lib_1_1_xml_information_1aea8e1c806340a6f77e14aff75703d140" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.XmlInformation.XmlInformation</definition>
+        <argsstring>()</argsstring>
+        <name>XmlInformation</name>
+        <qualifiedname>MaiLib.XmlInformation.XmlInformation</qualifiedname>
+        <briefdescription>
+<para>Using take in Xml to store trackInformation: </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/XmlInformation.cs" line="14" column="16" bodyfile="Neskol/MaiLib/XmlInformation.cs" bodystart="14" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_xml_information_1a6815a452b29ff536dc3ba63656649126" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.XmlInformation.XmlInformation</definition>
+        <argsstring>(string location)</argsstring>
+        <name>XmlInformation</name>
+        <qualifiedname>MaiLib.XmlInformation.XmlInformation</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>location</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/XmlInformation.cs" line="19" column="16" bodyfile="Neskol/MaiLib/XmlInformation.cs" bodystart="19" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_xml_information_1a9ec926d8d05c4c0e446a8452c3f22060" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void MaiLib.XmlInformation.GenerateEmptyStoredXML</definition>
+        <argsstring>()</argsstring>
+        <name>GenerateEmptyStoredXML</name>
+        <qualifiedname>MaiLib.XmlInformation.GenerateEmptyStoredXML</qualifiedname>
+        <briefdescription>
+<para>Generate new music.xml for export. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/XmlInformation.cs" line="38" column="21" bodyfile="Neskol/MaiLib/XmlInformation.cs" bodystart="38" bodyend="282"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_xml_information_1ac925da7253f899120a18f546c9351f20" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>XmlElement</type>
+        <definition>XmlElement MaiLib.XmlInformation.CreateNotesInformation</definition>
+        <argsstring>(Dictionary&lt; string, string &gt; information, int chartIndex)</argsstring>
+        <name>CreateNotesInformation</name>
+        <qualifiedname>MaiLib.XmlInformation.CreateNotesInformation</qualifiedname>
+        <param>
+          <type>Dictionary&lt; string, string &gt;</type>
+          <declname>information</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>chartIndex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/XmlInformation.cs" line="284" column="27" bodyfile="Neskol/MaiLib/XmlInformation.cs" bodystart="284" bodyend="289"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_xml_information_1a9c943de86ffcc9917870d187f0708efa" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>override void</type>
+        <definition>override void MaiLib.XmlInformation.Update</definition>
+        <argsstring>()</argsstring>
+        <name>Update</name>
+        <qualifiedname>MaiLib.XmlInformation.Update</qualifiedname>
+        <reimplements refid="class_mai_lib_1_1_track_information_1a879f0520004112f7e52f18eee96b8160">Update</reimplements>
+        <briefdescription>
+<para>Update information. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/XmlInformation.cs" line="291" column="30" bodyfile="Neskol/MaiLib/XmlInformation.cs" bodystart="291" bodyend="491"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Using Xml to store trackInformation. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>IXmlUtility</label>
+      </node>
+      <node id="1">
+        <label>MaiLib.XmlInformation</label>
+        <link refid="class_mai_lib_1_1_xml_information"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>TrackInformation</label>
+        <link refid="class_mai_lib_1_1_track_information"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>IXmlUtility</label>
+      </node>
+      <node id="1">
+        <label>MaiLib.XmlInformation</label>
+        <link refid="class_mai_lib_1_1_xml_information"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>TrackInformation</label>
+        <link refid="class_mai_lib_1_1_track_information"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="Neskol/MaiLib/XmlInformation.cs" line="9" column="11" bodyfile="Neskol/MaiLib/XmlInformation.cs" bodystart="10" bodyend="492"/>
+    <listofallmembers>
+      <member refid="class_mai_lib_1_1_track_information_1a511f8348a7079403b8f9ddfe6316ea87" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>addVersion</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a6033eb230ae721061292a3185d8c79e7" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>addVersionDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a8bf39d942efe72f558cf35bb3acb8289" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>artistNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ab4f5ab4471644bb6e109fc3797ce5928" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>CompensateShortZero</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a507b73e496dac767e83cac63876675b1" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>CompensateZero</name></member>
+      <member refid="class_mai_lib_1_1_xml_information_1ac925da7253f899120a18f546c9351f20" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>CreateNotesInformation</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ab3d47f46a35045cef10330022c577865" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>difficulty</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a85712e801552890f9bbcc72a7a359177" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>DXChartTrackPathSuffix</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a6669da2a32dcfcbc9629331101d99761" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>eventNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a3287749fbd92748d1057e60b38546209" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>FormatDummyInformation</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1af05fb6fef6e83623100535d15b798814" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>FormatInformation</name></member>
+      <member refid="class_mai_lib_1_1_xml_information_1a9ec926d8d05c4c0e446a8452c3f22060" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>GenerateEmptyStoredXML</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a696b34aa330a65f41352300761a7a70f" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>genre</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ae8bc2fbcda6b3f95aa3d4baaff982659" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>GetMatchNodes</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1adcaf647c20f72d7b58d122443dab8ced" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>Information</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ac81aa2e67e1a4c2c42c5d25e80bca5b8" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>IsDXChart</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1acbc3367c065b8d5c09d09ebb7c21a035" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>level</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a30ab3fc9c6baa30405117eba14e12c08" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>netOpenNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ae664a03204aa951394efc062f8674343" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>notesDesignerDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a74fcaf8c3d20c7794bdc57e13f49e23f" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>releaseTagNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ace4d15ef48c152032f4e49ae7f08fe8e" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>rightsInfoDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a123ebc559b693a7b882ef91e6e13b4f7" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>Save</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1af1a7ad9fc78e056c3948dbda529505fe" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>shortVersion</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a8d024106709ceb0d873a6210ea785cf1" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>StandardDeluxePrefix</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ac70ef12216b3cfede5eb78ea91001e64" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>StandardDeluxeSuffix</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ae359250ba13c83b77c7545aec965adfc" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>subEventNameDic</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a132e36ac4af1f628dbfc6f2163343357" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TakeInValue</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a0a8f69ce445f9eb7709080570e30d159" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackBPM</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1adcea7cd6aee16a6b44efe4d635038ef1" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackComposer</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ab67766915f0eb59f06b8fadaebd0f7dd" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackDecimalLevels</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1ae6901ed016f3f1b049daf0fb955ed2df" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackGenre</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1af951ce58d285ac8a5870c23e8fe980a6" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackID</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a9cb9fd4cc0f1b1f2c63f09f87821f72d" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackInformation</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a3f7338cbe50cf3a7daccab3955ef6b78" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackLevels</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a40313e4e0ab822735ae2d9c5ffffb178" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackName</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1afc67dbfa0522889a3328169b02b91fdc" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackSortName</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a2c4aa9563d252768bafca68a08b499b7" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackSymbolicLevel</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a44f77f0e3d8b6898f1350751d5f61c1e" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackVersion</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1adf852d73f7f45f7c858189ca44262906" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>TrackVersionNumber</name></member>
+      <member refid="class_mai_lib_1_1_xml_information_1a9c943de86ffcc9917870d187f0708efa" prot="public" virt="virtual"><scope>MaiLib::XmlInformation</scope><name>Update</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1af23312148a60e4fa86b521aa16a66211" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>version</name></member>
+      <member refid="class_mai_lib_1_1_track_information_1a8acb25e8b9f13a35b362c60cb53eb5e6" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>versionArray</name></member>
+      <member refid="class_mai_lib_1_1_xml_information_1aea8e1c806340a6f77e14aff75703d140" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>XmlInformation</name></member>
+      <member refid="class_mai_lib_1_1_xml_information_1a6815a452b29ff536dc3ba63656649126" prot="public" virt="non-virtual"><scope>MaiLib::XmlInformation</scope><name>XmlInformation</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

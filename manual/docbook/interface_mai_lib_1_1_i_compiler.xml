@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_interface_mai_lib_1_1_i_compiler" xml:lang="en-US">
+<title>MaiLib.ICompiler Interface Reference</title>
+<indexterm><primary>MaiLib.ICompiler</primary></indexterm>
+<para>
+
+<para>Provide interface for Compilers. </para>
+ 
+</para>
+<para>Inheritance diagram for MaiLib.ICompiler:    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="interface_mai_lib_1_1_i_compiler.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47">TakeInformation</link> (Dictionary&lt; string, string &gt; information)</para>
+
+<para>Intake information to compile data. </para>
+</listitem>
+            <listitem><para>string <link linkend="_interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99">Compose</link> ()</para>
+
+<para>Compose given chart to specific format. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6">CheckValidity</link> ()</para>
+
+<para>Check if the chart given is valid to print. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Provide interface for Compilers. </para>
+<para>
+Definition at line <link linkend="__i_compiler_8cs_source_1l00006">6</link> of file <link linkend="__i_compiler_8cs_source">ICompiler.cs</link>.</para>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6"/><section>
+    <title>CheckValidity()</title>
+<indexterm><primary>CheckValidity</primary><secondary>MaiLib.ICompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.ICompiler</primary><secondary>CheckValidity</secondary></indexterm>
+<para><computeroutput>bool MaiLib.ICompiler.CheckValidity ( )</computeroutput></para><para>
+
+<para>Check if the chart given is valid to print. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>True if valid, false otherwise</para>
+</formalpara>
+</para>
+<para>
+Implemented in <link linkend="_class_mai_lib_1_1_compiler_1aec1cd5d4b62f460ff08a755c9d80cd8b">MaiLib.Compiler</link>, <link linkend="_class_mai_lib_1_1_ma2_1af6c726c84c93dddaa2463df262f23fcd">MaiLib.Ma2</link>, and <link linkend="_class_mai_lib_1_1_x_mai_l_1a38546ac7bf57a9ad796b8978bf5a45b4">MaiLib.XMaiL</link>.</para>
+</section>
+<anchor xml:id="_interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99"/><section>
+    <title>Compose()</title>
+<indexterm><primary>Compose</primary><secondary>MaiLib.ICompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.ICompiler</primary><secondary>Compose</secondary></indexterm>
+<para><computeroutput>string MaiLib.ICompiler.Compose ( )</computeroutput></para><para>
+
+<para>Compose given chart to specific format. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>Corresponding chart</para>
+</formalpara>
+</para>
+<para>
+Implemented in <link linkend="_class_mai_lib_1_1_compiler_1a54e1b7c04ec645d3201da1543f5307d2">MaiLib.Compiler</link>, <link linkend="_class_mai_lib_1_1_ma2_1a230dc740665afdf2a1f011abfefb4ba5">MaiLib.Ma2</link>, <link linkend="_class_mai_lib_1_1_simai_compiler_1aaa782911ec0cfbb86a44ed2bdf4e031f">MaiLib.SimaiCompiler</link>, and <link linkend="_class_mai_lib_1_1_x_mai_l_1af55039abe693e63b35b69f20717f0917">MaiLib.XMaiL</link>.</para>
+</section>
+<anchor xml:id="_interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47"/><section>
+    <title>TakeInformation()</title>
+<indexterm><primary>TakeInformation</primary><secondary>MaiLib.ICompiler</secondary></indexterm>
+<indexterm><primary>MaiLib.ICompiler</primary><secondary>TakeInformation</secondary></indexterm>
+<para><computeroutput>void MaiLib.ICompiler.TakeInformation (Dictionary&lt; string, string &gt; information)</computeroutput></para><para>
+
+<para>Intake information to compile data. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>information</entry><entry>
+<para>TakeInformation to provide</para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Implemented in <link linkend="_class_mai_lib_1_1_compiler_1ad4fa15a9fe8bafefa4b5023dd526fa39">MaiLib.Compiler</link>.</para>
+</section>
+<para>
+The documentation for this interface was generated from the following file:</para>
+Neskol/MaiLib/<link linkend="__i_compiler_8cs">ICompiler.cs</link></section>
+</section>

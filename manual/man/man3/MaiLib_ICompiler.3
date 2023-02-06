@@ -1,0 +1,77 @@
+.TH "MaiLib.ICompiler" 3 "Sun Feb 5 2023" "Version 1.0.4.0" "MaiLib" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MaiLib.ICompiler \- Provide interface for Compilers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherited by \fBMaiLib\&.Compiler\fP, \fBMaiLib\&.Ma2\fP, and \fBMaiLib\&.XMaiL\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBTakeInformation\fP (Dictionary< string, string > information)"
+.br
+.RI "Intake information to compile data\&. "
+.ti -1c
+.RI "string \fBCompose\fP ()"
+.br
+.RI "Compose given chart to specific format\&. "
+.ti -1c
+.RI "bool \fBCheckValidity\fP ()"
+.br
+.RI "Check if the chart given is valid to print\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Provide interface for Compilers\&. 
+.PP
+Definition at line \fB6\fP of file \fBICompiler\&.cs\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "bool MaiLib\&.ICompiler\&.CheckValidity ()"
+
+.PP
+Check if the chart given is valid to print\&. 
+.PP
+\fBReturns\fP
+.RS 4
+True if valid, false otherwise
+.RE
+.PP
+
+.PP
+Implemented in \fBMaiLib\&.Compiler\fP, \fBMaiLib\&.Ma2\fP, and \fBMaiLib\&.XMaiL\fP\&.
+.SS "string MaiLib\&.ICompiler\&.Compose ()"
+
+.PP
+Compose given chart to specific format\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Corresponding chart
+.RE
+.PP
+
+.PP
+Implemented in \fBMaiLib\&.Compiler\fP, \fBMaiLib\&.Ma2\fP, \fBMaiLib\&.SimaiCompiler\fP, and \fBMaiLib\&.XMaiL\fP\&.
+.SS "void MaiLib\&.ICompiler\&.TakeInformation (Dictionary< string, string > information)"
+
+.PP
+Intake information to compile data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIinformation\fP TakeInformation to provide
+.RE
+.PP
+
+.PP
+Implemented in \fBMaiLib\&.Compiler\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MaiLib from the source code\&.

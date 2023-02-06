@@ -1,0 +1,155 @@
+.TH "MaiLib.BPMChanges" 3 "Sun Feb 5 2023" "Version 1.0.4.0" "MaiLib" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MaiLib.BPMChanges
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBPMChanges\fP (List< int > bar, List< int > tick, List< double > bpm)"
+.br
+.RI "Construct with changes listed\&. "
+.ti -1c
+.RI "\fBBPMChanges\fP ()"
+.br
+.RI "Construct empty BPMChange List\&. "
+.ti -1c
+.RI "\fBBPMChanges\fP (\fBBPMChanges\fP takenIn)"
+.br
+.RI "Construct BPMChanges with existing one\&. "
+.ti -1c
+.RI "void \fBAdd\fP (\fBBPMChange\fP takeIn)"
+.br
+.RI "Add BPMChange to change notes\&. "
+.ti -1c
+.RI "void \fBUpdate\fP ()"
+.br
+.RI "Compose change notes according to BPMChanges\&. "
+.ti -1c
+.RI "bool \fBCheckValidity\fP ()"
+.br
+.RI "See if the BPMChange is valid\&. "
+.ti -1c
+.RI "string \fBCompose\fP ()"
+.br
+.RI "Compose BPMChanges in beginning of MA2\&. "
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "List< \fBBPMChange\fP > \fBChangeNotes\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBInitialChange\fP\fC [get]\fP"
+.br
+.RI "Returns first definitions\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB6\fP of file \fBBPMChanges\&.cs\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "MaiLib\&.BPMChanges\&.BPMChanges (List< int > bar, List< int > tick, List< double > bpm)"
+
+.PP
+Construct with changes listed\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbar\fP Bar which contains changes
+.br
+\fItick\fP Tick in bar contains changes
+.br
+\fIbpm\fP Specified BPM changes
+.RE
+.PP
+
+.PP
+Definition at line \fB16\fP of file \fBBPMChanges\&.cs\fP\&.
+.SS "MaiLib\&.BPMChanges\&.BPMChanges ()"
+
+.PP
+Construct empty BPMChange List\&. 
+.PP
+Definition at line \fB30\fP of file \fBBPMChanges\&.cs\fP\&.
+.SS "MaiLib\&.BPMChanges\&.BPMChanges (\fBBPMChanges\fP takenIn)"
+
+.PP
+Construct BPMChanges with existing one\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItakenIn\fP 
+.RE
+.PP
+
+.PP
+Definition at line \fB40\fP of file \fBBPMChanges\&.cs\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void MaiLib\&.BPMChanges\&.Add (\fBBPMChange\fP takeIn)"
+
+.PP
+Add BPMChange to change notes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItakeIn\fP 
+.RE
+.PP
+
+.PP
+Definition at line \fB63\fP of file \fBBPMChanges\&.cs\fP\&.
+.SS "bool MaiLib\&.BPMChanges\&.CheckValidity ()"
+
+.PP
+See if the BPMChange is valid\&. 
+.PP
+\fBReturns\fP
+.RS 4
+True if valid, false elsewise
+.RE
+.PP
+
+.PP
+Definition at line \fB138\fP of file \fBBPMChanges\&.cs\fP\&.
+.SS "string MaiLib\&.BPMChanges\&.Compose ()"
+
+.PP
+Compose BPMChanges in beginning of MA2\&. 
+.PP
+\fBReturns\fP
+.RS 4
+
+.RE
+.PP
+
+.PP
+Definition at line \fB148\fP of file \fBBPMChanges\&.cs\fP\&.
+.SS "void MaiLib\&.BPMChanges\&.Update ()"
+
+.PP
+Compose change notes according to BPMChanges\&. 
+.PP
+Definition at line \fB72\fP of file \fBBPMChanges\&.cs\fP\&.
+.SH "Property Documentation"
+.PP 
+.SS "List<\fBBPMChange\fP> MaiLib\&.BPMChanges\&.ChangeNotes\fC [get]\fP"
+
+.PP
+Definition at line \fB49\fP of file \fBBPMChanges\&.cs\fP\&.
+.SS "string MaiLib\&.BPMChanges\&.InitialChange\fC [get]\fP"
+
+.PP
+Returns first definitions\&. 
+.PP
+Definition at line \fB99\fP of file \fBBPMChanges\&.cs\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for MaiLib from the source code\&.

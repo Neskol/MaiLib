@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_class_mai_lib_1_1_ma2_tokenizer" xml:lang="en-US">
+<title>MaiLib.Ma2Tokenizer Class Reference</title>
+<indexterm><primary>MaiLib.Ma2Tokenizer</primary></indexterm>
+<para>
+
+<para>Tokenizer of ma2 file. </para>
+ 
+</para>
+<para>Inheritance diagram for MaiLib.Ma2Tokenizer:    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="class_mai_lib_1_1_ma2_tokenizer.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a96fff7b26802321752aa51f5e5167ca7">Ma2Tokenizer</link> ()</para>
+
+<para>Empty Constructor. </para>
+</listitem>
+            <listitem><para>string[] <link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a778fd03506c7360d3adcde7bb0384c18">Tokens</link> (string location)</para>
+
+<para>Intake files and return tokens. </para>
+</listitem>
+            <listitem><para>string[] <link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a114800b90275656150560c3a8bea6d5e">TokensFromText</link> (string text)</para>
+
+<para>Intake files and return tokens. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+        <itemizedlist>
+            <listitem><para>string[] <link linkend="_interface_mai_lib_1_1_i_tokenizer_1a36ba40088fe7fe4fa4b8401cedeb7643">Tokens</link> (string location)</para>
+
+<para>Intake files and return tokens. </para>
+</listitem>
+            <listitem><para>string[] <link linkend="_interface_mai_lib_1_1_i_tokenizer_1ad87a5402aa6b4e445615967853c80eb1">TokensFromText</link> (string text)</para>
+
+<para>Intake files and return tokens. </para>
+</listitem>
+        </itemizedlist>
+<section>
+<title>Detailed Description</title>
+
+<para>Tokenizer of ma2 file. </para>
+<para>
+Definition at line <link linkend="__ma2_tokenizer_8cs_source_1l00006">6</link> of file <link linkend="__ma2_tokenizer_8cs_source">Ma2Tokenizer.cs</link>.</para>
+</section>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_ma2_tokenizer_1a96fff7b26802321752aa51f5e5167ca7"/><section>
+    <title>Ma2Tokenizer()</title>
+<indexterm><primary>Ma2Tokenizer</primary><secondary>MaiLib.Ma2Tokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.Ma2Tokenizer</primary><secondary>Ma2Tokenizer</secondary></indexterm>
+<para><computeroutput>MaiLib.Ma2Tokenizer.Ma2Tokenizer ( )</computeroutput></para><para>
+
+<para>Empty Constructor. </para>
+</para>
+<para>
+Definition at line <link linkend="__ma2_tokenizer_8cs_source_1l00011">11</link> of file <link linkend="__ma2_tokenizer_8cs_source">Ma2Tokenizer.cs</link>.</para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_class_mai_lib_1_1_ma2_tokenizer_1a778fd03506c7360d3adcde7bb0384c18"/><section>
+    <title>Tokens()</title>
+<indexterm><primary>Tokens</primary><secondary>MaiLib.Ma2Tokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.Ma2Tokenizer</primary><secondary>Tokens</secondary></indexterm>
+<para><computeroutput>string[] MaiLib.Ma2Tokenizer.Tokens (string location)</computeroutput></para><para>
+
+<para>Intake files and return tokens. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>location</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Tokens from file specified</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_interface_mai_lib_1_1_i_tokenizer_1a36ba40088fe7fe4fa4b8401cedeb7643">MaiLib.ITokenizer</link>.</para>
+<para>
+Definition at line <link linkend="__ma2_tokenizer_8cs_source_1l00015">15</link> of file <link linkend="__ma2_tokenizer_8cs_source">Ma2Tokenizer.cs</link>.</para>
+</section>
+<anchor xml:id="_class_mai_lib_1_1_ma2_tokenizer_1a114800b90275656150560c3a8bea6d5e"/><section>
+    <title>TokensFromText()</title>
+<indexterm><primary>TokensFromText</primary><secondary>MaiLib.Ma2Tokenizer</secondary></indexterm>
+<indexterm><primary>MaiLib.Ma2Tokenizer</primary><secondary>TokensFromText</secondary></indexterm>
+<para><computeroutput>string[] MaiLib.Ma2Tokenizer.TokensFromText (string text)</computeroutput></para><para>
+
+<para>Intake files and return tokens. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>text</entry><entry></entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Tokens from text specified</para>
+</formalpara>
+</para>
+<para>
+Implements <link linkend="_interface_mai_lib_1_1_i_tokenizer_1ad87a5402aa6b4e445615967853c80eb1">MaiLib.ITokenizer</link>.</para>
+<para>
+Definition at line <link linkend="__ma2_tokenizer_8cs_source_1l00021">21</link> of file <link linkend="__ma2_tokenizer_8cs_source">Ma2Tokenizer.cs</link>.</para>
+</section>
+<para>
+The documentation for this class was generated from the following file:</para>
+Neskol/MaiLib/<link linkend="__ma2_tokenizer_8cs">Ma2Tokenizer.cs</link></section>
+</section>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__i_chart_8cs_source" xml:lang="en-US">
+<title>IChart.cs</title>
+<indexterm><primary>Neskol/MaiLib/IChart.cs</primary></indexterm>
+Go to the documentation of this file.<programlisting linenumbering="unnumbered"><anchor xml:id="__i_chart_8cs_source_1l00001"/>00001 <emphasis role="keyword">namespace&#32;</emphasis><link linkend="_namespace_mai_lib">MaiLib</link>
+<anchor xml:id="__i_chart_8cs_source_1l00002"/>00002 {
+<anchor xml:id="__i_chart_8cs_source_1l00006"/><link linkend="_interface_mai_lib_1_1_i_chart">00006</link> &#32;&#32;&#32;&#32;<emphasis role="keyword">interface&#32;</emphasis><link linkend="_interface_mai_lib_1_1_i_chart">IChart</link>
+<anchor xml:id="__i_chart_8cs_source_1l00007"/>00007 &#32;&#32;&#32;&#32;{
+<anchor xml:id="__i_chart_8cs_source_1l00011"/><link linkend="_interface_mai_lib_1_1_i_chart_1a9124e4135182c4c2f5ade3ebe14e512c">00011</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_chart_1a9124e4135182c4c2f5ade3ebe14e512c">Update</link>();
+<anchor xml:id="__i_chart_8cs_source_1l00012"/>00012 
+<anchor xml:id="__i_chart_8cs_source_1l00017"/><link linkend="_interface_mai_lib_1_1_i_chart_1ab377ec3aa9607b5e63ef2d986fdf45bb">00017</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_chart_1ab377ec3aa9607b5e63ef2d986fdf45bb">CheckValidity</link>();
+<anchor xml:id="__i_chart_8cs_source_1l00018"/>00018 
+<anchor xml:id="__i_chart_8cs_source_1l00023"/><link linkend="_interface_mai_lib_1_1_i_chart_1a60914b01b3ff92fb490a30fa1f8388e2">00023</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">string</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_chart_1a60914b01b3ff92fb490a30fa1f8388e2">Compose</link>();
+<anchor xml:id="__i_chart_8cs_source_1l00024"/>00024 
+<anchor xml:id="__i_chart_8cs_source_1l00029"/><link linkend="_interface_mai_lib_1_1_i_chart_1a0bbf3f61adb0f8c200e717671a96f2b6">00029</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_chart_1a0bbf3f61adb0f8c200e717671a96f2b6">ShiftByOffset</link>(<emphasis role="keywordtype">int</emphasis>&#32;overallTick);
+<anchor xml:id="__i_chart_8cs_source_1l00030"/>00030 
+<anchor xml:id="__i_chart_8cs_source_1l00036"/><link linkend="_interface_mai_lib_1_1_i_chart_1ad0da4fb4c8554c0e07291ca1b028329d">00036</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_chart_1ad0da4fb4c8554c0e07291ca1b028329d">ShiftByOffset</link>(<emphasis role="keywordtype">int</emphasis>&#32;bar,&#32;<emphasis role="keywordtype">int</emphasis>&#32;tick);
+<anchor xml:id="__i_chart_8cs_source_1l00037"/>00037 
+<anchor xml:id="__i_chart_8cs_source_1l00042"/><link linkend="_interface_mai_lib_1_1_i_chart_1af091191ffbc4fae800197964e0f7a3c0">00042</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_chart_1af091191ffbc4fae800197964e0f7a3c0">RotateNotes</link>(<emphasis role="keywordtype">string</emphasis>&#32;method);
+<anchor xml:id="__i_chart_8cs_source_1l00043"/>00043 
+<anchor xml:id="__i_chart_8cs_source_1l00049"/><link linkend="_interface_mai_lib_1_1_i_chart_1a300fae8a8444a5314dc8eab652d0fd81">00049</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">double</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_chart_1a300fae8a8444a5314dc8eab652d0fd81">GetTimeStamp</link>(<emphasis role="keywordtype">int</emphasis>&#32;bar,&#32;<emphasis role="keywordtype">int</emphasis>&#32;tick);
+<anchor xml:id="__i_chart_8cs_source_1l00050"/>00050 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__i_chart_8cs_source_1l00051"/>00051 }
+</programlisting></section>

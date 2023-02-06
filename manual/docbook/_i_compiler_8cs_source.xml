@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__i_compiler_8cs_source" xml:lang="en-US">
+<title>ICompiler.cs</title>
+<indexterm><primary>Neskol/MaiLib/ICompiler.cs</primary></indexterm>
+Go to the documentation of this file.<programlisting linenumbering="unnumbered"><anchor xml:id="__i_compiler_8cs_source_1l00001"/>00001 <emphasis role="keyword">namespace&#32;</emphasis><link linkend="_namespace_mai_lib">MaiLib</link>
+<anchor xml:id="__i_compiler_8cs_source_1l00002"/>00002 {
+<anchor xml:id="__i_compiler_8cs_source_1l00006"/><link linkend="_interface_mai_lib_1_1_i_compiler">00006</link> &#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">interface&#32;</emphasis><link linkend="_interface_mai_lib_1_1_i_compiler">ICompiler</link>
+<anchor xml:id="__i_compiler_8cs_source_1l00007"/>00007 &#32;&#32;&#32;&#32;{
+<anchor xml:id="__i_compiler_8cs_source_1l00012"/><link linkend="_interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47">00012</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_compiler_1a281d223725bf982b400b28e9228f8a47">TakeInformation</link>(Dictionary&lt;string,&#32;string&gt;&#32;information);
+<anchor xml:id="__i_compiler_8cs_source_1l00013"/>00013 
+<anchor xml:id="__i_compiler_8cs_source_1l00018"/><link linkend="_interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99">00018</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_compiler_1a89f3a58823c63bd1221ef23ed5b96c99">Compose</link>();
+<anchor xml:id="__i_compiler_8cs_source_1l00019"/>00019 
+<anchor xml:id="__i_compiler_8cs_source_1l00024"/><link linkend="_interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6">00024</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_interface_mai_lib_1_1_i_compiler_1a45800ce9ae1248a440cba619a5d8b0e6">CheckValidity</link>();
+<anchor xml:id="__i_compiler_8cs_source_1l00025"/>00025 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__i_compiler_8cs_source_1l00026"/>00026 }
+<anchor xml:id="__i_compiler_8cs_source_1l00027"/>00027 
+</programlisting></section>

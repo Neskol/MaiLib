@@ -1,0 +1,132 @@
+\hypertarget{_measure_changes_8cs_source}{}\doxysection{Measure\+Changes.\+cs}
+\label{_measure_changes_8cs_source}\index{Neskol/MaiLib/MeasureChanges.cs@{Neskol/MaiLib/MeasureChanges.cs}}
+\mbox{\hyperlink{_measure_changes_8cs}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00001}00001\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_mai_lib}{MaiLib}}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00002}00002\ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00006}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{00006}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00007}00007\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00008}00008\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<int>\ bar;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00009}00009\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<int>\ tick;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00010}00010\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<int>\ quavers;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00011}00011\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<int>\ beats;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ List<MeasureChange>\ changeNotes;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ initialQuaver;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ initialBeat;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00019}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_ac589446cf1108de036fdcf6f594a4d72}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_ac589446cf1108de036fdcf6f594a4d72}{MeasureChanges}}()}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00020}00020\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ bar\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ tick\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ quavers\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ beats\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ changeNotes\ =\ \textcolor{keyword}{new}\ List<MeasureChange>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00026}00026\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00031}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a089390f57270e80254a0e8b29ab52a86}{00031}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a089390f57270e80254a0e8b29ab52a86}{MeasureChanges}}(\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{MeasureChanges}}\ takeIn)}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00032}00032\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ bar\ =\ \textcolor{keyword}{new}\ List<int>(takeIn.\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a331edfaf199866f86246546f4bab50e0}{Bar}});}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ tick\ =\ \textcolor{keyword}{new}\ List<int>(takeIn.\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a25fc3b1cf5e0c3ae09f96195e4c40da5}{Tick}});}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ quavers\ =\ \textcolor{keyword}{new}\ List<int>(takeIn.\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a336ab254badf283ef4fa7f088d92f04d}{Quavers}});}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ beats\ =\ \textcolor{keyword}{new}\ List<int>(takeIn.\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a6a5ba801a227665926200baf0bee594c}{Beats}});}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ changeNotes\ =\ \textcolor{keyword}{new}\ List<MeasureChange>(takeIn.\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a8754ef92a91eef9c2b566beb2a66c6bd}{ChangeNotes}});}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00038}00038\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00045}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a45443bc629c31b85bf292dcc28948cf2}{00045}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a45443bc629c31b85bf292dcc28948cf2}{MeasureChanges}}(\textcolor{keywordtype}{int}\ initialQuaver,\ \textcolor{keywordtype}{int}\ initialBeat)}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00046}00046\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ bar\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ tick\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ quavers\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ beats\ =\ \textcolor{keyword}{new}\ List<int>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ changeNotes\ =\ \textcolor{keyword}{new}\ List<MeasureChange>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ this.initialQuaver\ =\ initialQuaver;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ this.initialBeat\ =\ initialBeat;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00054}00054\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00063}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_ac975c70ee2d86a089c52e43c091f4291}{00063}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_ac975c70ee2d86a089c52e43c091f4291}{MeasureChanges}}(List<int>\ bar,\ List<int>\ tick,\ List<int>\ quavers,\ List<int>\ beats)}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00064}00064\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ this.bar\ =\ bar;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ this.tick\ =\ tick;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ this.quavers\ =\ quavers;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ this.initialQuaver\ =\ quavers[0];}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ this.beats\ =\ beats;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ this.initialBeat\ =\ beats[0];}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ changeNotes\ =\ \textcolor{keyword}{new}\ List<MeasureChange>();}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00072}00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00077}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a331edfaf199866f86246546f4bab50e0}{00077}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ List<int>\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a331edfaf199866f86246546f4bab50e0}{Bar}}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00078}00078\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}\ \{\ \textcolor{keywordflow}{return}\ bar;\ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00085}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a25fc3b1cf5e0c3ae09f96195e4c40da5}{00085}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ List<int>\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a25fc3b1cf5e0c3ae09f96195e4c40da5}{Tick}}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00086}00086\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}\ \{\ \textcolor{keywordflow}{return}\ tick;\ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00088}00088\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00093}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a336ab254badf283ef4fa7f088d92f04d}{00093}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ List<int>\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a336ab254badf283ef4fa7f088d92f04d}{Quavers}}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00094}00094\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}\ \{\ \textcolor{keywordflow}{return}\ quavers;\ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00096}00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00101}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a6a5ba801a227665926200baf0bee594c}{00101}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ List<int>\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a6a5ba801a227665926200baf0bee594c}{Beats}}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00102}00102\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}\ \{\ \textcolor{keywordflow}{return}\ beats;\ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00104}00104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00106}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a8754ef92a91eef9c2b566beb2a66c6bd}{00106}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ List<MeasureChange>\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a8754ef92a91eef9c2b566beb2a66c6bd}{ChangeNotes}}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00107}00107\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}\ \{\ \textcolor{keywordflow}{return}\ changeNotes;\ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00109}00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00111}00111\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00120}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_aeb76df02bf4918cd354944eb89c023c3}{00120}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_aeb76df02bf4918cd354944eb89c023c3}{Add}}(\textcolor{keywordtype}{int}\ bar,\ \textcolor{keywordtype}{int}\ tick,\ \textcolor{keywordtype}{int}\ quavers,\ \textcolor{keywordtype}{int}\ beats)}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00121}00121\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ this.bar.Add(bar);}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ this.tick.Add(tick);}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ this.quavers.Add(quavers);}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ this.beats.Add(beats);}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00126}00126\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00131}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_ac1b94bf7b40b4ee30533e15c4fc0e207}{00131}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_ac1b94bf7b40b4ee30533e15c4fc0e207}{InitialChange}}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00132}00132\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}MET\_DEF"{}}\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ this.initialQuaver\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ this.initialBeat\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00137}00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00139}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a2c035ef447867dad827e642c1820f0f8}{00139}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a2c035ef447867dad827e642c1820f0f8}{CheckValidity}}()}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00140}00140\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ result\ =\ bar.IndexOf(0)\ ==\ 0;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ result\ \&\&\ tick.IndexOf(0)\ ==\ 0;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ result\ \&\&\ !quavers[0].Equals(\textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ result\ \&\&\ !beats[0].Equals(\textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00146}00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00148}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a7c6936ba52d572d6412a79d503ba5a94}{00148}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a7c6936ba52d572d6412a79d503ba5a94}{Compose}}()}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00149}00149\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ result\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bar.Count\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}MET"{}}\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ 0\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ 0\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ 4\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ 4\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ bar.Count;\ i++)}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}MET"{}}\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ bar[i]\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ tick[i]\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ quavers[i]\ +\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ beats[i]\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00163}00163\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00165}\mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a7bc23c3e23cdb4fa165faaefa6d14ca1}{00165}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_mai_lib_1_1_measure_changes_a7bc23c3e23cdb4fa165faaefa6d14ca1}{Update}}()}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00166}00166\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00167}00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00168}00168\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_measure_changes_8cs_source_l00169}00169\ \}}
+
+\end{DoxyCode}

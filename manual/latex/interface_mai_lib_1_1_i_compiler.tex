@@ -1,0 +1,90 @@
+\hypertarget{interface_mai_lib_1_1_i_compiler}{}\doxysection{Mai\+Lib.\+ICompiler Interface Reference}
+\label{interface_mai_lib_1_1_i_compiler}\index{MaiLib.ICompiler@{MaiLib.ICompiler}}
+
+
+Provide interface for Compilers.  
+
+
+Inheritance diagram for Mai\+Lib.\+ICompiler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{interface_mai_lib_1_1_i_compiler}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_compiler_a281d223725bf982b400b28e9228f8a47}{Take\+Information}} (Dictionary$<$ string, string $>$ information)
+\begin{DoxyCompactList}\small\item\em Intake information to compile data. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{interface_mai_lib_1_1_i_compiler_a89f3a58823c63bd1221ef23ed5b96c99}{Compose}} ()
+\begin{DoxyCompactList}\small\item\em Compose given chart to specific format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{interface_mai_lib_1_1_i_compiler_a45800ce9ae1248a440cba619a5d8b0e6}{Check\+Validity}} ()
+\begin{DoxyCompactList}\small\item\em Check if the chart given is valid to print. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provide interface for Compilers. 
+
+Definition at line \mbox{\hyperlink{_i_compiler_8cs_source_l00006}{6}} of file \mbox{\hyperlink{_i_compiler_8cs_source}{ICompiler.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_compiler_a45800ce9ae1248a440cba619a5d8b0e6}\label{interface_mai_lib_1_1_i_compiler_a45800ce9ae1248a440cba619a5d8b0e6}} 
+\index{MaiLib.ICompiler@{MaiLib.ICompiler}!CheckValidity@{CheckValidity}}
+\index{CheckValidity@{CheckValidity}!MaiLib.ICompiler@{MaiLib.ICompiler}}
+\doxysubsubsection{\texorpdfstring{CheckValidity()}{CheckValidity()}}
+{\footnotesize\ttfamily bool Mai\+Lib.\+ICompiler.\+Check\+Validity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if the chart given is valid to print. 
+
+\begin{DoxyReturn}{Returns}
+True if valid, false otherwise
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_compiler_aec1cd5d4b62f460ff08a755c9d80cd8b}{Mai\+Lib.\+Compiler}}, \mbox{\hyperlink{class_mai_lib_1_1_ma2_af6c726c84c93dddaa2463df262f23fcd}{Mai\+Lib.\+Ma2}}, and \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_a38546ac7bf57a9ad796b8978bf5a45b4}{Mai\+Lib.\+XMaiL}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_compiler_a89f3a58823c63bd1221ef23ed5b96c99}\label{interface_mai_lib_1_1_i_compiler_a89f3a58823c63bd1221ef23ed5b96c99}} 
+\index{MaiLib.ICompiler@{MaiLib.ICompiler}!Compose@{Compose}}
+\index{Compose@{Compose}!MaiLib.ICompiler@{MaiLib.ICompiler}}
+\doxysubsubsection{\texorpdfstring{Compose()}{Compose()}}
+{\footnotesize\ttfamily string Mai\+Lib.\+ICompiler.\+Compose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Compose given chart to specific format. 
+
+\begin{DoxyReturn}{Returns}
+Corresponding chart
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_compiler_a54e1b7c04ec645d3201da1543f5307d2}{Mai\+Lib.\+Compiler}}, \mbox{\hyperlink{class_mai_lib_1_1_ma2_a230dc740665afdf2a1f011abfefb4ba5}{Mai\+Lib.\+Ma2}}, \mbox{\hyperlink{class_mai_lib_1_1_simai_compiler_aaa782911ec0cfbb86a44ed2bdf4e031f}{Mai\+Lib.\+Simai\+Compiler}}, and \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_af55039abe693e63b35b69f20717f0917}{Mai\+Lib.\+XMaiL}}.
+
+\mbox{\Hypertarget{interface_mai_lib_1_1_i_compiler_a281d223725bf982b400b28e9228f8a47}\label{interface_mai_lib_1_1_i_compiler_a281d223725bf982b400b28e9228f8a47}} 
+\index{MaiLib.ICompiler@{MaiLib.ICompiler}!TakeInformation@{TakeInformation}}
+\index{TakeInformation@{TakeInformation}!MaiLib.ICompiler@{MaiLib.ICompiler}}
+\doxysubsubsection{\texorpdfstring{TakeInformation()}{TakeInformation()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+ICompiler.\+Take\+Information (\begin{DoxyParamCaption}\item[{Dictionary$<$ string, string $>$}]{information }\end{DoxyParamCaption})}
+
+
+
+Intake information to compile data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em information} & Take\+Information to provide\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_compiler_ad4fa15a9fe8bafefa4b5023dd526fa39}{Mai\+Lib.\+Compiler}}.
+
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Neskol/\+Mai\+Lib/\mbox{\hyperlink{_i_compiler_8cs}{ICompiler.\+cs}}\end{DoxyCompactItemize}

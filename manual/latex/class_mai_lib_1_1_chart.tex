@@ -1,0 +1,912 @@
+\hypertarget{class_mai_lib_1_1_chart}{}\doxysection{Mai\+Lib.\+Chart Class Reference}
+\label{class_mai_lib_1_1_chart}\index{MaiLib.Chart@{MaiLib.Chart}}
+
+
+A class holding notes and information to form a chart.  
+
+
+Inheritance diagram for Mai\+Lib.\+Chart\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_mai_lib_1_1_chart}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mai_lib_1_1_chart_ae40f0f7c3204cdf2764de19613e9f2c0}{Chart}} ()
+\begin{DoxyCompactList}\small\item\em Empty constructor. \end{DoxyCompactList}\item 
+abstract bool \mbox{\hyperlink{class_mai_lib_1_1_chart_a24a2ddf0d5764aadfb9ad4dff61ae4ba}{Check\+Validity}} ()
+\begin{DoxyCompactList}\small\item\em Check if this chart is valid. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}{Update}} ()
+\begin{DoxyCompactList}\small\item\em Update properties in Good Brother for exporting. \end{DoxyCompactList}\item 
+abstract string \mbox{\hyperlink{class_mai_lib_1_1_chart_a8721d4107a720b19b2c5545f0edbef01}{Compose}} ()
+\begin{DoxyCompactList}\small\item\em Compose chart in appropriate result. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_mai_lib_1_1_chart_ab0c006dc1841c80fe7cda829a9f86af4}{Check\+Slide\+Start}} ()
+\begin{DoxyCompactList}\small\item\em Check if all of the slide starts were in the notes. \end{DoxyCompactList}\item 
+abstract string \mbox{\hyperlink{class_mai_lib_1_1_chart_a812c2d3fafeb12a1eac8f9d2f74a533d}{Compose}} (\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} bpm, \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} measure)
+\begin{DoxyCompactList}\small\item\em Override and compose with given arrays. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_mai_lib_1_1_chart_a71d7a0e92f11e27ae3645966df9a9ce0}{Take\+Information}} (Dictionary$<$ string, string $>$ information)
+\begin{DoxyCompactList}\small\item\em Take in and replace the current information. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}{Get\+Time\+Stamp}} (int bar, int tick)
+\begin{DoxyCompactList}\small\item\em Get appropriate time stamp of given tick. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_mai_lib_1_1_chart_a387b82b715f80cb22fe332134dfd5d57}{Get\+Time\+Stamp}} (int overall\+Tick)
+\begin{DoxyCompactList}\small\item\em Give time stamp given overall tick. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}{Get\+BPMBy\+Tick}} (int overall\+Tick)
+\begin{DoxyCompactList}\small\item\em Return the BPM at certain tick. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_mai_lib_1_1_chart_adb762e3e3097e5970438fab7147d2928}{Has\+BPMChange\+In\+Between}} (int start\+Tick, int end\+Tick)
+\begin{DoxyCompactList}\small\item\em Determine if there are BPM change in between ticks. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_mai_lib_1_1_chart_a6190d29123e5766dc3e92ced077832cd}{Shift\+By\+Offset}} (int overall\+Tick)
+\begin{DoxyCompactList}\small\item\em Shift the chart notes by defined overall tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_mai_lib_1_1_chart_a3430a13901df368d8235aea76793e17e}{Shift\+By\+Offset}} (int bar, int tick)
+\begin{DoxyCompactList}\small\item\em Shift the chart notes by defined overall tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_mai_lib_1_1_chart_ab51aa728afccb1a2af2f285f38b4a64d}{Rotate\+Notes}} (string method)
+\begin{DoxyCompactList}\small\item\em Rotate the notes by specified method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a9124e4135182c4c2f5ade3ebe14e512c}{Update}} ()
+\begin{DoxyCompactList}\small\item\em Updates all information. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_ab377ec3aa9607b5e63ef2d986fdf45bb}{Check\+Validity}} ()
+\begin{DoxyCompactList}\small\item\em Check if this chart is valid. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a60914b01b3ff92fb490a30fa1f8388e2}{Compose}} ()
+\begin{DoxyCompactList}\small\item\em Export this Good Brother. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a0bbf3f61adb0f8c200e717671a96f2b6}{Shift\+By\+Offset}} (int overall\+Tick)
+\begin{DoxyCompactList}\small\item\em Shift the chart notes by defined overall tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_ad0da4fb4c8554c0e07291ca1b028329d}{Shift\+By\+Offset}} (int bar, int tick)
+\begin{DoxyCompactList}\small\item\em Shift the chart notes by defined overall tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_af091191ffbc4fae800197964e0f7a3c0}{Rotate\+Notes}} (string method)
+\begin{DoxyCompactList}\small\item\em Rotate the notes by specified method. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a300fae8a8444a5314dc8eab652d0fd81}{Get\+Time\+Stamp}} (int bar, int tick)
+\begin{DoxyCompactList}\small\item\em Get appropriate time stamp of given tick. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_mai_lib_1_1_chart_a2d6be14511650d8e2c51b0101288797c}{Calculate\+Least\+Measure}} (List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$ bar)
+\begin{DoxyCompactList}\small\item\em Return the least none 0 measure of bar. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}{Real\+Note\+Number}} (List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$ \mbox{\hyperlink{namespace_mai_lib_adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653}{Bar}})
+\begin{DoxyCompactList}\small\item\em Return note number except Rest, BPM and Measure. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_mai_lib_1_1_chart_a3e92802706592214749d7d77d0594106}{Contain\+Notes}} (List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$ \mbox{\hyperlink{namespace_mai_lib_adb5e6f6beeec05fe18aebc928e2f1c21addc35f88fa71b6ef142ae61f35364653}{Bar}})
+\begin{DoxyCompactList}\small\item\em Judges if this bar contains notes. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{class_mai_lib_1_1_chart_afce9f50e60b35092a955953e87aac8ae}{Calculate\+Quaver}} (int length)
+\begin{DoxyCompactList}\small\item\em Generate appropriate length for hold and slide. \end{DoxyCompactList}\item 
+static List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$ \mbox{\hyperlink{class_mai_lib_1_1_chart_ae4db3ec85fdfa9993a3931c838e44967}{Finish\+Bar}} (List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$ bar, List$<$ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}} $>$ bpm\+Changes, int bar\+Number, int minimal\+Quaver)
+\begin{DoxyCompactList}\small\item\em Finish Bar writing byu adding specific rest note in between. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}{GCD}} (int a, int b)
+\begin{DoxyCompactList}\small\item\em Return GCD of A and B. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_mai_lib_1_1_chart_a9801eed737a6546794f7585eff838563}{Is\+Prime}} (int number)
+\begin{DoxyCompactList}\small\item\em Return if this is a prime (1 counts) \end{DoxyCompactList}\item 
+static double \mbox{\hyperlink{class_mai_lib_1_1_chart_a045524af8a9e0c8d28e67c1c75c2463a}{Get\+Time\+Stamp}} (\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} bpm\+Changes, int overall\+Tick)
+\begin{DoxyCompactList}\small\item\em Give time stamp given overall tick. \end{DoxyCompactList}\item 
+static double \mbox{\hyperlink{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}{Get\+BPMTime\+Unit}} (double bpm)
+\begin{DoxyCompactList}\small\item\em Return BPM tick unit of given bpm. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_mai_lib_1_1_chart_a74f8d7936f2d7264ec320ba292a5375f}{Get\+Note\+Detail}} (\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} bpm\+Changes, \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} in\+Take)
+\begin{DoxyCompactList}\small\item\em For debug use\+: print out the note\textquotesingle{}s time stamp in given bpm changes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$ \mbox{\hyperlink{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}{Notes}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Notes. \end{DoxyCompactList}\item 
+List$<$ List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$ $>$ \mbox{\hyperlink{class_mai_lib_1_1_chart_a7ebf2ca619175ab423cc7f28f48b6eb1}{Stored\+Chart}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Returns this.\+Chart. aka List of bars. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} \mbox{\hyperlink{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}{BPMChanges}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to BPM Changes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} \mbox{\hyperlink{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}{Measure\+Changes}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Measure Changes. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_abe8c93962fc19004d449d9e7c3ae922b}{Tap\+Number}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Tap Number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_adb370295002d3ccb69166835da9cf15e}{Break\+Number}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Break Number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_a0c38f0821fa17e71241b1eb9cc820ea1}{Hold\+Number}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Hold Number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_a61431b59f9cb028c07150e071848a960}{Slide\+Number}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Slide Number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_a90f3f25ed181d5c4aa17c461c6b78923}{Touch\+Number}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Touch Number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_a3a3b6c560ec65a27b1a4f5a1dd6e9fb9}{Tho\+Number}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Touch Hold Number. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_a2b2fdda4926a0d0dd8fd7285fdbf0510}{Total\+Note\+Number}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to the total note number. \end{DoxyCompactList}\item 
+int\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{class_mai_lib_1_1_chart_a88ec62135bd8b4c74a0e41a62bb81a5e}{Unit\+Score}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to Unit Score. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_a7739f094aa7c4dc178e77719dcd3617e}{Achievement}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access to theoretical Achievement. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_a24bc12c7a3a865fffec0f84379bad3de}{Total\+Delay}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Return the total delayed value of this Chart. \end{DoxyCompactList}\item 
+Dictionary$<$ string, string $>$ \mbox{\hyperlink{class_mai_lib_1_1_chart_a6f19b3e20979061bb5a1121e8530028b}{Information}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Return Information. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_mai_lib_1_1_chart_a68a3904b9cf4f7ded0ea1fa1c6c8a40b}{Is\+DXChart}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}? \mbox{\hyperlink{class_mai_lib_1_1_chart_a5b97aabb984691057352038dd6df8770}{First\+Note}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\item 
+int \mbox{\hyperlink{class_mai_lib_1_1_chart_a04c1336727a09012958a449fd2e31416}{Definition}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Access the definition of this chart, default by 384. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class holding notes and information to form a chart. 
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_ae40f0f7c3204cdf2764de19613e9f2c0}\label{class_mai_lib_1_1_chart_ae40f0f7c3204cdf2764de19613e9f2c0}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!Chart@{Chart}}
+\index{Chart@{Chart}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{Chart()}{Chart()}}
+{\footnotesize\ttfamily Mai\+Lib.\+Chart.\+Chart (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Empty constructor. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00343}{343}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a2d6be14511650d8e2c51b0101288797c}\label{class_mai_lib_1_1_chart_a2d6be14511650d8e2c51b0101288797c}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!CalculateLeastMeasure@{CalculateLeastMeasure}}
+\index{CalculateLeastMeasure@{CalculateLeastMeasure}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{CalculateLeastMeasure()}{CalculateLeastMeasure()}}
+{\footnotesize\ttfamily static int Mai\+Lib.\+Chart.\+Calculate\+Least\+Measure (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$}]{bar }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Return the least none 0 measure of bar. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bar} & bar to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List none 0 measure
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00603}{603}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_afce9f50e60b35092a955953e87aac8ae}\label{class_mai_lib_1_1_chart_afce9f50e60b35092a955953e87aac8ae}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!CalculateQuaver@{CalculateQuaver}}
+\index{CalculateQuaver@{CalculateQuaver}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{CalculateQuaver()}{CalculateQuaver()}}
+{\footnotesize\ttfamily static int Mai\+Lib.\+Chart.\+Calculate\+Quaver (\begin{DoxyParamCaption}\item[{int}]{length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Generate appropriate length for hold and slide. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em length} & Last Time\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{[}Definition\+:Length\mbox{]}=\mbox{[}Quaver\+:Beat\mbox{]}
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00669}{669}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_ab0c006dc1841c80fe7cda829a9f86af4}\label{class_mai_lib_1_1_chart_ab0c006dc1841c80fe7cda829a9f86af4}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!CheckSlideStart@{CheckSlideStart}}
+\index{CheckSlideStart@{CheckSlideStart}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{CheckSlideStart()}{CheckSlideStart()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+Chart.\+Check\+Slide\+Start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if all of the slide starts were in the notes. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00561}{561}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a24a2ddf0d5764aadfb9ad4dff61ae4ba}\label{class_mai_lib_1_1_chart_a24a2ddf0d5764aadfb9ad4dff61ae4ba}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!CheckValidity@{CheckValidity}}
+\index{CheckValidity@{CheckValidity}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{CheckValidity()}{CheckValidity()}}
+{\footnotesize\ttfamily abstract bool Mai\+Lib.\+Chart.\+Check\+Validity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Check if this chart is valid. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_ab377ec3aa9607b5e63ef2d986fdf45bb}{Mai\+Lib.\+IChart}}.
+
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_ma2_af6c726c84c93dddaa2463df262f23fcd}{Mai\+Lib.\+Ma2}}, \mbox{\hyperlink{class_mai_lib_1_1_simai_abd7fc5db57bd6768c4b8b85620293b7c}{Mai\+Lib.\+Simai}}, and \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_a38546ac7bf57a9ad796b8978bf5a45b4}{Mai\+Lib.\+XMaiL}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a8721d4107a720b19b2c5545f0edbef01}\label{class_mai_lib_1_1_chart_a8721d4107a720b19b2c5545f0edbef01}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!Compose@{Compose}}
+\index{Compose@{Compose}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{Compose()}{Compose()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily abstract string Mai\+Lib.\+Chart.\+Compose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Compose chart in appropriate result. 
+
+\begin{DoxyReturn}{Returns}
+String of chart compiled
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a60914b01b3ff92fb490a30fa1f8388e2}{Mai\+Lib.\+IChart}}.
+
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_chart_pack_a653d1a1afb90e8343b30a2adfaac3b2b}{Mai\+Lib.\+Chart\+Pack}}, \mbox{\hyperlink{class_mai_lib_1_1_ma2_a230dc740665afdf2a1f011abfefb4ba5}{Mai\+Lib.\+Ma2}}, \mbox{\hyperlink{class_mai_lib_1_1_simai_ad3f9f102b7d484b865e3b9513a5eaae2}{Mai\+Lib.\+Simai}}, and \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_af55039abe693e63b35b69f20717f0917}{Mai\+Lib.\+XMaiL}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a812c2d3fafeb12a1eac8f9d2f74a533d}\label{class_mai_lib_1_1_chart_a812c2d3fafeb12a1eac8f9d2f74a533d}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!Compose@{Compose}}
+\index{Compose@{Compose}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{Compose()}{Compose()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily abstract string Mai\+Lib.\+Chart.\+Compose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}}]{bpm,  }\item[{\mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}}}]{measure }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Override and compose with given arrays. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bpm} & Override BPM array\\
+\hline
+{\em measure} & Override Measure array\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Good Brother with override array
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_mai_lib_1_1_ma2_a9bb8f025715e811b3eacaa56a607c339}{Mai\+Lib.\+Ma2}}, \mbox{\hyperlink{class_mai_lib_1_1_simai_a8038d960496d0e2bd8cea2b9df5358d6}{Mai\+Lib.\+Simai}}, and \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_ab33eb577450cc76124866bd4855259dd}{Mai\+Lib.\+XMaiL}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a3e92802706592214749d7d77d0594106}\label{class_mai_lib_1_1_chart_a3e92802706592214749d7d77d0594106}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!ContainNotes@{ContainNotes}}
+\index{ContainNotes@{ContainNotes}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{ContainNotes()}{ContainNotes()}}
+{\footnotesize\ttfamily static bool Mai\+Lib.\+Chart.\+Contain\+Notes (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$}]{Bar }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Judges if this bar contains notes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Bar} & Bar to analyze on\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if contains, false otherwise
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00654}{654}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_ae4db3ec85fdfa9993a3931c838e44967}\label{class_mai_lib_1_1_chart_ae4db3ec85fdfa9993a3931c838e44967}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!FinishBar@{FinishBar}}
+\index{FinishBar@{FinishBar}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{FinishBar()}{FinishBar()}}
+{\footnotesize\ttfamily static List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$ Mai\+Lib.\+Chart.\+Finish\+Bar (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$}]{bar,  }\item[{List$<$ \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_change}{BPMChange}} $>$}]{bpm\+Changes,  }\item[{int}]{bar\+Number,  }\item[{int}]{minimal\+Quaver }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Finish Bar writing byu adding specific rest note in between. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bar} & Bar to finish with\\
+\hline
+{\em bpm\+Changes} & BPMChange Notes\\
+\hline
+{\em bar\+Number} & Bar number of Bar\\
+\hline
+{\em minimal\+Quaver} & Minimal interval calculated from bar\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Finished bar
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00687}{687}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}\label{class_mai_lib_1_1_chart_afb0d825c838c1ae16a1fe08d38cabd46}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!GCD@{GCD}}
+\index{GCD@{GCD}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{GCD()}{GCD()}}
+{\footnotesize\ttfamily static int Mai\+Lib.\+Chart.\+GCD (\begin{DoxyParamCaption}\item[{int}]{a,  }\item[{int}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Return GCD of A and B. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & A\\
+\hline
+{\em b} & B\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+GCD of A and B
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00815}{815}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}\label{class_mai_lib_1_1_chart_a46dbd5ab73d9114bbe0e415a9a8be2b1}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!GetBPMByTick@{GetBPMByTick}}
+\index{GetBPMByTick@{GetBPMByTick}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{GetBPMByTick()}{GetBPMByTick()}}
+{\footnotesize\ttfamily double Mai\+Lib.\+Chart.\+Get\+BPMBy\+Tick (\begin{DoxyParamCaption}\item[{int}]{overall\+Tick }\end{DoxyParamCaption})}
+
+
+
+Return the BPM at certain tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em overall\+Tick} & Tick to specify\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+BPM at that tick
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00997}{997}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}\label{class_mai_lib_1_1_chart_afd6070cce9947d515ba3c1ff4b8bc754}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!GetBPMTimeUnit@{GetBPMTimeUnit}}
+\index{GetBPMTimeUnit@{GetBPMTimeUnit}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{GetBPMTimeUnit()}{GetBPMTimeUnit()}}
+{\footnotesize\ttfamily static double Mai\+Lib.\+Chart.\+Get\+BPMTime\+Unit (\begin{DoxyParamCaption}\item[{double}]{bpm }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Return BPM tick unit of given bpm. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bpm} & BPM to calculate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tick Unit of BPM
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00966}{966}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a74f8d7936f2d7264ec320ba292a5375f}\label{class_mai_lib_1_1_chart_a74f8d7936f2d7264ec320ba292a5375f}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!GetNoteDetail@{GetNoteDetail}}
+\index{GetNoteDetail@{GetNoteDetail}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{GetNoteDetail()}{GetNoteDetail()}}
+{\footnotesize\ttfamily static string Mai\+Lib.\+Chart.\+Get\+Note\+Detail (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}}]{bpm\+Changes,  }\item[{\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}}]{in\+Take }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+For debug use\+: print out the note\textquotesingle{}s time stamp in given bpm changes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bpm\+Changes} & The list of BPMChanges\\
+\hline
+{\em in\+Take} & The Note to test\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String of result, consists tick time stamp, wait time stamp and last time stamp
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00978}{978}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a045524af8a9e0c8d28e67c1c75c2463a}\label{class_mai_lib_1_1_chart_a045524af8a9e0c8d28e67c1c75c2463a}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!GetTimeStamp@{GetTimeStamp}}
+\index{GetTimeStamp@{GetTimeStamp}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{GetTimeStamp()}{GetTimeStamp()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily static double Mai\+Lib.\+Chart.\+Get\+Time\+Stamp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}}}]{bpm\+Changes,  }\item[{int}]{overall\+Tick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Give time stamp given overall tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em overall\+Tick} & Note.\+Bar$\ast$384+\+Note.Tick\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Appropriate time stamp in seconds
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00930}{930}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}\label{class_mai_lib_1_1_chart_a97e094b052c92767d6f9e3e6c9e22a99}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!GetTimeStamp@{GetTimeStamp}}
+\index{GetTimeStamp@{GetTimeStamp}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{GetTimeStamp()}{GetTimeStamp()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily double Mai\+Lib.\+Chart.\+Get\+Time\+Stamp (\begin{DoxyParamCaption}\item[{int}]{bar,  }\item[{int}]{tick }\end{DoxyParamCaption})}
+
+
+
+Get appropriate time stamp of given tick. 
+
+\begin{DoxyReturn}{Returns}
+Time stamp of bar and note
+\end{DoxyReturn}
+$<$requires$>$this.\+bpm\+Changes!=null$<$/requires$>$ 
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a300fae8a8444a5314dc8eab652d0fd81}{Mai\+Lib.\+IChart}}.
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00852}{852}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a387b82b715f80cb22fe332134dfd5d57}\label{class_mai_lib_1_1_chart_a387b82b715f80cb22fe332134dfd5d57}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!GetTimeStamp@{GetTimeStamp}}
+\index{GetTimeStamp@{GetTimeStamp}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{GetTimeStamp()}{GetTimeStamp()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily double Mai\+Lib.\+Chart.\+Get\+Time\+Stamp (\begin{DoxyParamCaption}\item[{int}]{overall\+Tick }\end{DoxyParamCaption})}
+
+
+
+Give time stamp given overall tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em overall\+Tick} & Note.\+Bar$\ast$384+\+Note.Tick\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Appropriate time stamp in seconds
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00889}{889}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_adb762e3e3097e5970438fab7147d2928}\label{class_mai_lib_1_1_chart_adb762e3e3097e5970438fab7147d2928}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!HasBPMChangeInBetween@{HasBPMChangeInBetween}}
+\index{HasBPMChangeInBetween@{HasBPMChangeInBetween}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{HasBPMChangeInBetween()}{HasBPMChangeInBetween()}}
+{\footnotesize\ttfamily bool Mai\+Lib.\+Chart.\+Has\+BPMChange\+In\+Between (\begin{DoxyParamCaption}\item[{int}]{start\+Tick,  }\item[{int}]{end\+Tick }\end{DoxyParamCaption})}
+
+
+
+Determine if there are BPM change in between ticks. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Tick} & Tick to start with\\
+\hline
+{\em end\+Tick} & Tick to end with\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l01022}{1022}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a9801eed737a6546794f7585eff838563}\label{class_mai_lib_1_1_chart_a9801eed737a6546794f7585eff838563}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!IsPrime@{IsPrime}}
+\index{IsPrime@{IsPrime}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{IsPrime()}{IsPrime()}}
+{\footnotesize\ttfamily static bool Mai\+Lib.\+Chart.\+Is\+Prime (\begin{DoxyParamCaption}\item[{int}]{number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Return if this is a prime (1 counts) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em number} & Number to inspect\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if is prime, false otherwise
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00825}{825}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}\label{class_mai_lib_1_1_chart_a2be24869fba6508efab7920d32831653}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!RealNoteNumber@{RealNoteNumber}}
+\index{RealNoteNumber@{RealNoteNumber}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{RealNoteNumber()}{RealNoteNumber()}}
+{\footnotesize\ttfamily static int Mai\+Lib.\+Chart.\+Real\+Note\+Number (\begin{DoxyParamCaption}\item[{List$<$ \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}} $>$}]{Bar }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Return note number except Rest, BPM and Measure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Bar} & bar of note to take in\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00636}{636}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_ab51aa728afccb1a2af2f285f38b4a64d}\label{class_mai_lib_1_1_chart_ab51aa728afccb1a2af2f285f38b4a64d}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!RotateNotes@{RotateNotes}}
+\index{RotateNotes@{RotateNotes}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{RotateNotes()}{RotateNotes()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+Chart.\+Rotate\+Notes (\begin{DoxyParamCaption}\item[{string}]{method }\end{DoxyParamCaption})}
+
+
+
+Rotate the notes by specified method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em method} & Clockwise90, Clockwise 180, Counterclockwise90, Counterclockwise 180, Up\+Side\+Down, Left\+To\+Right\\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_af091191ffbc4fae800197964e0f7a3c0}{Mai\+Lib.\+IChart}}.
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l01114}{1114}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a3430a13901df368d8235aea76793e17e}\label{class_mai_lib_1_1_chart_a3430a13901df368d8235aea76793e17e}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!ShiftByOffset@{ShiftByOffset}}
+\index{ShiftByOffset@{ShiftByOffset}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{ShiftByOffset()}{ShiftByOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Mai\+Lib.\+Chart.\+Shift\+By\+Offset (\begin{DoxyParamCaption}\item[{int}]{bar,  }\item[{int}]{tick }\end{DoxyParamCaption})}
+
+
+
+Shift the chart notes by defined overall tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bar} & Bar to add for offset\\
+\hline
+{\em tick} & Tick to add for offset\\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_ad0da4fb4c8554c0e07291ca1b028329d}{Mai\+Lib.\+IChart}}.
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l01108}{1108}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a6190d29123e5766dc3e92ced077832cd}\label{class_mai_lib_1_1_chart_a6190d29123e5766dc3e92ced077832cd}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!ShiftByOffset@{ShiftByOffset}}
+\index{ShiftByOffset@{ShiftByOffset}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{ShiftByOffset()}{ShiftByOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Mai\+Lib.\+Chart.\+Shift\+By\+Offset (\begin{DoxyParamCaption}\item[{int}]{overall\+Tick }\end{DoxyParamCaption})}
+
+
+
+Shift the chart notes by defined overall tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em overall\+Tick} & Tick to add for offset\\
+\hline
+\end{DoxyParams}
+This method is not designed with detecting overall\+Tick\+Overflow!
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a0bbf3f61adb0f8c200e717671a96f2b6}{Mai\+Lib.\+IChart}}.
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l01037}{1037}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a71d7a0e92f11e27ae3645966df9a9ce0}\label{class_mai_lib_1_1_chart_a71d7a0e92f11e27ae3645966df9a9ce0}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!TakeInformation@{TakeInformation}}
+\index{TakeInformation@{TakeInformation}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{TakeInformation()}{TakeInformation()}}
+{\footnotesize\ttfamily void Mai\+Lib.\+Chart.\+Take\+Information (\begin{DoxyParamCaption}\item[{Dictionary$<$ string, string $>$}]{information }\end{DoxyParamCaption})}
+
+
+
+Take in and replace the current information. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em information} & Dictionary containing information needed\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00844}{844}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}\label{class_mai_lib_1_1_chart_a7cb4b824ded6941348dd021445096503}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!Update@{Update}}
+\index{Update@{Update}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily virtual void Mai\+Lib.\+Chart.\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Update properties in Good Brother for exporting. 
+
+
+
+Implements \mbox{\hyperlink{interface_mai_lib_1_1_i_chart_a9124e4135182c4c2f5ade3ebe14e512c}{Mai\+Lib.\+IChart}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{class_mai_lib_1_1_x_mai_l_a40fcea53c56aeb06566e6875813a9c17}{Mai\+Lib.\+XMaiL}}.
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00359}{359}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a7739f094aa7c4dc178e77719dcd3617e}\label{class_mai_lib_1_1_chart_a7739f094aa7c4dc178e77719dcd3617e}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!Achievement@{Achievement}}
+\index{Achievement@{Achievement}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{Achievement}{Achievement}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Achievement\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to theoretical Achievement. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00277}{277}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}\label{class_mai_lib_1_1_chart_a214f4fbd3255e38722b79c826f0a6f6f}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!BPMChanges@{BPMChanges}}
+\index{BPMChanges@{BPMChanges}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{BPMChanges}{BPMChanges}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_b_p_m_changes}{BPMChanges}} Mai\+Lib.\+Chart.\+BPMChanges\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to BPM Changes. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00138}{138}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_adb370295002d3ccb69166835da9cf15e}\label{class_mai_lib_1_1_chart_adb370295002d3ccb69166835da9cf15e}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!BreakNumber@{BreakNumber}}
+\index{BreakNumber@{BreakNumber}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{BreakNumber}{BreakNumber}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Break\+Number\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to Break Number. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00183}{183}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a04c1336727a09012958a449fd2e31416}\label{class_mai_lib_1_1_chart_a04c1336727a09012958a449fd2e31416}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!Definition@{Definition}}
+\index{Definition@{Definition}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{Definition}{Definition}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Definition\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access the definition of this chart, default by 384. 
+
+this.\+chart\+Definition
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00337}{337}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a5b97aabb984691057352038dd6df8770}\label{class_mai_lib_1_1_chart_a5b97aabb984691057352038dd6df8770}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!FirstNote@{FirstNote}}
+\index{FirstNote@{FirstNote}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{FirstNote}{FirstNote}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}? Mai\+Lib.\+Chart.\+First\+Note\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00327}{327}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a0c38f0821fa17e71241b1eb9cc820ea1}\label{class_mai_lib_1_1_chart_a0c38f0821fa17e71241b1eb9cc820ea1}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!HoldNumber@{HoldNumber}}
+\index{HoldNumber@{HoldNumber}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{HoldNumber}{HoldNumber}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Hold\+Number\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to Hold Number. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00198}{198}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a6f19b3e20979061bb5a1121e8530028b}\label{class_mai_lib_1_1_chart_a6f19b3e20979061bb5a1121e8530028b}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!Information@{Information}}
+\index{Information@{Information}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{Information}{Information}}
+{\footnotesize\ttfamily Dictionary$<$string, string$>$ Mai\+Lib.\+Chart.\+Information\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Return Information. 
+
+this.\+Information
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00309}{309}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a68a3904b9cf4f7ded0ea1fa1c6c8a40b}\label{class_mai_lib_1_1_chart_a68a3904b9cf4f7ded0ea1fa1c6c8a40b}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!IsDXChart@{IsDXChart}}
+\index{IsDXChart@{IsDXChart}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{IsDXChart}{IsDXChart}}
+{\footnotesize\ttfamily bool Mai\+Lib.\+Chart.\+Is\+DXChart\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00321}{321}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}\label{class_mai_lib_1_1_chart_ac5aa7741c3bbc8b765ee1f72df64c200}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!MeasureChanges@{MeasureChanges}}
+\index{MeasureChanges@{MeasureChanges}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{MeasureChanges}{MeasureChanges}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mai_lib_1_1_measure_changes}{Measure\+Changes}} Mai\+Lib.\+Chart.\+Measure\+Changes\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to Measure Changes. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00153}{153}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}\label{class_mai_lib_1_1_chart_a097673d87437b40fa1e537aee31f5027}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!Notes@{Notes}}
+\index{Notes@{Notes}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{Notes}{Notes}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}$>$ Mai\+Lib.\+Chart.\+Notes\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to Notes. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00107}{107}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a61431b59f9cb028c07150e071848a960}\label{class_mai_lib_1_1_chart_a61431b59f9cb028c07150e071848a960}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!SlideNumber@{SlideNumber}}
+\index{SlideNumber@{SlideNumber}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{SlideNumber}{SlideNumber}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Slide\+Number\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to Slide Number. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00213}{213}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a7ebf2ca619175ab423cc7f28f48b6eb1}\label{class_mai_lib_1_1_chart_a7ebf2ca619175ab423cc7f28f48b6eb1}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!StoredChart@{StoredChart}}
+\index{StoredChart@{StoredChart}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{StoredChart}{StoredChart}}
+{\footnotesize\ttfamily List$<$List$<$\mbox{\hyperlink{class_mai_lib_1_1_note}{Note}}$>$ $>$ Mai\+Lib.\+Chart.\+Stored\+Chart\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Returns this.\+Chart. aka List of bars. 
+
+this.\+Chart
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00123}{123}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_abe8c93962fc19004d449d9e7c3ae922b}\label{class_mai_lib_1_1_chart_abe8c93962fc19004d449d9e7c3ae922b}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!TapNumber@{TapNumber}}
+\index{TapNumber@{TapNumber}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{TapNumber}{TapNumber}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Tap\+Number\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to Tap Number. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00168}{168}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a3a3b6c560ec65a27b1a4f5a1dd6e9fb9}\label{class_mai_lib_1_1_chart_a3a3b6c560ec65a27b1a4f5a1dd6e9fb9}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!ThoNumber@{ThoNumber}}
+\index{ThoNumber@{ThoNumber}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{ThoNumber}{ThoNumber}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Tho\+Number\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to Touch Hold Number. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00243}{243}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a24bc12c7a3a865fffec0f84379bad3de}\label{class_mai_lib_1_1_chart_a24bc12c7a3a865fffec0f84379bad3de}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!TotalDelay@{TotalDelay}}
+\index{TotalDelay@{TotalDelay}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{TotalDelay}{TotalDelay}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Total\+Delay\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Return the total delayed value of this Chart. 
+
+this.\+Total\+Delayed\+Value
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00293}{293}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a2b2fdda4926a0d0dd8fd7285fdbf0510}\label{class_mai_lib_1_1_chart_a2b2fdda4926a0d0dd8fd7285fdbf0510}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!TotalNoteNumber@{TotalNoteNumber}}
+\index{TotalNoteNumber@{TotalNoteNumber}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{TotalNoteNumber}{TotalNoteNumber}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Total\+Note\+Number\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Access to the total note number. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00258}{258}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a90f3f25ed181d5c4aa17c461c6b78923}\label{class_mai_lib_1_1_chart_a90f3f25ed181d5c4aa17c461c6b78923}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!TouchNumber@{TouchNumber}}
+\index{TouchNumber@{TouchNumber}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{TouchNumber}{TouchNumber}}
+{\footnotesize\ttfamily int Mai\+Lib.\+Chart.\+Touch\+Number\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Access to Touch Number. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00228}{228}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+\mbox{\Hypertarget{class_mai_lib_1_1_chart_a88ec62135bd8b4c74a0e41a62bb81a5e}\label{class_mai_lib_1_1_chart_a88ec62135bd8b4c74a0e41a62bb81a5e}} 
+\index{MaiLib.Chart@{MaiLib.Chart}!UnitScore@{UnitScore}}
+\index{UnitScore@{UnitScore}!MaiLib.Chart@{MaiLib.Chart}}
+\doxysubsubsection{\texorpdfstring{UnitScore}{UnitScore}}
+{\footnotesize\ttfamily int \mbox{[}$\,$\mbox{]} Mai\+Lib.\+Chart.\+Unit\+Score\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Access to Unit Score. 
+
+
+
+Definition at line \mbox{\hyperlink{_chart_8cs_source_l00266}{266}} of file \mbox{\hyperlink{_chart_8cs_source}{Chart.\+cs}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Neskol/\+Mai\+Lib/\mbox{\hyperlink{_chart_8cs}{Chart.\+cs}}\end{DoxyCompactItemize}

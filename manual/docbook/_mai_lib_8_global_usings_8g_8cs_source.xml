@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__mai_lib_8_global_usings_8g_8cs_source" xml:lang="en-US">
+<title>MaiLib.GlobalUsings.g.cs</title>
+<indexterm><primary>Neskol/MaiLib/obj/Debug/net6.0/MaiLib.GlobalUsings.g.cs</primary></indexterm>
+Go to the documentation of this file.<programlisting linenumbering="unnumbered"><anchor xml:id="__mai_lib_8_global_usings_8g_8cs_source_1l00001"/>00001 <emphasis role="comment">//&#32;&lt;auto-generated/&gt;</emphasis>
+<anchor xml:id="__mai_lib_8_global_usings_8g_8cs_source_1l00002"/>00002 global&#32;<emphasis role="keyword">using&#32;</emphasis>global::System;
+<anchor xml:id="__mai_lib_8_global_usings_8g_8cs_source_1l00003"/>00003 global&#32;<emphasis role="keyword">using&#32;</emphasis>global::System.Collections.Generic;
+<anchor xml:id="__mai_lib_8_global_usings_8g_8cs_source_1l00004"/>00004 global&#32;<emphasis role="keyword">using&#32;</emphasis>global::System.IO;
+<anchor xml:id="__mai_lib_8_global_usings_8g_8cs_source_1l00005"/>00005 global&#32;<emphasis role="keyword">using&#32;</emphasis>global::System.Linq;
+<anchor xml:id="__mai_lib_8_global_usings_8g_8cs_source_1l00006"/>00006 global&#32;<emphasis role="keyword">using&#32;</emphasis>global::System.Net.Http;
+<anchor xml:id="__mai_lib_8_global_usings_8g_8cs_source_1l00007"/>00007 global&#32;<emphasis role="keyword">using&#32;</emphasis>global::System.Threading;
+<anchor xml:id="__mai_lib_8_global_usings_8g_8cs_source_1l00008"/>00008 global&#32;<emphasis role="keyword">using&#32;</emphasis>global::System.Threading.Tasks;
+</programlisting></section>

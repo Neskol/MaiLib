@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__ma2_tokenizer_8cs_source" xml:lang="en-US">
+<title>Ma2Tokenizer.cs</title>
+<indexterm><primary>Neskol/MaiLib/Ma2Tokenizer.cs</primary></indexterm>
+Go to the documentation of this file.<programlisting linenumbering="unnumbered"><anchor xml:id="__ma2_tokenizer_8cs_source_1l00001"/>00001 <emphasis role="keyword">namespace&#32;</emphasis><link linkend="_namespace_mai_lib">MaiLib</link>
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00002"/>00002 {
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00006"/><link linkend="_class_mai_lib_1_1_ma2_tokenizer">00006</link> &#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keyword">class&#32;</emphasis><link linkend="_class_mai_lib_1_1_ma2_tokenizer">Ma2Tokenizer</link>&#32;:&#32;<link linkend="_interface_mai_lib_1_1_i_tokenizer">ITokenizer</link>
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00007"/>00007 &#32;&#32;&#32;&#32;{
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00011"/><link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a96fff7b26802321752aa51f5e5167ca7">00011</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a96fff7b26802321752aa51f5e5167ca7">Ma2Tokenizer</link>()
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00012"/>00012 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00013"/>00013 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00014"/>00014 
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00015"/><link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a778fd03506c7360d3adcde7bb0384c18">00015</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>[]&#32;<link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a778fd03506c7360d3adcde7bb0384c18">Tokens</link>(<emphasis role="keywordtype">string</emphasis>&#32;location)
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00016"/>00016 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00017"/>00017 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">string</emphasis>[]&#32;result&#32;=&#32;System.IO.File.ReadAllLines(location);
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00018"/>00018 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00019"/>00019 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00020"/>00020 
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00021"/><link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a114800b90275656150560c3a8bea6d5e">00021</link> &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>&#32;<emphasis role="keywordtype">string</emphasis>[]&#32;<link linkend="_class_mai_lib_1_1_ma2_tokenizer_1a114800b90275656150560c3a8bea6d5e">TokensFromText</link>(<emphasis role="keywordtype">string</emphasis>&#32;text)
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00022"/>00022 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00023"/>00023 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">string</emphasis>[]&#32;result&#32;=&#32;text.Split(<emphasis role="stringliteral">&quot;\n&quot;</emphasis>);
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00024"/>00024 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00025"/>00025 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00026"/>00026 &#32;&#32;&#32;&#32;}
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00027"/>00027 }
+<anchor xml:id="__ma2_tokenizer_8cs_source_1l00028"/>00028 
+</programlisting></section>

@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.6" xml:lang="en-US">
+  <compounddef id="class_mai_lib_1_1_simai_tokenizer" kind="class" language="C#" prot="public">
+    <compoundname>MaiLib::SimaiTokenizer</compoundname>
+    <basecompoundref refid="interface_mai_lib_1_1_i_tokenizer" prot="public" virt="non-virtual">MaiLib.ITokenizer</basecompoundref>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_mai_lib_1_1_simai_tokenizer_1aa66ed84d3d534e0c2ecdf1bf01a2f78e" prot="private" static="no" mutable="no">
+        <type>Dictionary&lt; string, string[]&gt;</type>
+        <definition>Dictionary&lt;string,string[]&gt; MaiLib.SimaiTokenizer.chartCandidates</definition>
+        <argsstring></argsstring>
+        <name>chartCandidates</name>
+        <qualifiedname>MaiLib.SimaiTokenizer.chartCandidates</qualifiedname>
+        <briefdescription>
+<para>Stores the candidates of charts. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="16" column="28" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_mai_lib_1_1_simai_tokenizer_1abda6da36c3e5f2f25f9557897dcf22bf" prot="private" static="no" mutable="no">
+        <type><ref refid="class_mai_lib_1_1_track_information" kindref="compound">TrackInformation</ref></type>
+        <definition>TrackInformation MaiLib.SimaiTokenizer.simaiTrackInformation</definition>
+        <argsstring></argsstring>
+        <name>simaiTrackInformation</name>
+        <qualifiedname>MaiLib.SimaiTokenizer.simaiTrackInformation</qualifiedname>
+        <briefdescription>
+<para>Stores the information to read. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="21" column="34" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_mai_lib_1_1_simai_tokenizer_1ab9ed4e016680959cdf01cdeb1b6fd053" prot="public" static="no" readable="no" writable="no" gettable="yes" privategettable="no" protectedgettable="no" settable="no" privatesettable="no" protectedsettable="no">
+        <type>Dictionary&lt; string, string[]&gt;</type>
+        <definition>Dictionary&lt;string, string[]&gt; MaiLib.SimaiTokenizer.ChartCandidates</definition>
+        <argsstring></argsstring>
+        <name>ChartCandidates</name>
+        <qualifiedname>MaiLib.SimaiTokenizer.ChartCandidates</qualifiedname>
+        <briefdescription>
+<para>Access the chart candidates. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="35" column="27" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="36" bodyend="38"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_tokenizer_1a15f73680dbe11eb6cebe24210535fd1e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>MaiLib.SimaiTokenizer.SimaiTokenizer</definition>
+        <argsstring>()</argsstring>
+        <name>SimaiTokenizer</name>
+        <qualifiedname>MaiLib.SimaiTokenizer.SimaiTokenizer</qualifiedname>
+        <briefdescription>
+<para>Constructs a tokenizer. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="26" column="16" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="26" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_tokenizer_1addd70be0acb4f633e8c2dcc4ed3f981d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void MaiLib.SimaiTokenizer.UpdateFromText</definition>
+        <argsstring>(string input)</argsstring>
+        <name>UpdateFromText</name>
+        <qualifiedname>MaiLib.SimaiTokenizer.UpdateFromText</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>input</declname>
+        </param>
+        <briefdescription>
+<para>Update candidates from texts specified. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>input</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Text to be tokenized</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="45" column="21" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="45" bodyend="207"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_tokenizer_1a27341673e00019ef886bd6bba5e0e625" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void MaiLib.SimaiTokenizer.UpdateFromPath</definition>
+        <argsstring>(string path)</argsstring>
+        <name>UpdateFromPath</name>
+        <qualifiedname>MaiLib.SimaiTokenizer.UpdateFromPath</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+<para>Update candidates from texts specified. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>path</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Location of text to be tokenized</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="213" column="21" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="213" bodyend="222"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_tokenizer_1afd239f9eb4e9aebcc0240d5dc795f6fe" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string[]</type>
+        <definition>string[] MaiLib.SimaiTokenizer.Tokens</definition>
+        <argsstring>(string location)</argsstring>
+        <name>Tokens</name>
+        <qualifiedname>MaiLib.SimaiTokenizer.Tokens</qualifiedname>
+        <reimplements refid="interface_mai_lib_1_1_i_tokenizer_1a36ba40088fe7fe4fa4b8401cedeb7643">Tokens</reimplements>
+        <param>
+          <type>string</type>
+          <declname>location</declname>
+        </param>
+        <briefdescription>
+<para>Intake files and return tokens. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>location</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Tokens from file specified</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="224" column="23" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="224" bodyend="235"/>
+      </memberdef>
+      <memberdef kind="function" id="class_mai_lib_1_1_simai_tokenizer_1a324525f0269d16007993214f40298110" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string[]</type>
+        <definition>string[] MaiLib.SimaiTokenizer.TokensFromText</definition>
+        <argsstring>(string text)</argsstring>
+        <name>TokensFromText</name>
+        <qualifiedname>MaiLib.SimaiTokenizer.TokensFromText</qualifiedname>
+        <reimplements refid="interface_mai_lib_1_1_i_tokenizer_1ad87a5402aa6b4e445615967853c80eb1">TokensFromText</reimplements>
+        <param>
+          <type>string</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+<para>Intake files and return tokens. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Tokens from text specified</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="237" column="23" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="237" bodyend="242"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Tokenize input file into tokens that parser can read. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>ITokenizer</label>
+        <link refid="interface_mai_lib_1_1_i_tokenizer"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.SimaiTokenizer</label>
+        <link refid="class_mai_lib_1_1_simai_tokenizer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>ITokenizer</label>
+        <link refid="interface_mai_lib_1_1_i_tokenizer"/>
+      </node>
+      <node id="1">
+        <label>MaiLib.SimaiTokenizer</label>
+        <link refid="class_mai_lib_1_1_simai_tokenizer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="Neskol/MaiLib/SimaiTokenizer.cs" line="11" column="11" bodyfile="Neskol/MaiLib/SimaiTokenizer.cs" bodystart="12" bodyend="243"/>
+    <listofallmembers>
+      <member refid="class_mai_lib_1_1_simai_tokenizer_1aa66ed84d3d534e0c2ecdf1bf01a2f78e" prot="private" virt="non-virtual"><scope>MaiLib::SimaiTokenizer</scope><name>chartCandidates</name></member>
+      <member refid="class_mai_lib_1_1_simai_tokenizer_1ab9ed4e016680959cdf01cdeb1b6fd053" prot="public" virt="non-virtual"><scope>MaiLib::SimaiTokenizer</scope><name>ChartCandidates</name></member>
+      <member refid="class_mai_lib_1_1_simai_tokenizer_1a15f73680dbe11eb6cebe24210535fd1e" prot="public" virt="non-virtual"><scope>MaiLib::SimaiTokenizer</scope><name>SimaiTokenizer</name></member>
+      <member refid="class_mai_lib_1_1_simai_tokenizer_1abda6da36c3e5f2f25f9557897dcf22bf" prot="private" virt="non-virtual"><scope>MaiLib::SimaiTokenizer</scope><name>simaiTrackInformation</name></member>
+      <member refid="class_mai_lib_1_1_simai_tokenizer_1afd239f9eb4e9aebcc0240d5dc795f6fe" prot="public" virt="non-virtual"><scope>MaiLib::SimaiTokenizer</scope><name>Tokens</name></member>
+      <member refid="class_mai_lib_1_1_simai_tokenizer_1a324525f0269d16007993214f40298110" prot="public" virt="non-virtual"><scope>MaiLib::SimaiTokenizer</scope><name>TokensFromText</name></member>
+      <member refid="class_mai_lib_1_1_simai_tokenizer_1a27341673e00019ef886bd6bba5e0e625" prot="public" virt="non-virtual"><scope>MaiLib::SimaiTokenizer</scope><name>UpdateFromPath</name></member>
+      <member refid="class_mai_lib_1_1_simai_tokenizer_1addd70be0acb4f633e8c2dcc4ed3f981d" prot="public" virt="non-virtual"><scope>MaiLib::SimaiTokenizer</scope><name>UpdateFromText</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
