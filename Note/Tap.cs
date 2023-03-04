@@ -19,7 +19,30 @@
         /// Stores enums of accepting tap notes
         /// </summary>
         /// <value></value>
-        private readonly string[] allowedType = { "TAP", "STR", "BRK", "BST", "XTP", "XST", "TTP", "NST", "NSS" };
+        private readonly string[] allowedType = { "TAP", "STR", "BRK", "BST", "XTP", "XST", "TTP", "NST" };
+
+        /// <summary>
+        /// The allowed tap type
+        /// </summary>
+        public enum TapType
+        {
+            /// <summary>
+            /// Normal tap
+            /// </summary>
+            TAP,
+            /// <summary>
+            /// Start of a slide
+            /// </summary>
+            STR,
+            /// <summary>
+            /// Start of a slide but have no consecutive slide following
+            /// </summary>
+            NST,
+            /// <summary>
+            /// Touch Note
+            /// </summary>
+            TTP
+        };
 
         /// <summary>
         /// Empty Constructor Tap Note

@@ -21,6 +21,18 @@
         /// <value></value>
         private readonly string[] allowedType = { "HLD", "XHO", "THO" };
 
+        public enum HoldType
+        {
+            /// <summary>
+            /// Normal Hold
+            /// </summary>
+            HLD,
+            /// <summary>
+            /// Touch Hold
+            /// </summary>
+            THO
+        }
+
         /// <summary>
         /// Construct a Hold Note
         /// </summary>

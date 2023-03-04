@@ -7,6 +7,14 @@
     {
         private readonly string[] allowedType = { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
 
+        public enum SlideType
+        {
+            /// <summary>
+            /// Straight Slide
+            /// </summary>
+            SI_
+        }
+
         /// <summary>
         /// Empty Constructor
         /// </summary>

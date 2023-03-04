@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Reflection.Metadata;
 using System.Resources;
 
 namespace MaiLib
@@ -14,6 +15,26 @@ namespace MaiLib
         /// The note type
         /// </summary>
         private string noteType;
+
+        public enum SpecialState
+        {
+            /// <summary>
+            /// Normal note, nothing special
+            /// </summary>
+            Normal,
+            /// <summary>
+            /// Break note
+            /// </summary>
+            Break,
+            /// <summary>
+            /// EX Note
+            /// </summary>
+            EX,
+            /// <summary>
+            /// EX Break
+            /// </summary>
+            EXBreak
+        }
 
         /// <summary>
         /// The key
