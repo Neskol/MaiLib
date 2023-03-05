@@ -64,11 +64,11 @@ namespace MaiLib
                         || x.Split('\t')[(int)StdParam.Type].Equals("SXR")
                         || x.Split('\t')[(int)StdParam.Type].Equals("SSL")
                         || x.Split('\t')[(int)StdParam.Type].Equals("SSR")
-                        || x.Split('\t')[(int)StdParam.Type].Contains("NM")
-                        || x.Split('\t')[(int)StdParam.Type].Contains("CN")
-                        || x.Split('\t')[(int)StdParam.Type].Contains("BR")
-                        || x.Split('\t')[(int)StdParam.Type].Contains("EX")
-                        || x.Split('\t')[(int)StdParam.Type].Contains("BX");
+                        || (x.Split('\t')[(int)StdParam.Type].Contains("NM") && x.Length == 5)
+                        || (x.Split('\t')[(int)StdParam.Type].Contains("CN") && x.Length == 5)
+                        || (x.Split('\t')[(int)StdParam.Type].Contains("EX") && x.Length == 5)
+                        || (x.Split('\t')[(int)StdParam.Type].Contains("BR") && x.Length == 5)
+                        || (x.Split('\t')[(int)StdParam.Type].Contains("BX") && x.Length == 5);
 
                     if (isBPM_DEF)
                     {
@@ -268,7 +268,7 @@ namespace MaiLib
                             int.Parse(candidate[(int)StdParam.Tick]),
                             candidate[(int)StdParam.Key],
                             int.Parse(candidate[(int)StdParam.WaitTime]));
-            if (bpm>0.0) result.BPM = bpm;
+            if (bpm > 0.0) result.BPM = bpm;
             string specialProperty = "";
             if (candidate[(int)DxTapParam.Type].Length > 3)
             {
