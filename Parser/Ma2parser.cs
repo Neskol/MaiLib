@@ -388,10 +388,12 @@ namespace MaiLib
                     int.Parse(candidate[(int)StdParam.Bar]),
                     int.Parse(candidate[(int)StdParam.Tick]),
                     candidate[(int)StdParam.Key]);
+            string specialProperty = "";
             if (candidate[(int)DxTapParam.Type].Length > 3)
             {
                 specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
                 result.NoteType = result.NoteType.Substring(2);
+
             }
             switch (specialProperty)
             {
