@@ -5,11 +5,15 @@ namespace MaiLib
     /// <summary>
     /// Give enums of parameters of Standard Keys
     /// </summary>
-    public enum StdParam { Type, Bar, Tick, KeyOrParam, WaitTimeOrParam, LastTime, EndKey };
+    public enum StdParam { Type, Bar, Tick, Key, WaitTime, LastTime, EndKey };
     /// <summary>
-    /// Give enums of parameters of Deluxe Keys
+    /// Give enums of parameters of Deluxe Tap/Slide Keys
     /// </summary>
-    public enum DxParam { Type, Bar, Tick, Key, KeyGroupOrLastTime, SpecialEffect, NoteSize };
+    public enum DxTapParam { Type, Bar, Tick, Key, KeyGroup, SpecialEffect, NoteSize };
+    /// <summary>
+    /// Give enums of parameters of Deluxe Hold Keys
+    /// </summary>
+    public enum DxHoldParam { Type, Bar, Tick, Key, LastTime, KeyGroup, SpecialEffect, NoteSize };
     /// <summary>
     /// Parses ma2 file into Ma2 chart format
     /// </summary>
@@ -59,7 +63,12 @@ namespace MaiLib
                         || x.Split('\t')[(int)StdParam.Type].Equals("SXL")
                         || x.Split('\t')[(int)StdParam.Type].Equals("SXR")
                         || x.Split('\t')[(int)StdParam.Type].Equals("SSL")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SSR");
+                        || x.Split('\t')[(int)StdParam.Type].Equals("SSR")
+                        || x.Split('\t')[(int)StdParam.Type].Contains("NM")
+                        || x.Split('\t')[(int)StdParam.Type].Contains("CN")
+                        || x.Split('\t')[(int)StdParam.Type].Contains("BR")
+                        || x.Split('\t')[(int)StdParam.Type].Contains("EX")
+                        || x.Split('\t')[(int)StdParam.Type].Contains("BX");
 
                     if (isBPM_DEF)
                     {
@@ -91,8 +100,8 @@ namespace MaiLib
                         string[] measureCandidate = x.Split('\t');
                         measureChanges.Add(Int32.Parse(measureCandidate[(int)StdParam.Bar]),
                             Int32.Parse(measureCandidate[(int)StdParam.Tick]),
-                            Int32.Parse(measureCandidate[(int)StdParam.KeyOrParam]),
-                            Int32.Parse(measureCandidate[(int)StdParam.WaitTimeOrParam]));
+                            Int32.Parse(measureCandidate[(int)StdParam.Key]),
+                            Int32.Parse(measureCandidate[(int)StdParam.WaitTime]));
                     }
                     else if (isNOTE)
                     {
@@ -138,29 +147,29 @@ namespace MaiLib
         public Note NoteOfToken(string token)
         {
             Note result = new Rest();
-            bool isTap = token.Split('\t')[(int)StdParam.Type].Equals("TAP")
-                || token.Split('\t')[(int)StdParam.Type].Equals("STR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("TTP")
+            bool isTap = token.Split('\t')[(int)StdParam.Type].Contains("TAP")
+                || token.Split('\t')[(int)StdParam.Type].Contains("STR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("TTP")
                 || token.Split('\t')[(int)StdParam.Type].Equals("XTP")
                 || token.Split('\t')[(int)StdParam.Type].Equals("XST")
                 || token.Split('\t')[(int)StdParam.Type].Equals("BRK")
                 || token.Split('\t')[(int)StdParam.Type].Equals("BST");
-            bool isHold = token.Split('\t')[(int)StdParam.Type].Equals("HLD")
+            bool isHold = token.Split('\t')[(int)StdParam.Type].Contains("HLD")
                 || token.Split('\t')[(int)StdParam.Type].Equals("XHO")
-                || token.Split('\t')[(int)StdParam.Type].Equals("THO");
-            bool isSlide = token.Split('\t')[(int)StdParam.Type].Equals("SI_")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SV_")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SF_")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SCL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SCR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SUL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SUR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SLL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SLR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SXL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SXR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SSL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SSR");
+                || token.Split('\t')[(int)StdParam.Type].Contains("THO");
+            bool isSlide = token.Split('\t')[(int)StdParam.Type].Contains("SI_")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SV_")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SF_")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SCL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SCR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SUL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SUR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SLL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SLR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SXL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SXR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SSL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SSR");
             string[] candidate = token.Split('\t');
             int bar = Int32.Parse(candidate[(int)StdParam.Bar]);
             int tick = Int32.Parse(candidate[(int)StdParam.Tick]);
@@ -192,29 +201,29 @@ namespace MaiLib
         public Note NoteOfToken(string token, int bar, int tick, double bpm)
         {
             Note result = new Rest();
-            bool isTap = token.Split('\t')[(int)StdParam.Type].Equals("TAP")
-                || token.Split('\t')[(int)StdParam.Type].Equals("STR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("TTP")
+            bool isTap = token.Split('\t')[(int)StdParam.Type].Contains("TAP")
+                || token.Split('\t')[(int)StdParam.Type].Contains("STR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("TTP")
                 || token.Split('\t')[(int)StdParam.Type].Equals("XTP")
                 || token.Split('\t')[(int)StdParam.Type].Equals("XST")
                 || token.Split('\t')[(int)StdParam.Type].Equals("BRK")
                 || token.Split('\t')[(int)StdParam.Type].Equals("BST");
-            bool isHold = token.Split('\t')[(int)StdParam.Type].Equals("HLD")
+            bool isHold = token.Split('\t')[(int)StdParam.Type].Contains("HLD")
                 || token.Split('\t')[(int)StdParam.Type].Equals("XHO")
-                || token.Split('\t')[(int)StdParam.Type].Equals("THO");
-            bool isSlide = token.Split('\t')[(int)StdParam.Type].Equals("SI_")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SV_")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SF_")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SCL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SCR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SUL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SUR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SLL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SLR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SXL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SXR")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SSL")
-                || token.Split('\t')[(int)StdParam.Type].Equals("SSR");
+                || token.Split('\t')[(int)StdParam.Type].Contains("THO");
+            bool isSlide = token.Split('\t')[(int)StdParam.Type].Contains("SI_")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SV_")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SF_")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SCL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SCR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SUL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SUR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SLL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SLR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SXL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SXR")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SSL")
+                || token.Split('\t')[(int)StdParam.Type].Contains("SSR");
             string[] candidate = token.Split('\t');
             foreach (string x in candidate)
             {
@@ -243,32 +252,47 @@ namespace MaiLib
         {
             Note result = new Rest();
             string[] candidate = token.Split('\t');
-            if (candidate[(int)StdParam.Type].Equals("THO") && candidate.Count() > 7)
+            if (candidate[(int)DxTapParam.Type].Contains("THO") && candidate.Count() > 7) //Basically all THO falls in this line
             {
-                result = new Hold(candidate[(int)StdParam.Type],
+                string noteSize = candidate.Count() > 7 ? candidate[(int)DxHoldParam.NoteSize] : "M1";
+                result = new Hold(candidate[(int)DxHoldParam.Type],
                 bar,
                 tick,
-                candidate[(int)StdParam.KeyOrParam] + candidate[(int)StdParam.LastTime], int.Parse(candidate[(int)DxParam.SpecialEffect]),
-                int.Parse(candidate[(int)StdParam.EndKey]),
-                candidate[7]); //candidate[(int)StdParam.EndKey] is special effect
-            }
-            else if (candidate[(int)StdParam.Type].Equals("THO") && candidate.Count() <= 7)
-            {
-                //Console.ReadLine();
-                result = new Hold(candidate[(int)StdParam.Type],
-                int.Parse(candidate[(int)StdParam.Bar]),
-                int.Parse(candidate[(int)StdParam.Tick]),
-                candidate[(int)StdParam.KeyOrParam] + candidate[(int)StdParam.LastTime], int.Parse(candidate[(int)StdParam.WaitTimeOrParam]),
-                int.Parse(candidate[(int)StdParam.EndKey]),
-                "M1"); //candidate[(int)StdParam.EndKey] is special effect
+                candidate[(int)DxHoldParam.Key] + candidate[(int)DxHoldParam.KeyGroup], int.Parse(candidate[(int)DxHoldParam.LastTime]),
+                int.Parse(candidate[(int)DxHoldParam.SpecialEffect]),
+                noteSize);
             }
             else
                 result = new Hold(candidate[(int)StdParam.Type],
                             int.Parse(candidate[(int)StdParam.Bar]),
                             int.Parse(candidate[(int)StdParam.Tick]),
-                            candidate[(int)StdParam.KeyOrParam],
-                            int.Parse(candidate[(int)StdParam.WaitTimeOrParam]));
-            result.BPM = bpm;
+                            candidate[(int)StdParam.Key],
+                            int.Parse(candidate[(int)StdParam.WaitTime]));
+            if (bpm>0.0) result.BPM = bpm;
+            string specialProperty = "";
+            if (candidate[(int)DxTapParam.Type].Length > 3)
+            {
+                specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
+                result.NoteType = result.NoteType.Substring(2);
+
+            }
+            switch (specialProperty)
+            {
+                case "BR":
+                    result.NoteSpecialState = Note.SpecialState.Break;
+                    break;
+                case "EX":
+                    result.NoteSpecialState = Note.SpecialState.EX;
+                    break;
+                case "BX":
+                    result.NoteSpecialState = Note.SpecialState.BreakEX;
+                    break;
+                case "NM":
+                case "":
+                default:
+                    result.NoteSpecialState = Note.SpecialState.Normal;
+                    break;
+            }
             return (Hold)result;
         }
 
@@ -277,55 +301,53 @@ namespace MaiLib
             string[] candidate = token.Split('\t');
             int bar = int.Parse(candidate[(int)StdParam.Bar]);
             int tick = int.Parse(candidate[(int)StdParam.Tick]);
-            if (candidate[(int)StdParam.Type].Equals("THO") && candidate.Count() > 7)
-            {
-                return new Hold(candidate[(int)StdParam.Type],
-                bar,
-                tick,
-                candidate[(int)StdParam.KeyOrParam] + candidate[(int)StdParam.LastTime], int.Parse(candidate[(int)StdParam.WaitTimeOrParam]),
-                int.Parse(candidate[(int)StdParam.EndKey]),
-                candidate[7]); //candidate[(int)StdParam.EndKey] is special effect
-            }
-            else if (candidate[(int)StdParam.Type].Equals("THO") && candidate.Count() <= 7)
-            {
-                //Console.ReadLine();
-                return new Hold(candidate[(int)StdParam.Type],
-                int.Parse(candidate[(int)StdParam.Bar]),
-                int.Parse(candidate[(int)StdParam.Tick]),
-                candidate[(int)StdParam.KeyOrParam] + candidate[(int)StdParam.LastTime], int.Parse(candidate[(int)StdParam.WaitTimeOrParam]),
-                int.Parse(candidate[(int)StdParam.EndKey]),
-                "M1"); //candidate[(int)StdParam.EndKey] is special effect
-            }
-            else
-                return new Hold(candidate[(int)StdParam.Type],
-                            int.Parse(candidate[(int)StdParam.Bar]),
-                            int.Parse(candidate[(int)StdParam.Tick]),
-                            candidate[(int)StdParam.KeyOrParam],
-                            int.Parse(candidate[(int)StdParam.WaitTimeOrParam]));
+            return this.HoldOfToken(token, bar, tick, 0.0);
         }
 
         public Slide SlideOfToken(string token, int bar, int tick, Note slideStart, double bpm)
         {
             string[] candidate = token.Split('\t');
-            Note localSlideStart = new Slide(slideStart);
-            if (!localSlideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam]) || localSlideStart.Bar != bar || localSlideStart.Tick != tick)
+            if (!slideStart.Key.Equals(candidate[(int)StdParam.Key]) || slideStart.Bar != bar || slideStart.Tick != tick)
             {
                 //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
                 //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
                 //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
                 //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
-                localSlideStart = new Tap("NST", bar, tick, candidate[(int)StdParam.KeyOrParam]);
+                PreviousSlideStart = new Tap("NST", bar, tick, candidate[(int)StdParam.Key]);
             }
             Slide result = new Slide(candidate[(int)StdParam.Type],
                         bar,
                         tick,
-                        localSlideStart.Key,
-                        int.Parse(candidate[(int)StdParam.WaitTimeOrParam]),
+                        slideStart.Key,
+                        int.Parse(candidate[(int)StdParam.WaitTime]),
                         int.Parse(candidate[(int)StdParam.LastTime]),
                         candidate[(int)StdParam.EndKey]);
-            result.SlideStart = localSlideStart;
-            localSlideStart.ConsecutiveSlide = result;
-            slideStart = localSlideStart;
+            string specialProperty = "";
+            if (candidate[(int)DxTapParam.Type].Length > 3)
+            {
+                specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
+                result.NoteType = result.NoteType.Substring(2);
+            }
+            switch (specialProperty)
+            {
+                case "BR":
+                    result.NoteSpecialState = Note.SpecialState.Break;
+                    break;
+                case "EX":
+                    result.NoteSpecialState = Note.SpecialState.EX;
+                    break;
+                case "BX":
+                    result.NoteSpecialState = Note.SpecialState.BreakEX;
+                    break;
+                case "NM":
+                case "":
+                default:
+                    result.NoteSpecialState = Note.SpecialState.Normal;
+                    break;
+            }
+            result.SlideStart = slideStart;
+            slideStart.ConsecutiveSlide = result;
+            if (bpm > 0.0) result.BPM = bpm;
             return result;
         }
 
@@ -334,24 +356,15 @@ namespace MaiLib
             string[] candidate = token.Split('\t');
             int bar = int.Parse(candidate[(int)StdParam.Bar]);
             int tick = int.Parse(candidate[(int)StdParam.Tick]);
-            if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.KeyOrParam]) || PreviousSlideStart.Bar != bar || PreviousSlideStart.Tick != tick)
+            if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.Key]) || PreviousSlideStart.Bar != bar || PreviousSlideStart.Tick != tick)
             {
-                //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
+                //Console.WriteLine("Expected key: " + candidate[(int)StdParam.Key]);
                 //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
                 //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
                 //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
-                PreviousSlideStart = new Tap("NST", bar, tick, candidate[(int)StdParam.KeyOrParam]);
+                PreviousSlideStart = new Tap("NST", bar, tick, candidate[(int)StdParam.Key]);
             }
-            Slide result = new Slide(candidate[(int)StdParam.Type],
-                        bar,
-                        tick,
-                        PreviousSlideStart.Key,
-                        int.Parse(candidate[(int)StdParam.WaitTimeOrParam]),
-                        int.Parse(candidate[(int)StdParam.LastTime]),
-                        candidate[(int)StdParam.EndKey]);
-            result.SlideStart = PreviousSlideStart;
-            PreviousSlideStart.ConsecutiveSlide = result;
-            return result;
+            return this.SlideOfToken(token, bar, tick, PreviousSlideStart, 0.0);
         }
 
 
@@ -359,31 +372,22 @@ namespace MaiLib
         {
             Note result = new Rest();
             string[] candidate = token.Split('\t');
-            if (candidate[(int)StdParam.Type].Equals("TTP") && (candidate.Count()) >= 7)
+            if (candidate[(int)StdParam.Type].Equals("TTP"))
             {
-                result = new Tap(candidate[(int)StdParam.Type],
+                string noteSize = candidate.Length >= 7 ? candidate[7] : "M1";
+                return new Tap(candidate[(int)StdParam.Type],
                 bar,
                 tick,
-                candidate[(int)StdParam.KeyOrParam] + candidate[(int)StdParam.WaitTimeOrParam],
+                candidate[(int)StdParam.Key] + candidate[(int)StdParam.WaitTime],
                 int.Parse(candidate[(int)StdParam.LastTime]),
-                candidate[(int)StdParam.EndKey]);
-            }
-            else if (candidate[(int)StdParam.Type].Equals("TTP") && (candidate.Count()) < 7)
-            {
-                //Console.ReadLine();
-                result = new Tap(candidate[(int)StdParam.Type],
-                int.Parse(candidate[(int)StdParam.Bar]),
-                int.Parse(candidate[(int)StdParam.Tick]),
-                candidate[(int)StdParam.KeyOrParam] + candidate[(int)StdParam.WaitTimeOrParam],
-                int.Parse(candidate[(int)StdParam.LastTime]),
-                "M1");
+                noteSize);
             }
             else
                 result = new Tap(candidate[(int)StdParam.Type],
                     int.Parse(candidate[(int)StdParam.Bar]),
                     int.Parse(candidate[(int)StdParam.Tick]),
-                    candidate[(int)StdParam.KeyOrParam]);
-            result.BPM = bpm;
+                    candidate[(int)StdParam.Key]);
+            if (bpm > 0.0) result.BPM = bpm;
             return (Tap)result;
         }
 
@@ -392,30 +396,7 @@ namespace MaiLib
             string[] candidate = token.Split('\t');
             int bar = int.Parse(candidate[(int)StdParam.Bar]);
             int tick = int.Parse(candidate[(int)StdParam.Tick]);
-            if (candidate[(int)StdParam.Type].Equals("TTP") && (candidate.Count()) >= 7)
-            {
-                return new Tap(candidate[(int)StdParam.Type],
-                bar,
-                tick,
-                candidate[(int)StdParam.KeyOrParam] + candidate[(int)StdParam.WaitTimeOrParam],
-                int.Parse(candidate[(int)StdParam.LastTime]),
-                candidate[(int)StdParam.EndKey]);
-            }
-            else if (candidate[(int)StdParam.Type].Equals("TTP") && (candidate.Count()) < 7)
-            {
-                //Console.ReadLine();
-                return new Tap(candidate[(int)StdParam.Type],
-                int.Parse(candidate[(int)StdParam.Bar]),
-                int.Parse(candidate[(int)StdParam.Tick]),
-                candidate[(int)StdParam.KeyOrParam] + candidate[(int)StdParam.WaitTimeOrParam],
-                int.Parse(candidate[(int)StdParam.LastTime]),
-                "M1");
-            }
-            else
-                return new Tap(candidate[(int)StdParam.Type],
-                    int.Parse(candidate[(int)StdParam.Bar]),
-                    int.Parse(candidate[(int)StdParam.Tick]),
-                    candidate[(int)StdParam.KeyOrParam]);
+            return this.TapOfToken(token, bar, tick, 0.0);
         }
     }
 

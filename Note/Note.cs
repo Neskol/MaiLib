@@ -16,26 +16,6 @@ namespace MaiLib
         /// </summary>
         private string noteType;
 
-        public enum SpecialState
-        {
-            /// <summary>
-            /// Normal note, nothing special
-            /// </summary>
-            Normal,
-            /// <summary>
-            /// Break note
-            /// </summary>
-            Break,
-            /// <summary>
-            /// EX Note
-            /// </summary>
-            EX,
-            /// <summary>
-            /// EX Break
-            /// </summary>
-            EXBreak
-        }
-
         /// <summary>
         /// The key
         /// </summary>
@@ -207,6 +187,32 @@ namespace MaiLib
             this.bpm = inTake.BPM;
             this.bpmChangeNotes = inTake.bpmChangeNotes;
         }
+
+        public enum SpecialState
+        {
+            /// <summary>
+            /// Normal note, nothing special
+            /// </summary>
+            Normal,
+            /// <summary>
+            /// Break note
+            /// </summary>
+            Break,
+            /// <summary>
+            /// EX Note
+            /// </summary>
+            EX,
+            /// <summary>
+            /// EX Break
+            /// </summary>
+            BreakEX,
+            /// <summary>
+            /// Connecting Slide
+            /// </summary>
+            ConnectingSlide
+        }
+
+        public SpecialState NoteSpecialState { get; set; }
 
         /// <summary>
         /// Access NoteType
