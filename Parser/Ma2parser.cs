@@ -376,11 +376,11 @@ namespace MaiLib
             if (candidate[(int)StdParam.Type].Contains("TTP"))
             {
                 string noteSize = candidate.Length > 7 ? candidate[7] : "M1";
-                return new Tap(candidate[(int)StdParam.Type],
+                result = new Tap(candidate[(int)DxTapParam.Type],
                 bar,
                 tick,
-                candidate[(int)StdParam.Key] + candidate[(int)StdParam.KeyGroup],
-                int.Parse(candidate[(int)StdParam.LastTime]),
+                candidate[(int)DxTapParam.Key] + candidate[(int)DxTapParam.KeyGroup],
+                int.Parse(candidate[(int)DxTapParam.SpecialEffect]),
                 noteSize);
             }
             else
