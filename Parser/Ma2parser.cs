@@ -379,7 +379,7 @@ namespace MaiLib
                 return new Tap(candidate[(int)StdParam.Type],
                 bar,
                 tick,
-                candidate[(int)StdParam.Key] + candidate[(int)StdParam.WaitTime],
+                candidate[(int)StdParam.Key] + candidate[(int)StdParam.KeyGroup],
                 int.Parse(candidate[(int)StdParam.LastTime]),
                 noteSize);
             }
