@@ -252,7 +252,7 @@ namespace MaiLib
         {
             Note result = new Rest();
             string[] candidate = token.Split('\t');
-            if (candidate[(int)DxTapParam.Type].Contains("THO") && candidate.Count() > 7) //Basically all THO falls in this line
+            if (candidate[(int)DxTapParam.Type].Contains("THO")) //Basically all THO falls in this line
             {
                 string noteSize = candidate.Count() > 7 ? candidate[(int)DxHoldParam.NoteSize] : "M1";
                 result = new Hold(candidate[(int)DxHoldParam.Type],
@@ -374,7 +374,7 @@ namespace MaiLib
             string[] candidate = token.Split('\t');
             if (candidate[(int)StdParam.Type].Equals("TTP"))
             {
-                string noteSize = candidate.Length >= 7 ? candidate[7] : "M1";
+                string noteSize = candidate.Length > 7 ? candidate[7] : "M1";
                 return new Tap(candidate[(int)StdParam.Type],
                 bar,
                 tick,
