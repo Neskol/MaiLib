@@ -678,6 +678,7 @@ namespace MaiLib
         {
             if (this.Key != null && !this.Key.Equals("") && !(this.Key.Count() > 1 && this.Key.ToCharArray()[1] == 'C'))
             {
+                #region FlipConditions
                 switch (method)
                 {
                     case "Clockwise90":
@@ -1165,6 +1166,7 @@ namespace MaiLib
                     default:
                         throw new NotImplementedException("METHOD SPECIFIED INVALID. EXPECT: Clockwise90, Clockwise180, Counterclockwise90, Counterclockwise180, UpSideDown, LeftToRight");
                 }
+                #endregion
             }
             this.Update();
         }

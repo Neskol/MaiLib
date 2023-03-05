@@ -245,6 +245,29 @@ namespace MaiLib
             {
                 result.Tick = 0;
                 result.Bar++;
+            }     
+            if (candidate[(int)DxTapParam.Type].Length > 3)
+            {
+                string specialProperty = "";
+                specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
+                result.NoteType = result.NoteType.Substring(2);
+                switch (specialProperty)
+                {
+                    case "BR":
+                        result.NoteSpecialState = Note.SpecialState.Break;
+                        break;
+                    case "EX":
+                        result.NoteSpecialState = Note.SpecialState.EX;
+                        break;
+                    case "BX":
+                        result.NoteSpecialState = Note.SpecialState.BreakEX;
+                        break;
+                    case "NM":
+                    case "":
+                    default:
+                        result.NoteSpecialState = Note.SpecialState.Normal;
+                        break;
+                }
             }
             return result;
         }
@@ -270,30 +293,7 @@ namespace MaiLib
                             candidate[(int)StdParam.Key],
                             int.Parse(candidate[(int)StdParam.WaitTime]));
             if (bpm > 0.0) result.BPM = bpm;
-            string specialProperty = "";
-            if (candidate[(int)DxTapParam.Type].Length > 3)
-            {
-                specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
-                result.NoteType = result.NoteType.Substring(2);
-
-            }
-            switch (specialProperty)
-            {
-                case "BR":
-                    result.NoteSpecialState = Note.SpecialState.Break;
-                    break;
-                case "EX":
-                    result.NoteSpecialState = Note.SpecialState.EX;
-                    break;
-                case "BX":
-                    result.NoteSpecialState = Note.SpecialState.BreakEX;
-                    break;
-                case "NM":
-                case "":
-                default:
-                    result.NoteSpecialState = Note.SpecialState.Normal;
-                    break;
-            }
+            result.NoteSpecialState = result.NoteType.Equals("XHO") ? Note.SpecialState.EX : Note.SpecialState.Normal;
             return (Hold)result;
         }
 
@@ -323,29 +323,6 @@ namespace MaiLib
                         int.Parse(candidate[(int)StdParam.WaitTime]),
                         int.Parse(candidate[(int)StdParam.LastTime]),
                         candidate[(int)StdParam.EndKey]);
-            string specialProperty = "";
-            if (candidate[(int)DxTapParam.Type].Length > 3)
-            {
-                specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
-                result.NoteType = result.NoteType.Substring(2);
-            }
-            switch (specialProperty)
-            {
-                case "BR":
-                    result.NoteSpecialState = Note.SpecialState.Break;
-                    break;
-                case "EX":
-                    result.NoteSpecialState = Note.SpecialState.EX;
-                    break;
-                case "BX":
-                    result.NoteSpecialState = Note.SpecialState.BreakEX;
-                    break;
-                case "NM":
-                case "":
-                default:
-                    result.NoteSpecialState = Note.SpecialState.Normal;
-                    break;
-            }
             result.SlideStart = slideStart;
             slideStart.ConsecutiveSlide = result;
             if (bpm > 0.0) result.BPM = bpm;
@@ -388,31 +365,11 @@ namespace MaiLib
                     int.Parse(candidate[(int)StdParam.Bar]),
                     int.Parse(candidate[(int)StdParam.Tick]),
                     candidate[(int)StdParam.Key]);
-            string specialProperty = "";
-            if (candidate[(int)DxTapParam.Type].Length > 3)
-            {
-                specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
-                result.NoteType = result.NoteType.Substring(2);
-
-            }
-            switch (specialProperty)
-            {
-                case "BR":
-                    result.NoteSpecialState = Note.SpecialState.Break;
-                    break;
-                case "EX":
-                    result.NoteSpecialState = Note.SpecialState.EX;
-                    break;
-                case "BX":
-                    result.NoteSpecialState = Note.SpecialState.BreakEX;
-                    break;
-                case "NM":
-                case "":
-                default:
-                    result.NoteSpecialState = Note.SpecialState.Normal;
-                    break;
-            }
             if (bpm > 0.0) result.BPM = bpm;
+            result.NoteSpecialState = result.NoteType.Equals("XTP")
+            || result.NoteType.Equals("XST") ? Note.SpecialState.EX : Note.SpecialState.Normal;
+            result.NoteSpecialState = result.NoteType.Equals("BRK")
+            || result.NoteType.Equals("BST") ? Note.SpecialState.Break : Note.SpecialState.Normal;
             return (Tap)result;
         }
 
