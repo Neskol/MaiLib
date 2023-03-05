@@ -217,13 +217,26 @@
                         result += "qq";
                         break;
                 }
+                result += ((Convert.ToInt32(this.EndKey) + 1).ToString());
+                if (this.NoteSpecialState == Note.SpecialState.Break)
+                {
+                    result += "b";
+                }
+                else if (this.NoteSpecialState == Note.SpecialState.EX)
+                {
+                    result += "x";
+                }
+                else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                {
+                    result += "bx";
+                }
                 if (this.TickBPMDisagree || this.Delayed)
                 {
-                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString()) + GenerateAppropriateLength(this.LastLength, this.BPM);
+                    result += GenerateAppropriateLength(this.LastLength, this.BPM);
                 }
                 else
                 {
-                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString()) + GenerateAppropriateLength(this.LastLength);
+                    result += GenerateAppropriateLength(this.LastLength);
                 }
                 //result += "_" + this.Tick;
                 //result += "_" + this.Key;
