@@ -388,6 +388,28 @@ namespace MaiLib
                     int.Parse(candidate[(int)StdParam.Bar]),
                     int.Parse(candidate[(int)StdParam.Tick]),
                     candidate[(int)StdParam.Key]);
+            if (candidate[(int)DxTapParam.Type].Length > 3)
+            {
+                specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
+                result.NoteType = result.NoteType.Substring(2);
+            }
+            switch (specialProperty)
+            {
+                case "BR":
+                    result.NoteSpecialState = Note.SpecialState.Break;
+                    break;
+                case "EX":
+                    result.NoteSpecialState = Note.SpecialState.EX;
+                    break;
+                case "BX":
+                    result.NoteSpecialState = Note.SpecialState.BreakEX;
+                    break;
+                case "NM":
+                case "":
+                default:
+                    result.NoteSpecialState = Note.SpecialState.Normal;
+                    break;
+            }
             if (bpm > 0.0) result.BPM = bpm;
             return (Tap)result;
         }
