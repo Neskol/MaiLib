@@ -37,38 +37,39 @@ namespace MaiLib
             {
                 foreach (string x in token)
                 {
-                    bool isBPM_DEF = x.Split('\t')[(int)StdParam.Type].Equals("BPM_DEF");
-                    bool isMET_DEF = x.Split('\t')[(int)StdParam.Type].Equals("MET_DEF");
-                    bool isBPM = x.Split('\t')[(int)StdParam.Type].Equals("BPM");
-                    bool isMET = x.Split('\t')[(int)StdParam.Type].Equals("MET");
-                    bool isNOTE = x.Split('\t')[(int)StdParam.Type].Equals("TAP")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("STR")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("TTP")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("XTP")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("XST")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("BRK")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("BST")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("HLD")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("XHO")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("THO")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SI_")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SV_")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SF_")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SCL")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SCR")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SUL")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SUR")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SLL")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SLR")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SXL")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SXR")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SSL")
-                        || x.Split('\t')[(int)StdParam.Type].Equals("SSR")
-                        || (x.Split('\t')[(int)StdParam.Type].Contains("NM") && x.Length == 5)
-                        || (x.Split('\t')[(int)StdParam.Type].Contains("CN") && x.Length == 5)
-                        || (x.Split('\t')[(int)StdParam.Type].Contains("EX") && x.Length == 5)
-                        || (x.Split('\t')[(int)StdParam.Type].Contains("BR") && x.Length == 5)
-                        || (x.Split('\t')[(int)StdParam.Type].Contains("BX") && x.Length == 5);
+                    string typeCandidate = x.Split('\t')[(int)StdParam.Type];
+                    bool isBPM_DEF = typeCandidate.Equals("BPM_DEF");
+                    bool isMET_DEF = typeCandidate.Equals("MET_DEF");
+                    bool isBPM = typeCandidate.Equals("BPM");
+                    bool isMET = typeCandidate.Equals("MET");
+                    bool isNOTE = typeCandidate.Equals("TAP")
+                        || typeCandidate.Equals("STR")
+                        || typeCandidate.Equals("TTP")
+                        || typeCandidate.Equals("XTP")
+                        || typeCandidate.Equals("XST")
+                        || typeCandidate.Equals("BRK")
+                        || typeCandidate.Equals("BST")
+                        || typeCandidate.Equals("HLD")
+                        || typeCandidate.Equals("XHO")
+                        || typeCandidate.Equals("THO")
+                        || typeCandidate.Equals("SI_")
+                        || typeCandidate.Equals("SV_")
+                        || typeCandidate.Equals("SF_")
+                        || typeCandidate.Equals("SCL")
+                        || typeCandidate.Equals("SCR")
+                        || typeCandidate.Equals("SUL")
+                        || typeCandidate.Equals("SUR")
+                        || typeCandidate.Equals("SLL")
+                        || typeCandidate.Equals("SLR")
+                        || typeCandidate.Equals("SXL")
+                        || typeCandidate.Equals("SXR")
+                        || typeCandidate.Equals("SSL")
+                        || typeCandidate.Equals("SSR")
+                        || (typeCandidate.Contains("NM") && typeCandidate.Length == 5)
+                        || (typeCandidate.Contains("CN") && typeCandidate.Length == 5)
+                        || (typeCandidate.Contains("EX") && typeCandidate.Length == 5)
+                        || (typeCandidate.Contains("BR") && typeCandidate.Length == 5)
+                        || (typeCandidate.Contains("BX") && typeCandidate.Length == 5);
 
                     if (isBPM_DEF)
                     {
