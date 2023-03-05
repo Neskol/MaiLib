@@ -373,7 +373,7 @@ namespace MaiLib
         {
             Note result = new Rest();
             string[] candidate = token.Split('\t');
-            if (candidate[(int)StdParam.Type].Equals("TTP"))
+            if (candidate[(int)StdParam.Type].Contains("TTP"))
             {
                 string noteSize = candidate.Length > 7 ? candidate[7] : "M1";
                 return new Tap(candidate[(int)StdParam.Type],
