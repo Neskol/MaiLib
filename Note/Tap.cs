@@ -307,10 +307,6 @@
                             {
                                 result += "x";
                             }
-                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                            {
-                                result += "bx";
-                            }
                             break;
                         case "STR":
                             result += (Int32.Parse(this.Key) + 1).ToString();
@@ -321,10 +317,6 @@
                             else if (this.NoteSpecialState == Note.SpecialState.EX)
                             {
                                 result += "x";
-                            }
-                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                            {
-                                result += "bx";
                             }
                             break;
                         case "BRK":
