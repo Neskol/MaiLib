@@ -199,7 +199,7 @@ namespace MaiLib
             {
                 result.Tick = 0;
                 result.Bar++;
-            }     
+            }
             if (candidate[(int)DxTapParam.Type].Length > 3)
             {
                 string specialProperty = "";
@@ -209,12 +209,18 @@ namespace MaiLib
                 {
                     case "BR":
                         result.NoteSpecialState = Note.SpecialState.Break;
+                        result.NoteVersion = result.NoteGenre.Equals("SLIDE")
+                        || result.NoteGenre.Equals("HOLD")
+                        || (result.NoteType.Equals("TTP") && (result.KeyGroup.Equals("A") || result.KeyGroup.Equals("D")))
+                        ? Note.Version.Festival : Note.Version.Normal;
                         break;
                     case "EX":
                         result.NoteSpecialState = Note.SpecialState.EX;
+                        result.NoteVersion = result.NoteGenre.Equals("SLIDE") ? Note.Version.Festival : Note.Version.Normal;
                         break;
                     case "BX":
                         result.NoteSpecialState = Note.SpecialState.BreakEX;
+                        result.NoteVersion = Note.Version.Festival;
                         break;
                     case "NM":
                     case "":
@@ -223,7 +229,7 @@ namespace MaiLib
                         break;
                 }
             }
-            if (bpm>0.0) result.BPM = bpm;
+            if (bpm > 0.0) result.BPM = bpm;
             return result;
         }
 

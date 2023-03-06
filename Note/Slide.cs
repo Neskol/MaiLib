@@ -64,7 +64,11 @@
             /// <summary>
             /// Z Star
             /// </summary>
-            SSR
+            SSR,
+            /// <summary>
+            /// Connecting slide group
+            /// </summary>
+            CNS
             #endregion
         }
 

@@ -212,6 +212,17 @@ namespace MaiLib
             ConnectingSlide
         }
 
+        /// <summary>
+        /// Defines the note version of this note
+        /// </summary>
+        public enum Version
+        {
+            Normal,
+            Festival
+        }
+
+        public Version NoteVersion { get; set; }
+
         public SpecialState NoteSpecialState { get; set; }
 
         /// <summary>
@@ -1171,7 +1182,7 @@ namespace MaiLib
             this.Update();
         }
 
-        public bool Update()
+        public virtual bool Update()
         {
             // Console.WriteLine("This note has bpm note number of " + this.BPMChangeNotes.Count());
             bool result = false;
@@ -1227,7 +1238,7 @@ namespace MaiLib
         {
             string result = "";
             const int definition = 384;
-            int divisor = GCD(definition, length);
+            int divisor = gcd(definition, length);
             int quaver = definition / divisor, beat = length / divisor;
             result = "[" + quaver.ToString() + ":" + beat.ToString() + "]";
             return result;
@@ -1239,9 +1250,9 @@ namespace MaiLib
         /// <param name="a">A</param>
         /// <param name="b">B</param>
         /// <returns>GCD of A and B</returns>
-        static int GCD(int a, int b)
+        private static int gcd(int a, int b)
         {
-            return b == 0 ? a : GCD(b, a % b);
+            return b == 0 ? a : gcd(b, a % b);
         }
 
         /// <summary>
@@ -1257,11 +1268,11 @@ namespace MaiLib
             switch (this.NoteGenre)
             {
                 case "SLIDE":
-                    double sustain = Math.Round(this.WaitTimeStamp - this.TickTimeStamp,4);                 
+                    double sustain = Math.Round(this.WaitTimeStamp - this.TickTimeStamp, 4);
                     result = "[" + sustain + "##" + duration + "]";
                     break;
                 case "HOLD":
-                    double startTime = Math.Round(startTime = this.TickTimeStamp,4);
+                    double startTime = Math.Round(startTime = this.TickTimeStamp, 4);
                     result = "[" + startTime + "##" + duration + "]";
                     break;
             }
