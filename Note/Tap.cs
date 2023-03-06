@@ -162,103 +162,196 @@
 
         public override string Compose(int format)
         {
+            return this.Compose(format, Chart.CompatibleProperty.Normal);
+        }
+
+        public override string Compose(int format,Chart.CompatibleProperty chartProperty)
+        {
             string result = "";
-            // if (format == 1 && !(this.NoteType.Equals("TTP")) && !((this.NoteType.Equals("NST"))||this.NoteType.Equals("NSS")))
-            // {
-            //     result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
-            // }
-            // else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
-            // {
-            //     result = ""; //NST and NSS is just a place holder for slide
-            // }
-            if (format == 1 && !this.NoteType.Equals("TTP"))
+            if (chartProperty == Chart.CompatibleProperty.Festival)
             {
-                result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
-            }
-            else if (format == 1 && this.NoteType.Equals("TTP"))
-            {
-                result = this.NoteType + "\t" +
-                    this.Bar + "\t" +
-                    this.Tick + "\t" +
-                    this.Key.ToCharArray()[1] + "\t" +
-                    this.Key.ToCharArray()[0] + "\t" +
-                    this.specialEffect + "\t" +
-                    this.touchSize; //M1 for regular note and L1 for Larger Note
-            }
-            else if (format == 0)
-            {
-                switch (this.NoteType)
+                string noteTypePrefix = "";
+                switch (this.NoteSpecialState)
                 {
-                    case "TAP":
-                        result += (Int32.Parse(this.Key) + 1).ToString();
-                        if (this.NoteSpecialState == Note.SpecialState.Break)
-                        {
-                            result += "b";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.EX)
-                        {
-                            result += "x";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                        {
-                            result += "bx";
-                        }
+                    case Note.SpecialState.Break:
+                        noteTypePrefix = "BR";
                         break;
-                    case "STR":
-                        result += (Int32.Parse(this.Key) + 1).ToString();
-                        if (this.NoteSpecialState == Note.SpecialState.Break)
-                        {
-                            result += "b";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.EX)
-                        {
-                            result += "x";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                        {
-                            result += "bx";
-                        }
+                    case Note.SpecialState.EX:
+                        noteTypePrefix = "EX";
                         break;
-                    case "BRK":
-                        result += (Int32.Parse(this.Key) + 1).ToString() + "b";
+                    case Note.SpecialState.BreakEX:
+                        noteTypePrefix = "BX";
                         break;
-                    case "BST":
-                        result += (Int32.Parse(this.Key) + 1).ToString() + "b";
-                        break;
-                    case "XTP":
-                        result += (Int32.Parse(this.Key) + 1).ToString() + "x";
-                        break;
-                    case "XST":
-                        result += (Int32.Parse(this.Key) + 1).ToString() + "x";
-                        break;
-                    case "NST":
-                        result += (Int32.Parse(this.Key) + 1).ToString() + "!";
-                        break;
-                    case "TTP":
-                        result += this.Key.ToCharArray()[1] + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString());
-                        if (this.NoteSpecialState == Note.SpecialState.Break)
-                        {
-                            result += "b";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.EX)
-                        {
-                            result += "x";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                        {
-                            result += "bx";
-                        }
-                        if (this.SpecialEffect == 1)
-                        {
-                            result += "f";
-                        }
+                    case Note.SpecialState.Normal:
+                    default:
+                        noteTypePrefix = "NM";
                         break;
                 }
-                if (this.NoteSpecificGenre.Equals("SLIDE_START") && this.ConsecutiveSlide == null)
+                if (format == 1 && !this.NoteType.Equals("TTP"))
                 {
-                    result += "$";
+                    result = noteTypePrefix+this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
                 }
-                //result += "_" + this.Tick;
+                else if (format == 1 && this.NoteType.Equals("TTP"))
+                {
+                    result = noteTypePrefix + this.NoteType + "\t" +
+                        this.Bar + "\t" +
+                        this.Tick + "\t" +
+                        this.Key.ToCharArray()[1] + "\t" +
+                        this.Key.ToCharArray()[0] + "\t" +
+                        this.specialEffect + "\t" +
+                        this.touchSize; //M1 for regular note and L1 for Larger Note
+                }
+                else if (format == 0)
+                {
+                    switch (this.NoteType)
+                    {
+                        case "TAP":
+                            result += (Int32.Parse(this.Key) + 1).ToString();
+                            if (this.NoteSpecialState == Note.SpecialState.Break)
+                            {
+                                result += "b";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.EX)
+                            {
+                                result += "x";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                            {
+                                result += "bx";
+                            }
+                            break;
+                        case "STR":
+                            result += (Int32.Parse(this.Key) + 1).ToString();
+                            if (this.NoteSpecialState == Note.SpecialState.Break)
+                            {
+                                result += "b";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.EX)
+                            {
+                                result += "x";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                            {
+                                result += "bx";
+                            }
+                            break;
+                        case "BRK":
+                            result += (Int32.Parse(this.Key) + 1).ToString() + "b";
+                            break;
+                        case "BST":
+                            result += (Int32.Parse(this.Key) + 1).ToString() + "b";
+                            break;
+                        case "XTP":
+                            result += (Int32.Parse(this.Key) + 1).ToString() + "x";
+                            break;
+                        case "XST":
+                            result += (Int32.Parse(this.Key) + 1).ToString() + "x";
+                            break;
+                        case "NST":
+                            result += (Int32.Parse(this.Key) + 1).ToString() + "!";
+                            break;
+                        case "TTP":
+                            result += this.Key.ToCharArray()[1] + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString());
+                            if (this.NoteSpecialState == Note.SpecialState.Break)
+                            {
+                                result += "b";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.EX)
+                            {
+                                result += "x";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                            {
+                                result += "bx";
+                            }
+                            if (this.SpecialEffect == 1)
+                            {
+                                result += "f";
+                            }
+                            break;
+                    }
+                    if (this.NoteSpecificGenre.Equals("SLIDE_START") && this.ConsecutiveSlide == null)
+                    {
+                        result += "$";
+                    }
+                    //result += "_" + this.Tick;
+                }
+            }
+            else
+            {
+                if (format == 1 && !this.NoteType.Equals("TTP"))
+                {
+                    result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
+                }
+                else if (format == 1 && this.NoteType.Equals("TTP"))
+                {
+                    result = this.NoteType + "\t" +
+                        this.Bar + "\t" +
+                        this.Tick + "\t" +
+                        this.Key.ToCharArray()[1] + "\t" +
+                        this.Key.ToCharArray()[0] + "\t" +
+                        this.specialEffect + "\t" +
+                        this.touchSize; //M1 for regular note and L1 for Larger Note
+                }
+                else if (format == 0)
+                {
+                    switch (this.NoteType)
+                    {
+                        case "TAP":
+                            result += (Int32.Parse(this.Key) + 1).ToString();
+                            if (this.NoteSpecialState == Note.SpecialState.Break)
+                            {
+                                result += "b";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.EX)
+                            {
+                                result += "x";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                            {
+                                result += "bx";
+                            }
+                            break;
+                        case "STR":
+                            result += (Int32.Parse(this.Key) + 1).ToString();
+                            if (this.NoteSpecialState == Note.SpecialState.Break)
+                            {
+                                result += "b";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.EX)
+                            {
+                                result += "x";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                            {
+                                result += "bx";
+                            }
+                            break;
+                        case "BRK":
+                        case "BST":
+                            result += (Int32.Parse(this.Key) + 1).ToString() + "b";
+                            break;
+                        case "XTP":
+                        case "XST":
+                            result += (Int32.Parse(this.Key) + 1).ToString() + "x";
+                            break;
+                        case "NST":
+                            result += (Int32.Parse(this.Key) + 1).ToString() + "!";
+                            break;
+                        case "TTP":
+                            result += this.Key.ToCharArray()[1] + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString());
+                            if (this.SpecialEffect == 1)
+                            {
+                                result += "f";
+                            }
+                            break;
+                    }
+                    if (this.NoteSpecificGenre.Equals("SLIDE_START") && this.ConsecutiveSlide == null)
+                    {
+                        result += "$";
+                    }
+                    //result += "_" + this.Tick;
+                }
             }
             return result;
         }

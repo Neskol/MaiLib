@@ -162,92 +162,192 @@
 
         public override string Compose(int format)
         {
+            return this.Compose(format, Chart.CompatibleProperty.Normal);
+        }
+
+        public override string Compose(int format, Chart.CompatibleProperty chartProperty)
+        {
             string result = "";
-            if (format == 1)
+            if (chartProperty == Chart.CompatibleProperty.Festival)
             {
-                result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key + "\t" + this.WaitLength + "\t" + this.LastLength + "\t" + this.EndKey;
+                if (format == 1)
+                {
+                    string noteTypePrefix = "";
+                    switch (this.NoteSpecialState)
+                    {
+                        case Note.SpecialState.Break:
+                            noteTypePrefix = "BR";
+                            break;
+                        case Note.SpecialState.EX:
+                            noteTypePrefix = "EX";
+                            break;
+                        case Note.SpecialState.BreakEX:
+                            noteTypePrefix = "BX";
+                            break;
+                        case Note.SpecialState.ConnectingSlide:
+                            noteTypePrefix = "CN";
+                            break;
+                        case Note.SpecialState.Normal:
+                        default:
+                            noteTypePrefix = "NM";
+                            break;
+                    }
+                    result = noteTypePrefix+this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key + "\t" + this.WaitLength + "\t" + this.LastLength + "\t" + this.EndKey;
+                }
+                else if (format == 0)
+                {
+                    switch (this.NoteType)
+                    {
+                        case "SI_":
+                            result += "-";
+                            break;
+                        case "SV_":
+                            result += "v";
+                            break;
+                        case "SF_":
+                            result += "w";
+                            break;
+                        case "SCL":
+                            if (Int32.Parse(this.Key) == 0 || Int32.Parse(this.Key) == 1 || Int32.Parse(this.Key) == 6 || Int32.Parse(this.Key) == 7)
+                            {
+                                result += "<";
+                            }
+                            else
+                                result += ">";
+                            break;
+                        case "SCR":
+                            if (Int32.Parse(this.Key) == 0 || Int32.Parse(this.Key) == 1 || Int32.Parse(this.Key) == 6 || Int32.Parse(this.Key) == 7)
+                            {
+                                result += ">";
+                            }
+                            else
+                                result += "<";
+                            break;
+                        case "SUL":
+                            result += "p";
+                            break;
+                        case "SUR":
+                            result += "q";
+                            break;
+                        case "SSL":
+                            result += "s";
+                            break;
+                        case "SSR":
+                            result += "z";
+                            break;
+                        case "SLL":
+                            result += "V" + GenerateInflection(this);
+                            break;
+                        case "SLR":
+                            result += "V" + GenerateInflection(this);
+                            break;
+                        case "SXL":
+                            result += "pp";
+                            break;
+                        case "SXR":
+                            result += "qq";
+                            break;
+                    }
+                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString());
+                    if (this.NoteSpecialState == Note.SpecialState.Break)
+                    {
+                        result += "b";
+                    }
+                    else if (this.NoteSpecialState == Note.SpecialState.EX)
+                    {
+                        result += "x";
+                    }
+                    else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                    {
+                        result += "bx";
+                    }
+                    if (this.TickBPMDisagree || this.Delayed)
+                    {
+                        result += GenerateAppropriateLength(this.LastLength, this.BPM);
+                    }
+                    else
+                    {
+                        result += GenerateAppropriateLength(this.LastLength);
+                    }
+                    //result += "_" + this.Tick;
+                    //result += "_" + this.Key;
+                }   
             }
-            else if (format == 0)
+            else
             {
-                switch (this.NoteType)
+                if (format == 1)
                 {
-                    case "SI_":
-                        result += "-";
-                        break;
-                    case "SV_":
-                        result += "v";
-                        break;
-                    case "SF_":
-                        result += "w";
-                        break;
-                    case "SCL":
-                        if (Int32.Parse(this.Key) == 0 || Int32.Parse(this.Key) == 1 || Int32.Parse(this.Key) == 6 || Int32.Parse(this.Key) == 7)
-                        {
-                            result += "<";
-                        }
-                        else
-                            result += ">";
-                        break;
-                    case "SCR":
-                        if (Int32.Parse(this.Key) == 0 || Int32.Parse(this.Key) == 1 || Int32.Parse(this.Key) == 6 || Int32.Parse(this.Key) == 7)
-                        {
-                            result += ">";
-                        }
-                        else
-                            result += "<";
-                        break;
-                    case "SUL":
-                        result += "p";
-                        break;
-                    case "SUR":
-                        result += "q";
-                        break;
-                    case "SSL":
-                        result += "s";
-                        break;
-                    case "SSR":
-                        result += "z";
-                        break;
-                    case "SLL":
-                        result += "V" + GenerateInflection(this);
-                        break;
-                    case "SLR":
-                        result += "V" + GenerateInflection(this);
-                        break;
-                    case "SXL":
-                        result += "pp";
-                        break;
-                    case "SXR":
-                        result += "qq";
-                        break;
+                    result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key + "\t" + this.WaitLength + "\t" + this.LastLength + "\t" + this.EndKey;
                 }
-                result += ((Convert.ToInt32(this.EndKey) + 1).ToString());
-                if (this.NoteSpecialState == Note.SpecialState.Break)
+                else if (format == 0)
                 {
-                    result += "b";
+                    switch (this.NoteType)
+                    {
+                        case "SI_":
+                            result += "-";
+                            break;
+                        case "SV_":
+                            result += "v";
+                            break;
+                        case "SF_":
+                            result += "w";
+                            break;
+                        case "SCL":
+                            if (Int32.Parse(this.Key) == 0 || Int32.Parse(this.Key) == 1 || Int32.Parse(this.Key) == 6 || Int32.Parse(this.Key) == 7)
+                            {
+                                result += "<";
+                            }
+                            else
+                                result += ">";
+                            break;
+                        case "SCR":
+                            if (Int32.Parse(this.Key) == 0 || Int32.Parse(this.Key) == 1 || Int32.Parse(this.Key) == 6 || Int32.Parse(this.Key) == 7)
+                            {
+                                result += ">";
+                            }
+                            else
+                                result += "<";
+                            break;
+                        case "SUL":
+                            result += "p";
+                            break;
+                        case "SUR":
+                            result += "q";
+                            break;
+                        case "SSL":
+                            result += "s";
+                            break;
+                        case "SSR":
+                            result += "z";
+                            break;
+                        case "SLL":
+                            result += "V" + GenerateInflection(this);
+                            break;
+                        case "SLR":
+                            result += "V" + GenerateInflection(this);
+                            break;
+                        case "SXL":
+                            result += "pp";
+                            break;
+                        case "SXR":
+                            result += "qq";
+                            break;
+                    }
+                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString());
+                    if (this.TickBPMDisagree || this.Delayed)
+                    {
+                        result += GenerateAppropriateLength(this.LastLength, this.BPM);
+                    }
+                    else
+                    {
+                        result += GenerateAppropriateLength(this.LastLength);
+                    }
+                    //result += "_" + this.Tick;
+                    //result += "_" + this.Key;
                 }
-                else if (this.NoteSpecialState == Note.SpecialState.EX)
-                {
-                    result += "x";
-                }
-                else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                {
-                    result += "bx";
-                }
-                if (this.TickBPMDisagree || this.Delayed)
-                {
-                    result += GenerateAppropriateLength(this.LastLength, this.BPM);
-                }
-                else
-                {
-                    result += GenerateAppropriateLength(this.LastLength);
-                }
-                //result += "_" + this.Tick;
-                //result += "_" + this.Key;
             }
             return result;
         }
-
         /// <summary>
         /// Return inflection point of SLL and SLR
         /// </summary>

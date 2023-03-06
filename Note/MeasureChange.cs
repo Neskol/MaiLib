@@ -68,6 +68,11 @@
             return result;
         }
 
+        public override string Compose(int format, Chart.CompatibleProperty chartProperty)
+        {
+            return this.Compose(format);
+        }
+
         public override Note NewInstance()
         {
             Note result = new MeasureChange(this);

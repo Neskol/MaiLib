@@ -102,6 +102,21 @@ namespace MaiLib
         //Theoretical Rating = (Difference in 100-down and Max score)/100-down
 
         /// <summary>
+        /// Stores the property of this chart
+        /// </summary>
+        public enum CompatibleProperty
+        {
+            Normal,
+            Utage,
+            Festival
+        }
+
+        /// <summary>
+        /// Return this chart's property
+        /// </summary>
+        public CompatibleProperty ChartProperty { get; set; }
+
+        /// <summary>
         /// Access to Notes
         /// </summary>
         public List<Note> Notes
@@ -349,6 +364,7 @@ namespace MaiLib
             this.information = new Dictionary<string, string>();
             this.isDxChart = false;
             this.definition = 384;
+            this.ChartProperty = CompatibleProperty.Normal;
         }
 
         public abstract bool CheckValidity();

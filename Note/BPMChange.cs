@@ -76,6 +76,11 @@ namespace MaiLib
             return result;
         }
 
+        public override string Compose(int format, Chart.CompatibleProperty chartProperty)
+        {
+            return this.Compose(format);
+        }
+
         public override string NoteGenre => "BPM";
 
         public override bool IsNote => true;

@@ -54,6 +54,11 @@
             return "";
         }
 
+        public override string Compose(int format, Chart.CompatibleProperty chartProperty)
+        {
+            return this.Compose(format);
+        }
+
         public override Note NewInstance()
         {
             Note result = new Rest(this);

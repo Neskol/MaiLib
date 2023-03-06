@@ -228,7 +228,7 @@ namespace MaiLib
         /// <summary>
         /// Access NoteType
         /// </summary>
-        public string NoteType
+        public virtual string NoteType
         {
             get
             {
@@ -243,7 +243,7 @@ namespace MaiLib
         /// <summary>
         /// Access Key
         /// </summary>
-        public string Key
+        public virtual string Key
         {
             get
             {
@@ -259,7 +259,7 @@ namespace MaiLib
         /// Get the number value of Key
         /// </summary>
         /// <value>Number value of Key 0-7, exclude key group</value>
-        public int KeyNum
+        public virtual int KeyNum
         {
             get => int.Parse(this.key.ToCharArray()[0].ToString());
         }
@@ -284,7 +284,7 @@ namespace MaiLib
         /// <summary>
         /// Access Bar
         /// </summary>
-        public int Bar
+        public virtual int Bar
         {
             get
             {
@@ -299,7 +299,7 @@ namespace MaiLib
         /// <summary>
         /// Access Tick
         /// </summary>
-        public int Tick
+        public virtual int Tick
         {
             get
             {
@@ -314,7 +314,7 @@ namespace MaiLib
         /// <summary>
         /// Access FixedTick
         /// </summary>
-        public int FixedTick
+        public virtual int FixedTick
         {
             get
             {
@@ -329,7 +329,7 @@ namespace MaiLib
         /// <summary>
         /// Access Tick Stamp = this.Bar*384 + this.Tick
         /// </summary>
-        public int TickStamp
+        public virtual int TickStamp
         {
             get
             {
@@ -346,7 +346,7 @@ namespace MaiLib
         /// <summary>
         /// Access Tick Stamp = this.Bar*384 + this.Tick
         /// </summary>
-        public double TickTimeStamp
+        public virtual double TickTimeStamp
         {
             get { return this.tickTimeStamp; }
             set { this.tickTimeStamp = value; }
@@ -355,7 +355,7 @@ namespace MaiLib
         /// <summary>
         /// Access wait time
         /// </summary>
-        public int WaitLength
+        public virtual int WaitLength
         {
             get
             {
@@ -371,7 +371,7 @@ namespace MaiLib
         /// Access the time stamp where wait time ends in ticks
         /// </summary>
         /// <value>The incoming time</value>
-        public int WaitTickStamp
+        public virtual int WaitTickStamp
         {
             get { return this.waitTickStamp; }
             set { this.waitTickStamp = value; }
@@ -381,7 +381,7 @@ namespace MaiLib
         /// Access the time stamp where wait time ends in seconds
         /// </summary>
         /// <value>The incoming time</value>
-        public double WaitTimeStamp
+        public virtual double WaitTimeStamp
         {
             get { return this.waitTimeStamp; }
             set { this.waitTimeStamp = value; }
@@ -393,7 +393,7 @@ namespace MaiLib
         /// <value>
         /// The calculated wait time in seconds.
         /// </value>
-        public double CalculatedWaitTime
+        public virtual double CalculatedWaitTime
         {
             get { return this.calculatedWaitTime; }
             set { this.calculatedWaitTime = value; }
@@ -402,7 +402,7 @@ namespace MaiLib
         /// <summary>
         /// Access EndTime
         /// </summary>
-        public int LastLength
+        public virtual int LastLength
         {
             get
             {
@@ -417,7 +417,7 @@ namespace MaiLib
         /// <summary>
         /// Access FixedEndTime
         /// </summary>
-        public int FixedLastLength
+        public virtual int FixedLastLength
         {
             get
             {
@@ -432,7 +432,7 @@ namespace MaiLib
         /// <summary>
         /// Access Last time in ticks
         /// </summary>
-        public int LastTickStamp
+        public virtual int LastTickStamp
         {
             get
             {
@@ -447,7 +447,7 @@ namespace MaiLib
         /// <summary>
         /// Access last time in seconds
         /// </summary>
-        public double LastTimeStamp
+        public virtual double LastTimeStamp
         {
             get
             {
@@ -465,7 +465,7 @@ namespace MaiLib
         /// <value>
         /// The calculated last time in seconds.
         /// </value>
-        public double CalculatedLastTime
+        public virtual double CalculatedLastTime
         {
             get => this.calculatedLastTime;
             set { this.calculatedLastTime = value; }
@@ -475,7 +475,7 @@ namespace MaiLib
         /// Stores if the wait or last are in different BPM
         /// </summary>
         /// <value>True if in different BPM, false otherwise</value>
-        public bool TickBPMDisagree
+        public virtual bool TickBPMDisagree
         {
             get => this.tickBPMDisagree;
             set { this.tickBPMDisagree = value; }
@@ -484,7 +484,7 @@ namespace MaiLib
         /// <summary>
         /// Access EndKey
         /// </summary>
-        public string EndKey
+        public virtual string EndKey
         {
             get
             {
@@ -500,7 +500,7 @@ namespace MaiLib
         /// Get the number value of End Key
         /// </summary>
         /// <value>Number value of Key 0-7, exclude key group</value>
-        public int EndKeyNum
+        public virtual int EndKeyNum
         {
             get
             {
@@ -525,7 +525,7 @@ namespace MaiLib
         /// <summary>
         /// Access BPM
         /// </summary>
-        public double BPM
+        public virtual double BPM
         {
             get { return this.bpm; }
             set { this.bpm = value; }
@@ -601,6 +601,8 @@ namespace MaiLib
 
         public abstract string Compose(int format);
 
+        public abstract string Compose(int format,Chart.CompatibleProperty chartProperty);
+
         public abstract Note NewInstance();
 
         public int CompareTo(Object? obj)
@@ -609,42 +611,6 @@ namespace MaiLib
 
             Note another = obj as Note ?? throw new NullReferenceException("Note is not defined");
 
-            //else if (this.NoteSpecificType().Equals("SLIDE")&&(this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD")) && this.tick == another.Tick && this.bar == another.Bar)
-            //{
-            //    result = -1;
-            //}
-            //else if (this.NoteSpecificType().Equals("SLIDE_START") && (another.NoteSpecificType().Equals("TAP") || another.NoteSpecificType().Equals("HOLD")) && this.tick == another.Tick && this.bar == another.Bar)
-            //{
-            //    Console.WriteLine("STAR AND TAP");
-            //    result = 1;
-            //    Console.WriteLine(this.NoteSpecificType() + ".compareTo(" + another.NoteSpecificType() + ") is" + result);
-            //    //Console.ReadKey();
-            //}
-            //if (this.Bar==another.Bar&&this.Tick==another.Tick)
-            //{
-            //    if (this.NoteGenre().Equals("BPM"))
-            //    {
-            //        result = -1;
-            //    }
-            //    else if (this.NoteGenre().Equals("MEASURE"))
-            //    {
-            //        result = 1;
-            //    }
-            //    else if ((this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD"))&&another.NoteSpecificType().Equals("SLIDE_START"))
-            //    {
-            //        result= -1;
-            //    }
-            //}
-            //else
-            //{
-            //    if (this.bar != another.Bar)
-            //    {
-            //        result = this.bar.CompareTo(another.Bar);
-            //        //Console.WriteLine("this.compareTo(another) is" + result);
-            //        //Console.ReadKey();
-            //    }
-            //    else result = this.tick.CompareTo(another.Tick);
-            //}
             if (this.Bar != another.Bar)
             {
                 result = this.Bar.CompareTo(another.Bar);
@@ -659,10 +625,6 @@ namespace MaiLib
                 {
                     result = -1;
                 }
-                //else if (this.NoteSpecificType().Equals("SLIDE")&&another.NoteSpecificType().Equals("SLIDE_START")&&this.Key.Equals(another.Key))
-                //{
-                //    result = 1;
-                //}
                 else result = 0;
             }
             return result;

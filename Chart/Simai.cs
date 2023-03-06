@@ -215,7 +215,7 @@ namespace MaiLib
 
         public override bool CheckValidity()
         {
-            bool result = this == null;
+            bool result = this != null;
             // Not yet implemented
             return result;
         }

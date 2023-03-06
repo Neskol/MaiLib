@@ -144,66 +144,126 @@
 
         public override string Compose(int format)
         {
+            return this.Compose(format, Chart.CompatibleProperty.Normal);
+        }
+
+        public override string Compose(int format,Chart.CompatibleProperty chartProperty)
+        {
             string result = "";
-            if (format == 1 && !(this.NoteType.Equals("THO")))
+            if (chartProperty == Chart.CompatibleProperty.Festival) 
             {
-                result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key + "\t" + this.LastLength;
-            }
-            else if (format == 1 && this.NoteType.Equals("THO"))
-            {
-                result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key.ToCharArray()[0] + "\t" + this.LastLength + "\t" + this.Key.ToCharArray()[1] + "\t" + this.SpecialEffect + "\tM1"; //M1 for regular note and L1 for Larger Note
-            }
-            else if (format == 0)
-            {
-                switch (this.NoteType)
+                string noteTypePrefix = "";
+                switch (this.NoteSpecialState)
                 {
-                    case "HLD":
-                        result += (Convert.ToInt32(this.Key) + 1);
-                        if (this.NoteSpecialState == Note.SpecialState.Break)
-                        {
-                            result += "b";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.EX)
-                        {
-                            result += "x";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                        {
-                            result += "bx";
-                        }
-                        result += "h";
+                    case Note.SpecialState.Break:
+                        noteTypePrefix = "BR";
                         break;
-                    case "XHO":
-                        result += (Convert.ToInt32(this.Key) + 1) + "xh";
+                    case Note.SpecialState.EX:
+                        noteTypePrefix = "EX";
                         break;
-                    case "THO":
-                        result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString();
-                        if (this.NoteSpecialState == Note.SpecialState.Break)
-                        {
-                            result += "b";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.EX)
-                        {
-                            result += "x";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                        {
-                            result += "bx";
-                        }
-                        if (this.SpecialEffect == 1)
-                        {
-                            result += "f";
-                        }
-                        result += "h";
+                    case Note.SpecialState.BreakEX:
+                        noteTypePrefix = "BX";
+                        break;
+                    case Note.SpecialState.Normal:
+                    default:
+                        noteTypePrefix = "NM";
                         break;
                 }
-                if (this.TickBPMDisagree || this.Delayed)
+                if (format == 1 && !(this.NoteType.Equals("THO")))
                 {
-                    result += GenerateAppropriateLength(this.FixedLastLength);
+                    result = noteTypePrefix+this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key + "\t" + this.LastLength;
+                }
+                else if (format == 1 && this.NoteType.Equals("THO"))
+                {
+                    result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key.ToCharArray()[0] + "\t" + this.LastLength + "\t" + this.Key.ToCharArray()[1] + "\t" + this.SpecialEffect + "\tM1"; //M1 for regular note and L1 for Larger Note
+                }
+                else if (format == 0)
+                {
+                    switch (this.NoteType)
+                    {
+                        case "HLD":
+                            result += (Convert.ToInt32(this.Key) + 1);
+                            if (this.NoteSpecialState == Note.SpecialState.Break)
+                            {
+                                result += "b";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.EX)
+                            {
+                                result += "x";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                            {
+                                result += "bx";
+                            }
+                            result += "h";
+                            break;
+                        case "XHO":
+                        case "THO":
+                            result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString();
+                            if (this.NoteSpecialState == Note.SpecialState.Break)
+                            {
+                                result += "b";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.EX)
+                            {
+                                result += "x";
+                            }
+                            else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                            {
+                                result += "bx";
+                            }
+                            if (this.SpecialEffect == 1)
+                            {
+                                result += "f";
+                            }
+                            result += "h";
+                            break;
+                    }
+                    if (this.TickBPMDisagree || this.Delayed)
+                    {
+                        result += GenerateAppropriateLength(this.FixedLastLength);
+                    }
+                    else
+                    {
+                        result += GenerateAppropriateLength(this.LastLength);
+                    }
                 }
                 else
                 {
-                    result += GenerateAppropriateLength(this.LastLength);
+                    if (format == 1 && !(this.NoteType.Equals("THO")))
+                    {
+                        result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key + "\t" + this.LastLength;
+                    }
+                    else if (format == 1 && this.NoteType.Equals("THO"))
+                    {
+                        result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key.ToCharArray()[0] + "\t" + this.LastLength + "\t" + this.Key.ToCharArray()[1] + "\t" + this.SpecialEffect + "\tM1"; //M1 for regular note and L1 for Larger Note
+                    }
+                    else if (format == 0)
+                    {
+                        switch (this.NoteType)
+                        {
+                            case "HLD":
+                                result += (Convert.ToInt32(this.Key) + 1);
+                                if (this.NoteSpecialState == Note.SpecialState.Break)
+                                result += "h";
+                                break;
+                            case "XHO":
+                                result += (Convert.ToInt32(this.Key) + 1) + "xh";
+                                break;
+                            case "THO":
+                                result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString();
+                                result += "h";
+                                break;
+                        }
+                        if (this.TickBPMDisagree || this.Delayed)
+                        {
+                            result += GenerateAppropriateLength(this.FixedLastLength);
+                        }
+                        else
+                        {
+                            result += GenerateAppropriateLength(this.LastLength);
+                        }
+                    }
                 }
             }
             return result;
