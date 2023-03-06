@@ -147,56 +147,10 @@ namespace MaiLib
 
         public Note NoteOfToken(string token)
         {
-            Note result = new Rest();
-            bool isTap = token.Split('\t')[(int)StdParam.Type].Contains("TAP")
-                || token.Split('\t')[(int)StdParam.Type].Contains("STR")
-                || token.Split('\t')[(int)StdParam.Type].Contains("TTP")
-                || token.Split('\t')[(int)StdParam.Type].Equals("XTP")
-                || token.Split('\t')[(int)StdParam.Type].Equals("XST")
-                || token.Split('\t')[(int)StdParam.Type].Equals("BRK")
-                || token.Split('\t')[(int)StdParam.Type].Equals("BST");
-            bool isHold = token.Split('\t')[(int)StdParam.Type].Contains("HLD")
-                || token.Split('\t')[(int)StdParam.Type].Equals("XHO")
-                || token.Split('\t')[(int)StdParam.Type].Contains("THO");
-            bool isSlide = token.Split('\t')[(int)StdParam.Type].Contains("SI_")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SV_")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SF_")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SCL")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SCR")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SUL")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SUR")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SLL")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SLR")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SXL")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SXR")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SSL")
-                || token.Split('\t')[(int)StdParam.Type].Contains("SSR");
             string[] candidate = token.Split('\t');
             int bar = Int32.Parse(candidate[(int)StdParam.Bar]);
             int tick = Int32.Parse(candidate[(int)StdParam.Tick]);
-            if (isTap)
-            {
-                result = TapOfToken(token);
-                if (result.NoteSpecificGenre.Equals("SLIDE_START"))
-                {
-                    PreviousSlideStart = (Tap)result;
-                }
-            }
-            else if (isHold)
-            {
-                result = HoldOfToken(token);
-            }
-            else if (isSlide)
-            {
-                result = SlideOfToken(token);
-                // result.SlideStart = PreviousSlideStart;
-            }
-            if (result.Tick == 384)
-            {
-                result.Tick = 0;
-                result.Bar++;
-            }
-            return result;
+            return this.NoteOfToken(token, bar, tick, 0.0);
         }
 
         public Note NoteOfToken(string token, int bar, int tick, double bpm)
@@ -269,6 +223,7 @@ namespace MaiLib
                         break;
                 }
             }
+            if (bpm>0.0) result.BPM = bpm;
             return result;
         }
 
