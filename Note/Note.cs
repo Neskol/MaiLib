@@ -1253,16 +1253,15 @@ namespace MaiLib
         public string GenerateAppropriateLength(int length, double bpm)
         {
             string result = "";
+            double duration = Math.Round(this.LastTimeStamp - this.WaitTimeStamp, 4);
             switch (this.NoteGenre)
             {
                 case "SLIDE":
-                    double sustain = this.WaitTimeStamp - this.TickTimeStamp;
-                    double duration = this.LastTimeStamp - this.WaitTimeStamp;
+                    double sustain = Math.Round(this.WaitTimeStamp - this.TickTimeStamp,4);                 
                     result = "[" + sustain + "##" + duration + "]";
                     break;
                 case "HOLD":
-                    double startTime = this.TickTimeStamp;
-                    duration = this.LastTimeStamp - this.TickTimeStamp;
+                    double startTime = Math.Round(startTime = this.TickTimeStamp,4);
                     result = "[" + startTime + "##" + duration + "]";
                     break;
             }
