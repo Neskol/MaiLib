@@ -185,6 +185,10 @@ namespace MaiLib
                 if (isTap)
                 {
                     result = TapOfToken(token, bar, tick, bpm);
+                    if (result.NoteSpecificGenre.Equals("SLIDE_START"))
+                    {
+                        PreviousSlideStart = (Tap)result;
+                    }
                 }
                 else if (isHold)
                 {
