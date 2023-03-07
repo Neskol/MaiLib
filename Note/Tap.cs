@@ -191,9 +191,33 @@
                 {
                     case "TAP":
                         result += (Int32.Parse(this.Key) + 1).ToString();
+                        if (this.NoteSpecialState == Note.SpecialState.Break)
+                        {
+                            result += "b";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.EX)
+                        {
+                            result += "x";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                        {
+                            result += "bx";
+                        }
                         break;
                     case "STR":
                         result += (Int32.Parse(this.Key) + 1).ToString();
+                        if (this.NoteSpecialState == Note.SpecialState.Break)
+                        {
+                            result += "b";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.EX)
+                        {
+                            result += "x";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                        {
+                            result += "bx";
+                        }
                         break;
                     case "BRK":
                         result += (Int32.Parse(this.Key) + 1).ToString() + "b";
@@ -212,6 +236,18 @@
                         break;
                     case "TTP":
                         result += this.Key.ToCharArray()[1] + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString());
+                        if (this.NoteSpecialState == Note.SpecialState.Break)
+                        {
+                            result += "b";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.EX)
+                        {
+                            result += "x";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                        {
+                            result += "bx";
+                        }
                         if (this.SpecialEffect == 1)
                         {
                             result += "f";

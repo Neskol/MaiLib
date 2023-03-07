@@ -158,18 +158,43 @@
                 switch (this.NoteType)
                 {
                     case "HLD":
-                        result += (Convert.ToInt32(this.Key) + 1) + "h";
+                        result += (Convert.ToInt32(this.Key) + 1);
+                        if (this.NoteSpecialState == Note.SpecialState.Break)
+                        {
+                            result += "b";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.EX)
+                        {
+                            result += "x";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                        {
+                            result += "bx";
+                        }
+                        result += "h";
                         break;
                     case "XHO":
                         result += (Convert.ToInt32(this.Key) + 1) + "xh";
                         break;
                     case "THO":
+                        result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString();
+                        if (this.NoteSpecialState == Note.SpecialState.Break)
+                        {
+                            result += "b";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.EX)
+                        {
+                            result += "x";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                        {
+                            result += "bx";
+                        }
                         if (this.SpecialEffect == 1)
                         {
-                            result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString() + "hf";
+                            result += "f";
                         }
-                        else
-                            result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString() + "xh";
+                        result += "h";
                         break;
                 }
                 if (this.TickBPMDisagree || this.Delayed)
