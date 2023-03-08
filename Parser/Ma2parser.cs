@@ -180,30 +180,28 @@ namespace MaiLib
                 || token.Split('\t')[(int)StdParam.Type].Contains("SSL")
                 || token.Split('\t')[(int)StdParam.Type].Contains("SSR");
             string[] candidate = token.Split('\t');
-            foreach (string x in candidate)
+            if (isTap)
             {
-                if (isTap)
+                result = TapOfToken(token);
+                if (result.NoteSpecificGenre.Equals("SLIDE_START"))
                 {
-                    result = TapOfToken(token, bar, tick, bpm);
-                    if (result.NoteSpecificGenre.Equals("SLIDE_START"))
-                    {
-                        PreviousSlideStart = (Tap)result;
-                    }
+                    PreviousSlideStart = (Tap)result;
                 }
-                else if (isHold)
-                {
-                    result = HoldOfToken(token, bar, tick, bpm);
-                }
-                else if (isSlide)
-                {
-                    result = SlideOfToken(token, bar, tick, PreviousSlideStart, bpm);
-                }
+            }
+            else if (isHold)
+            {
+                result = HoldOfToken(token);
+            }
+            else if (isSlide)
+            {
+                result = SlideOfToken(token);
+                // result.SlideStart = PreviousSlideStart;
             }
             if (result.Tick == 384)
             {
                 result.Tick = 0;
                 result.Bar++;
-            }     
+            }  
             if (candidate[(int)DxTapParam.Type].Length > 3)
             {
                 string specialProperty = "";
