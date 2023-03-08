@@ -179,6 +179,24 @@ namespace MaiLib
                 || token.Split('\t')[(int)StdParam.Type].Contains("SXR")
                 || token.Split('\t')[(int)StdParam.Type].Contains("SSL")
                 || token.Split('\t')[(int)StdParam.Type].Contains("SSR");
+            if (isTap)
+            {
+                result = TapOfToken(token);
+            }
+            else if (isHold)
+            {
+                result = HoldOfToken(token);
+            }
+            else if (isSlide)
+            {
+                result = SlideOfToken(token);
+                // result.SlideStart = PreviousSlideStart;
+            }
+            if (result.Tick == 384)
+            {
+                result.Tick = 0;
+                result.Bar++;
+            }
             string[] candidate = token.Split('\t');
             if (candidate[(int)DxTapParam.Type].Length > 3)
             {
@@ -203,29 +221,11 @@ namespace MaiLib
                         break;
                 }
             }
-            if (isTap)
-            {
-                result = TapOfToken(token);
-                if (result.NoteSpecificGenre.Equals("SLIDE_START"))
-                {
-                    PreviousSlideStart = (Tap)result;
-                }
-            }
-            else if (isHold)
-            {
-                result = HoldOfToken(token);
-            }
-            else if (isSlide)
-            {
-                result = SlideOfToken(token);
-                // result.SlideStart = PreviousSlideStart;
-            }
-            if (result.Tick == 384)
-            {
-                result.Tick = 0;
-                result.Bar++;
-            }  
             if (bpm>0.0) result.BPM = bpm;
+            if (result.NoteSpecificGenre.Equals("SLIDE_START"))
+            {
+                PreviousSlideStart = (Tap)result;
+            }
             return result;
         }
 
