@@ -1309,5 +1309,21 @@ namespace MaiLib
             } //A serious improvement is needed for this method
             return result;
         }
+
+        public override bool Equals(object? obj)
+        {
+            bool result = (this == null && obj == null) || (this!=null && obj!=null);
+            if (result && obj!=null)
+            {
+                Note localNote = (Note)obj;
+                result = (this.TickStamp == localNote.TickStamp) && this.Compose(1).Equals(localNote.Compose(1));
+            }
+            return result;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -58,6 +58,27 @@ namespace MaiLib
             this.Update();
         }
 
+        public void ComposeSlideGroup()
+        {
+            List<Note> adjusted = new();
+            List<SlideGroup> slideGroups = new();
+            List<Slide> connectedSlides = new();
+            List<Slide> slideNotesOfChart = new();
+            SlideGroup currentGroup = new();
+
+            foreach (Note candidate in this.Notes)
+            {
+                if (candidate.NoteGenre.Equals("SLIDE")) slideNotesOfChart.Add((Slide)candidate);
+            }
+
+            /// If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
+            for (int i = 0, j=1; i < slideNotesOfChart.Count && j<slideNotesOfChart.Count;i++, j++)
+            {
+
+            }
+            this.Notes = new(adjusted);
+        }
+
         public override string Compose()
         {
             string result = "";
