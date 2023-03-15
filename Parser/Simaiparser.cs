@@ -431,7 +431,6 @@ public class SimaiParser : IParser
             int times = int.Parse(lastTimeCandidates[1]);
             lastTick *= times;
             result = new Slide(noteType, bar, tick, slideStartCandidate.Key, 96, lastTick, fixedKeyCandidate.ToString());
-            result.SlideStart = slideStartCandidate;
         }
         else
         {
@@ -444,7 +443,6 @@ public class SimaiParser : IParser
             result = new Slide(noteType, bar, tick, slideStartCandidate.Key, waitLength, lastLength, fixedKeyCandidate.ToString());
             result.CalculatedWaitTime = waitLengthCandidate;
             result.CalculatedLastTime = lastLengthCandidate;
-            result.SlideStart = slideStartCandidate;
         }
 
         result.BPM = bpm;

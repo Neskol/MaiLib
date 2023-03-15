@@ -283,8 +283,6 @@ namespace MaiLib
                         int.Parse(candidate[(int)StdParam.WaitTime]),
                         int.Parse(candidate[(int)StdParam.LastTime]),
                         candidate[(int)StdParam.EndKey]);
-            result.SlideStart = slideStart;
-            slideStart.ConsecutiveSlide = result;
             if (bpm > 0.0) result.BPM = bpm;
             return result;
         }

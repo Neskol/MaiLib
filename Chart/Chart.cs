@@ -487,13 +487,13 @@ namespace MaiLib
                                     //Console.WriteLine("New delay: "+delay);
                                     //Console.WriteLine(x.Compose(1));
                                 }
-                                if (x.SlideStart == null)
-                                {
-                                    Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
-                                    Console.WriteLine(x.Compose(1));
-                                    Console.WriteLine("This slide has start: " + (x.SlideStart == null));
-                                    throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
-                                }
+                                // if (x.SlideStart == null)
+                                // {
+                                //     Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
+                                //     Console.WriteLine(x.Compose(1));
+                                //     Console.WriteLine("This slide has start: " + (x.SlideStart == null));
+                                //     throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
+                                // }
                                 break;
                             default:
                                 break;
@@ -554,37 +554,6 @@ namespace MaiLib
         /// <returns>String of chart compiled</returns>
         public abstract string Compose();
 
-        /// <summary>
-        /// Check if all of the slide starts were in the notes
-        /// </summary>
-        public void CheckSlideStart()
-        {
-            List<Note> adjusted = new();
-            Note previousSlideStart = new Rest();
-            foreach (Note x in this.Notes)
-            {
-                if (x.NoteGenre.Equals("SLIDE"))
-                {
-                    if (x.SlideStart != null && x.SlideStart.NoteType.Equals("NST") && !adjusted.Contains(x.SlideStart))
-                    {
-                        adjusted.Add(x.SlideStart);
-                        previousSlideStart = new Tap(x.SlideStart);
-                    }
-                    else if (x.SlideStart == null)
-                    {
-                        Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
-                        if (x.NoteSpecialState!=Note.SpecialState.ConnectingSlide) Console.WriteLine(x.Compose(1));
-                        Console.WriteLine("This slide has start: " + (x.SlideStart == null));
-                        throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
-                    }
-                }
-                if (!x.NoteGenre.Equals("SLIDE_START"))
-                {
-                    adjusted.Add(x);
-                }
-            }
-            this.Notes = new(adjusted);
-        }
 
         /// <summary>
         /// Override and compose with given arrays

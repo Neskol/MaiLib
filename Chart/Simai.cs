@@ -1,5 +1,3 @@
-using System.Net.Http.Headers;
-
 namespace MaiLib
 {
     public class Simai : Chart
@@ -100,6 +98,45 @@ namespace MaiLib
             //For verification only: check if slide count is correct
             if (processedSlides!=slideNotesOfChart.Count) throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart + ", Actual:" + processedSlides);
             this.Notes = new(adjusted);
+        }
+
+        public void ComposeSlideEachGroup()
+        {
+            List<SlideEachSet> composedCandidates = new();
+            List<Note> adjusted = new();
+            int processedNotes = 0;
+            foreach (Note x in this.Notes)
+            {
+                bool eachCandidateCombined = false;
+                if (!(x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START")))
+                {
+                    adjusted.Add(x);
+                    processedNotes++;
+                }
+                else if (composedCandidates.Count>0 && x.NoteSpecificGenre.Equals("SLIDE_START")) foreach (SlideEachSet parent in composedCandidates)
+                {
+                    Tap slideStartCandidate = x as Tap ?? throw new InvalidOperationException("THIS IS NOT A SLIDE START");
+                    eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
+                    processedNotes++;
+                }
+                else if (composedCandidates.Count > 0 && x.NoteSpecificGenre.Equals("SLIDE")) foreach (SlideEachSet parent in composedCandidates)
+                {
+                    Slide slideStartCandidate = x as Slide ?? throw new InvalidOperationException("THIS IS NOT A SLIDE");
+                    eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
+                    processedNotes++;
+                }
+                else if (!eachCandidateCombined && (x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START")))
+                {
+                    composedCandidates.Add(new SlideEachSet(x));
+                    processedNotes++;
+                }
+            }
+            if (processedNotes != this.Notes.Count) throw new InvalidOperationException("PROCESSED NOTES MISMATCH: Expected "+this.Notes.Count+", Actual "+processedNotes);
+            else
+            {
+                adjusted.AddRange(composedCandidates);
+                this.Notes = adjusted;
+            }
         }
 
         public override string Compose()
