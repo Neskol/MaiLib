@@ -162,11 +162,13 @@ namespace MaiLib
                     separateSymbol = "*";
                     if (this.InternalSlides.Count == 0 && this.SlideStart!=null) result += this.SlideStart.Compose(format) + "$";
                     else if (this.InternalSlides.Count>0 && this.SlideStart == null) result += new Tap(this.InternalSlides.First()).Compose(format) + "!";
+                    else if (this.SlideStart != null) result += this.SlideStart.Compose(format);
                     break;
                 case 1:
                 default:
                     if (this.InternalSlides.Count == 0 && this.SlideStart != null) result += this.SlideStart.Compose(format);
                     else if (this.InternalSlides.Count > 0 && this.SlideStart == null) result += new Tap(this.InternalSlides.First()).Compose(format);
+                    else if (this.SlideStart != null) result += this.SlideStart.Compose(format);
                     separateSymbol = "\n";
                     break;
             }

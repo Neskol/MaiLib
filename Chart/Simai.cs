@@ -61,20 +61,23 @@ namespace MaiLib
             List<Note> adjusted = new();
             List<Slide> connectedSlides = new();
             List<Slide> slideNotesOfChart = new();
-            
 
+            int maximumBar = 0;
             foreach (Note candidate in this.Notes)
             {
-                if (candidate.NoteGenre.Equals("SLIDE")) slideNotesOfChart.Add((Slide)candidate);
+                maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
+                if (candidate.NoteSpecificGenre.Equals("SLIDE")) slideNotesOfChart.Add((Slide)candidate);
                 else adjusted.Add(candidate);
             }
 
             /// If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
 
             int processedSlides = 0;
+            
             for (int i = 0; i < slideNotesOfChart.Count; i++)
             {              
-                Slide parentSlide = slideNotesOfChart[i];           
+                Slide parentSlide = slideNotesOfChart[i];
+                maximumBar = parentSlide.Bar > maximumBar ? parentSlide.Bar : maximumBar;        
                 if (parentSlide.NoteSpecialState != Note.SpecialState.ConnectingSlide)
                 {
                     SlideGroup currentGroup = new();
@@ -98,6 +101,7 @@ namespace MaiLib
             //For verification only: check if slide count is correct
             if (processedSlides!=slideNotesOfChart.Count) throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart + ", Actual:" + processedSlides);
             this.Notes = new(adjusted);
+            
         }
 
         public void ComposeSlideEachGroup()
@@ -117,26 +121,23 @@ namespace MaiLib
                 {
                     Tap slideStartCandidate = x as Tap ?? throw new InvalidOperationException("THIS IS NOT A SLIDE START");
                     eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
-                    processedNotes++;
+                    if (eachCandidateCombined) processedNotes++;
                 }
                 else if (composedCandidates.Count > 0 && x.NoteSpecificGenre.Equals("SLIDE")) foreach (SlideEachSet parent in composedCandidates)
                 {
                     Slide slideStartCandidate = x as Slide ?? throw new InvalidOperationException("THIS IS NOT A SLIDE");
                     eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
-                    processedNotes++;
+                    if (eachCandidateCombined) processedNotes++;
                 }
-                else if (!eachCandidateCombined && (x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START")))
+                if (!eachCandidateCombined && (x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START")))
                 {
                     composedCandidates.Add(new SlideEachSet(x));
                     processedNotes++;
                 }
             }
-            if (processedNotes != this.Notes.Count) throw new InvalidOperationException("PROCESSED NOTES MISMATCH: Expected "+this.Notes.Count+", Actual "+processedNotes);
-            else
-            {
-                adjusted.AddRange(composedCandidates);
-                this.Notes = adjusted;
-            }
+            // if (processedNotes != this.Notes.Count) throw new InvalidOperationException("PROCESSED NOTES MISMATCH: Expected "+this.Notes.Count+", Actual "+processedNotes);
+            adjusted.AddRange(composedCandidates);
+            this.Notes = adjusted;
         }
 
         public override string Compose()
@@ -175,78 +176,82 @@ namespace MaiLib
                             break;
                         case "BPM":
                             break;
-                        case "TAP":
-                            if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
-                            {
-                                result += "/";
-                            }
-                            else
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            break;
-                        case "HOLD":
-                            if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "/";
-                            }
-                            else
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            break;
-                        case "SLIDE_START":
-                            // if (lastNote.ConsecutiveSlide == null)
-                            // {
-                            //     result += "$";
-                            // }
-                            // if (x.IsNote && (!x.NoteGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            // {
-                            //     result += "/";
-                            // }
-                            // else if (x.NoteGenre != "SLIDE"||lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
-                            // {
-                            //     result += ",";
-                            // }
-                            if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
-                            {
-                                result += "/";
-                            }
-                            else if (x.IsNote && !x.NoteSpecificGenre.Equals("SLIDE") && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            else if (x.NoteGenre.Equals("REST"))
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            break;
-                        case "SLIDE":
-                            if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "/";
-                            }
-                            else if (x.IsNote && x.NoteSpecificGenre.Equals("SLIDE") && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "*";
-                            }
-                            // else if (x.IsNote && !lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Bar!=lastNote.Bar && x.Tick!=lastNote.Tick&& !x.NoteGenre.Equals("BPM"))
-                            // {
-                            //     result += ",";
-                            // }
-                            else
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            break;
+                        // case "TAP":
+                        //     if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
+                        //     {
+                        //         result += "/";
+                        //     }
+                        //     else
+                        //     {
+                        //         result += ",";
+                        //         commaCompiled++;
+                        //     }
+                        //     break;
+                        // case "HOLD":
+                        //     if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                        //     {
+                        //         result += "/";
+                        //     }
+                        //     else
+                        //     {
+                        //         result += ",";
+                        //         commaCompiled++;
+                        //     }
+                        //     break;
+                        // case "SLIDE_START":
+                        //     // if (lastNote.ConsecutiveSlide == null)
+                        //     // {
+                        //     //     result += "$";
+                        //     // }
+                        //     // if (x.IsNote && (!x.NoteGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                        //     // {
+                        //     //     result += "/";
+                        //     // }
+                        //     // else if (x.NoteGenre != "SLIDE"||lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
+                        //     // {
+                        //     //     result += ",";
+                        //     // }
+                        //     if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
+                        //     {
+                        //         result += "/";
+                        //     }
+                        //     else if (x.IsNote && !x.NoteSpecificGenre.Equals("SLIDE") && !x.NoteGenre.Equals("BPM"))
+                        //     {
+                        //         result += ",";
+                        //         commaCompiled++;
+                        //     }
+                        //     else if (x.NoteGenre.Equals("REST"))
+                        //     {
+                        //         result += ",";
+                        //         commaCompiled++;
+                        //     }
+                        //     break;
+                        // case "SLIDE":
+                        //     if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                        //     {
+                        //         result += "/";
+                        //     }
+                        //     else if (x.IsNote && x.NoteSpecificGenre.Equals("SLIDE") && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
+                        //     {
+                        //         result += "*";
+                        //     }
+                        //     // else if (x.IsNote && !lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Bar!=lastNote.Bar && x.Tick!=lastNote.Tick&& !x.NoteGenre.Equals("BPM"))
+                        //     // {
+                        //     //     result += ",";
+                        //     // }
+                        //     else
+                        //     {
+                        //         result += ",";
+                        //         commaCompiled++;
+                        //     }
+                        //     break;
                         default:
-                            result += ",";
-                            commaCompiled++;
+                            if (x.IsOfSameTime(lastNote)) result += "/";
+                            else 
+                            {
+                                result += ",";
+                                commaCompiled++;
+                            }
                             break;
                     }
                     // if (x.NoteGenre.Equals("SLIDE"))
@@ -320,6 +325,13 @@ namespace MaiLib
             this.MeasureChanges = sourceMeasures;
             this.Update();
             return result;
+        }
+
+        public override void Update()
+        {
+            this.ComposeSlideGroup();
+            this.ComposeSlideEachGroup();
+            base.Update();
         }
     }
 }

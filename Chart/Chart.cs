@@ -361,9 +361,9 @@ namespace MaiLib
             this.StoredChart = new List<List<Note>>();
             int maxBar = 0;
             double timeStamp = 0.0;
-            if (notes.Count > 0)
+            if (notes.Count > 0) foreach (Note x in this.Notes)
             {
-                maxBar = notes[notes.Count - 1].Bar; //Iterate to get the last note's bar as Max Bar
+                if (x.Bar>maxBar) maxBar = x.Bar;
             }
 
             //Iterate over bar
