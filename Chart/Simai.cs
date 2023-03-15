@@ -61,21 +61,44 @@ namespace MaiLib
         public void ComposeSlideGroup()
         {
             List<Note> adjusted = new();
-            List<SlideGroup> slideGroups = new();
             List<Slide> connectedSlides = new();
             List<Slide> slideNotesOfChart = new();
-            SlideGroup currentGroup = new();
+            
 
             foreach (Note candidate in this.Notes)
             {
                 if (candidate.NoteGenre.Equals("SLIDE")) slideNotesOfChart.Add((Slide)candidate);
+                else adjusted.Add(candidate);
             }
 
             /// If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
-            for (int i = 0, j=1; i < slideNotesOfChart.Count && j<slideNotesOfChart.Count;i++, j++)
-            {
 
+            int processedSlides = 0;
+            for (int i = 0; i < slideNotesOfChart.Count; i++)
+            {              
+                Slide parentSlide = slideNotesOfChart[i];           
+                if (parentSlide.NoteSpecialState != Note.SpecialState.ConnectingSlide)
+                {
+                    SlideGroup currentGroup = new();
+                    currentGroup.AddConnectingSlide(parentSlide);
+                    for (int j = i == 0 ? 1 : 0; j < slideNotesOfChart.Count; j += j + 1 == i ? 2 : 1)
+                    {
+                        Slide candidate = slideNotesOfChart[j];
+                        if ((candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide) && (candidate.TickStamp == currentGroup.LastSlide.LastTickStamp))
+                        {
+                            currentGroup.AddConnectingSlide(candidate);
+                            connectedSlides.Add(candidate);
+                            processedSlides++;
+                        }
+                    }
+                    if (currentGroup.SlideCount>1) adjusted.Add(currentGroup);
+                    else adjusted.Add(parentSlide);
+                    processedSlides++;
+                }
             }
+
+            //For verification only: check if slide count is correct
+            if (processedSlides!=slideNotesOfChart.Count) throw new InvalidOperationException("SLIDE NUMBER MISMATCH: Expected: " + slideNotesOfChart + ", Actual:" + processedSlides);
             this.Notes = new(adjusted);
         }
 
