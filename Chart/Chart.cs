@@ -358,7 +358,6 @@ namespace MaiLib
         /// </summary>
         public virtual void Update()
         {
-            this.CheckSlideStart(); //Add all NSTs back to the chart
             this.StoredChart = new List<List<Note>>();
             int maxBar = 0;
             double timeStamp = 0.0;
@@ -574,7 +573,7 @@ namespace MaiLib
                     else if (x.SlideStart == null)
                     {
                         Console.WriteLine("A SLIDE WITHOUT START WAS FOUND");
-                        Console.WriteLine(x.Compose(1));
+                        if (x.NoteSpecialState!=Note.SpecialState.ConnectingSlide) Console.WriteLine(x.Compose(1));
                         Console.WriteLine("This slide has start: " + (x.SlideStart == null));
                         throw new NullReferenceException("A SLIDE WITHOUT START WAS FOUND");
                     }
@@ -695,6 +694,7 @@ namespace MaiLib
                 Note bpm = new Rest();
                 List<Note> eachSet = new List<Note>();
                 List<Note> touchEachSet = new List<Note>();
+
                 //Set condition to write rest if appropriate
                 writeRest = true;
                 //Add Appropriate note into each set
@@ -706,11 +706,6 @@ namespace MaiLib
                         if (x.NoteSpecificGenre.Equals("BPM"))
                         {
                             bpm = x;
-                            //List<Note> tempSet = new List<Note>();
-                            //tempSet.Add(x);
-                            //tempSet.AddRange(eachSet);
-                            //eachSet=tempSet;
-                            //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
                         }
                         else
                         {
@@ -737,7 +732,7 @@ namespace MaiLib
                             lastNote.Next = x;
                         }
                     }
-                    if (!x.NoteSpecificGenre.Equals("BPM"))
+                    if (!x.NoteSpecificGenre.Equals("BPM")&&!x.NoteSpecificGenre.Equals("SLIDE_START"))
                     {
                         lastNote = x.NewInstance();
                     }

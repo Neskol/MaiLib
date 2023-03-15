@@ -214,6 +214,9 @@ namespace MaiLib
                     case "BX":
                         result.NoteSpecialState = Note.SpecialState.BreakEX;
                         break;
+                    case "CN":
+                        result.NoteSpecialState = Note.SpecialState.ConnectingSlide;
+                        break;
                     case "NM":
                     case "":
                     default:

@@ -1171,7 +1171,7 @@ namespace MaiLib
             this.Update();
         }
 
-        public bool Update()
+        public virtual bool Update()
         {
             // Console.WriteLine("This note has bpm note number of " + this.BPMChangeNotes.Count());
             bool result = false;
