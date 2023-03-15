@@ -84,7 +84,7 @@ namespace MaiLib
                     for (int j = i == 0 ? 1 : 0; j < slideNotesOfChart.Count; j += j + 1 == i ? 2 : 1)
                     {
                         Slide candidate = slideNotesOfChart[j];
-                        if ((candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide) && (candidate.TickStamp == currentGroup.LastSlide.LastTickStamp))
+                        if (candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide && candidate.TickStamp == currentGroup.LastSlide.LastTickStamp && !connectedSlides.Contains(candidate))
                         {
                             currentGroup.AddConnectingSlide(candidate);
                             connectedSlides.Add(candidate);
@@ -98,7 +98,7 @@ namespace MaiLib
             }
 
             //For verification only: check if slide count is correct
-            if (processedSlides!=slideNotesOfChart.Count) throw new InvalidOperationException("SLIDE NUMBER MISMATCH: Expected: " + slideNotesOfChart + ", Actual:" + processedSlides);
+            if (processedSlides!=slideNotesOfChart.Count) throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart + ", Actual:" + processedSlides);
             this.Notes = new(adjusted);
         }
 
