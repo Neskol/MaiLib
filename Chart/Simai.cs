@@ -66,7 +66,7 @@ namespace MaiLib
             foreach (Note candidate in this.Notes)
             {
                 maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
-                if (candidate.NoteSpecificGenre.Equals("SLIDE")) slideNotesOfChart.Add((Slide)candidate);
+                if (candidate.NoteSpecificGenre.Equals("SLIDE")||candidate.NoteSpecificGenre.Equals("SLIDE_GROUP")) slideNotesOfChart.Add((Slide)candidate);
                 else adjusted.Add(candidate);
             }
 
@@ -112,7 +112,7 @@ namespace MaiLib
             foreach (Note x in this.Notes)
             {
                 bool eachCandidateCombined = false;
-                if (!(x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START")))
+                if (!(x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START")||x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
                 {
                     adjusted.Add(x);
                     processedNotes++;
@@ -123,13 +123,13 @@ namespace MaiLib
                     eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
                     if (eachCandidateCombined) processedNotes++;
                 }
-                else if (composedCandidates.Count > 0 && x.NoteSpecificGenre.Equals("SLIDE")) foreach (SlideEachSet parent in composedCandidates)
+                else if (composedCandidates.Count > 0 && (x.NoteSpecificGenre.Equals("SLIDE")||x.NoteSpecificGenre.Equals("SLIDE_GROUP"))) foreach (SlideEachSet parent in composedCandidates)
                 {
                     Slide slideStartCandidate = x as Slide ?? throw new InvalidOperationException("THIS IS NOT A SLIDE");
                     eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
                     if (eachCandidateCombined) processedNotes++;
                 }
-                if (!eachCandidateCombined && (x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START")))
+                if (!eachCandidateCombined && (x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START") ||x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
                 {
                     composedCandidates.Add(new SlideEachSet(x));
                     processedNotes++;
