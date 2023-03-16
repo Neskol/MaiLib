@@ -163,6 +163,7 @@ namespace MaiLib
                         break;
                 }
             }
+            this.Notes = adjusted;
         }
 
         /// <summary>
