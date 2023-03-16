@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Xml;
 
@@ -147,7 +148,7 @@ namespace MaiLib
                 beginning += "&version=" + this.MusicXml.TrackVersion + "\n";
                 beginning += "&ChartConverter=Neskol\n";
                 beginning += "&ChartConvertTool=MaichartConverter\n";
-                beginning += "&ChartConvertToolVersion=1.0.4.0\n";
+                beginning += "&ChartConvertToolVersion=" + FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion + "\n";
                 beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
                 beginning += "\n";
 
