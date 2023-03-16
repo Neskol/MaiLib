@@ -85,7 +85,7 @@ namespace MaiLib
                     for (int j = i == 0 ? 1 : 0; j < slideNotesOfChart.Count; j += j + 1 == i ? 2 : 1)
                     {
                         Slide candidate = slideNotesOfChart[j];
-                        if (candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide && candidate.TickStamp == currentGroup.LastSlide.LastTickStamp && !connectedSlides.Contains(candidate))
+                        if (candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide && candidate.TickStamp == currentGroup.LastSlide.LastTickStamp && candidate.Key.Equals(currentGroup.LastSlide.EndKey) && !connectedSlides.Contains(candidate))
                         {
                             currentGroup.AddConnectingSlide(candidate);
                             connectedSlides.Add(candidate);
