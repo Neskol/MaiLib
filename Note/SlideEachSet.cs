@@ -165,6 +165,7 @@ namespace MaiLib
                     else if (this.SlideStart != null) result += this.SlideStart.Compose(format);
                     break;
                 case 1:
+                    throw new InvalidOperationException("Ma2 does not support this feature");
                 default:
                     if (this.InternalSlides.Count == 0 && this.SlideStart != null) result += this.SlideStart.Compose(format) + "\n";
                     else if (this.InternalSlides.Count > 0 && this.SlideStart == null) result += new Tap(this.InternalSlides.First()).Compose(format)+"\n";

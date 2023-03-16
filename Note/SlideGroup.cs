@@ -82,8 +82,8 @@ namespace MaiLib
             }
             else
             {
-                // Console.WriteLine("Invalid slide group located at bar " + this.Bar + " tick " + this.Tick);
-                // throw new InvalidOperationException("MA2 IS NOT COMPATIBLE WITH SLIDE GROUP");
+                Console.WriteLine("Invalid slide group located at bar " + this.Bar + " tick " + this.Tick);
+                throw new InvalidOperationException("MA2 IS NOT COMPATIBLE WITH SLIDE GROUP");
             }
             return result;
         }
