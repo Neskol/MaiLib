@@ -14,6 +14,10 @@ namespace MaiLib
 
         public int SlideCount { get => this == null ? 0 : this.internalSlides.Count;}
 
+        public override string NoteSpecificGenre => "SLIDE_GROUP";
+
+        public List<Slide> InternalSlides { get => this.internalSlides; }
+
         public Slide FirstSlide { get => this.internalSlides.First(); }
         public Slide LastSlide { get => this.internalSlides.Last(); }
 

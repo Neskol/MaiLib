@@ -9,7 +9,7 @@ namespace MaiLib
     public class SlideEachSet : Note
     {
         public Note? SlideStart{ get; set; }
-        public List<Note> InternalSlides;
+        public List<Slide> InternalSlides;
         public override string NoteSpecificGenre => "SLIDE_EACH";
 
         public override string NoteGenre => "SLIDE";
@@ -166,8 +166,8 @@ namespace MaiLib
                     break;
                 case 1:
                 default:
-                    if (this.InternalSlides.Count == 0 && this.SlideStart != null) result += this.SlideStart.Compose(format);
-                    else if (this.InternalSlides.Count > 0 && this.SlideStart == null) result += new Tap(this.InternalSlides.First()).Compose(format);
+                    if (this.InternalSlides.Count == 0 && this.SlideStart != null) result += this.SlideStart.Compose(format) + "\n";
+                    else if (this.InternalSlides.Count > 0 && this.SlideStart == null) result += new Tap(this.InternalSlides.First()).Compose(format)+"\n";
                     else if (this.SlideStart != null) result += this.SlideStart.Compose(format);
                     separateSymbol = "\n";
                     break;
