@@ -99,7 +99,7 @@ namespace MaiLib
             }
 
             //For verification only: check if slide count is correct
-            if (processedSlides!=slideNotesOfChart.Count) throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart + ", Actual:" + processedSlides);
+            if (processedSlides!=slideNotesOfChart.Count) throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count + ", Actual:" + processedSlides);
             this.Notes = new(adjusted);
             
         }

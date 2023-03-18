@@ -107,9 +107,17 @@ namespace MaiLib
         public override bool Update()
         {
             bool result = false;
-            
+            if (this.SlideCount>0&&this.InternalSlides.Last().LastLength == 0) throw new InvalidOperationException("THE LAST SLIDE IN THIS GROUP DOES NOT HAVE LAST TIME ASSIGNED");
             if (this.SlideCount>0&&this.Key!=null)
             {
+                foreach (Slide x in this.InternalSlides)
+                {
+                    if (x.LastLength == 0)
+                    {
+                        x.LastLength = this.InternalSlides.Last().LastLength;
+                    }
+                }
+
                 while (this.Tick >= 384)
                 {
                     this.Tick -= 384;
