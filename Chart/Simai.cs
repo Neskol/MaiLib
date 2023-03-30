@@ -176,75 +176,6 @@ namespace MaiLib
                             break;
                         case "BPM":
                             break;
-                        // case "TAP":
-                        //     if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
-                        //     {
-                        //         result += "/";
-                        //     }
-                        //     else
-                        //     {
-                        //         result += ",";
-                        //         commaCompiled++;
-                        //     }
-                        //     break;
-                        // case "HOLD":
-                        //     if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                        //     {
-                        //         result += "/";
-                        //     }
-                        //     else
-                        //     {
-                        //         result += ",";
-                        //         commaCompiled++;
-                        //     }
-                        //     break;
-                        // case "SLIDE_START":
-                        //     // if (lastNote.ConsecutiveSlide == null)
-                        //     // {
-                        //     //     result += "$";
-                        //     // }
-                        //     // if (x.IsNote && (!x.NoteGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                        //     // {
-                        //     //     result += "/";
-                        //     // }
-                        //     // else if (x.NoteGenre != "SLIDE"||lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
-                        //     // {
-                        //     //     result += ",";
-                        //     // }
-                        //     if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
-                        //     {
-                        //         result += "/";
-                        //     }
-                        //     else if (x.IsNote && !x.NoteSpecificGenre.Equals("SLIDE") && !x.NoteGenre.Equals("BPM"))
-                        //     {
-                        //         result += ",";
-                        //         commaCompiled++;
-                        //     }
-                        //     else if (x.NoteGenre.Equals("REST"))
-                        //     {
-                        //         result += ",";
-                        //         commaCompiled++;
-                        //     }
-                        //     break;
-                        // case "SLIDE":
-                        //     if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                        //     {
-                        //         result += "/";
-                        //     }
-                        //     else if (x.IsNote && x.NoteSpecificGenre.Equals("SLIDE") && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                        //     {
-                        //         result += "*";
-                        //     }
-                        //     // else if (x.IsNote && !lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Bar!=lastNote.Bar && x.Tick!=lastNote.Tick&& !x.NoteGenre.Equals("BPM"))
-                        //     // {
-                        //     //     result += ",";
-                        //     // }
-                        //     else
-                        //     {
-                        //         result += ",";
-                        //         commaCompiled++;
-                        //     }
-                        //     break;
                         default:
                             if (x.IsOfSameTime(lastNote)) result += "/";
                             else 
@@ -254,23 +185,8 @@ namespace MaiLib
                             }
                             break;
                     }
-                    // if (x.NoteGenre.Equals("SLIDE"))
-                    // {
-                    //     if (x.SlideStart==null)
-                    //     {
-                    //         x.SlideStart = new Tap("NST",x.Bar,x.Tick,x.Key);
-                    //     }
-                    // }
-                    // if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&(!lastNote.NoteGenre.Equals("SLIDE")||lastNote.NoteGenre.Equals("SLIDE")&&lastNote.TickStamp!=x.TickStamp&&!lastNote.Key.Equals(x)))
-                    // {
-                    //     result += x.SlideStart.Compose(0);
-                    // }
                     result += x.Compose(0);
                     lastNote = x;
-                    //if (x.NoteGenre().Equals("BPM"))
-                    //{
-                    //    result+="("+ x.Bar + "_" + x.Tick + ")";
-                    //}
                 }
                 result += ",\n";
                 commaCompiled++;
@@ -287,10 +203,6 @@ namespace MaiLib
                     throw new NullReferenceException("COMMA COMPILED MISMATCH IN BAR " + bar[0].Bar);
                 }
             }
-            //if (delayBar>0)
-            //{
-            //    Console.WriteLine("TOTAL DELAYED BAR: "+delayBar);
-            //}
             for (int i = 0; i < delayBar + 1; i++)
             {
                 result += "{1},\n";

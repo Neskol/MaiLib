@@ -66,7 +66,7 @@ public class SimaiParser : IParser
                 }
                 else if (containsMeasure)
                 {
-                    
+
                     string quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
                     tickStep = MaximumDefinition / Int32.Parse(quaverCandidate);
                     // MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
@@ -269,9 +269,9 @@ public class SimaiParser : IParser
         string sustainCandidate = "";
         string noteType = "";
         bool isConnectingSlide = token.Contains("CN");
-        string connectedSlideStart = isConnectingSlide? token.Split("CN")[1]:"";
+        string connectedSlideStart = isConnectingSlide ? token.Split("CN")[1] : "";
         // if (isConnectingSlide) Console.ReadKey();
-        bool isEXBreak = token.Contains("b")&&token.Contains("x");
+        bool isEXBreak = token.Contains("b") && token.Contains("x");
         bool isBreak = token.Contains("b") && !token.Contains("x");
         bool isEX = !token.Contains("b") && token.Contains("x");
         bool timeAssigned = token.Contains("[");
@@ -435,20 +435,20 @@ public class SimaiParser : IParser
         if (!isSecond)
         {
             string[] lastTimeCandidates = sustainCandidate.Split(":");
-            int quaver = timeAssigned? int.Parse(lastTimeCandidates[0]) : 0;
-            int lastTick = timeAssigned? 384 / quaver: 0;
-            int times = timeAssigned? int.Parse(lastTimeCandidates[1]):0;
+            int quaver = timeAssigned ? int.Parse(lastTimeCandidates[0]) : 0;
+            int lastTick = timeAssigned ? 384 / quaver : 0;
+            int times = timeAssigned ? int.Parse(lastTimeCandidates[1]) : 0;
             lastTick *= times;
             result = new Slide(noteType, bar, tick, slideStartCandidate.Key, 96, lastTick, fixedKeyCandidate.ToString());
         }
         else
         {
             string[] timeCandidates = sustainCandidate.Split("##");
-            double waitLengthCandidate = timeAssigned? double.Parse(timeCandidates[0]):0;
-            double lastLengthCandidate = timeAssigned? double.Parse(timeCandidates[1]):0;
+            double waitLengthCandidate = timeAssigned ? double.Parse(timeCandidates[0]) : 0;
+            double lastLengthCandidate = timeAssigned ? double.Parse(timeCandidates[1]) : 0;
             double tickUnit = Chart.GetBPMTimeUnit(bpm);
-            int waitLength = timeAssigned? (int)(waitLengthCandidate / tickUnit):0;
-            int lastLength = timeAssigned? (int)(lastLengthCandidate / tickUnit):0;
+            int waitLength = timeAssigned ? (int)(waitLengthCandidate / tickUnit) : 0;
+            int lastLength = timeAssigned ? (int)(lastLengthCandidate / tickUnit) : 0;
             result = new Slide(noteType, bar, tick, slideStartCandidate.Key, waitLength, lastLength, fixedKeyCandidate.ToString());
             result.CalculatedWaitTime = waitLengthCandidate;
             result.CalculatedLastTime = lastLengthCandidate;
@@ -472,8 +472,8 @@ public class SimaiParser : IParser
     {
         bool isEXBreak = token.Contains("b") && token.Contains("x");
         bool isBreak = token.Contains("b") && !token.Contains("x");
-        bool isEXTap = token.Contains("x")&&token.Contains("b");
-        bool isTouch = token.Contains("A") || 
+        bool isEXTap = token.Contains("x") && token.Contains("b");
+        bool isTouch = token.Contains("A") ||
         token.Contains("B") ||
         token.Contains("C") ||
         token.Contains("D") ||
@@ -486,9 +486,9 @@ public class SimaiParser : IParser
             int keyCandidate = Int32.Parse(token.Substring(1, 1)) - 1;
             if (hasSpecialEffect)
             {
-                result = new Tap("TTP", bar, tick, token.Substring(0, 1) + keyCandidate.ToString(), 1, "M1");
+                result = new Tap("TTP", bar, tick, keyCandidate.ToString() + token.Substring(0, 1), 1, "M1");
             }
-            else result = new Tap("TTP", bar, tick, token.Substring(0, 1) + keyCandidate.ToString(), 0, "M1");
+            else result = new Tap("TTP", bar, tick, keyCandidate.ToString() + token.Substring(0, 1), 0, "M1");
         }
         else if (isEXBreak)
         {
@@ -886,7 +886,7 @@ public class SimaiParser : IParser
             {
                 if (!IsSlideNotation(token[i])) result = token[i].ToString();
             }
-            return ((int.Parse(result)-1)%8).ToString();
+            return ((int.Parse(result) - 1) % 8).ToString();
         }
 
         bool slideStartExtracted = false;
@@ -900,28 +900,28 @@ public class SimaiParser : IParser
         {
             // slideStartExtracted = IsSlideNotation(symbol) && result.Count > 0;
             // normalSlideExtracted = IsSlideNotation(symbol) && result.Count > 2;
-            if (!slideStartExtracted&&!IsSlideNotation(symbol))
+            if (!slideStartExtracted && !IsSlideNotation(symbol))
             {
                 slideStartCandidate += symbol;
             }
-            else if (!normalSlideExtracted&&!IsSlideNotation(symbol))
+            else if (!normalSlideExtracted && !IsSlideNotation(symbol))
             {
                 slideCandidate += symbol;
                 previousSlideNoteBuffer += symbol;
             }
-            else if (IsSlideNotation(symbol)&&((symbol == 'p' && previousSlideNoteBuffer.Equals("p"))||(symbol == 'q' && previousSlideNoteBuffer.Equals("q"))))
+            else if (IsSlideNotation(symbol) && ((symbol == 'p' && previousSlideNoteBuffer.Equals("p")) || (symbol == 'q' && previousSlideNoteBuffer.Equals("q"))))
             {
                 slideCandidate += symbol;
                 previousSlideNoteBuffer += symbol;
             }
-            else if(IsSlideNotation(symbol)&&!slideStartExtracted)
+            else if (IsSlideNotation(symbol) && !slideStartExtracted)
             {
-                if (slideStartCandidate.Length>0) result.Add(slideStartCandidate+"_");
+                if (slideStartCandidate.Length > 0) result.Add(slideStartCandidate + "_");
                 slideCandidate += symbol;
                 previousSlideNoteBuffer += symbol;
                 slideStartExtracted = true;
             }
-            else if (IsSlideNotation(symbol)&&!((symbol == 'p' && previousSlideNoteBuffer.Equals("p")) || (symbol == 'q' && previousSlideNoteBuffer.Equals("q"))) && !normalSlideExtracted)
+            else if (IsSlideNotation(symbol) && !((symbol == 'p' && previousSlideNoteBuffer.Equals("p")) || (symbol == 'q' && previousSlideNoteBuffer.Equals("q"))) && !normalSlideExtracted)
             {
                 lastKeyCandidate = KeyCandidate(slideCandidate);
                 result.Add(slideCandidate);
@@ -931,7 +931,7 @@ public class SimaiParser : IParser
             }
             else if (IsSlideNotation(symbol))
             {
-                result.Add(slideCandidate + "CN"+lastKeyCandidate);
+                result.Add(slideCandidate + "CN" + lastKeyCandidate);
                 lastKeyCandidate = KeyCandidate(slideCandidate);
                 slideCandidate = symbol.ToString();
                 previousSlideNoteBuffer = symbol.ToString();
@@ -941,8 +941,8 @@ public class SimaiParser : IParser
                 slideCandidate += symbol;
             }
         }
-        if (slideCandidate.Length>0&&!normalSlideExtracted) result.Add(slideCandidate);
-        else if(slideCandidate.Length>0&&normalSlideExtracted) result.Add(slideCandidate + "CN"+lastKeyCandidate);
+        if (slideCandidate.Length > 0 && !normalSlideExtracted) result.Add(slideCandidate);
+        else if (slideCandidate.Length > 0 && normalSlideExtracted) result.Add(slideCandidate + "CN" + lastKeyCandidate);
         return result;
     }
 }
