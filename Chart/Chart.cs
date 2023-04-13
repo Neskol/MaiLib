@@ -390,9 +390,9 @@ namespace MaiLib
                     }
                     //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
                     //x.Update();
-                    //x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
+                    x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
                     //x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
-                    //x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
+                    // x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                     if (x.Bar == i)
                     {
                         //x.ReplaceBPMChanges(this.bpmChanges);
