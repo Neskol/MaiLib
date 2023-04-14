@@ -43,6 +43,7 @@ namespace MaiLib
         public TrackInformation SimaiTrackInformation
         {
             get { return this.simaiTrackInformation; }
+        }
 
 
         /// <summary>
