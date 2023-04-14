@@ -37,6 +37,13 @@ namespace MaiLib
             get { return this.chartCandidates; }
         }
 
+        /// <summary>
+        /// Access the chart information
+        /// </summary>
+        public TrackInformation SimaiTrackInformation
+        {
+            get { return this.simaiTrackInformation; }
+
 
         /// <summary>
         /// Update candidates from texts specified
