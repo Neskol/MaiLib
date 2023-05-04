@@ -30,9 +30,11 @@ namespace MaiLib
 
         public Chart ChartOfToken(string[] token)
         {
-            BPMChanges bpmChanges = new BPMChanges();
-            MeasureChanges measureChanges = new MeasureChanges();
+            // BPMChanges bpmChanges = new BPMChanges();
+            // MeasureChanges measureChanges = new MeasureChanges();
             List<Note> notes = new List<Note>();
+            List<BPMChange> bpmChangeNotes = new();
+            List<MeasureChange> measureChangeNotes = new();
             if (token != null)
             {
                 foreach (string x in token)
@@ -71,15 +73,15 @@ namespace MaiLib
                         || (typeCandidate.Contains("BR") && typeCandidate.Length == 5)
                         || (typeCandidate.Contains("BX") && typeCandidate.Length == 5);
 
-                    if (isBPM_DEF)
-                    {
-                        bpmChanges = BPMChangesOfToken(x);
-                    }
-                    else if (isMET_DEF)
-                    {
-                        measureChanges = MeasureChangesOfToken(x);
-                    }
-                    else if (isBPM)
+                    // if (isBPM_DEF)
+                    // {
+                    //     bpmChanges = BPMChangesOfToken(x);
+                    // }
+                    // else if (isMET_DEF)
+                    // {
+                    //     measureChanges = MeasureChangesOfToken(x);
+                    // }
+                    if (isBPM)
                     {
                         string[] bpmCandidate = x.Split('\t');
                         BPMChange candidate = new BPMChange(Int32.Parse(bpmCandidate[1]),
@@ -93,16 +95,15 @@ namespace MaiLib
                         //         Console.WriteLine("A BPM change note was added with overall tick of "+change.TickStamp + " with bpm of "+change.BPM);
                         //     }
                         // }
-                        bpmChanges.Add(candidate);
-                        bpmChanges.Update();
+                        bpmChangeNotes.Add(candidate);
                     }
                     else if (isMET)
                     {
                         string[] measureCandidate = x.Split('\t');
-                        measureChanges.Add(Int32.Parse(measureCandidate[(int)StdParam.Bar]),
+                        measureChangeNotes.Add(new MeasureChange(Int32.Parse(measureCandidate[(int)StdParam.Bar]),
                             Int32.Parse(measureCandidate[(int)StdParam.Tick]),
                             Int32.Parse(measureCandidate[(int)StdParam.Key]),
-                            Int32.Parse(measureCandidate[(int)StdParam.WaitTime]));
+                            Int32.Parse(measureCandidate[(int)StdParam.WaitTime])));
                     }
                     else if (isNOTE)
                     {
@@ -121,24 +122,24 @@ namespace MaiLib
             }
             foreach (Note note in notes)
             {
-                note.BPMChangeNotes = bpmChanges.ChangeNotes;
-                if (bpmChanges.ChangeNotes.Count > 0 && note.BPMChangeNotes.Count == 0)
-                {
-                    throw new IndexOutOfRangeException("BPM COUNT DISAGREE");
-                }
-                if (bpmChanges.ChangeNotes.Count == 0)
-                {
-                    throw new IndexOutOfRangeException("BPM CHANGE COUNT DISAGREE");
-                }
+                note.BPMChangeNotes = new(bpmChangeNotes);
+                // if (bpmChanges.ChangeNotes.Count > 0 && note.BPMChangeNotes.Count == 0)
+                // {
+                //     throw new IndexOutOfRangeException("BPM COUNT DISAGREE");
+                // }
+                // if (bpmChanges.ChangeNotes.Count == 0)
+                // {
+                //     throw new IndexOutOfRangeException("BPM CHANGE COUNT DISAGREE");
+                // }
             }
-            Chart result = new Ma2(notes, bpmChanges, measureChanges);
+            Chart result = new Ma2(notes);
             return result;
         }
 
-        public BPMChanges BPMChangesOfToken(string token)
-        {
-            return new BPMChanges();
-        }
+        // public BPMChanges BPMChangesOfToken(string token)
+        // {
+        //     return new BPMChanges();
+        // }
 
         public MeasureChanges MeasureChangesOfToken(string token)
         {

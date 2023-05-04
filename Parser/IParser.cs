@@ -14,12 +14,12 @@ namespace MaiLib
         /// <returns>Corresponding GoodBrother</returns>
         public Chart ChartOfToken(string[] token);
 
-        /// <summary>
-        /// Return correct BPMChanges of given Token.
-        /// </summary>
-        /// <param name="token">Token to intake</param>
-        /// <returns>Corresponding BPMChanges</returns>
-        public BPMChanges BPMChangesOfToken(string token);
+        // /// <summary>
+        // /// Return correct BPMChanges of given Token.
+        // /// </summary>
+        // /// <param name="token">Token to intake</param>
+        // /// <returns>Corresponding BPMChanges</returns>
+        // public BPMChanges BPMChangesOfToken(string token);
 
         /// <summary>
         /// Return corresponding MeasureChanges

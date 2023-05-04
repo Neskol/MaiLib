@@ -5,26 +5,21 @@ namespace MaiLib
         /// <summary>
         /// Empty constructor
         /// </summary>
-        public Simai()
+        public Simai() : base()
         {
-            this.Notes = new List<Note>();
-            this.BPMChanges = new BPMChanges();
-            this.MeasureChanges = new MeasureChanges();
-            this.StoredChart = new List<List<Note>>();
-            this.Information = new Dictionary<string, string>();
         }
 
         /// <summary>
         /// Constructs Simai chart directly from path specified
         /// </summary>
         /// <param name="location"></param>
-        public Simai(string location)
+        public Simai(string location) : base()
         {
             string[] tokens = new SimaiTokenizer().Tokens(location);
             Chart chart = new SimaiParser().ChartOfToken(tokens);
             this.Notes = new List<Note>(chart.Notes);
-            this.BPMChanges = new BPMChanges(chart.BPMChanges);
-            this.MeasureChanges = new MeasureChanges(chart.MeasureChanges);
+            this.BPMChangeNotes = new(chart.BPMChangeNotes);
+            this.MeasureChangeNotes = new(chart.MeasureChangeNotes);
             this.StoredChart = new List<List<Note>>();
             this.Information = new Dictionary<string, string>(chart.Information);
             this.Update();
@@ -36,11 +31,11 @@ namespace MaiLib
         /// <param name="notes">Notes to take in</param>
         /// <param name="bpmChanges">BPM change to take in</param>
         /// <param name="measureChanges">Measure change to take in</param>
-        public Simai(List<Note> notes, BPMChanges bpmChanges, MeasureChanges measureChanges)
+        public Simai(List<Note> notes)
         {
             this.Notes = notes;
-            this.BPMChanges = bpmChanges;
-            this.MeasureChanges = measureChanges;
+            this.BPMChangeNotes = new();
+            this.MeasureChangeNotes = new();
             this.StoredChart = new List<List<Note>>();
             this.Information = new Dictionary<string, string>();
             this.Update();
@@ -49,8 +44,8 @@ namespace MaiLib
         public Simai(Chart takenIn)
         {
             this.Notes = takenIn.Notes;
-            this.BPMChanges = takenIn.BPMChanges;
-            this.MeasureChanges = takenIn.MeasureChanges;
+            this.BPMChangeNotes = new(takenIn.BPMChangeNotes);
+            this.MeasureChangeNotes = new(takenIn.MeasureChangeNotes);
             this.StoredChart = new List<List<Note>>();
             this.Information = new Dictionary<string, string>();
             this.Update();
@@ -218,26 +213,26 @@ namespace MaiLib
             return result;
         }
 
-        /// <summary>
-        /// Reconstruct the chart with given arrays
-        /// </summary>
-        /// <param name="bpm">New BPM Changes</param>
-        /// <param name="measure">New Measure Changes</param>
-        /// <returns>New Composed Chart</returns>
-        public override string Compose(BPMChanges bpm, MeasureChanges measure)
-        {
-            BPMChanges sourceBPM = this.BPMChanges;
-            MeasureChanges sourceMeasures = this.MeasureChanges;
-            this.BPMChanges = bpm;
-            this.MeasureChanges = measure;
-            this.Update();
+        // /// <summary>
+        // /// Reconstruct the chart with given arrays
+        // /// </summary>
+        // /// <param name="bpm">New BPM Changes</param>
+        // /// <param name="measure">New Measure Changes</param>
+        // /// <returns>New Composed Chart</returns>
+        // public override string Compose(BPMChanges bpm, MeasureChanges measure)
+        // {
+        //     BPMChanges sourceBPM = this.BPMChanges;
+        //     MeasureChanges sourceMeasures = this.MeasureChanges;
+        //     this.BPMChanges = bpm;
+        //     this.MeasureChanges = measure;
+        //     this.Update();
 
-            string result = this.Compose();
-            this.BPMChanges = sourceBPM;
-            this.MeasureChanges = sourceMeasures;
-            this.Update();
-            return result;
-        }
+        //     string result = this.Compose();
+        //     this.BPMChanges = sourceBPM;
+        //     this.MeasureChanges = sourceMeasures;
+        //     this.Update();
+        //     return result;
+        // }
 
         public override void Update()
         {

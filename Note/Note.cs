@@ -1180,15 +1180,15 @@ namespace MaiLib
             return result;
         }
 
-        /// <summary>
-        /// Replace this.BPMChangeNotes from change table given
-        /// </summary>
-        /// <param name="changeTable">Change table contains bpm notes</param>
-        public void ReplaceBPMChanges(BPMChanges changeTable)
-        {
-            this.bpmChangeNotes = new List<BPMChange>();
-            this.bpmChangeNotes.AddRange(changeTable.ChangeNotes);
-        }
+        // /// <summary>
+        // /// Replace this.BPMChangeNotes from change table given
+        // /// </summary>
+        // /// <param name="changeTable">Change table contains bpm notes</param>
+        // public void ReplaceBPMChanges(BPMChanges changeTable)
+        // {
+        //     this.bpmChangeNotes = new List<BPMChange>();
+        //     this.bpmChangeNotes.AddRange(changeTable.ChangeNotes);
+        // }
 
         /// <summary>
         /// Replace this.BPMChangeNotes from change table given

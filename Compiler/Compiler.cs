@@ -191,15 +191,15 @@ namespace MaiLib
         /// Return the chart bpm change table of MaiCompiler
         /// </summary>
         /// <returns>First BPM change table of this.charts</returns>
-        public BPMChanges SymbolicBPMTable()
+        public List<BPMChange> SymbolicBPMTable()
         {
-            BPMChanges bpmTable = new BPMChanges();
+            List<BPMChange> bpmTable = new();
             bool foundTable = false;
             for (int i = 0; i < this.charts.Count && !foundTable; i++)
             {
                 if (this.charts[i] != null)
                 {
-                    bpmTable = this.charts[i].BPMChanges;
+                    bpmTable = this.charts[i].BPMChangeNotes;
                     foundTable = true;
                 }
             }

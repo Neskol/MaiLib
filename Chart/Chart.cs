@@ -6,20 +6,30 @@ using System.Xml;
 
 namespace MaiLib
 {
-
     /// <summary>
     /// A class holding notes and information to form a chart
     /// </summary>
     public abstract class Chart : IChart
     {
+        # region basicDefinition
         //Stores all notes
         private List<Note> notes;
 
-        //Stores definitions of BPM Changes
-        private BPMChanges bpmChanges;
+        // //Stores definitions of BPM Changes
+        // private BPMChanges bpmChanges;
 
-        //Stores definitions of Measure Changes
-        private MeasureChanges measureChanges;
+        /// <summary>
+        /// Stores the bpm change of this chart
+        /// </summary>
+        private List<BPMChange> bpmChangeNotes;
+
+        /// <summary>
+        /// Stores the bpm change of this chart
+        /// </summary>
+        private List<MeasureChange> measureChangeNotes;
+
+        // //Stores definitions of Measure Changes
+        // private MeasureChanges measureChanges;
 
         private int totalNoteNumber;
 
@@ -74,7 +84,7 @@ namespace MaiLib
         /// <summary>
         /// Stored chart in structure of bar of notes
         /// </summary>
-        private List<List<Note>> chart;
+        private List<List<Note>> storedChart;
 
         /// <summary>
         /// Stored the information of this chart, if any
@@ -116,6 +126,12 @@ namespace MaiLib
             }
         }
 
+        public List<BPMChange> BPMChangeNotes
+        {
+            get { return this.bpmChangeNotes; }
+            set { this.bpmChangeNotes = value; }
+        }
+
         /// <summary>
         /// Returns this.Chart. aka List of bars
         /// </summary>
@@ -124,41 +140,26 @@ namespace MaiLib
         {
             get
             {
-                return this.chart;
+                return this.storedChart;
             }
             set
             {
-                this.chart = value;
+                this.storedChart = value;
             }
         }
 
-        /// <summary>
-        /// Access to BPM Changes
-        /// </summary>
-        public BPMChanges BPMChanges
+        // /// <summary>
+        // /// Access to Measure Changes
+        // /// </summary>
+        public List<MeasureChange> MeasureChangeNotes
         {
             get
             {
-                return this.bpmChanges;
+                return this.measureChangeNotes;
             }
             set
             {
-                this.bpmChanges = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to Measure Changes
-        /// </summary>
-        public MeasureChanges MeasureChanges
-        {
-            get
-            {
-                return this.measureChanges;
-            }
-            set
-            {
-                this.measureChanges = value;
+                this.measureChangeNotes = value;
             }
         }
 
@@ -335,17 +336,17 @@ namespace MaiLib
         /// </summary>
         /// <value>this.chartDefinition</value>
         public int Definition
-        {get; set; }
-
+        {get { return this.definition;} }
+    # endregion
     /// <summary>
     /// Empty constructor
     /// </summary>
     public Chart()
         {
             this.notes = new List<Note>();
-            this.bpmChanges = new BPMChanges();
-            this.measureChanges = new MeasureChanges();
-            this.chart = new List<List<Note>>();
+            this.bpmChangeNotes = new();
+            this.measureChangeNotes = new();
+            this.storedChart = new List<List<Note>>();
             this.information = new Dictionary<string, string>();
             this.isDxChart = false;
             this.definition = 384;
@@ -371,10 +372,10 @@ namespace MaiLib
             {
                 List<Note> bar = new List<Note>();
                 BPMChange noteChange = new BPMChange();
-                double currentBPM = this.BPMChanges.ChangeNotes[0].BPM;
+                double currentBPM = this.bpmChangeNotes[0].BPM;
                 Note lastNote = new Rest();
                 Note realLastNote = new Rest();
-                foreach (BPMChange x in this.BPMChanges.ChangeNotes)
+                foreach (BPMChange x in this.bpmChangeNotes)
                 {
                     if (x.Bar == i)
                     {
@@ -432,11 +433,11 @@ namespace MaiLib
                                 x.Update();
                                 if (x.TickTimeStamp == 0)
                                 {
-                                    x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
+                                    x.TickTimeStamp = x.GetTimeStamp(x.TickStamp);
                                 }
                                 if (x.CalculatedLastTime == 0)
                                 {
-                                    x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
+                                    x.LastTimeStamp = x.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
                                     x.FixedLastLength = (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp)));
                                 }
@@ -464,16 +465,16 @@ namespace MaiLib
                                 x.Update();
                                 if (x.TickTimeStamp == 0)
                                 {
-                                    x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
+                                    x.TickTimeStamp = x.GetTimeStamp(x.TickStamp);
                                 }
                                 if (x.CalculatedWaitTime == 0)
                                 {
-                                    x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
+                                    x.WaitTimeStamp = x.GetTimeStamp(x.WaitTickStamp);
                                     x.CalculatedWaitTime = x.WaitTimeStamp - x.TickTimeStamp;
                                 }
                                 if (x.CalculatedLastTime == 0)
                                 {
-                                    x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
+                                    x.LastTimeStamp = x.GetTimeStamp(x.LastTickStamp);
                                     x.CalculatedLastTime = x.LastTimeStamp - x.WaitTimeStamp;
                                 }
                                 // if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
@@ -529,21 +530,21 @@ namespace MaiLib
                 }
 
                 List<Note> afterBar = new List<Note>();
-                afterBar.Add(new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar))));
+                afterBar.Add(new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar)),4));
                 //Console.WriteLine();
                 //Console.WriteLine("In bar "+i+", LeastMeasure is "+ CalculateLeastMeasure(bar)+", so quaver will be "+ CalculateQuaver(CalculateLeastMeasure(bar)));
                 afterBar.AddRange(bar);
-                this.chart.Add(FinishBar(afterBar, this.BPMChanges.ChangeNotes, i, CalculateQuaver(CalculateLeastMeasure(bar))));
+                this.storedChart.Add(FinishBar(afterBar, this.bpmChangeNotes, i, CalculateQuaver(CalculateLeastMeasure(bar))));
             }
             //Console.WriteLine("TOTAL DELAY: "+this.TotalDelay);
             //Console.WriteLine("TOTAL COUNT: "+ this.chart.Count * 384);
-            if (this.totalDelay < this.chart.Count * definition)
+            if (this.totalDelay < this.storedChart.Count * definition)
             {
                 this.totalDelay = 0;
             }
             else
             {
-                this.totalDelay -= this.chart.Count * definition;
+                this.totalDelay -= this.storedChart.Count * definition;
             }
             this.totalNoteNumber += (this.tapNumber + this.holdNumber + this.slideNumber);
         }
@@ -555,13 +556,13 @@ namespace MaiLib
         public abstract string Compose();
 
 
-        /// <summary>
-        /// Override and compose with given arrays
-        /// </summary>
-        /// <param name="bpm">Override BPM array</param>
-        /// <param name="measure">Override Measure array</param>
-        /// <returns>Good Brother with override array</returns>
-        public abstract string Compose(BPMChanges bpm, MeasureChanges measure);
+        // /// <summary>
+        // /// Override and compose with given arrays
+        // /// </summary>
+        // /// <param name="bpm">Override BPM array</param>
+        // /// <param name="measure">Override Measure array</param>
+        // /// <returns>Good Brother with override array</returns>
+        // public abstract string Compose(BPMChanges bpm, MeasureChanges measure);
 
         /// <summary>
         /// Return the least none 0 measure of bar.
@@ -820,107 +821,107 @@ namespace MaiLib
             if (overallTick != 0)
             {
                 int maximumBPMIndex = 0;
-                for (int i = 0; i < this.BPMChanges.ChangeNotes.Count; i++)
+                for (int i = 0; i < this.bpmChangeNotes.Count; i++)
                 {
-                    if (this.BPMChanges.ChangeNotes[i].TickStamp <= overallTick)
+                    if (this.bpmChangeNotes[i].TickStamp <= overallTick)
                     {
                         maximumBPMIndex = i;
                     }
                 }
                 if (maximumBPMIndex == 0)
                 {
-                    result = 60 / this.BPMChanges.ChangeNotes[0].BPM * 4 / 384;
+                    result = 60 / this.bpmChangeNotes[0].BPM * 4 / this.Definition;
                 }
                 else
                 {
                     for (int i = 1; i <= maximumBPMIndex; i++)
                     {
-                        double previousTickTimeUnit = 60 / this.BPMChanges.ChangeNotes[i - 1].BPM * 4 / 384;
-                        result += (this.BPMChanges.ChangeNotes[i].TickStamp - this.BPMChanges.ChangeNotes[i - 1].TickStamp) * previousTickTimeUnit;
+                        double previousTickTimeUnit = 60 / this.bpmChangeNotes[i - 1].BPM * 4 / 384;
+                        result += (this.bpmChangeNotes[i].TickStamp - this.bpmChangeNotes[i - 1].TickStamp) * previousTickTimeUnit;
                     }
-                    double tickTimeUnit = 60 / this.BPMChanges.ChangeNotes[maximumBPMIndex].BPM * 4 / 384;
-                    result += (overallTick - this.BPMChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
+                    double tickTimeUnit = 60 / this.bpmChangeNotes[maximumBPMIndex].BPM * 4 / 384;
+                    result += (overallTick - this.bpmChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
                 }
             }
             return result;
         }
 
-        /// <summary>
-        /// Give time stamp given overall tick
-        /// </summary>
-        /// <param name="overallTick">Note.Bar*384+Note.Tick</param>
-        /// <returns>Appropriate time stamp in seconds</returns>
-        public double GetTimeStamp(int overallTick)
-        {
-            double result = 0.0;
-            if (overallTick != 0)
-            {
-                bool foundMax = false;
-                int maximumBPMIndex = 0;
-                for (int i = 0; i < this.BPMChanges.ChangeNotes.Count && !foundMax; i++)
-                {
-                    if (this.BPMChanges.ChangeNotes[i].TickStamp <= overallTick)
-                    {
-                        maximumBPMIndex = i;
-                    }
-                    else
-                    {
-                        foundMax = true;
-                    }
-                }
-                if (maximumBPMIndex == 0)
-                {
-                    result = GetBPMTimeUnit(this.BPMChanges.ChangeNotes[0].BPM) * overallTick;
-                }
-                else
-                {
-                    for (int i = 1; i <= maximumBPMIndex; i++)
-                    {
-                        double previousTickTimeUnit = GetBPMTimeUnit(this.BPMChanges.ChangeNotes[i - 1].BPM);
-                        result += (this.BPMChanges.ChangeNotes[i].TickStamp - this.BPMChanges.ChangeNotes[i - 1].TickStamp) * previousTickTimeUnit;
-                    }
-                    double tickTimeUnit = GetBPMTimeUnit(this.BPMChanges.ChangeNotes[maximumBPMIndex].BPM);
-                    result += (overallTick - this.BPMChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
-                }
-            }
-            return result;
-        }
+        // /// <summary>
+        // /// Give time stamp given overall tick
+        // /// </summary>
+        // /// <param name="overallTick">Note.Bar*384+Note.Tick</param>
+        // /// <returns>Appropriate time stamp in seconds</returns>
+        // public double GetTimeStamp(int overallTick)
+        // {
+        //     double result = 0.0;
+        //     if (overallTick != 0)
+        //     {
+        //         bool foundMax = false;
+        //         int maximumBPMIndex = 0;
+        //         for (int i = 0; i < this.BPMChanges.ChangeNotes.Count && !foundMax; i++)
+        //         {
+        //             if (this.BPMChanges.ChangeNotes[i].TickStamp <= overallTick)
+        //             {
+        //                 maximumBPMIndex = i;
+        //             }
+        //             else
+        //             {
+        //                 foundMax = true;
+        //             }
+        //         }
+        //         if (maximumBPMIndex == 0)
+        //         {
+        //             result = GetBPMTimeUnit(this.BPMChanges.ChangeNotes[0].BPM) * overallTick;
+        //         }
+        //         else
+        //         {
+        //             for (int i = 1; i <= maximumBPMIndex; i++)
+        //             {
+        //                 double previousTickTimeUnit = GetBPMTimeUnit(this.BPMChanges.ChangeNotes[i - 1].BPM);
+        //                 result += (this.BPMChanges.ChangeNotes[i].TickStamp - this.BPMChanges.ChangeNotes[i - 1].TickStamp) * previousTickTimeUnit;
+        //             }
+        //             double tickTimeUnit = GetBPMTimeUnit(this.BPMChanges.ChangeNotes[maximumBPMIndex].BPM);
+        //             result += (overallTick - this.BPMChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
+        //         }
+        //     }
+        //     return result;
+        // }
 
-        /// <summary>
-        /// Give time stamp given overall tick
-        /// </summary>
-        /// <param name="overallTick">Note.Bar*384+Note.Tick</param>
-        /// <returns>Appropriate time stamp in seconds</returns>
-        public static double GetTimeStamp(BPMChanges bpmChanges, int overallTick)
-        {
-            double result = 0.0;
-            if (overallTick != 0)
-            {
-                int maximumBPMIndex = 0;
-                for (int i = 0; i < bpmChanges.ChangeNotes.Count; i++)
-                {
-                    if (bpmChanges.ChangeNotes[i].TickStamp <= overallTick)
-                    {
-                        maximumBPMIndex = i;
-                    }
-                }
-                if (maximumBPMIndex == 0)
-                {
-                    result = GetBPMTimeUnit(bpmChanges.ChangeNotes[0].BPM) * overallTick;
-                }
-                else
-                {
-                    for (int i = 1; i <= maximumBPMIndex; i++)
-                    {
-                        double previousTickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[i - 1].BPM);
-                        result += (bpmChanges.ChangeNotes[i].TickStamp - bpmChanges.ChangeNotes[i - 1].TickStamp) * previousTickTimeUnit;
-                    }
-                    double tickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[maximumBPMIndex].BPM);
-                    result += (overallTick - bpmChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
-                }
-            }
-            return result;
-        }
+        // /// <summary>
+        // /// Give time stamp given overall tick
+        // /// </summary>
+        // /// <param name="overallTick">Note.Bar*384+Note.Tick</param>
+        // /// <returns>Appropriate time stamp in seconds</returns>
+        // public static double GetTimeStamp(BPMChanges bpmChanges, int overallTick)
+        // {
+        //     double result = 0.0;
+        //     if (overallTick != 0)
+        //     {
+        //         int maximumBPMIndex = 0;
+        //         for (int i = 0; i < bpmChanges.ChangeNotes.Count; i++)
+        //         {
+        //             if (bpmChanges.ChangeNotes[i].TickStamp <= overallTick)
+        //             {
+        //                 maximumBPMIndex = i;
+        //             }
+        //         }
+        //         if (maximumBPMIndex == 0)
+        //         {
+        //             result = GetBPMTimeUnit(bpmChanges.ChangeNotes[0].BPM) * overallTick;
+        //         }
+        //         else
+        //         {
+        //             for (int i = 1; i <= maximumBPMIndex; i++)
+        //             {
+        //                 double previousTickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[i - 1].BPM);
+        //                 result += (bpmChanges.ChangeNotes[i].TickStamp - bpmChanges.ChangeNotes[i - 1].TickStamp) * previousTickTimeUnit;
+        //             }
+        //             double tickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[maximumBPMIndex].BPM);
+        //             result += (overallTick - bpmChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
+        //         }
+        //     }
+        //     return result;
+        // }
 
         /// <summary>
         /// Return BPM tick unit of given bpm
@@ -933,25 +934,25 @@ namespace MaiLib
             return result;
         }
 
-        /// <summary>
-        /// For debug use: print out the note's time stamp in given bpm changes
-        /// </summary>
-        /// <param name="bpmChanges">The list of BPMChanges</param>
-        /// <param name="inTake">The Note to test</param>
-        /// <returns>String of result, consists tick time stamp, wait time stamp and last time stamp</returns>
-        public static string GetNoteDetail(BPMChanges bpmChanges, Note inTake)
-        {
-            string result = "";
-            result += inTake.Compose(1) + "\n";
-            result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
-            result += "This note has overall tick of " + inTake.TickStamp + ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";
-            if (inTake.NoteGenre.Equals("SLIDE"))
-            {
-                result += "This note has wait length of " + inTake.WaitLength + ", and therefor, its wait tick stamp is " + inTake.WaitTickStamp + " with wait time stamp of " + GetTimeStamp(bpmChanges, inTake.WaitTickStamp) + "\n";
-                result += "This note has last length of " + inTake.LastLength + ", and therefor, its last tick stamp is " + inTake.LastTickStamp + " with last time stamp of " + GetTimeStamp(bpmChanges, inTake.LastTickStamp) + "\n";
-            }
-            return result;
-        }
+        // /// <summary>
+        // /// For debug use: print out the note's time stamp in given bpm changes
+        // /// </summary>
+        // /// <param name="bpmChanges">The list of BPMChanges</param>
+        // /// <param name="inTake">The Note to test</param>
+        // /// <returns>String of result, consists tick time stamp, wait time stamp and last time stamp</returns>
+        // public static string GetNoteDetail(BPMChanges bpmChanges, Note inTake)
+        // {
+        //     string result = "";
+        //     result += inTake.Compose(1) + "\n";
+        //     result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
+        //     result += "This note has overall tick of " + inTake.TickStamp + ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";
+        //     if (inTake.NoteGenre.Equals("SLIDE"))
+        //     {
+        //         result += "This note has wait length of " + inTake.WaitLength + ", and therefor, its wait tick stamp is " + inTake.WaitTickStamp + " with wait time stamp of " + GetTimeStamp(bpmChanges, inTake.WaitTickStamp) + "\n";
+        //         result += "This note has last length of " + inTake.LastLength + ", and therefor, its last tick stamp is " + inTake.LastTickStamp + " with last time stamp of " + GetTimeStamp(bpmChanges, inTake.LastTickStamp) + "\n";
+        //     }
+        //     return result;
+        // }
 
         /// <summary>
         /// Return the BPM at certain tick
@@ -960,18 +961,18 @@ namespace MaiLib
         /// <returns>BPM at that tick</returns>
         public double GetBPMByTick(int overallTick)
         {
-            double result = this.bpmChanges.ChangeNotes[0].BPM;
+            double result = this.bpmChangeNotes[0].BPM;
             if (overallTick > 0)
             {
                 int maximumBPMIndex = 0;
-                for (int i = 0; i < this.bpmChanges.ChangeNotes.Count; i++)
+                for (int i = 0; i < this.bpmChangeNotes.Count; i++)
                 {
-                    if (this.bpmChanges.ChangeNotes[i].TickStamp <= overallTick)
+                    if (this.bpmChangeNotes[i].TickStamp <= overallTick)
                     {
                         maximumBPMIndex = i;
                     }
                 }
-                result = this.bpmChanges.ChangeNotes[maximumBPMIndex].BPM;
+                result = this.bpmChangeNotes[maximumBPMIndex].BPM;
 
             }
             return result;
@@ -987,9 +988,9 @@ namespace MaiLib
         {
             bool result = false;
 
-            for (int i = 0; i < this.bpmChanges.ChangeNotes.Count && !result; i++)
+            for (int i = 0; i < this.bpmChangeNotes.Count && !result; i++)
             {
-                if (this.bpmChanges.ChangeNotes[i].TickStamp > startTick && this.bpmChanges.ChangeNotes[i].TickStamp < endTick)
+                if (this.bpmChangeNotes[i].TickStamp > startTick && this.bpmChangeNotes[i].TickStamp < endTick)
                 {
                     result = true;
                 }

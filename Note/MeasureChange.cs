@@ -6,14 +6,17 @@
     public class MeasureChange : Note
     {
         private int quaver;
+        private int beat;
 
         /// <summary>
         /// Construct Empty
         /// </summary>
         public MeasureChange()
         {
+            this.Bar = 0;
             this.Tick = 0;
-            this.quaver = 0;
+            this.quaver = 4;
+            this.beat = 4;
             this.Update();
         }
 
@@ -23,11 +26,12 @@
         /// <param name="bar">Bar</param>
         /// <param name="tick">Tick</param>
         /// <param name="Quaver">Quaver</param>
-        public MeasureChange(int bar, int tick, int quaver)
+        public MeasureChange(int bar, int tick, int quaver, int beat)
         {
             this.Bar = bar;
             this.Tick = tick;
             this.quaver = quaver;
+            this.beat = beat;
             this.Update();
         }
 
@@ -52,6 +56,15 @@
             get { return this.quaver; }
         }
 
+        /// <summary>
+        /// Return this.beat
+        /// </summary>
+        /// <value>Quaver</value>
+        public int Beat
+        {
+            get { return this.Beat; }
+        }
+
         public override bool CheckValidity()
         {
             return this.quaver > 0;
@@ -63,6 +76,11 @@
             if (format == 0)
             {
                 result += "{" + this.Quaver + "}";
+                //result += "{" + this.Quaver+"_"+this.Tick + "}";
+            }
+            else if (format == 1)
+            {
+                result += "MET\t"+this.Quaver+"\t"+this.Beat+"\n";
                 //result += "{" + this.Quaver+"_"+this.Tick + "}";
             }
             return result;

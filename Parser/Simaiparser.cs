@@ -25,22 +25,23 @@ public class SimaiParser : IParser
         PreviousSlideStart = new Tap();
     }
 
-    /// <summary>
-    /// Parse BPM change notes
-    /// </summary>
-    /// <param name="token">The parsed set of BPM change</param>
-    /// <returns>Error: simai does not have this variable</returns>
-    public BPMChanges BPMChangesOfToken(string token)
-    {
-        throw new NotImplementedException("Simai does not have this component");
-    }
+    // /// <summary>
+    // /// Parse BPM change notes
+    // /// </summary>
+    // /// <param name="token">The parsed set of BPM change</param>
+    // /// <returns>Error: simai does not have this variable</returns>
+    // public BPMChanges BPMChangesOfToken(string token)
+    // {
+    //     throw new NotImplementedException("Simai does not have this component");
+    // }
 
     public Chart ChartOfToken(string[] tokens)
     // Note: here chart will only return syntax after &inote_x= and each token is separated by ","
     {
         List<Note> notes = new List<Note>();
-        BPMChanges bpmChanges = new BPMChanges();
-        MeasureChanges measureChanges = new MeasureChanges(4, 4);
+        List<BPMChange> bpmChangeNotes = new();
+        List<MeasureChange> measureChangeNotes = new();
+        measureChangeNotes.Add(new MeasureChange(0, 0, 4,4));
         int bar = 0;
         int tick = 0;
         double currentBPM = 0.0;
@@ -62,7 +63,7 @@ public class SimaiParser : IParser
                     noteCandidate.Tick = tick;
                     //notes.Add(changeNote);
                     currentBPM = noteCandidate.BPM;
-                    bpmChanges.Add((BPMChange)noteCandidate);
+                    bpmChangeNotes.Add((BPMChange)noteCandidate);
                 }
                 else if (containsMeasure)
                 {
@@ -87,7 +88,20 @@ public class SimaiParser : IParser
                 bar++;
             }
         }
-        Chart result = new Simai(notes, bpmChanges, measureChanges);
+
+        foreach (Note note in notes)
+        {
+            note.BPMChangeNotes = new(bpmChangeNotes);
+            // if (bpmChanges.ChangeNotes.Count > 0 && note.BPMChangeNotes.Count == 0)
+            // {
+            //     throw new IndexOutOfRangeException("BPM COUNT DISAGREE");
+            // }
+            // if (bpmChanges.ChangeNotes.Count == 0)
+            // {
+            //     throw new IndexOutOfRangeException("BPM CHANGE COUNT DISAGREE");
+            // }
+        }
+        Chart result = new Simai(notes);
         return result;
     }
 
@@ -245,7 +259,7 @@ public class SimaiParser : IParser
             else if (isMeasure)
             {
                 string quaverCandidate = token.Replace("{", "").Replace("}", "");
-                result = new MeasureChange(bar, tick, Int32.Parse(quaverCandidate));
+                result = new MeasureChange(bar, tick, Int32.Parse(quaverCandidate),4);
             }
             else if (!token.Equals("E") && !token.Equals(""))
             {
