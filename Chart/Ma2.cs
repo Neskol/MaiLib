@@ -124,6 +124,49 @@ namespace MaiLib
         }
 
         /// <summary>
+        /// Extracts the special slide containers created by Simai
+        /// </summary>
+        /// <exception cref="InvalidOperationException">If slide container is casted wrongly, this exception will be raised</exception>
+        public void ExtractSlideEachGroup()
+        {
+            List<Note> adjusted = new();
+            List<Slide> slideCandidates = new();
+            foreach (Note x in this.Notes)
+            {
+                switch (x.NoteSpecificGenre)
+                {
+                    case "SLIDE_EACH":
+                        SlideEachSet candidate = x as SlideEachSet ?? throw new InvalidOperationException("THIS IS NOT A SLIDE EACH");
+                        if (candidate.SlideStart != null) adjusted.Add(candidate.SlideStart);
+                        if (candidate.InternalSlides.Count > 0) slideCandidates.AddRange(candidate.InternalSlides);
+                        break;
+                    case "SLIDE_GROUP":
+                        SlideGroup groupCandidate = x as SlideGroup ?? throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
+                        if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
+                        break;
+                    default:
+                        adjusted.Add(x);
+                        break;
+                }
+            }
+
+            foreach (Slide x in slideCandidates)
+            {
+                switch (x.NoteSpecificGenre)
+                {
+                    case "SLIDE_GROUP":
+                        SlideGroup groupCandidate = x as SlideGroup ?? throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
+                        if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
+                        break;
+                    default:
+                        adjusted.Add(x);
+                        break;
+                }
+            }
+            this.Notes = adjusted;
+        }
+
+        /// <summary>
         /// Override and compose with given arrays
         /// </summary>
         /// <param name="bpm">Override BPM array</param>
@@ -150,6 +193,12 @@ namespace MaiLib
             }
             result += "\n";
             return result;
+        }
+
+        public override void Update()
+        {
+            this.ExtractSlideEachGroup();
+            base.Update();
         }
     }
 }

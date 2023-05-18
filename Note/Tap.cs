@@ -98,7 +98,7 @@
         /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
         public Tap(Note inTake)
         {
-            this.NoteType = inTake.NoteType;
+            this.NoteType = inTake.NoteGenre.Equals("TAP")? inTake.NoteType: "TAP";
             this.Key = inTake.Key;
             this.EndKey = inTake.EndKey;
             this.Bar = inTake.Bar;
@@ -116,7 +116,6 @@
             this.TickBPMDisagree = inTake.TickBPMDisagree;
             this.BPM = inTake.BPM;
             this.BPMChangeNotes = inTake.BPMChangeNotes;
-            this.ConsecutiveSlide = inTake.ConsecutiveSlide;
             if (inTake.NoteGenre == "TAP")
             {
                 this.touchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
@@ -253,10 +252,6 @@
                             result += "f";
                         }
                         break;
-                }
-                if (this.NoteSpecificGenre.Equals("SLIDE_START") && this.ConsecutiveSlide == null)
-                {
-                    result += "$";
                 }
                 //result += "_" + this.Tick;
             }

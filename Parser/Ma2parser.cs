@@ -214,6 +214,9 @@ namespace MaiLib
                     case "BX":
                         result.NoteSpecialState = Note.SpecialState.BreakEX;
                         break;
+                    case "CN":
+                        result.NoteSpecialState = Note.SpecialState.ConnectingSlide;
+                        break;
                     case "NM":
                     case "":
                     default:
@@ -280,8 +283,6 @@ namespace MaiLib
                         int.Parse(candidate[(int)StdParam.WaitTime]),
                         int.Parse(candidate[(int)StdParam.LastTime]),
                         candidate[(int)StdParam.EndKey]);
-            result.SlideStart = slideStart;
-            slideStart.ConsecutiveSlide = result;
             if (bpm > 0.0) result.BPM = bpm;
             return result;
         }
