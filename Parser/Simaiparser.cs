@@ -685,6 +685,7 @@ public class SimaiParser : IParser
             {
                 result.AddRange(ExtractConnectingSlides(symbol));
             }
+            # region OldSlideHandling
             // if (!token.Contains("*"))
             // {
             //     string splitCandidate = token;
@@ -852,6 +853,7 @@ public class SimaiParser : IParser
             //         }
             //     }
             // }
+            #endregion
         }
         return result;
     }
