@@ -1236,6 +1236,7 @@ namespace MaiLib
         {
             string result = "";
             double duration = Math.Round(this.LastTimeStamp - this.WaitTimeStamp, 4);
+            if (duration == 0) { return GenerateAppropriateLength(this.LastLength); }
             switch (this.NoteGenre)
             {
                 case "SLIDE":

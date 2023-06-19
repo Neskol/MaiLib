@@ -439,7 +439,7 @@ public class SimaiParser : IParser
             int lastTick = timeAssigned ? 384 / quaver : 0;
             int times = timeAssigned ? int.Parse(lastTimeCandidates[1]) : 0;
             lastTick *= times;
-            result = new Slide(noteType, bar, tick, slideStartCandidate.Key, 96, lastTick, fixedKeyCandidate.ToString());
+            result = new Slide(noteType, bar, tick, slideStartCandidate.Key, 96, lastTick, fixedKeyCandidate.ToString()); //96 is fixed for 1 qualter note
         }
         else
         {
