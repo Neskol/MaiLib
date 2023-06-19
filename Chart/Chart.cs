@@ -390,7 +390,7 @@ namespace MaiLib
                     }
                     //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
                     //x.Update();
-                    // x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
+                    //x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
                     //x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
                     // x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                     if (x.Bar == i)
@@ -474,7 +474,8 @@ namespace MaiLib
                                 if (x.CalculatedLastTime == 0)
                                 {
                                     x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
-                                    x.CalculatedLastTime = x.LastTimeStamp - x.WaitTimeStamp;
+                                    x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
+                                    x.FixedLastLength = (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp)));
                                 }
                                 // if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
                                 // {
