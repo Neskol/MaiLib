@@ -16,26 +16,6 @@ namespace MaiLib
         /// </summary>
         private string noteType;
 
-        public enum SpecialState
-        {
-            /// <summary>
-            /// Normal note, nothing special
-            /// </summary>
-            Normal,
-            /// <summary>
-            /// Break note
-            /// </summary>
-            Break,
-            /// <summary>
-            /// EX Note
-            /// </summary>
-            EX,
-            /// <summary>
-            /// EX Break
-            /// </summary>
-            EXBreak
-        }
-
         /// <summary>
         /// The key
         /// </summary>
@@ -142,16 +122,6 @@ namespace MaiLib
         private Note? next;
 
         /// <summary>
-        /// Stores the start note of slide
-        /// </summary>
-        private Note? slideStart;
-
-        /// <summary>
-        /// Stores the connecting slide of slide start
-        /// </summary>
-        private Note? consecutiveSlide;
-
-        /// <summary>
         /// Stores all BPM change prior to this
         /// </summary>
         private List<BPMChange> bpmChangeNotes;
@@ -207,6 +177,32 @@ namespace MaiLib
             this.bpm = inTake.BPM;
             this.bpmChangeNotes = inTake.bpmChangeNotes;
         }
+
+        public enum SpecialState
+        {
+            /// <summary>
+            /// Normal note, nothing special
+            /// </summary>
+            Normal,
+            /// <summary>
+            /// Break note
+            /// </summary>
+            Break,
+            /// <summary>
+            /// EX Note
+            /// </summary>
+            EX,
+            /// <summary>
+            /// EX Break
+            /// </summary>
+            BreakEX,
+            /// <summary>
+            /// Connecting Slide
+            /// </summary>
+            ConnectingSlide
+        }
+
+        public SpecialState NoteSpecialState { get; set; }
 
         /// <summary>
         /// Access NoteType
@@ -506,6 +502,16 @@ namespace MaiLib
         }
 
         /// <summary>
+        /// Judges if two notes are of same time
+        /// </summary>
+        /// <param name="x">Comparing note</param>
+        /// <returns>True if BAR=BAR & TICK=TICK</returns>
+        public bool IsOfSameTime(Note x)
+        {
+            return this.Bar == x.Bar && this.Tick == x.Tick;
+        }
+
+        /// <summary>
         /// Access BPM
         /// </summary>
         public double BPM
@@ -530,24 +536,6 @@ namespace MaiLib
         {
             get { return this.next; }
             set { this.next = value; }
-        }
-
-        /// <summary>
-        /// Return the slide start of a note (reserved for slides only)
-        /// </summary>
-        public Note? SlideStart
-        {
-            get { return this.slideStart; }
-            set { this.slideStart = value; }
-        }
-
-        /// <summary>
-        /// Return the consecutive of a note (reserved for slides only)
-        /// </summary>
-        public Note? ConsecutiveSlide
-        {
-            get { return this.consecutiveSlide; }
-            set { this.consecutiveSlide = value; }
         }
 
         public List<BPMChange> BPMChangeNotes
@@ -672,6 +660,7 @@ namespace MaiLib
         {
             if (this.Key != null && !this.Key.Equals("") && !(this.Key.Count() > 1 && this.Key.ToCharArray()[1] == 'C'))
             {
+                #region FlipConditions
                 switch (method)
                 {
                     case "Clockwise90":
@@ -1159,11 +1148,12 @@ namespace MaiLib
                     default:
                         throw new NotImplementedException("METHOD SPECIFIED INVALID. EXPECT: Clockwise90, Clockwise180, Counterclockwise90, Counterclockwise180, UpSideDown, LeftToRight");
                 }
+                #endregion
             }
             this.Update();
         }
 
-        public bool Update()
+        public virtual bool Update()
         {
             // Console.WriteLine("This note has bpm note number of " + this.BPMChangeNotes.Count());
             bool result = false;
@@ -1245,16 +1235,15 @@ namespace MaiLib
         public string GenerateAppropriateLength(int length, double bpm)
         {
             string result = "";
+            double duration = Math.Round(this.LastTimeStamp - this.WaitTimeStamp, 4);
             switch (this.NoteGenre)
             {
                 case "SLIDE":
-                    double sustain = this.WaitTimeStamp - this.TickTimeStamp;
-                    double duration = this.LastTimeStamp - this.WaitTimeStamp;
+                    double sustain = Math.Round(this.WaitTimeStamp - this.TickTimeStamp,4);                 
                     result = "[" + sustain + "##" + duration + "]";
                     break;
                 case "HOLD":
-                    double startTime = this.TickTimeStamp;
-                    duration = this.LastTimeStamp - this.TickTimeStamp;
+                    double startTime = Math.Round(startTime = this.TickTimeStamp,4);
                     result = "[" + startTime + "##" + duration + "]";
                     break;
             }
@@ -1301,6 +1290,22 @@ namespace MaiLib
                 }
             } //A serious improvement is needed for this method
             return result;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            bool result = (this == null && obj == null) || (this!=null && obj!=null);
+            if (result && obj!=null)
+            {
+                Note localNote = (Note)obj;
+                result = (this.TickStamp == localNote.TickStamp) && this.Compose(1).Equals(localNote.Compose(1));
+            }
+            return result;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

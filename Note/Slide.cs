@@ -7,12 +7,84 @@
     {
         private readonly string[] allowedType = { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
 
+        /// <summary>
+        /// Defines what type of slide could be used
+        /// </summary>
         public enum SlideType
         {
+            #region SlideDescription
             /// <summary>
             /// Straight Slide
             /// </summary>
-            SI_
+            SI_,
+            /// <summary>
+            /// Left circle slide aka Counterclockwise
+            /// </summary>
+            SCL,
+            /// <summary>
+            /// Right circle slide aka Clockwise
+            /// </summary>
+            SCR,
+            /// <summary>
+            /// Line not intercepting Crossing Center
+            /// </summary>
+            SV_,
+            /// <summary>
+            /// U Star Left
+            /// </summary>
+            SUL,
+            /// <summary>
+            /// U Star Right
+            /// </summary>
+            SUR,
+            /// <summary>
+            /// Wifi Star
+            /// </summary>
+            SF_,
+            /// <summary>
+            /// Inflecting Line Left
+            /// </summary>
+            SLL,
+            /// <summary>
+            /// Inflecting Line Right
+            /// </summary>
+            SLR,
+            /// <summary>
+            /// Self-winding Left
+            /// </summary>
+            SXL,
+            /// <summary>
+            /// Self-winding Right
+            /// </summary>
+            SXR,
+            /// <summary>
+            /// S Star
+            /// </summary>
+            SSL,
+            /// <summary>
+            /// Z Star
+            /// </summary>
+            SSR
+            #endregion
+        }
+
+        /// <summary>
+        /// Defines the special property of the slide
+        /// </summary>
+        public enum SlideProperty
+        {
+            /// <summary>
+            /// Normal Slide
+            /// </summary>
+            Normal,
+            /// <summary>
+            /// Slide without Start Tap
+            /// </summary>
+            NoStart,
+            /// <summary>
+            /// Connecting Slide
+            /// </summary>
+            Connecting
         }
 
         /// <summary>
@@ -68,8 +140,6 @@
             this.TickBPMDisagree = inTake.TickBPMDisagree;
             this.BPM = inTake.BPM;
             this.BPMChangeNotes = inTake.BPMChangeNotes;
-            this.SlideStart = inTake.SlideStart;
-            this.ConsecutiveSlide = inTake.ConsecutiveSlide;
         }
 
         public override bool CheckValidity()
@@ -145,13 +215,28 @@
                         result += "qq";
                         break;
                 }
+                result += ((Convert.ToInt32(this.EndKey) + 1).ToString());
+                if (this.NoteSpecialState == Note.SpecialState.Break)
+                {
+                    result += "b";
+                }
+                else if (this.NoteSpecialState == Note.SpecialState.EX)
+                {
+                    result += "x";
+                }
+                else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                {
+                    result += "bx";
+                }
                 if (this.TickBPMDisagree || this.Delayed)
                 {
-                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString()) + GenerateAppropriateLength(this.LastLength, this.BPM);
+                    //result += GenerateAppropriateLength(this.LastLength, this.BPM);
+                    if (this.NoteSpecialState!=Note.SpecialState.ConnectingSlide && this.WaitLength != 96) result += GenerateAppropriateLength(this.LastLength, this.BPM);
+                    else result += GenerateAppropriateLength(this.FixedLastLength);
                 }
                 else
                 {
-                    result += ((Convert.ToInt32(this.EndKey) + 1).ToString()) + GenerateAppropriateLength(this.LastLength);
+                    result += GenerateAppropriateLength(this.LastLength);
                 }
                 //result += "_" + this.Tick;
                 //result += "_" + this.Key;

@@ -1,5 +1,3 @@
-using System.Net.Http.Headers;
-
 namespace MaiLib
 {
     public class Simai : Chart
@@ -58,6 +56,90 @@ namespace MaiLib
             this.Update();
         }
 
+        public void ComposeSlideGroup()
+        {
+            List<Note> adjusted = new();
+            List<Slide> connectedSlides = new();
+            List<Slide> slideNotesOfChart = new();
+
+            int maximumBar = 0;
+            foreach (Note candidate in this.Notes)
+            {
+                maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
+                if (candidate.NoteSpecificGenre.Equals("SLIDE")||candidate.NoteSpecificGenre.Equals("SLIDE_GROUP")) slideNotesOfChart.Add((Slide)candidate);
+                else adjusted.Add(candidate);
+            }
+
+            /// If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
+
+            int processedSlides = 0;
+            
+            for (int i = 0; i < slideNotesOfChart.Count; i++)
+            {              
+                Slide parentSlide = slideNotesOfChart[i];
+                maximumBar = parentSlide.Bar > maximumBar ? parentSlide.Bar : maximumBar;        
+                if (parentSlide.NoteSpecialState != Note.SpecialState.ConnectingSlide)
+                {
+                    SlideGroup currentGroup = new();
+                    currentGroup.AddConnectingSlide(parentSlide);
+                    for (int j = i == 0 ? 1 : 0; j < slideNotesOfChart.Count; j += j + 1 == i ? 2 : 1)
+                    {
+                        Slide candidate = slideNotesOfChart[j];
+                        if (candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide && candidate.TickStamp == currentGroup.LastSlide.LastTickStamp && candidate.Key.Equals(currentGroup.LastSlide.EndKey) && !connectedSlides.Contains(candidate))
+                        {
+                            currentGroup.AddConnectingSlide(candidate);
+                            connectedSlides.Add(candidate);
+                            processedSlides++;
+                        }
+                    }
+                    if (currentGroup.SlideCount>1) adjusted.Add(currentGroup);
+                    else adjusted.Add(parentSlide);
+                    processedSlides++;
+                }
+            }
+
+            //For verification only: check if slide count is correct
+            if (processedSlides!=slideNotesOfChart.Count) throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count + ", Actual:" + processedSlides);
+            this.Notes = new(adjusted);
+            
+        }
+
+        public void ComposeSlideEachGroup()
+        {
+            List<SlideEachSet> composedCandidates = new();
+            List<Note> adjusted = new();
+            int processedNotes = 0;
+            foreach (Note x in this.Notes)
+            {
+                bool eachCandidateCombined = false;
+                if (!(x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START")||x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
+                {
+                    adjusted.Add(x);
+                    processedNotes++;
+                }
+                else if (composedCandidates.Count>0 && x.NoteSpecificGenre.Equals("SLIDE_START")) foreach (SlideEachSet parent in composedCandidates)
+                {
+                    Tap slideStartCandidate = x as Tap ?? throw new InvalidOperationException("THIS IS NOT A SLIDE START");
+                    eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
+                    if (eachCandidateCombined) processedNotes++;
+                }
+                else if (composedCandidates.Count > 0 && (x.NoteSpecificGenre.Equals("SLIDE")||x.NoteSpecificGenre.Equals("SLIDE_GROUP"))) foreach (SlideEachSet parent in composedCandidates)
+                {
+                    Slide slideStartCandidate = x as Slide ?? throw new InvalidOperationException("THIS IS NOT A SLIDE");
+                    eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
+                    if (eachCandidateCombined) processedNotes++;
+                }
+                if (!eachCandidateCombined && (x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START") ||x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
+                {
+                    composedCandidates.Add(new SlideEachSet(x));
+                    processedNotes++;
+                }
+            }
+            // if (processedNotes != this.Notes.Count) throw new InvalidOperationException("PROCESSED NOTES MISMATCH: Expected "+this.Notes.Count+", Actual "+processedNotes);
+            adjusted.AddRange(composedCandidates);
+            this.Notes = adjusted;
+        }
+
         public override string Compose()
         {
             string result = "";
@@ -94,97 +176,17 @@ namespace MaiLib
                             break;
                         case "BPM":
                             break;
-                        case "TAP":
-                            if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
-                            {
-                                result += "/";
-                            }
-                            else
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            break;
-                        case "HOLD":
-                            if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "/";
-                            }
-                            else
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            break;
-                        case "SLIDE_START":
-                            // if (lastNote.ConsecutiveSlide == null)
-                            // {
-                            //     result += "$";
-                            // }
-                            // if (x.IsNote && (!x.NoteGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            // {
-                            //     result += "/";
-                            // }
-                            // else if (x.NoteGenre != "SLIDE"||lastNote.Bar!=x.Bar || lastNote.Tick!=x.Tick)
-                            // {
-                            //     result += ",";
-                            // }
-                            if (x.IsNote && ((!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM")))
-                            {
-                                result += "/";
-                            }
-                            else if (x.IsNote && !x.NoteSpecificGenre.Equals("SLIDE") && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            else if (x.NoteGenre.Equals("REST"))
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            break;
-                        case "SLIDE":
-                            if (x.IsNote && (!x.NoteSpecificGenre.Equals("SLIDE")) && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "/";
-                            }
-                            else if (x.IsNote && x.NoteSpecificGenre.Equals("SLIDE") && x.Tick == lastNote.Tick && !x.NoteGenre.Equals("BPM"))
-                            {
-                                result += "*";
-                            }
-                            // else if (x.IsNote && !lastNote.NoteSpecificType.Equals("SLIDE_START")&& x.Bar!=lastNote.Bar && x.Tick!=lastNote.Tick&& !x.NoteGenre.Equals("BPM"))
-                            // {
-                            //     result += ",";
-                            // }
-                            else
-                            {
-                                result += ",";
-                                commaCompiled++;
-                            }
-                            break;
                         default:
-                            result += ",";
-                            commaCompiled++;
+                            if (x.IsOfSameTime(lastNote)) result += "/";
+                            else 
+                            {
+                                result += ",";
+                                commaCompiled++;
+                            }
                             break;
                     }
-                    // if (x.NoteGenre.Equals("SLIDE"))
-                    // {
-                    //     if (x.SlideStart==null)
-                    //     {
-                    //         x.SlideStart = new Tap("NST",x.Bar,x.Tick,x.Key);
-                    //     }
-                    // }
-                    // if (x.SlideStart!=null&&x.SlideStart.NoteType.Equals("NST")&&(!lastNote.NoteGenre.Equals("SLIDE")||lastNote.NoteGenre.Equals("SLIDE")&&lastNote.TickStamp!=x.TickStamp&&!lastNote.Key.Equals(x)))
-                    // {
-                    //     result += x.SlideStart.Compose(0);
-                    // }
                     result += x.Compose(0);
                     lastNote = x;
-                    //if (x.NoteGenre().Equals("BPM"))
-                    //{
-                    //    result+="("+ x.Bar + "_" + x.Tick + ")";
-                    //}
                 }
                 result += ",\n";
                 commaCompiled++;
@@ -201,10 +203,6 @@ namespace MaiLib
                     throw new NullReferenceException("COMMA COMPILED MISMATCH IN BAR " + bar[0].Bar);
                 }
             }
-            //if (delayBar>0)
-            //{
-            //    Console.WriteLine("TOTAL DELAYED BAR: "+delayBar);
-            //}
             for (int i = 0; i < delayBar + 1; i++)
             {
                 result += "{1},\n";
@@ -239,6 +237,13 @@ namespace MaiLib
             this.MeasureChanges = sourceMeasures;
             this.Update();
             return result;
+        }
+
+        public override void Update()
+        {
+            this.ComposeSlideGroup();
+            this.ComposeSlideEachGroup();
+            base.Update();
         }
     }
 }

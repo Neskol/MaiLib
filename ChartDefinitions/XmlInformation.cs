@@ -328,7 +328,7 @@ namespace MaiLib
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                         var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                         fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                        this.Information["Basic"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Basic"] = Int32.Parse(musicLevelIDCandidate.InnerText) != 0 ? level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1] : "";
                         this.Information["Basic Chart Maker"] = notesDesignerCandidate.InnerText;
                         this.Information["Basic Chart Path"] = fileCandidate.InnerText;
                     }
@@ -342,7 +342,7 @@ namespace MaiLib
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                         var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                         fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                        this.Information["Advanced"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Advanced"] = Int32.Parse(musicLevelIDCandidate.InnerText) != 0 ? level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1] : "";
                         this.Information["Advanced Chart Maker"] = notesDesignerCandidate.InnerText;
                         this.Information["Advanced Chart Path"] = fileCandidate.InnerText;
                     }
@@ -356,7 +356,7 @@ namespace MaiLib
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                         var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                         fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                        this.Information["Expert"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Expert"] = Int32.Parse(musicLevelIDCandidate.InnerText) != 0 ? level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1] : "";
                         this.Information["Expert Chart Maker"] = notesDesignerCandidate.InnerText;
                         this.Information["Expert Chart Path"] = fileCandidate.InnerText;
                     }
@@ -370,7 +370,7 @@ namespace MaiLib
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                         var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                         fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                        this.Information["Master"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Master"] = Int32.Parse(musicLevelIDCandidate.InnerText) != 0 ? level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1] : "";
                         this.Information["Master Chart Maker"] = notesDesignerCandidate.InnerText;
                         this.Information["Master Chart Path"] = fileCandidate.InnerText;
                     }
@@ -384,7 +384,7 @@ namespace MaiLib
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                         var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                         fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                        this.Information["Remaster"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Remaster"] = Int32.Parse(musicLevelIDCandidate.InnerText) != 0? level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1] : "";
                         this.Information["Remaster Chart Maker"] = notesDesignerCandidate.InnerText;
                         this.Information["Remaster Chart Path"] = fileCandidate.InnerText;
                     }
@@ -398,7 +398,7 @@ namespace MaiLib
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                         var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                         fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                        this.Information["Utage"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Utage"] = Int32.Parse(musicLevelIDCandidate.InnerText) != 0 ? level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1] : "";
                         this.Information["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
                         this.Information["Utage Chart Path"] = fileCandidate.InnerText;
                     }
@@ -412,7 +412,7 @@ namespace MaiLib
                         notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                         var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                         fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                        this.Information["Easy"] = level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1];
+                        this.Information["Easy"] = Int32.Parse(musicLevelIDCandidate.InnerText) != 0 ? level[Int32.Parse(musicLevelIDCandidate.InnerText) - 1] : "";
                         this.Information["Easy Chart Maker"] = notesDesignerCandidate.InnerText;
                         this.Information["Easy Chart Path"] = fileCandidate.InnerText;
                     }

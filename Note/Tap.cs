@@ -98,7 +98,7 @@
         /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
         public Tap(Note inTake)
         {
-            this.NoteType = inTake.NoteType;
+            this.NoteType = inTake.NoteGenre.Equals("TAP")? inTake.NoteType: "TAP";
             this.Key = inTake.Key;
             this.EndKey = inTake.EndKey;
             this.Bar = inTake.Bar;
@@ -116,7 +116,6 @@
             this.TickBPMDisagree = inTake.TickBPMDisagree;
             this.BPM = inTake.BPM;
             this.BPMChangeNotes = inTake.BPMChangeNotes;
-            this.ConsecutiveSlide = inTake.ConsecutiveSlide;
             if (inTake.NoteGenre == "TAP")
             {
                 this.touchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
@@ -191,9 +190,33 @@
                 {
                     case "TAP":
                         result += (Int32.Parse(this.Key) + 1).ToString();
+                        if (this.NoteSpecialState == Note.SpecialState.Break)
+                        {
+                            result += "b";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.EX)
+                        {
+                            result += "x";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                        {
+                            result += "bx";
+                        }
                         break;
                     case "STR":
                         result += (Int32.Parse(this.Key) + 1).ToString();
+                        if (this.NoteSpecialState == Note.SpecialState.Break)
+                        {
+                            result += "b";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.EX)
+                        {
+                            result += "x";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                        {
+                            result += "bx";
+                        }
                         break;
                     case "BRK":
                         result += (Int32.Parse(this.Key) + 1).ToString() + "b";
@@ -212,15 +235,23 @@
                         break;
                     case "TTP":
                         result += this.Key.ToCharArray()[1] + ((Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString());
+                        if (this.NoteSpecialState == Note.SpecialState.Break)
+                        {
+                            result += "b";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.EX)
+                        {
+                            result += "x";
+                        }
+                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
+                        {
+                            result += "bx";
+                        }
                         if (this.SpecialEffect == 1)
                         {
                             result += "f";
                         }
                         break;
-                }
-                if (this.NoteSpecificGenre.Equals("SLIDE_START") && this.ConsecutiveSlide == null)
-                {
-                    result += "$";
                 }
                 //result += "_" + this.Tick;
             }
