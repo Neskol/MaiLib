@@ -26,32 +26,32 @@ namespace MaiLib
             this.Information = MusicXml.Information;
             //Construct Charts
             {
-                if (!this.Information["Easy"].Equals(""))
+                if (!this.Information["Easy"].Equals("")&&File.Exists(location + this.Information.GetValueOrDefault("Easy Chart Path")))
                 {
                     Charts[0] = new Ma2(location + this.Information.GetValueOrDefault("Easy Chart Path"));
                 }
-                if (!this.Information["Basic"].Equals(""))
+                if (!this.Information["Basic"].Equals("")&& File.Exists(location + this.Information.GetValueOrDefault("Basic Chart Path")))
                 {
                     //Console.WriteLine("Have basic: "+ location + this.Information.GetValueOrDefault("Basic Chart Path"));
                     Charts[1] = new Ma2(location + this.Information.GetValueOrDefault("Basic Chart Path"));
                 }
-                if (!this.Information["Advanced"].Equals(""))
+                if (!this.Information["Advanced"].Equals("")&& File.Exists(location + this.Information.GetValueOrDefault("Advanced Chart Path")))
                 {
                     Charts[2] = new Ma2(location + this.Information.GetValueOrDefault("Advanced Chart Path"));
                 }
-                if (!this.Information["Expert"].Equals(""))
+                if (!this.Information["Expert"].Equals("")&& File.Exists(location + this.Information.GetValueOrDefault("Expert Chart Path")))
                 {
                     Charts[3] = new Ma2(location + this.Information.GetValueOrDefault("Expert Chart Path"));
                 }
-                if (!this.Information["Master"].Equals(""))
+                if (!this.Information["Master"].Equals("")&& File.Exists(location + this.Information.GetValueOrDefault("Master Chart Path")))
                 {
                     Charts[4] = new Ma2(location + this.Information.GetValueOrDefault("Master Chart Path"));
                 }
-                if (!this.Information["Remaster"].Equals(""))
+                if (!this.Information["Remaster"].Equals("")&& File.Exists(location + this.Information.GetValueOrDefault("Remaster Chart Path")))
                 {
                     Charts[5] = new Ma2(location + this.Information.GetValueOrDefault("Remaster Chart Path"));
                 }
-                if (!this.Information["Utage"].Equals(""))
+                if (!this.Information["Utage"].Equals("")&& File.Exists(location + this.Information.GetValueOrDefault("Utage Chart Path")))
                 {
                     Charts[6] = new Ma2(location + this.Information.GetValueOrDefault("Utage Chart Path"));
                 }
@@ -206,7 +206,7 @@ namespace MaiLib
                 for (int i = 0; i < this.Charts.Count; i++)
                 {
                     // Console.WriteLine("Processing chart: " + i);
-                    if (!this.Information[this.Difficulty[i]].Equals(""))
+                    if (Charts[i] != null && !this.Information[this.Difficulty[i]].Equals(""))
                     {
                         string? isDxChart = this.Information.GetValueOrDefault("SDDX Suffix");
                         if (!Charts[i].IsDXChart)

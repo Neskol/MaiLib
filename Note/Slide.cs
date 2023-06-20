@@ -231,7 +231,8 @@
                 if (this.TickBPMDisagree || this.Delayed)
                 {
                     //result += GenerateAppropriateLength(this.LastLength, this.BPM);
-                    result += GenerateAppropriateLength(this.FixedLastLength);
+                    if (this.NoteSpecialState!=Note.SpecialState.ConnectingSlide && this.WaitLength != 96) result += GenerateAppropriateLength(this.LastLength, this.BPM);
+                    else result += GenerateAppropriateLength(this.FixedLastLength);
                 }
                 else
                 {
