@@ -46,7 +46,7 @@ public abstract class ChartPack : Chart, IChart
     /// Accesses this.globalInformation
     /// </summary>
     /// <value>this.globalInformation</value>
-    public TrackInformation? GlobalInformation 
+    public TrackInformation? GlobalInformation
     {
         get
         {
