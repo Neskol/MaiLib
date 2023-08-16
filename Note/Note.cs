@@ -69,7 +69,7 @@ namespace MaiLib
         /// <summary>
         /// The Calculated Wait time in seconds
         /// </summary>
-        public double CalculatedWaitTime { get; private set; }
+        public double CalculatedWaitTime { get; set; }
 
         /// <summary>
         /// The Last length
@@ -79,7 +79,7 @@ namespace MaiLib
         /// <summary>
         /// Fixed Tick Last length with fixed BPM
         /// </summary>
-        public int FixedLastLength { get; private set; }
+        public int FixedLastLength { get; set; }
 
         /// <summary>
         /// The stamp when the Last time ends in Ticks
@@ -94,17 +94,17 @@ namespace MaiLib
         /// <summary>
         /// The Calculated Last time
         /// </summary>
-        public double CalculatedLastTime { get; private set; }
+        public double CalculatedLastTime { get; set; }
 
         /// <summary>
         /// Stores if the BPM of Wait or Last Tick is in different BPM
         /// </summary>
-        public bool TickBPMDisagree { get; private set; }
+        public bool TickBPMDisagree { get; set; }
 
         /// <summary>
         /// The delayed
         /// </summary>
-        public bool Delayed { get; private set; }
+        public bool Delayed { get; set; }
 
         /// <summary>
         /// The BPM
