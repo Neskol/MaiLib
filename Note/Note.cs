@@ -14,142 +14,142 @@ namespace MaiLib
         /// <summary>
         /// The note type
         /// </summary>
-        private string noteType;
+        public string NoteType { get; set; }
 
         /// <summary>
         /// The key
         /// </summary>
-        private string key;
+        public string Key { get; set; }
 
         /// <summary>
         /// The end key
         /// </summary>
-        private string endKey;
+        public string EndKey { get; set; }
 
         /// <summary>
         /// The bar
         /// </summary>
-        private int bar;
+        public int Bar { get; set; }
 
         /// <summary>
         /// The start time
         /// </summary>
-        private int tick;
+        public int Tick { get; set; }
 
         /// <summary>
         /// Start time fixed to BPM
         /// </summary>
-        private int fixedTick;
+        public int FixedTick { get; set; }
 
         /// <summary>
-        /// The absolute tick calculated by this.bar*384+this.tick
+        /// The absolute Tick Calculated by this.bar*384+this.Tick
         /// </summary>
-        private int tickStamp;
+        public int TickStamp { get; set; }
 
         /// <summary>
         /// The start time stamp
         /// </summary>
-        private double tickTimeStamp;
+        public double TickTimeStamp { get; set; }
 
         /// <summary>
-        /// The wait length
+        /// The Wait length
         /// </summary>
-        private int waitLength;
+        public int WaitLength { get; set; }
 
         /// <summary>
-        /// The stamp of wait time ends in ticks
+        /// The stamp of Wait time ends in Ticks
         /// </summary>
-        private int waitTickStamp;
+        public int WaitTickStamp { get; set; }
 
         /// <summary>
-        /// The stamp when the wait time ends in seconds
+        /// The stamp when the Wait time ends in seconds
         /// </summary>
-        private double waitTimeStamp;
+        public double WaitTimeStamp;
 
         /// <summary>
-        /// The calculated wait time in seconds
+        /// The Calculated Wait time in seconds
         /// </summary>
-        private double calculatedWaitTime;
+        public double CalculatedWaitTime { get; private set; }
 
         /// <summary>
-        /// The last length
+        /// The Last length
         /// </summary>
-        private int lastLength;
+        public int LastLength { get; set; }
 
         /// <summary>
-        /// Fixed tick last length with fixed BPM
+        /// Fixed Tick Last length with fixed BPM
         /// </summary>
-        private int fixedLastLength;
+        public int FixedLastLength { get; private set; }
 
         /// <summary>
-        /// The stamp when the last time ends in ticks
+        /// The stamp when the Last time ends in Ticks
         /// </summary>
-        private int lastTickStamp;
+        public int LastTickStamp { get; set; }
 
         /// <summary>
-        /// The stamp when the last time ends in seconds
+        /// The stamp when the Last time ends in seconds
         /// </summary>
-        private double lastTimeStamp;
+        public double LastTimeStamp { get; set; }
 
         /// <summary>
-        /// The calculated last time
+        /// The Calculated Last time
         /// </summary>
-        private double calculatedLastTime;
+        public double CalculatedLastTime { get; private set; }
 
         /// <summary>
-        /// Stores if the BPM of wait or last tick is in different BPM
+        /// Stores if the BPM of Wait or Last Tick is in different BPM
         /// </summary>
-        private bool tickBPMDisagree;
+        public bool TickBPMDisagree { get; private set; }
 
         /// <summary>
         /// The delayed
         /// </summary>
-        private bool delayed;
+        public bool Delayed { get; private set; }
 
         /// <summary>
         /// The BPM
         /// </summary>
-        private double bpm;
+        public double BPM { get; set; }
 
         /// <summary>
-        /// The previous
+        /// The previous note
         /// </summary>
-        private Note? prev;
+        public Note? Prev { get; set; }
 
         /// <summary>
-        /// The next
+        /// The next note
         /// </summary>
-        private Note? next;
+        public Note? Next { get; set; }
 
         /// <summary>
         /// Stores all BPM change prior to this
         /// </summary>
-        private List<BPMChange> bpmChangeNotes;
+        public List<BPMChange> BPMChangeNotes { get; set; }
 
         /// <summary>
         /// Construct an empty note
         /// </summary>
         public Note()
         {
-            noteType = "";
-            key = "";
-            endKey = "";
-            bar = 0;
-            tick = 0;
-            fixedTick = 0;
-            tickStamp = 0;
-            tickTimeStamp = 0.0;
-            lastLength = 0;
-            lastTickStamp = 0;
-            lastTimeStamp = 0.0;
-            waitLength = 0;
-            waitTickStamp = 0;
-            waitTimeStamp = 0.0;
-            calculatedLastTime = 0.0;
-            calculatedWaitTime = 0.0;
-            tickBPMDisagree = false;
-            bpm = 0;
-            bpmChangeNotes = new List<BPMChange>();
+            this.NoteType = "";
+            this.Key = "";
+            this.EndKey = "";
+            this.Bar = 0;
+            this.Tick = 0;
+            this.FixedTick = 0;
+            this.TickStamp = 0;
+            this.TickTimeStamp = 0.0;
+            this.LastLength = 0;
+            this.LastTickStamp = 0;
+            this.LastTimeStamp = 0.0;
+            this.WaitLength = 0;
+            this.WaitTickStamp = 0;
+            this.WaitTimeStamp = 0.0;
+            this.CalculatedLastTime = 0.0;
+            this.CalculatedWaitTime = 0.0;
+            this.TickBPMDisagree = false;
+            this.BPM = 0;
+            this.BPMChangeNotes = new List<BPMChange>();
         }
 
         /// <summary>
@@ -158,24 +158,24 @@ namespace MaiLib
         /// <param name="inTake">The intake note</param>
         public Note(Note inTake)
         {
-            this.noteType = inTake.NoteType;
-            this.key = inTake.Key;
-            this.endKey = inTake.EndKey;
-            this.bar = inTake.Bar;
-            this.tick = inTake.Tick;
-            this.tickStamp = inTake.TickStamp;
-            this.tickTimeStamp = inTake.TickTimeStamp;
-            this.lastLength = inTake.LastLength;
-            this.lastTickStamp = inTake.LastTickStamp;
-            this.lastTimeStamp = inTake.LastTimeStamp;
-            this.waitLength = inTake.WaitLength;
-            this.waitTickStamp = inTake.WaitTickStamp;
-            this.waitTimeStamp = inTake.WaitTimeStamp;
-            this.calculatedLastTime = inTake.CalculatedLastTime;
-            this.calculatedLastTime = inTake.CalculatedLastTime;
-            this.tickBPMDisagree = inTake.TickBPMDisagree;
-            this.bpm = inTake.BPM;
-            this.bpmChangeNotes = inTake.bpmChangeNotes;
+            this.NoteType = inTake.NoteType;
+            this.Key = inTake.Key;
+            this.EndKey = inTake.EndKey;
+            this.Bar = inTake.Bar;
+            this.Tick = inTake.Tick;
+            this.TickStamp = inTake.TickStamp;
+            this.TickTimeStamp = inTake.TickTimeStamp;
+            this.LastLength = inTake.LastLength;
+            this.LastTickStamp = inTake.LastTickStamp;
+            this.LastTimeStamp = inTake.LastTimeStamp;
+            this.WaitLength = inTake.WaitLength;
+            this.WaitTickStamp = inTake.WaitTickStamp;
+            this.WaitTimeStamp = inTake.WaitTimeStamp;
+            this.CalculatedLastTime = inTake.CalculatedLastTime;
+            this.CalculatedLastTime = inTake.CalculatedLastTime;
+            this.TickBPMDisagree = inTake.TickBPMDisagree;
+            this.BPM = inTake.BPM;
+            this.BPMChangeNotes = inTake.BPMChangeNotes;
         }
 
         public enum SpecialState
@@ -205,42 +205,12 @@ namespace MaiLib
         public SpecialState NoteSpecialState { get; set; }
 
         /// <summary>
-        /// Access NoteType
-        /// </summary>
-        public string NoteType
-        {
-            get
-            {
-                return this.noteType;
-            }
-            set
-            {
-                this.noteType = value;
-            }
-        }
-
-        /// <summary>
-        /// Access Key
-        /// </summary>
-        public string Key
-        {
-            get
-            {
-                return this.key;
-            }
-            set
-            {
-                this.key = value;
-            }
-        }
-
-        /// <summary>
         /// Get the number value of Key
         /// </summary>
         /// <value>Number value of Key 0-7, exclude key group</value>
         public int KeyNum
         {
-            get => int.Parse(this.key.ToCharArray()[0].ToString());
+            get => int.Parse(this.Key.ToCharArray()[0].ToString());
         }
 
         /// <summary>
@@ -252,226 +222,11 @@ namespace MaiLib
             get
             {
                 string result = "";
-                if (this.key.ToCharArray().Count() > 1)
+                if (this.Key.ToCharArray().Count() > 1)
                 {
-                    result = this.key.ToCharArray()[1].ToString();
+                    result = this.Key.ToCharArray()[1].ToString();
                 }
                 return result;
-            }
-        }
-
-        /// <summary>
-        /// Access Bar
-        /// </summary>
-        public int Bar
-        {
-            get
-            {
-                return this.bar;
-            }
-            set
-            {
-                this.bar = value;
-            }
-        }
-
-        /// <summary>
-        /// Access Tick
-        /// </summary>
-        public int Tick
-        {
-            get
-            {
-                return this.tick;
-            }
-            set
-            {
-                this.tick = value;
-            }
-        }
-
-        /// <summary>
-        /// Access FixedTick
-        /// </summary>
-        public int FixedTick
-        {
-            get
-            {
-                return this.fixedTick;
-            }
-            set
-            {
-                this.fixedTick = value;
-            }
-        }
-
-        /// <summary>
-        /// Access Tick Stamp = this.Bar*384 + this.Tick
-        /// </summary>
-        public int TickStamp
-        {
-            get
-            {
-                this.tickStamp = this.tick + this.bar * 384;
-                return this.tickStamp;
-            }
-            set
-            {
-                this.bar = value / 384;
-                this.tick = value % 384;
-            }
-        }
-
-        /// <summary>
-        /// Access Tick Stamp = this.Bar*384 + this.Tick
-        /// </summary>
-        public double TickTimeStamp
-        {
-            get { return this.tickTimeStamp; }
-            set { this.tickTimeStamp = value; }
-        }
-
-        /// <summary>
-        /// Access wait time
-        /// </summary>
-        public int WaitLength
-        {
-            get
-            {
-                return this.waitLength;
-            }
-            set
-            {
-                this.waitLength = value;
-            }
-        }
-
-        /// <summary>
-        /// Access the time stamp where wait time ends in ticks
-        /// </summary>
-        /// <value>The incoming time</value>
-        public int WaitTickStamp
-        {
-            get { return this.waitTickStamp; }
-            set { this.waitTickStamp = value; }
-        }
-
-        /// <summary>
-        /// Access the time stamp where wait time ends in seconds
-        /// </summary>
-        /// <value>The incoming time</value>
-        public double WaitTimeStamp
-        {
-            get { return this.waitTimeStamp; }
-            set { this.waitTimeStamp = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the calculated wait time.
-        /// </summary>
-        /// <value>
-        /// The calculated wait time in seconds.
-        /// </value>
-        public double CalculatedWaitTime
-        {
-            get { return this.calculatedWaitTime; }
-            set { this.calculatedWaitTime = value; }
-        }
-
-        /// <summary>
-        /// Access EndTime
-        /// </summary>
-        public int LastLength
-        {
-            get
-            {
-                return this.lastLength;
-            }
-            set
-            {
-                this.lastLength = value;
-            }
-        }
-
-        /// <summary>
-        /// Access FixedEndTime
-        /// </summary>
-        public int FixedLastLength
-        {
-            get
-            {
-                return this.fixedLastLength;
-            }
-            set
-            {
-                this.fixedLastLength = value;
-            }
-        }
-
-        /// <summary>
-        /// Access Last time in ticks
-        /// </summary>
-        public int LastTickStamp
-        {
-            get
-            {
-                return this.lastTickStamp;
-            }
-            set
-            {
-                this.lastTickStamp = value;
-            }
-        }
-
-        /// <summary>
-        /// Access last time in seconds
-        /// </summary>
-        public double LastTimeStamp
-        {
-            get
-            {
-                return this.lastTimeStamp;
-            }
-            set
-            {
-                this.lastTimeStamp = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the calculated last time in seconds.
-        /// </summary>
-        /// <value>
-        /// The calculated last time in seconds.
-        /// </value>
-        public double CalculatedLastTime
-        {
-            get => this.calculatedLastTime;
-            set { this.calculatedLastTime = value; }
-        }
-
-        /// <summary>
-        /// Stores if the wait or last are in different BPM
-        /// </summary>
-        /// <value>True if in different BPM, false otherwise</value>
-        public bool TickBPMDisagree
-        {
-            get => this.tickBPMDisagree;
-            set { this.tickBPMDisagree = value; }
-        }
-
-        /// <summary>
-        /// Access EndKey
-        /// </summary>
-        public string EndKey
-        {
-            get
-            {
-                return this.endKey;
-            }
-            set
-            {
-                this.endKey = value;
             }
         }
 
@@ -484,21 +239,12 @@ namespace MaiLib
             get
             {
                 int result = 0;
-                if (!this.endKey.Equals(""))
+                if (!this.EndKey.Equals(""))
                 {
-                    result = int.Parse(this.endKey.ToCharArray()[0].ToString());
+                    result = int.Parse(this.EndKey.ToCharArray()[0].ToString());
                 }
                 return result;
             }
-        }
-
-        /// <summary>
-        /// Access Delayed
-        /// </summary>
-        public bool Delayed
-        {
-            get { return this.delayed; }
-            set { this.delayed = value; }
         }
 
         /// <summary>
@@ -509,45 +255,6 @@ namespace MaiLib
         public bool IsOfSameTime(Note x)
         {
             return this.Bar == x.Bar && this.Tick == x.Tick;
-        }
-
-        /// <summary>
-        /// Access BPM
-        /// </summary>
-        public double BPM
-        {
-            get { return this.bpm; }
-            set { this.bpm = value; }
-        }
-
-        /// <summary>
-        /// Access this.prev;
-        /// </summary>
-        public Note? Prev
-        {
-            get { return this.prev; }
-            set { this.prev = value; }
-        }
-
-        /// <summary>
-        /// Access this.next
-        /// </summary>
-        public Note? Next
-        {
-            get { return this.next; }
-            set { this.next = value; }
-        }
-
-        public List<BPMChange> BPMChangeNotes
-        {
-            get
-            {
-                return this.bpmChangeNotes;
-            }
-            set
-            {
-                this.bpmChangeNotes = value;
-            }
         }
 
         /// <summary>
@@ -580,11 +287,11 @@ namespace MaiLib
 
             Note another = obj as Note ?? throw new NullReferenceException("Note is not defined");
 
-            //else if (this.NoteSpecificType().Equals("SLIDE")&&(this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD")) && this.tick == another.Tick && this.bar == another.Bar)
+            //else if (this.NoteSpecificType().Equals("SLIDE")&&(this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD")) && this.Tick == another.Tick && this.bar == another.Bar)
             //{
             //    result = -1;
             //}
-            //else if (this.NoteSpecificType().Equals("SLIDE_START") && (another.NoteSpecificType().Equals("TAP") || another.NoteSpecificType().Equals("HOLD")) && this.tick == another.Tick && this.bar == another.Bar)
+            //else if (this.NoteSpecificType().Equals("SLIDE_START") && (another.NoteSpecificType().Equals("TAP") || another.NoteSpecificType().Equals("HOLD")) && this.Tick == another.Tick && this.bar == another.Bar)
             //{
             //    Console.WriteLine("STAR AND TAP");
             //    result = 1;
@@ -614,7 +321,7 @@ namespace MaiLib
             //        //Console.WriteLine("this.compareTo(another) is" + result);
             //        //Console.ReadKey();
             //    }
-            //    else result = this.tick.CompareTo(another.Tick);
+            //    else result = this.Tick.CompareTo(another.Tick);
             //}
             if (this.Bar != another.Bar)
             {
@@ -1155,25 +862,25 @@ namespace MaiLib
 
         public virtual bool Update()
         {
-            // Console.WriteLine("This note has bpm note number of " + this.BPMChangeNotes.Count());
+            // Console.WriteLine("This note has BPM note number of " + this.BPMChangeNotes.Count());
             bool result = false;
-            this.tickStamp = this.bar * 384 + this.tick;
-            while (this.tick >= 384)
+            this.TickStamp = this.Bar * 384 + this.Tick;
+            while (this.Tick >= 384)
             {
-                this.tick -= 384;
-                this.bar++;
+                this.Tick -= 384;
+                this.Bar++;
             }
-            // string noteInformation = "This note is "+this.NoteType+", in tick "+ this.tickStamp+", ";
-            //this.tickTimeStamp = this.GetTimeStamp(this.tickStamp);
-            this.waitTickStamp = this.tickStamp + this.waitLength;
-            //this.waitTimeStamp = this.GetTimeStamp(this.waitTickStamp);
-            this.lastTickStamp = this.waitTickStamp + this.lastLength;
-            //this.lastTimeStamp = this.GetTimeStamp(this.lastTickStamp);
+            // string noteInformation = "This note is "+this.NoteType+", in Tick "+ this.TickStamp+", ";
+            //this.TickTimeStamp = this.GetTimeStamp(this.TickStamp);
+            this.WaitTickStamp = this.TickStamp + this.WaitLength;
+            //this.WaitTimeStamp = this.GetTimeStamp(this.WaitTickStamp);
+            this.LastTickStamp = this.WaitTickStamp + this.LastLength;
+            //this.LastTimeStamp = this.GetTimeStamp(this.LastTickStamp);
             if (!(this.NoteType.Equals("SLIDE") || this.NoteType.Equals("HOLD")))
             {
                 result = true;
             }
-            else if (this.calculatedLastTime > 0 && this.calculatedWaitTime > 0)
+            else if (this.CalculatedLastTime > 0 && this.CalculatedWaitTime > 0)
             {
                 result = true;
             }
@@ -1183,21 +890,21 @@ namespace MaiLib
         /// <summary>
         /// Replace this.BPMChangeNotes from change table given
         /// </summary>
-        /// <param name="changeTable">Change table contains bpm notes</param>
+        /// <param name="changeTable">Change table contains BPM notes</param>
         public void ReplaceBPMChanges(BPMChanges changeTable)
         {
-            this.bpmChangeNotes = new List<BPMChange>();
-            this.bpmChangeNotes.AddRange(changeTable.ChangeNotes);
+            this.BPMChangeNotes = new List<BPMChange>();
+            this.BPMChangeNotes.AddRange(changeTable.ChangeNotes);
         }
 
         /// <summary>
         /// Replace this.BPMChangeNotes from change table given
         /// </summary>
-        /// <param name="changeTable">Change table contains bpm notes</param>
+        /// <param name="changeTable">Change table contains BPM notes</param>
         public void ReplaceBPMChanges(List<BPMChange> changeTable)
         {
-            this.bpmChangeNotes = new List<BPMChange>();
-            this.bpmChangeNotes.AddRange(changeTable);
+            this.BPMChangeNotes = new List<BPMChange>();
+            this.BPMChangeNotes.AddRange(changeTable);
         }
 
         /// <summary>
@@ -1230,9 +937,9 @@ namespace MaiLib
         /// Generate appropriate length for hold and slide.
         /// </summary>
         /// <param name="length">Last Time</param>
-        /// <param name="bpm">BPM</param>
+        /// <param name="BPM">BPM</param>
         /// <returns>[Definition:Length]=[Quaver:Beat]</returns>
-        public string GenerateAppropriateLength(int length, double bpm)
+        public string GenerateAppropriateLength(int length, double BPM)
         {
             string result = "";
             double duration = Math.Round(this.LastTimeStamp - this.WaitTimeStamp, 4);
@@ -1251,13 +958,13 @@ namespace MaiLib
         }
 
         /// <summary>
-        /// Get BPM Time tick unit of bpm
+        /// Get BPM Time Tick unit of BPM
         /// </summary>
-        /// <param name="bpm">BPM to calculate</param>
-        /// <returns>BPM Tick Unit of bpm</returns>
-        public static double GetBPMTimeUnit(double bpm)
+        /// <param name="BPM">BPM to calculate</param>
+        /// <returns>BPM Tick Unit of BPM</returns>
+        public static double GetBPMTimeUnit(double BPM)
         {
-            double result = 60 / bpm * 4 / 384;
+            double result = 60 / BPM * 4 / 384;
             return result;
         }
 
@@ -1267,26 +974,26 @@ namespace MaiLib
             if (overallTick != 0)
             {
                 int maximumBPMIndex = 0;
-                for (int i = 0; i < this.bpmChangeNotes.Count; i++)
+                for (int i = 0; i < this.BPMChangeNotes.Count; i++)
                 {
-                    if (this.bpmChangeNotes[i].TickStamp <= overallTick)
+                    if (this.BPMChangeNotes[i].TickStamp <= overallTick)
                     {
                         maximumBPMIndex = i;
                     }
                 }
                 if (maximumBPMIndex == 0)
                 {
-                    result = GetBPMTimeUnit(this.bpmChangeNotes[0].BPM) * overallTick;
+                    result = GetBPMTimeUnit(this.BPMChangeNotes[0].BPM) * overallTick;
                 }
                 else
                 {
                     for (int i = 1; i <= maximumBPMIndex; i++)
                     {
-                        double previousTickTimeUnit = GetBPMTimeUnit(this.bpmChangeNotes[i - 1].BPM);
-                        result += (this.bpmChangeNotes[i].TickStamp - this.bpmChangeNotes[i - 1].TickStamp) * previousTickTimeUnit;
+                        double previousTickTimeUnit = GetBPMTimeUnit(this.BPMChangeNotes[i - 1].BPM);
+                        result += (this.BPMChangeNotes[i].TickStamp - this.BPMChangeNotes[i - 1].TickStamp) * previousTickTimeUnit;
                     }
-                    double tickTimeUnit = GetBPMTimeUnit(this.bpmChangeNotes[maximumBPMIndex].BPM);
-                    result += (overallTick - this.bpmChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
+                    double TickTimeUnit = GetBPMTimeUnit(this.BPMChangeNotes[maximumBPMIndex].BPM);
+                    result += (overallTick - this.BPMChangeNotes[maximumBPMIndex].TickStamp) * TickTimeUnit;
                 }
             } //A serious improvement is needed for this method
             return result;
