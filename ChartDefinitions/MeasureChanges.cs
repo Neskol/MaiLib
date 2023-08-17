@@ -5,13 +5,13 @@
     /// </summary>
     public class MeasureChanges
     {
-        private List<int> Bar;
-        private List<int> Tick;
-        private List<int> Quavers;
-        private List<int> Beats;
-        private List<MeasureChange> ChangeNotes;
-        private int InitialQuavers;
-        private int InitialBeats;
+        public List<int> Bar{get; private set;}
+        public List<int> Tick{get; private set;}
+        public List<int> Quavers{get; private set;}
+        public List<int> Beats{get; private set;}
+        public List<MeasureChange> ChangeNotes{get; private set;}
+        public int InitialQuavers{get; private set;}
+        public int InitialBeats{get; private set;}
 
         /// <summary>
         /// Construct an empty Measure Change

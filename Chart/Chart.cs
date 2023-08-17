@@ -12,343 +12,130 @@ namespace MaiLib
     /// </summary>
     public abstract class Chart : IChart
     {
-        //Stores all notes
-        private List<Note> notes;
+        /// <summary>
+        /// Stores all notes
+        /// </summary>
+        public List<Note> Notes{get; set;}
 
-        //Stores definitions of BPM Changes
-        private BPMChanges bpmChanges;
+        /// <summary>
+        /// Stores definitions of BPM Changes
+        /// </summary>
+        public BPMChanges BPMChanges{get; set;}
 
-        //Stores definitions of Measure Changes
-        private MeasureChanges measureChanges;
+        /// <summary>
+        /// Stores definitions of Measure Changes
+        /// </summary>
+        public MeasureChanges MeasureChanges{get; set;}
 
-        private int totalNoteNumber;
+        /// <summary>
+        /// Stores total note number
+        /// </summary>
+        public int TotalNoteNumber{get; set;}
 
-        //Counts number of Tap
-        private int tapNumber;
+        /// <summary>
+        /// Counts number of Tap
+        /// </summary>
+        public int TapNumber{get; set;}
 
-        //Counts number of Break
-        private int breakNumber;
+        /// <summary>
+        /// Counts number of Break
+        /// </summary>
+        public int BreakNumber{get; set;}
 
-        //Counts number of Hold
-        private int holdNumber;
+        /// <summary>
+        /// Counts number of Hold
+        /// </summary>
+        public int HoldNumber{get; set;}
 
-        //Counts number of Slide
-        private int slideNumber;
+        /// <summary>
+        /// Counts number of Slide
+        /// </summary>
+        public int SlideNumber{get; set;}
 
-        //Counts number of Touch
-        private int touchNumber;
+        /// <summary>
+        /// Counts number of Touch
+        /// </summary>
+        public int TouchNumber{get; set;}
 
-        //Counts number of Touch Hold
-        private int thoNumber;
+        /// <summary>
+        /// Counts number of Touch Hold
+        /// </summary>
+        public int ThoNumber{get; set;}
 
-        //Defines if the chart is DX chart
-        private bool isDxChart;
+        /// <summary>
+        /// Defines if the chart is DX chart
+        /// </summary>
+        public bool IsDxChart {get; set;}
 
         /// <summary>
         /// The first note of the chart
         /// </summary>
-        private Note? firstNote;
+        public Note? FirstNote{get; set;}
 
         /// <summary>
         /// The definition of this chart
         /// </summary>
-        private int definition = 384;
+        public int Definition {get; set;}
 
-        //Defines 
         /// <summary>
         /// The basic unit of maimai chart
         /// </summary>
         /// <value>Unit score</value>
-        private int[] unitScore = { 500, 1000, 1500, 2500 };
+        public int[] UnitScore {get; set;}
 
         /// <summary>
-        /// The total achievement of this chart; to be updated
+        /// The total achievement of this chart{get; set;} to be updated
         /// </summary>
-        private int achievement = 0;
+        public int Achievement {get; set;}
 
         /// <summary>
-        /// The total delay of holds behind final note; to be updated
+        /// The total delay of holds behind final note{get; set;} to be updated
         /// </summary>
-        private int totalDelay = 0;
+        public int TotalDelay {get; set;}
 
         /// <summary>
         /// Stored chart in structure of bar of notes
         /// </summary>
-        private List<List<Note>> chart;
+        public List<List<Note>> StoredChart {get; set;}
 
         /// <summary>
         /// Stored the information of this chart, if any
         /// </summary>
-        private Dictionary<string, string> information;
+        public Dictionary<string, string> Information{get; set;}
 
         /// <summary>
         /// Allowed TAP notes
         /// </summary>
         /// <value>TAP defs</value>
-        private readonly string[] TapTypes = { "TAP", "STR", "TTP", "XTP", "XST" };
+        public readonly string[] TapTypes = { "TAP", "STR", "TTP", "XTP", "XST" };
 
         /// <summary>
         /// Allowed HOLD notes
         /// </summary>
         /// <value>HOLD defs</value>
-        private readonly string[] HoldTypes = { "HLD", "THO", "XHO" };
+        public readonly string[] HoldTypes = { "HLD", "THO", "XHO" };
 
         /// <summary>
         /// Allowed SLIDE notes
         /// </summary>
         /// <value>SLIDE defs</value>
-        private readonly string[] SlideTypes = { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
+        public readonly string[] SlideTypes = { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
 
         //Theoretical Rating = (Difference in 100-down and Max score)/100-down
 
         /// <summary>
-        /// Access to Notes
+        /// Empty constructor
         /// </summary>
-        public List<Note> Notes
+        public Chart()
         {
-            get
-            {
-                return this.notes;
-            }
-            set
-            {
-                this.notes = value;
-            }
-        }
-
-        /// <summary>
-        /// Returns this.Chart. aka List of bars
-        /// </summary>
-        /// <value>this.Chart</value>
-        public List<List<Note>> StoredChart
-        {
-            get
-            {
-                return this.chart;
-            }
-            set
-            {
-                this.chart = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to BPM Changes
-        /// </summary>
-        public BPMChanges BPMChanges
-        {
-            get
-            {
-                return this.bpmChanges;
-            }
-            set
-            {
-                this.bpmChanges = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to Measure Changes
-        /// </summary>
-        public MeasureChanges MeasureChanges
-        {
-            get
-            {
-                return this.measureChanges;
-            }
-            set
-            {
-                this.measureChanges = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to Tap Number
-        /// </summary>
-        public int TapNumber
-        {
-            get
-            {
-                return this.tapNumber;
-            }
-            set
-            {
-                this.tapNumber = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to Break Number
-        /// </summary>
-        public int BreakNumber
-        {
-            get
-            {
-                return this.breakNumber;
-            }
-            set
-            {
-                this.breakNumber = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to Hold Number
-        /// </summary>
-        public int HoldNumber
-        {
-            get
-            {
-                return this.holdNumber;
-            }
-            set
-            {
-                this.holdNumber = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to Slide Number
-        /// </summary>
-        public int SlideNumber
-        {
-            get
-            {
-                return this.slideNumber;
-            }
-            set
-            {
-                this.slideNumber = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to Touch Number
-        /// </summary>
-        public int TouchNumber
-        {
-            get
-            {
-                return this.touchNumber;
-            }
-            set
-            {
-                this.touchNumber = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to Touch Hold Number
-        /// </summary>
-        public int ThoNumber
-        {
-            get
-            {
-                return this.thoNumber;
-            }
-            set
-            {
-                this.thoNumber = value;
-            }
-        }
-
-        /// <summary>
-        /// Access to the total note number
-        /// </summary>
-        public int TotalNoteNumber
-        {
-            get { return this.totalNoteNumber; }
-        }
-
-        /// <summary>
-        /// Access to Unit Score
-        /// </summary>
-        public int[] UnitScore
-        {
-            get
-            {
-                return this.unitScore;
-            }
-        }
-
-        /// <summary>
-        /// Access to theoretical Achievement
-        /// </summary>
-        public int Achievement
-        {
-            get
-            {
-                return this.achievement;
-            }
-            set
-            {
-                this.achievement = value;
-            }
-        }
-
-        /// <summary>
-        /// Return the total delayed value of this Chart.
-        /// </summary>
-        /// <value>this.TotalDelayedValue</value>
-        public int TotalDelay
-        {
-            get
-            {
-                return this.totalDelay;
-            }
-            set
-            {
-                this.totalDelay = value;
-            }
-        }
-
-        /// <summary>
-        /// Return Information
-        /// </summary>
-        /// <value>this.Information</value>
-        public Dictionary<string, string> Information
-        {
-            get
-            {
-                return this.information;
-            }
-            set
-            {
-                this.information = value;
-            }
-        }
-
-        public bool IsDXChart
-        {
-            get => this.isDxChart;
-            set => this.isDxChart = value;
-        }
-
-        public Note? FirstNote
-        {
-            get => this.firstNote;
-            set => this.firstNote = value;
-        }
-
-        /// <summary>
-        /// Access the definition of this chart, default by 384
-        /// </summary>
-        /// <value>this.chartDefinition</value>
-        public int Definition
-        {get; set; }
-
-    /// <summary>
-    /// Empty constructor
-    /// </summary>
-    public Chart()
-        {
-            this.notes = new List<Note>();
-            this.bpmChanges = new BPMChanges();
-            this.measureChanges = new MeasureChanges();
-            this.chart = new List<List<Note>>();
-            this.information = new Dictionary<string, string>();
-            this.isDxChart = false;
-            this.definition = 384;
+            this.Notes = new List<Note>();
+            this.BPMChanges = new BPMChanges();
+            this.MeasureChanges = new MeasureChanges();
+            this.StoredChart = new List<List<Note>>();
+            this.Information = new Dictionary<string, string>();
+            this.IsDxChart = false;
+            this.Definition = 384;
+            this.UnitScore = new int[] { 500, 1000, 1500, 2000, 2500};
         }
 
         public abstract bool CheckValidity();
@@ -361,7 +148,7 @@ namespace MaiLib
             this.StoredChart = new List<List<Note>>();
             int maxBar = 0;
             double timeStamp = 0.0;
-            if (notes.Count > 0) foreach (Note x in this.Notes)
+            if (this.Notes.Count > 0) foreach (Note x in this.Notes)
             {
                 if (x.Bar>maxBar) maxBar = x.Bar;
             }
@@ -400,7 +187,7 @@ namespace MaiLib
                         //x.Update();
                         // Console.WriteLine("This note contains "+x.BPMChangeNotes.Count+" BPM notes");
                         //Console.WriteLine(GetNoteDetail(this.bpmChanges, x));
-                        int delay = x.Bar * definition + x.Tick + x.WaitLength + x.LastLength;
+                        int delay = x.Bar * Definition + x.Tick + x.WaitLength + x.LastLength;
                         switch (x.NoteSpecificGenre)
                         {
                             case "BPM":
@@ -411,23 +198,23 @@ namespace MaiLib
                             case "REST":
                                 break;
                             case "TAP":
-                                this.tapNumber++;
+                                this.TapNumber++;
                                 if (x.NoteSpecificGenre.Equals("XTP"))
                                 {
-                                    this.isDxChart = false;
+                                    this.IsDxChart = false;
                                 }
                                 if (x.NoteType.Equals("TTP"))
                                 {
-                                    this.touchNumber++;
-                                    this.isDxChart = false;
+                                    this.TouchNumber++;
+                                    this.IsDxChart = false;
                                 }
                                 else if (x.NoteType.Equals("BRK") || x.NoteType.Equals("BST"))
                                 {
-                                    this.breakNumber++;
+                                    this.BreakNumber++;
                                 }
                                 break;
                             case "HOLD":
-                                this.holdNumber++;
+                                this.HoldNumber++;
                                 x.TickBPMDisagree = (GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) || HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp));
                                 x.Update();
                                 if (x.TickTimeStamp == 0)
@@ -442,21 +229,21 @@ namespace MaiLib
                                 }
                                 if (delay > this.TotalDelay)
                                 {
-                                    this.totalDelay = delay;
+                                    this.TotalDelay = delay;
                                     //Console.WriteLine("New delay: " + delay);
                                     //Console.WriteLine(x.Compose(1));
                                 }
                                 if (x.NoteType.Equals("THO"))
                                 {
-                                    this.thoNumber++;
-                                    this.isDxChart = false;
+                                    this.ThoNumber++;
+                                    this.IsDxChart = false;
                                 }
                                 break;
                             case "SLIDE_START":
-                                this.tapNumber++;
+                                this.TapNumber++;
                                 break;
                             case "SLIDE":
-                                this.slideNumber++;
+                                this.SlideNumber++;
                                 x.TickBPMDisagree = (GetBPMByTick(x.TickStamp) != GetBPMByTick(x.WaitTickStamp) ||
                                     GetBPMByTick(x.WaitTickStamp) != GetBPMByTick(x.LastTickStamp) ||
                                     GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
@@ -484,7 +271,7 @@ namespace MaiLib
                                 // }
                                 if (delay > this.TotalDelay)
                                 {
-                                    this.totalDelay = delay;
+                                    this.TotalDelay = delay;
                                     //Console.WriteLine("New delay: "+delay);
                                     //Console.WriteLine(x.Compose(1));
                                 }
@@ -534,19 +321,19 @@ namespace MaiLib
                 //Console.WriteLine();
                 //Console.WriteLine("In bar "+i+", LeastMeasure is "+ CalculateLeastMeasure(bar)+", so quaver will be "+ CalculateQuaver(CalculateLeastMeasure(bar)));
                 afterBar.AddRange(bar);
-                this.chart.Add(FinishBar(afterBar, this.BPMChanges.ChangeNotes, i, CalculateQuaver(CalculateLeastMeasure(bar))));
+                this.StoredChart.Add(FinishBar(afterBar, this.BPMChanges.ChangeNotes, i, CalculateQuaver(CalculateLeastMeasure(bar))));
             }
             //Console.WriteLine("TOTAL DELAY: "+this.TotalDelay);
             //Console.WriteLine("TOTAL COUNT: "+ this.chart.Count * 384);
-            if (this.totalDelay < this.chart.Count * definition)
+            if (this.TotalDelay < this.StoredChart.Count * Definition)
             {
-                this.totalDelay = 0;
+                this.TotalDelay = 0;
             }
             else
             {
-                this.totalDelay -= this.chart.Count * definition;
+                this.TotalDelay -= this.StoredChart.Count * Definition;
             }
-            this.totalNoteNumber += (this.tapNumber + this.holdNumber + this.slideNumber);
+            this.TotalNoteNumber += (this.TapNumber + this.HoldNumber + this.SlideNumber);
         }
 
         /// <summary>
@@ -810,7 +597,7 @@ namespace MaiLib
         {
             foreach (KeyValuePair<string, string> x in information)
             {
-                this.information.Add(x.Key, x.Value);
+                this.Information.Add(x.Key, x.Value);
             }
         }
 
@@ -961,18 +748,18 @@ namespace MaiLib
         /// <returns>BPM at that tick</returns>
         public double GetBPMByTick(int overallTick)
         {
-            double result = this.bpmChanges.ChangeNotes[0].BPM;
+            double result = this.BPMChanges.ChangeNotes[0].BPM;
             if (overallTick > 0)
             {
                 int maximumBPMIndex = 0;
-                for (int i = 0; i < this.bpmChanges.ChangeNotes.Count; i++)
+                for (int i = 0; i < this.BPMChanges.ChangeNotes.Count; i++)
                 {
-                    if (this.bpmChanges.ChangeNotes[i].TickStamp <= overallTick)
+                    if (this.BPMChanges.ChangeNotes[i].TickStamp <= overallTick)
                     {
                         maximumBPMIndex = i;
                     }
                 }
-                result = this.bpmChanges.ChangeNotes[maximumBPMIndex].BPM;
+                result = this.BPMChanges.ChangeNotes[maximumBPMIndex].BPM;
 
             }
             return result;
@@ -988,9 +775,9 @@ namespace MaiLib
         {
             bool result = false;
 
-            for (int i = 0; i < this.bpmChanges.ChangeNotes.Count && !result; i++)
+            for (int i = 0; i < this.BPMChanges.ChangeNotes.Count && !result; i++)
             {
-                if (this.bpmChanges.ChangeNotes[i].TickStamp > startTick && this.bpmChanges.ChangeNotes[i].TickStamp < endTick)
+                if (this.BPMChanges.ChangeNotes[i].TickStamp > startTick && this.BPMChanges.ChangeNotes[i].TickStamp < endTick)
                 {
                     result = true;
                 }

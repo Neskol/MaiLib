@@ -17,102 +17,32 @@ namespace MaiLib
         /// <summary>
         /// Stores chart collections
         /// </summary>
-        private List<Chart> Charts;
+        public List<Chart> Charts { get; set; }
 
         /// <summary>
         /// Stores global information
         /// </summary>
-        private Dictionary<string, string> Information;
+        public Dictionary<string, string> Information { get; set; }
 
         /// <summary>
         /// Stores read in music XML file
         /// </summary>
-        private XmlInformation MusicXML;
+        public XmlInformation MusicXML { get; set; }
 
         /// <summary>
         /// Stores the path separator
         /// </summary>
-        private string GlobalSep;
+        public string GlobalSep { get; set; }
 
         /// <summary>
         /// Stores the rotate dictionary
         /// </summary>
-        private Dictionary<string, string> RotateDictionary = new Dictionary<string, string> { { "17", "UpSideDown" }, { "305", "LeftToRight" }, { "417", "Clockwise90" } };
-
-        /// <summary>
-        /// Access the path separator
-        /// </summary>
-        public string GlobalSep
-        {
-            get { return this.GlobalSep; }
-        }
+        public Dictionary<string, string> RotateDictionary = new Dictionary<string, string> { { "17", "UpSideDown" }, { "305", "LeftToRight" }, { "417", "Clockwise90" } };
 
         /// <summary>
         /// Stores the information of Compiled Chart
         /// </summary>
-        private List<string> compiledChart;
-
-        /// <summary>
-        /// Stores the information of Compiled Chart
-        /// </summary>
-        public List<string> CompiledChart
-        {
-            get { return this.compiledChart; }
-            set { this.compiledChart = value; }
-        }
-
-        /// <summary>
-        /// Access stored charts
-        /// </summary>
-        public List<Chart> Charts
-        {
-            get { return this.Charts; }
-            set { this.Charts = value; }
-        }
-
-        /// <summary>
-        /// Access global information
-        /// </summary>
-        public Dictionary<string, string> Information
-        {
-            get { return this.Information; }
-            set { this.Information = value; }
-        }
-
-        /// <summary>
-        /// Access read in music XML file
-        /// </summary>
-        public XmlInformation MusicXml
-        {
-            get { return this.MusicXML; }
-            set { this.MusicXML = value; }
-        }
-
-        /// <summary>
-        /// Access difficulty;
-        /// </summary>
-        public string[] Difficulty
-        {
-            get { return Difficulty; }
-        }
-
-        /// <summary>
-        /// Access the rotate dictionary
-        /// </summary>
-        /// <value>Key: Music ID in Digits; Value: Rotate Parameter</value>
-        public Dictionary<string, string> RotateDictionary
-        {
-            get
-            {
-                return this.RotateDictionary;
-            }
-            set
-            {
-                this.RotateDictionary = value;
-            }
-        }
-
-
+        public List<string> CompiledChart { get; set; }
 
         /// <summary>
         /// Construct compiler of a single song.
@@ -121,7 +51,7 @@ namespace MaiLib
         /// <param name="targetLocation">Output folder</param>
         public Compiler(string location, string targetLocation)
         {
-            compiledChart = new();
+            this.CompiledChart = new();
             Charts = new List<Chart>();
             this.MusicXML = new XmlInformation(location);
             MusicXML.Update();
@@ -142,7 +72,7 @@ namespace MaiLib
         /// </summary>
         public Compiler()
         {
-            compiledChart = new();
+            this.CompiledChart = new();
             Charts = new List<Chart>();
             Information = new Dictionary<string, string>();
             this.MusicXML = new XmlInformation();

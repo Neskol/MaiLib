@@ -22,8 +22,8 @@ namespace MaiLib
             {
                 this.Charts.Add(new Simai());
             }
-            this.MusicXml = new XmlInformation(location);
-            this.Information = MusicXml.Information;
+            this.MusicXML = new XmlInformation(location);
+            this.Information = MusicXML.Information;
             //Construct Charts
             {
                 if (!this.Information["Easy"].Equals("")&&File.Exists(location + this.Information.GetValueOrDefault("Easy Chart Path")))
@@ -76,13 +76,13 @@ namespace MaiLib
         {
             string[] ma2files = Directory.GetFiles(location, "*.ma2");
             Charts = new List<Chart>();
-            this.MusicXml = new XmlInformation(location);
-            this.Information = MusicXml.Information;
+            this.MusicXML = new XmlInformation(location);
+            this.Information = MusicXML.Information;
             bool rotate = false;
             string rotateParameter = "";
             foreach (KeyValuePair<string,string> pair in this.RotateDictionary)
             {
-                if (this.MusicXml.TrackID.Equals(pair.Key))
+                if (this.MusicXML.TrackID.Equals(pair.Key))
                 {
                     rotateParameter = pair.Value;
                     rotate = true;
@@ -121,7 +121,7 @@ namespace MaiLib
             }
             Charts = new List<Chart>();
             Information = new Dictionary<string, string>();
-            this.MusicXml = new XmlInformation();
+            this.MusicXML = new XmlInformation();
         }
 
         public override string Compose()
@@ -137,7 +137,7 @@ namespace MaiLib
                 beginning += "&shortid=" + this.Information.GetValueOrDefault("Music ID") + "\n";
                 beginning += "&genre=" + this.Information.GetValueOrDefault("Genre") + "\n";
                 beginning += "&cabinet=";
-                if (this.MusicXml.IsDXChart)
+                if (this.MusicXML.IsDXChart)
                 {
                     beginning += "DX\n";
                 }
@@ -145,7 +145,7 @@ namespace MaiLib
                 {
                     beginning += "SD\n";
                 }
-                beginning += "&version=" + this.MusicXml.TrackVersion + "\n";
+                beginning += "&version=" + this.MusicXML.TrackVersion + "\n";
                 beginning += "&ChartConverter=Neskol\n";
                 beginning += "&ChartConvertTool=MaichartConverter\n";
                 beginning += "&ChartConvertToolVersion=" + FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion + "\n";
@@ -206,16 +206,16 @@ namespace MaiLib
                 for (int i = 0; i < this.Charts.Count; i++)
                 {
                     // Console.WriteLine("Processing chart: " + i);
-                    if (Charts[i] != null && !this.Information[this.Difficulty[i]].Equals(""))
+                    if (Charts[i] != null && !this.Information[Difficulty[i]].Equals(""))
                     {
                         string? isDxChart = this.Information.GetValueOrDefault("SDDX Suffix");
-                        if (!Charts[i].IsDXChart)
+                        if (!Charts[i].IsDxChart)
                         {
                             isDxChart = "";
                         }
                         result += "&inote_" + (i + 1) + "=\n";
                         result += this.Compose(Charts[i]);
-                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + this.Difficulty[i] + "]");
+                        this.CompiledChart.Add(this.Information.GetValueOrDefault("Name") + isDxChart + " [" + Difficulty[i] + "]");
                     }
                     result += "\n";
                 }
@@ -252,7 +252,7 @@ namespace MaiLib
             beginning += "&shortid=" + this.Information.GetValueOrDefault("Music ID") + "\n";
             beginning += "&genre=" + this.Information.GetValueOrDefault("Genre") + "\n";
             beginning += "&cabinet=SD";
-            beginning += "&version=" + this.MusicXml.TrackVersion + "\n";
+            beginning += "&version=" + this.MusicXML.TrackVersion + "\n";
             beginning += "&ChartConverter=Neskol\n";
             beginning += "&ChartConvertTool=MaichartConverter\n";
             beginning += "&ChartConvertToolVersion=1.0.4.0\n";

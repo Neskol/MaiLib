@@ -5,7 +5,7 @@ namespace MaiLib
 {
     public class BPMChanges
     {
-        private HashSet<BPMChange> changeNotes;
+        public List<BPMChange> ChangeNotes { get; private set; }
 
         /// <summary>
         /// Construct with changes listed
@@ -15,11 +15,11 @@ namespace MaiLib
         /// <param name="bpm">Specified BPM changes</param>
         public BPMChanges(List<int> bar, List<int> tick, List<double> bpm)
         {
-            this.changeNotes = new HashSet<BPMChange>();
+            this.ChangeNotes = new List<BPMChange>();
             for (int i = 0; i < bar.Count; i++)
             {
                 BPMChange candidate = new(bar[i], tick[i], bpm[i]);
-                changeNotes.Add(candidate);
+                this.ChangeNotes.Add(candidate);
             }
             this.Update();
         }
@@ -29,7 +29,7 @@ namespace MaiLib
         /// </summary>
         public BPMChanges()
         {
-            this.changeNotes = new HashSet<BPMChange>();
+            this.ChangeNotes = new List<BPMChange>();
             this.Update();
         }
 
@@ -39,22 +39,14 @@ namespace MaiLib
         /// <param name="takenIn"></param>
         public BPMChanges(BPMChanges takenIn)
         {
-            this.changeNotes = new HashSet<BPMChange>();
+            this.ChangeNotes = new List<BPMChange>();
             foreach (BPMChange candidate in takenIn.ChangeNotes)
             {
-                this.changeNotes.Add(candidate);
+                this.ChangeNotes.Add(candidate);
             }
         }
 
-        public List<BPMChange> ChangeNotes
-        {
-            get
-            {
-                List<BPMChange> result = new();
-                result.AddRange(this.changeNotes);
-                return result;
-            }
-        }
+        
 
         /// <summary>
         /// Add BPMChange to change notes
@@ -62,7 +54,7 @@ namespace MaiLib
         /// <param name="takeIn"></param>
         public void Add(BPMChange takeIn)
         {
-            this.changeNotes.Add(takeIn);
+            this.ChangeNotes.Add(takeIn);
             this.Update();
         }
 
@@ -73,7 +65,7 @@ namespace MaiLib
         {
             List<BPMChange> adjusted = new();
             Note lastNote = new Rest();
-            foreach (BPMChange x in this.changeNotes)
+            foreach (BPMChange x in this.ChangeNotes)
             {
                 if (!(x.Bar == lastNote.Bar && x.Tick == lastNote.Tick && x.BPM == lastNote.BPM))
                 {
@@ -82,12 +74,12 @@ namespace MaiLib
                 }
             }
             // Console.WriteLine(adjusted.Count);
-            this.changeNotes = new HashSet<BPMChange>();
+            this.ChangeNotes = new List<BPMChange>();
             foreach(BPMChange x in adjusted)
             {
-                this.changeNotes.Add(x);
+                this.ChangeNotes.Add(x);
             }
-            if (this.changeNotes.Count!=adjusted.Count)
+            if (this.ChangeNotes.Count!=adjusted.Count)
             {
                 throw new Exception("Adjusted BPM Note number not matching");
             }
@@ -100,7 +92,7 @@ namespace MaiLib
         {
             get
             {
-                if (changeNotes.Count > 4)
+                if (ChangeNotes.Count > 4)
                 {
                     string result = "BPM_DEF" + "\t";
                     for (int x = 0; x < 4; x++)
@@ -114,7 +106,7 @@ namespace MaiLib
                 {
                     int times = 0;
                     string result = "BPM_DEF" + "\t";
-                    foreach (BPMChange x in changeNotes)
+                    foreach (BPMChange x in ChangeNotes)
                     {
                         result += String.Format("{0:F3}", x.BPM);
                         result += "\t";
@@ -148,7 +140,7 @@ namespace MaiLib
         public string Compose()
         {
             string result = "";
-            for (int i = 0; i < changeNotes.Count; i++)
+            for (int i = 0; i < ChangeNotes.Count; i++)
             {
                 result += "BPM" + "\t" + this.ChangeNotes[i].Bar + "\t" + this.ChangeNotes[i].Tick + "\t" + this.ChangeNotes[i].BPM + "\n";
                 //result += "BPM" + "\t" + bar[i] + "\t" + tick[i] + "\t" + String.Format("{0:F3}", bpm[i])+"\n";
