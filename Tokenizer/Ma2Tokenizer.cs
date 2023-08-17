@@ -1,28 +1,26 @@
-﻿namespace MaiLib
+﻿namespace MaiLib;
+
+/// <summary>
+///     Tokenizer of ma2 file
+/// </summary>
+public class Ma2Tokenizer : ITokenizer
 {
     /// <summary>
-    /// Tokenizer of ma2 file
+    ///     Empty Constructor
     /// </summary>
-    public class Ma2Tokenizer : ITokenizer
+    public Ma2Tokenizer()
     {
-        /// <summary>
-        /// Empty Constructor
-        /// </summary>
-        public Ma2Tokenizer()
-        {
-        }
+    }
 
-        public string[] Tokens(string location)
-        {
-            string[] result = System.IO.File.ReadAllLines(location);
-            return result;
-        }
+    public string[] Tokens(string location)
+    {
+        var result = File.ReadAllLines(location);
+        return result;
+    }
 
-        public string[] TokensFromText(string text)
-        {
-            string[] result = text.Split("\n");
-            return result;
-        }
+    public string[] TokensFromText(string text)
+    {
+        var result = text.Split("\n");
+        return result;
     }
 }
-

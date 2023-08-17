@@ -1,69 +1,68 @@
-﻿namespace MaiLib
+﻿namespace MaiLib;
+
+/// <summary>
+///     Construct Rest Note solely for Simai
+/// </summary>
+internal class Rest : Note
 {
     /// <summary>
-    /// Construct Rest Note solely for Simai
+    ///     Construct empty
     /// </summary>
-    internal class Rest : Note
+    public Rest()
     {
+        NoteType = "RST";
+        Bar = 0;
+        Tick = 0;
+        Update();
+    }
 
-        /// <summary>
-        /// Construct empty
-        /// </summary>
-        public Rest()
-        {
-            this.NoteType = "RST";
-            this.Bar = 0;
-            this.Tick = 0;
-            this.Update();
-        }
+    /// <summary>
+    ///     Construct Rest Note with given information
+    /// </summary>
+    /// <param name="noteType">Note Type to take in</param>
+    /// <param name="bar">Bar to take in</param>
+    /// <param name="startTime">Start to take in</param>
+    public Rest(string noteType, int bar, int startTime)
+    {
+        NoteType = noteType;
+        Bar = bar;
+        Tick = startTime;
+        Update();
+    }
 
-        /// <summary>
-        /// Construct Rest Note with given information
-        /// </summary>
-        /// <param name="noteType">Note Type to take in</param>
-        /// <param name="bar">Bar to take in</param>
-        /// <param name="startTime">Start to take in</param>
-        public Rest(string noteType, int bar, int startTime)
-        {
-            this.NoteType = noteType;
-            this.Bar = bar;
-            this.Tick = startTime;
-            this.Update();
-        }
+    /// <summary>
+    ///     Construct with Note provided
+    /// </summary>
+    /// <param name="n">Note to take in</param>
+    public Rest(Note n)
+    {
+        NoteType = "RST";
+        Bar = n.Bar;
+        Tick = n.Tick;
+        BPMChangeNotes = n.BPMChangeNotes;
+        Update();
+    }
 
-        /// <summary>
-        /// Construct with Note provided
-        /// </summary>
-        /// <param name="n">Note to take in</param>
-        public Rest(Note n)
-        {
-            this.NoteType = "RST";
-            this.Bar = n.Bar;
-            this.Tick = n.Tick;
-            this.BPMChangeNotes = n.BPMChangeNotes;
-            this.Update();
-        }
-        public override bool CheckValidity()
-        {
-            throw new NotImplementedException();
-        }
+    public override string NoteGenre => "REST";
 
-        public override string Compose(int format)
-        {
-            // return "r_" + this.Tick;
-            return "";
-        }
+    public override bool IsNote => false;
 
-        public override Note NewInstance()
-        {
-            Note result = new Rest(this);
-            return result;
-        }
+    public override string NoteSpecificGenre => "REST";
 
-        public override string NoteGenre => "REST";
+    public override bool CheckValidity()
+    {
+        throw new NotImplementedException();
+    }
 
-        public override bool IsNote => false;
+    public override string Compose(int format)
+    {
+        // return "r_" + this.Tick;
+        return "";
+    }
 
-        public override string NoteSpecificGenre => "REST";
+    public override Note NewInstance()
+    {
+        Note result = new Rest(this);
+        return result;
     }
 }

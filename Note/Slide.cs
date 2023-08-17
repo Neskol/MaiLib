@@ -1,315 +1,303 @@
-﻿namespace MaiLib
+﻿namespace MaiLib;
+
+/// <summary>
+///     Construct a Slide note (With START!)
+/// </summary>
+public class Slide : Note
 {
     /// <summary>
-    /// Construct a Slide note (With START!)
+    ///     Defines the special property of the slide
     /// </summary>
-    public class Slide : Note
+    public enum SlideProperty
     {
-        private readonly string[] allowedType = { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
+        /// <summary>
+        ///     Normal Slide
+        /// </summary>
+        Normal,
 
         /// <summary>
-        /// Defines what type of slide could be used
+        ///     Slide without Start Tap
         /// </summary>
-        public enum SlideType
-        {
-            #region SlideDescription
-            /// <summary>
-            /// Straight Slide
-            /// </summary>
-            SI_,
-            /// <summary>
-            /// Left circle slide aka Counterclockwise
-            /// </summary>
-            SCL,
-            /// <summary>
-            /// Right circle slide aka Clockwise
-            /// </summary>
-            SCR,
-            /// <summary>
-            /// Line not intercepting Crossing Center
-            /// </summary>
-            SV_,
-            /// <summary>
-            /// U Star Left
-            /// </summary>
-            SUL,
-            /// <summary>
-            /// U Star Right
-            /// </summary>
-            SUR,
-            /// <summary>
-            /// Wifi Star
-            /// </summary>
-            SF_,
-            /// <summary>
-            /// Inflecting Line Left
-            /// </summary>
-            SLL,
-            /// <summary>
-            /// Inflecting Line Right
-            /// </summary>
-            SLR,
-            /// <summary>
-            /// Self-winding Left
-            /// </summary>
-            SXL,
-            /// <summary>
-            /// Self-winding Right
-            /// </summary>
-            SXR,
-            /// <summary>
-            /// S Star
-            /// </summary>
-            SSL,
-            /// <summary>
-            /// Z Star
-            /// </summary>
-            SSR
-            #endregion
-        }
+        NoStart,
 
         /// <summary>
-        /// Defines the special property of the slide
+        ///     Connecting Slide
         /// </summary>
-        public enum SlideProperty
-        {
-            /// <summary>
-            /// Normal Slide
-            /// </summary>
-            Normal,
-            /// <summary>
-            /// Slide without Start Tap
-            /// </summary>
-            NoStart,
-            /// <summary>
-            /// Connecting Slide
-            /// </summary>
-            Connecting
-        }
+        Connecting
+    }
+
+    /// <summary>
+    ///     Defines what type of slide could be used
+    /// </summary>
+    public enum SlideType
+    {
+        #region SlideDescription
 
         /// <summary>
-        /// Empty Constructor
+        ///     Straight Slide
         /// </summary>
-        public Slide()
-        {
-        }
+        SI_,
 
         /// <summary>
-        /// Construct a Slide Note (Valid only if Start Key matches a start!)
+        ///     Left circle slide aka Counterclockwise
         /// </summary>
-        /// <param name="noteType">SI_(Straight),SCL,SCR,SV_(Line not intercepting Crossing Center),SUL,SUR,SF_(Wifi),SLL(Infecting Line),SLR(Infecting),SXL(Self winding),SXR(Self winding),SSL,SSR</param>
-        /// <param name="key">0-7</param>
-        /// <param name="bar">Bar in</param>
-        /// <param name="startTime">Start Time</param>
-        /// <param name="lastTime">Last Time</param>
-        /// <param name="endKey">0-7</param>
-        public Slide(string noteType, int bar, int startTime, string key, int waitTime, int lastTime, string endKey)
-        {
-            this.NoteType = noteType;
-            this.Key = key;
-            this.Bar = bar;
-            this.Tick = startTime;
-            this.WaitLength = waitTime;
-            this.LastLength = lastTime;
-            this.EndKey = endKey;
-            this.Delayed = this.WaitLength != 96;
-            this.Update();
-        }
+        SCL,
 
         /// <summary>
-        /// Construct a Slide from another note
+        ///     Right circle slide aka Clockwise
         /// </summary>
-        /// <param name="inTake">The intake note</param>
-        public Slide(Note inTake)
-        {
-            this.NoteType = inTake.NoteType;
-            this.Key = inTake.Key;
-            this.EndKey = inTake.EndKey;
-            this.Bar = inTake.Bar;
-            this.Tick = inTake.Tick;
-            this.TickStamp = inTake.TickStamp;
-            this.TickTimeStamp = inTake.TickTimeStamp;
-            this.LastLength = inTake.LastLength;
-            this.LastTickStamp = inTake.LastTickStamp;
-            this.LastTimeStamp = inTake.LastTimeStamp;
-            this.WaitLength = inTake.WaitLength;
-            this.WaitTickStamp = inTake.WaitTickStamp;
-            this.WaitTimeStamp = inTake.WaitTimeStamp;
-            this.CalculatedLastTime = inTake.CalculatedLastTime;
-            this.CalculatedLastTime = inTake.CalculatedLastTime;
-            this.TickBPMDisagree = inTake.TickBPMDisagree;
-            this.BPM = inTake.BPM;
-            this.BPMChangeNotes = inTake.BPMChangeNotes;
-        }
-
-        public override bool CheckValidity()
-        {
-            bool result = false;
-            foreach (string x in allowedType)
-            {
-                result = result || this.NoteType.Equals(x);
-            }
-            result = result && NoteType.Length == 3;
-            result = result && Key.Length <= 2;
-            return result;
-        }
-
-        public override string Compose(int format)
-        {
-            string result = "";
-            if (format == 1)
-            {
-                result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key + "\t" + this.WaitLength + "\t" + this.LastLength + "\t" + this.EndKey;
-            }
-            else if (format == 0)
-            {
-                switch (this.NoteType)
-                {
-                    case "SI_":
-                        result += "-";
-                        break;
-                    case "SV_":
-                        result += "v";
-                        break;
-                    case "SF_":
-                        result += "w";
-                        break;
-                    case "SCL":
-                        if (Int32.Parse(this.Key) == 0 || Int32.Parse(this.Key) == 1 || Int32.Parse(this.Key) == 6 || Int32.Parse(this.Key) == 7)
-                        {
-                            result += "<";
-                        }
-                        else
-                            result += ">";
-                        break;
-                    case "SCR":
-                        if (Int32.Parse(this.Key) == 0 || Int32.Parse(this.Key) == 1 || Int32.Parse(this.Key) == 6 || Int32.Parse(this.Key) == 7)
-                        {
-                            result += ">";
-                        }
-                        else
-                            result += "<";
-                        break;
-                    case "SUL":
-                        result += "p";
-                        break;
-                    case "SUR":
-                        result += "q";
-                        break;
-                    case "SSL":
-                        result += "s";
-                        break;
-                    case "SSR":
-                        result += "z";
-                        break;
-                    case "SLL":
-                        result += "V" + GenerateInflection(this);
-                        break;
-                    case "SLR":
-                        result += "V" + GenerateInflection(this);
-                        break;
-                    case "SXL":
-                        result += "pp";
-                        break;
-                    case "SXR":
-                        result += "qq";
-                        break;
-                }
-                result += ((Convert.ToInt32(this.EndKey) + 1).ToString());
-                if (this.NoteSpecialState == Note.SpecialState.Break)
-                {
-                    result += "b";
-                }
-                else if (this.NoteSpecialState == Note.SpecialState.EX)
-                {
-                    result += "x";
-                }
-                else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                {
-                    result += "bx";
-                }
-                if (this.TickBPMDisagree || this.Delayed)
-                {
-                    //result += GenerateAppropriateLength(this.LastLength, this.BPM);
-                    if (this.NoteSpecialState!=Note.SpecialState.ConnectingSlide && this.WaitLength != 96) result += GenerateAppropriateLength(this.LastLength, this.BPM);
-                    else result += GenerateAppropriateLength(this.FixedLastLength);
-                }
-                else
-                {
-                    result += GenerateAppropriateLength(this.LastLength);
-                }
-                //result += "_" + this.Tick;
-                //result += "_" + this.Key;
-            }
-            return result;
-        }
+        SCR,
 
         /// <summary>
-        /// Return inflection point of SLL and SLR
+        ///     Line not intercepting Crossing Center
         /// </summary>
-        /// <param name="x">This note</param>
-        /// <returns>Infection point of this note</returns>
-        public static int GenerateInflection(Note x)
+        SV_,
+
+        /// <summary>
+        ///     U Star Left
+        /// </summary>
+        SUL,
+
+        /// <summary>
+        ///     U Star Right
+        /// </summary>
+        SUR,
+
+        /// <summary>
+        ///     Wifi Star
+        /// </summary>
+        SF_,
+
+        /// <summary>
+        ///     Inflecting Line Left
+        /// </summary>
+        SLL,
+
+        /// <summary>
+        ///     Inflecting Line Right
+        /// </summary>
+        SLR,
+
+        /// <summary>
+        ///     Self-winding Left
+        /// </summary>
+        SXL,
+
+        /// <summary>
+        ///     Self-winding Right
+        /// </summary>
+        SXR,
+
+        /// <summary>
+        ///     S Star
+        /// </summary>
+        SSL,
+
+        /// <summary>
+        ///     Z Star
+        /// </summary>
+        SSR
+
+        #endregion
+    }
+
+    private readonly string[] allowedType =
+        { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
+
+    /// <summary>
+    ///     Empty Constructor
+    /// </summary>
+    public Slide()
+    {
+    }
+
+    /// <summary>
+    ///     Construct a Slide Note (Valid only if Start Key matches a start!)
+    /// </summary>
+    /// <param name="noteType">
+    ///     SI_(Straight),SCL,SCR,SV_(Line not intercepting Crossing Center),SUL,SUR,SF_(Wifi),SLL(Infecting
+    ///     Line),SLR(Infecting),SXL(Self winding),SXR(Self winding),SSL,SSR
+    /// </param>
+    /// <param name="key">0-7</param>
+    /// <param name="bar">Bar in</param>
+    /// <param name="startTime">Start Time</param>
+    /// <param name="lastTime">Last Time</param>
+    /// <param name="endKey">0-7</param>
+    public Slide(string noteType, int bar, int startTime, string key, int waitTime, int lastTime, string endKey)
+    {
+        NoteType = noteType;
+        Key = key;
+        Bar = bar;
+        Tick = startTime;
+        WaitLength = waitTime;
+        LastLength = lastTime;
+        EndKey = endKey;
+        Delayed = WaitLength != 96;
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct a Slide from another note
+    /// </summary>
+    /// <param name="inTake">The intake note</param>
+    public Slide(Note inTake)
+    {
+        NoteType = inTake.NoteType;
+        Key = inTake.Key;
+        EndKey = inTake.EndKey;
+        Bar = inTake.Bar;
+        Tick = inTake.Tick;
+        TickStamp = inTake.TickStamp;
+        TickTimeStamp = inTake.TickTimeStamp;
+        LastLength = inTake.LastLength;
+        LastTickStamp = inTake.LastTickStamp;
+        LastTimeStamp = inTake.LastTimeStamp;
+        WaitLength = inTake.WaitLength;
+        WaitTickStamp = inTake.WaitTickStamp;
+        WaitTimeStamp = inTake.WaitTimeStamp;
+        CalculatedLastTime = inTake.CalculatedLastTime;
+        CalculatedLastTime = inTake.CalculatedLastTime;
+        TickBPMDisagree = inTake.TickBPMDisagree;
+        BPM = inTake.BPM;
+        BPMChangeNotes = inTake.BPMChangeNotes;
+    }
+
+    public override string NoteGenre => "SLIDE";
+
+    public override bool IsNote => true;
+
+    public override string NoteSpecificGenre => "SLIDE";
+
+    public override bool CheckValidity()
+    {
+        var result = false;
+        foreach (var x in allowedType) result = result || NoteType.Equals(x);
+        result = result && NoteType.Length == 3;
+        result = result && Key.Length <= 2;
+        return result;
+    }
+
+    public override string Compose(int format)
+    {
+        var result = "";
+        if (format == 1)
         {
-            int result = Int32.Parse(x.Key) + 1;
-            if (x.NoteType.Equals("SLR"))
+            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength + "\t" +
+                     EndKey;
+        }
+        else if (format == 0)
+        {
+            switch (NoteType)
             {
-                result += 2;
-            }
-            else if (x.NoteType.Equals("SLL"))
-            {
-                result -= 2;
+                case "SI_":
+                    result += "-";
+                    break;
+                case "SV_":
+                    result += "v";
+                    break;
+                case "SF_":
+                    result += "w";
+                    break;
+                case "SCL":
+                    if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
+                        result += "<";
+                    else
+                        result += ">";
+                    break;
+                case "SCR":
+                    if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
+                        result += ">";
+                    else
+                        result += "<";
+                    break;
+                case "SUL":
+                    result += "p";
+                    break;
+                case "SUR":
+                    result += "q";
+                    break;
+                case "SSL":
+                    result += "s";
+                    break;
+                case "SSR":
+                    result += "z";
+                    break;
+                case "SLL":
+                    result += "V" + GenerateInflection(this);
+                    break;
+                case "SLR":
+                    result += "V" + GenerateInflection(this);
+                    break;
+                case "SXL":
+                    result += "pp";
+                    break;
+                case "SXR":
+                    result += "qq";
+                    break;
             }
 
-            if (result > 8)
+            result += (Convert.ToInt32(EndKey) + 1).ToString();
+            if (NoteSpecialState == SpecialState.Break)
+                result += "b";
+            else if (NoteSpecialState == SpecialState.EX)
+                result += "x";
+            else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+            if (TickBPMDisagree || Delayed)
             {
-                result -= 8;
+                //result += GenerateAppropriateLength(this.LastLength, this.BPM);
+                if (NoteSpecialState != SpecialState.ConnectingSlide && WaitLength != 96)
+                    result += GenerateAppropriateLength(LastLength, BPM);
+                else result += GenerateAppropriateLength(FixedLastLength);
             }
-            else if (result < 1)
+            else
             {
-                result += 8;
+                result += GenerateAppropriateLength(LastLength);
             }
-
-            if (result == Int32.Parse(x.Key) + 1 || (result == Int32.Parse(x.EndKey) + 1))
-            {
-                //Deal with result;
-                if (result > 4)
-                {
-                    result -= 4;
-                }
-                else if (result <= 4)
-                {
-                    result += 4;
-                }
-
-                //Deal with note type;
-                if (x.NoteType.Equals("SLL"))
-                {
-                    x.NoteType = "SLR";
-                }
-                else if (x.NoteType.Equals("SLR"))
-                {
-                    x.NoteType = "SLL";
-                }
-                else
-                {
-                    throw new InvalidDataException("INFLECTION POINT IS THE SAME WITH ONE OF THE KEY!");
-                }
-            }
-
-            return result;
+            //result += "_" + this.Tick;
+            //result += "_" + this.Key;
         }
 
-        public override string NoteGenre => "SLIDE";
+        return result;
+    }
 
-        public override bool IsNote => true;
+    /// <summary>
+    ///     Return inflection point of SLL and SLR
+    /// </summary>
+    /// <param name="x">This note</param>
+    /// <returns>Infection point of this note</returns>
+    public static int GenerateInflection(Note x)
+    {
+        var result = int.Parse(x.Key) + 1;
+        if (x.NoteType.Equals("SLR"))
+            result += 2;
+        else if (x.NoteType.Equals("SLL")) result -= 2;
 
-        public override string NoteSpecificGenre => "SLIDE";
+        if (result > 8)
+            result -= 8;
+        else if (result < 1) result += 8;
 
-        public override Note NewInstance()
+        if (result == int.Parse(x.Key) + 1 || result == int.Parse(x.EndKey) + 1)
         {
-            Note result = new Slide(this);
-            return result;
+            //Deal with result;
+            if (result > 4)
+                result -= 4;
+            else if (result <= 4) result += 4;
+
+            //Deal with note type;
+            if (x.NoteType.Equals("SLL"))
+                x.NoteType = "SLR";
+            else if (x.NoteType.Equals("SLR"))
+                x.NoteType = "SLL";
+            else
+                throw new InvalidDataException("INFLECTION POINT IS THE SAME WITH ONE OF THE KEY!");
         }
+
+        return result;
+    }
+
+    public override Note NewInstance()
+    {
+        Note result = new Slide(this);
+        return result;
     }
 }

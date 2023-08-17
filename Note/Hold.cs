@@ -1,231 +1,204 @@
-﻿namespace MaiLib
+﻿namespace MaiLib;
+
+/// <summary>
+///     Constructs Hold Note
+/// </summary>
+public class Hold : Note
 {
-    /// <summary>
-    /// Constructs Hold Note
-    /// </summary>
-    public class Hold : Note
+    public enum HoldType
     {
         /// <summary>
-        /// Stores if this Touch Hold have special effect
+        ///     Normal Hold
         /// </summary>
-        private int specialEffect;
+        HLD,
 
         /// <summary>
-        /// Stores the size of touch hold
+        ///     Touch Hold
         /// </summary>
-        private string touchSize;
+        THO
+    }
 
-        /// <summary>
-        /// Stores enums of accepting Hold type
-        /// </summary>
-        /// <value></value>
-        private readonly string[] allowedType = { "HLD", "XHO", "THO" };
+    /// <summary>
+    ///     Stores enums of accepting Hold type
+    /// </summary>
+    /// <value></value>
+    private readonly string[] allowedType = { "HLD", "XHO", "THO" };
 
-        public enum HoldType
+    /// <summary>
+    ///     Stores if this Touch Hold have special effect
+    /// </summary>
+    private readonly int specialEffect;
+
+    /// <summary>
+    ///     Stores the size of touch hold
+    /// </summary>
+    private readonly string touchSize;
+
+    /// <summary>
+    ///     Construct a Hold Note
+    /// </summary>
+    /// <param name="noteType">HLD,XHO</param>
+    /// <param name="key">Key of the hold note</param>
+    /// <param name="bar">Bar of the hold note</param>
+    /// <param name="startTime">Tick of the hold note</param>
+    /// <param name="lastTime">Last time of the hold note</param>
+    public Hold(string noteType, int bar, int startTime, string key, int lastTime)
+    {
+        NoteType = noteType;
+        Key = key;
+        Bar = bar;
+        Tick = startTime;
+        LastLength = lastTime;
+        specialEffect = 0;
+        touchSize = "M1";
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct a Touch Hold Note
+    /// </summary>
+    /// <param name="noteType">THO</param>
+    /// <param name="key">Key of the hold note</param>
+    /// <param name="bar">Bar of the hold note</param>
+    /// <param name="startTime">Tick of the hold note</param>
+    /// <param name="lastTime">Last time of the hold note</param>
+    /// <param name="specialEffect">Store if the touch note ends with special effect</param>
+    /// <param name="touchSize">Determines how large the touch note is</param>
+    public Hold(string noteType, int bar, int startTime, string key, int lastTime, int specialEffect, string touchSize)
+    {
+        NoteType = noteType;
+        Key = key;
+        Bar = bar;
+        Tick = startTime;
+        LastLength = lastTime;
+        this.specialEffect = specialEffect;
+        this.touchSize = touchSize;
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct a Hold from another note
+    /// </summary>
+    /// <param name="inTake">The intake note</param>
+    /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
+    public Hold(Note inTake)
+    {
+        NoteType = inTake.NoteType;
+        Key = inTake.Key;
+        EndKey = inTake.EndKey;
+        Bar = inTake.Bar;
+        Tick = inTake.Tick;
+        TickStamp = inTake.TickStamp;
+        TickTimeStamp = inTake.TickTimeStamp;
+        LastLength = inTake.LastLength;
+        LastTickStamp = inTake.LastTickStamp;
+        LastTimeStamp = inTake.LastTimeStamp;
+        WaitLength = inTake.WaitLength;
+        WaitTickStamp = inTake.WaitTickStamp;
+        WaitTimeStamp = inTake.WaitTimeStamp;
+        CalculatedLastTime = inTake.CalculatedLastTime;
+        CalculatedLastTime = inTake.CalculatedLastTime;
+        TickBPMDisagree = inTake.TickBPMDisagree;
+        BPM = inTake.BPM;
+        BPMChangeNotes = inTake.BPMChangeNotes;
+        if (inTake.NoteGenre == "HOLD")
         {
-            /// <summary>
-            /// Normal Hold
-            /// </summary>
-            HLD,
-            /// <summary>
-            /// Touch Hold
-            /// </summary>
-            THO
+            touchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();
+            specialEffect = ((Hold)inTake).SpecialEffect;
         }
-
-        /// <summary>
-        /// Construct a Hold Note
-        /// </summary>
-        /// <param name="noteType">HLD,XHO</param>
-        /// <param name="key">Key of the hold note</param>
-        /// <param name="bar">Bar of the hold note</param>
-        /// <param name="startTime">Tick of the hold note</param>
-        /// <param name="lastTime">Last time of the hold note</param>
-        public Hold(string noteType, int bar, int startTime, string key, int lastTime)
+        else
         {
-            this.NoteType = noteType;
-            this.Key = key;
-            this.Bar = bar;
-            this.Tick = startTime;
-            this.LastLength = lastTime;
-            this.specialEffect = 0;
-            this.touchSize = "M1";
-            this.Update();
+            touchSize = "M1";
+            specialEffect = 0;
         }
+    }
 
-        /// <summary>
-        /// Construct a Touch Hold Note
-        /// </summary>
-        /// <param name="noteType">THO</param>
-        /// <param name="key">Key of the hold note</param>
-        /// <param name="bar">Bar of the hold note</param>
-        /// <param name="startTime">Tick of the hold note</param>
-        /// <param name="lastTime">Last time of the hold note</param>
-        /// <param name = "specialEffect">Store if the touch note ends with special effect</param>
-        /// <param name = "touchSize">Determines how large the touch note is</param>
-        public Hold(string noteType, int bar, int startTime, string key, int lastTime, int specialEffect, string touchSize)
+    /// <summary>
+    ///     Returns if the note comes with Special Effect
+    /// </summary>
+    /// <value>0 if no, 1 if yes</value>
+    public int SpecialEffect => specialEffect;
+
+    /// <summary>
+    ///     Returns the size of the note
+    /// </summary>
+    /// <value>M1 if regular, L1 if large</value>
+    public string TouchSize => touchSize;
+
+    public override string NoteGenre => "HOLD";
+
+    public override bool IsNote => true;
+
+    public override string NoteSpecificGenre
+    {
+        get
         {
-            this.NoteType = noteType;
-            this.Key = key;
-            this.Bar = bar;
-            this.Tick = startTime;
-            this.LastLength = lastTime;
-            this.specialEffect = specialEffect;
-            this.touchSize = touchSize;
-            this.Update();
+            var result = "HOLD";
+            return result;
         }
+    }
 
-        /// <summary>
-        /// Construct a Hold from another note
-        /// </summary>
-        /// <param name="inTake">The intake note</param>
-        /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
-        public Hold(Note inTake)
+    public override bool CheckValidity()
+    {
+        var result = false;
+        foreach (var x in allowedType) result = result || NoteType.Equals(x);
+        result = result && NoteType.Length == 3;
+        result = result && Key.Length <= 2;
+        return result;
+    }
+
+    public override string Compose(int format)
+    {
+        var result = "";
+        if (format == 1 && !NoteType.Equals("THO"))
         {
-            this.NoteType = inTake.NoteType;
-            this.Key = inTake.Key;
-            this.EndKey = inTake.EndKey;
-            this.Bar = inTake.Bar;
-            this.Tick = inTake.Tick;
-            this.TickStamp = inTake.TickStamp;
-            this.TickTimeStamp = inTake.TickTimeStamp;
-            this.LastLength = inTake.LastLength;
-            this.LastTickStamp = inTake.LastTickStamp;
-            this.LastTimeStamp = inTake.LastTimeStamp;
-            this.WaitLength = inTake.WaitLength;
-            this.WaitTickStamp = inTake.WaitTickStamp;
-            this.WaitTimeStamp = inTake.WaitTimeStamp;
-            this.CalculatedLastTime = inTake.CalculatedLastTime;
-            this.CalculatedLastTime = inTake.CalculatedLastTime;
-            this.TickBPMDisagree = inTake.TickBPMDisagree;
-            this.BPM = inTake.BPM;
-            this.BPMChangeNotes = inTake.BPMChangeNotes;
-            if (inTake.NoteGenre == "HOLD")
+            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
+        }
+        else if (format == 1 && NoteType.Equals("THO"))
+        {
+            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key.ToCharArray()[0] + "\t" + LastLength + "\t" +
+                     Key.ToCharArray()[1] + "\t" + SpecialEffect + "\tM1"; //M1 for regular note and L1 for Larger Note
+        }
+        else if (format == 0)
+        {
+            switch (NoteType)
             {
-                this.touchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();
-                this.specialEffect = ((Hold)inTake).SpecialEffect;
+                case "HLD":
+                    result += Convert.ToInt32(Key) + 1;
+                    if (NoteSpecialState == SpecialState.Break)
+                        result += "b";
+                    else if (NoteSpecialState == SpecialState.EX)
+                        result += "x";
+                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                    result += "h";
+                    break;
+                case "XHO":
+                    result += Convert.ToInt32(Key) + 1 + "xh";
+                    break;
+                case "THO":
+                    result += Key.ToCharArray()[1] + (Convert.ToInt32(Key.Substring(0, 1)) + 1).ToString();
+                    if (NoteSpecialState == SpecialState.Break)
+                        result += "b";
+                    else if (NoteSpecialState == SpecialState.EX)
+                        result += "x";
+                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                    if (SpecialEffect == 1) result += "f";
+                    result += "h";
+                    break;
             }
+
+            if (TickBPMDisagree || Delayed)
+                result += GenerateAppropriateLength(FixedLastLength);
             else
-            {
-                this.touchSize = "M1";
-                this.specialEffect = 0;
-            }
+                result += GenerateAppropriateLength(LastLength);
         }
 
-        /// <summary>
-        /// Returns if the note comes with Special Effect
-        /// </summary>
-        /// <value>0 if no, 1 if yes</value>
-        public int SpecialEffect
-        {
-            get { return specialEffect; }
-        }
+        return result;
+    }
 
-        /// <summary>
-        /// Returns the size of the note
-        /// </summary>
-        /// <value>M1 if regular, L1 if large</value>
-        public string TouchSize
-        {
-            get { return touchSize; }
-        }
-
-        public override bool CheckValidity()
-        {
-            bool result = false;
-            foreach (string x in allowedType)
-            {
-                result = result || this.NoteType.Equals(x);
-            }
-            result = result && NoteType.Length == 3;
-            result = result && Key.Length <= 2;
-            return result;
-        }
-
-        public override string Compose(int format)
-        {
-            string result = "";
-            if (format == 1 && !(this.NoteType.Equals("THO")))
-            {
-                result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key + "\t" + this.LastLength;
-            }
-            else if (format == 1 && this.NoteType.Equals("THO"))
-            {
-                result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key.ToCharArray()[0] + "\t" + this.LastLength + "\t" + this.Key.ToCharArray()[1] + "\t" + this.SpecialEffect + "\tM1"; //M1 for regular note and L1 for Larger Note
-            }
-            else if (format == 0)
-            {
-                switch (this.NoteType)
-                {
-                    case "HLD":
-                        result += (Convert.ToInt32(this.Key) + 1);
-                        if (this.NoteSpecialState == Note.SpecialState.Break)
-                        {
-                            result += "b";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.EX)
-                        {
-                            result += "x";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                        {
-                            result += "bx";
-                        }
-                        result += "h";
-                        break;
-                    case "XHO":
-                        result += (Convert.ToInt32(this.Key) + 1) + "xh";
-                        break;
-                    case "THO":
-                        result += this.Key.ToCharArray()[1].ToString() + (Convert.ToInt32(this.Key.Substring(0, 1)) + 1).ToString();
-                        if (this.NoteSpecialState == Note.SpecialState.Break)
-                        {
-                            result += "b";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.EX)
-                        {
-                            result += "x";
-                        }
-                        else if (this.NoteSpecialState == Note.SpecialState.BreakEX)
-                        {
-                            result += "bx";
-                        }
-                        if (this.SpecialEffect == 1)
-                        {
-                            result += "f";
-                        }
-                        result += "h";
-                        break;
-                }
-                if (this.TickBPMDisagree || this.Delayed)
-                {
-                    result += GenerateAppropriateLength(this.FixedLastLength);
-                }
-                else
-                {
-                    result += GenerateAppropriateLength(this.LastLength);
-                }
-            }
-            return result;
-        }
-
-        public override string NoteGenre => "HOLD";
-
-        public override bool IsNote => true;
-
-        public override string NoteSpecificGenre
-        {
-            get
-            {
-                string result = "HOLD";
-                return result;
-            }
-        }
-
-        public override Note NewInstance()
-        {
-            Note result = new Hold(this);
-            return result;
-        }
+    public override Note NewInstance()
+    {
+        Note result = new Hold(this);
+        return result;
     }
 }
