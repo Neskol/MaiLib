@@ -34,11 +34,6 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     }
 
     /// <summary>
-    ///     The stamp when the Wait time ends in seconds
-    /// </summary>
-    public double WaitTimeStamp;
-
-    /// <summary>
     ///     Construct an empty note
     /// </summary>
     public Note()
@@ -108,7 +103,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     The bar
     /// </summary>
-    public int Bar { get; set; }
+    public int Bar { get => this.TickStamp/this.Definition }
 
     /// <summary>
     ///     The start time
@@ -184,6 +179,11 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     The BPM
     /// </summary>
     public double BPM { get; set; }
+
+    /// <summary>
+    ///     The stamp when the Wait time ends in seconds
+    /// </summary>
+    public double WaitTimeStamp { get; set; }
 
     /// <summary>
     ///     The previous note
