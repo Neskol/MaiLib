@@ -5,24 +5,24 @@
     /// </summary>
     public class MeasureChanges
     {
-        private List<int> bar;
-        private List<int> tick;
-        private List<int> quavers;
-        private List<int> beats;
-        private List<MeasureChange> changeNotes;
-        private int initialQuaver;
-        private int initialBeat;
+        private List<int> Bar;
+        private List<int> Tick;
+        private List<int> Quavers;
+        private List<int> Beats;
+        private List<MeasureChange> ChangeNotes;
+        private int InitialQuavers;
+        private int InitialBeats;
 
         /// <summary>
         /// Construct an empty Measure Change
         /// </summary>
         public MeasureChanges()
         {
-            bar = new List<int>();
-            tick = new List<int>();
-            quavers = new List<int>();
-            beats = new List<int>();
-            changeNotes = new List<MeasureChange>();
+            Bar = new List<int>();
+            Tick = new List<int>();
+            Quavers = new List<int>();
+            Beats = new List<int>();
+            ChangeNotes = new List<MeasureChange>();
         }
 
         /// <summary>
@@ -30,11 +30,11 @@
         /// </summary>
         public MeasureChanges(MeasureChanges takeIn)
         {
-            bar = new List<int>(takeIn.Bar);
-            tick = new List<int>(takeIn.Tick);
-            quavers = new List<int>(takeIn.Quavers);
-            beats = new List<int>(takeIn.Beats);
-            changeNotes = new List<MeasureChange>(takeIn.ChangeNotes);
+            Bar = new List<int>(takeIn.Bar);
+            Tick = new List<int>(takeIn.Tick);
+            Quavers = new List<int>(takeIn.Quavers);
+            Beats = new List<int>(takeIn.Beats);
+            ChangeNotes = new List<MeasureChange>(takeIn.ChangeNotes);
         }
 
         /// <summary>
@@ -44,13 +44,13 @@
         /// <param name="initialBeat">Initial Beat</param>
         public MeasureChanges(int initialQuaver, int initialBeat)
         {
-            bar = new List<int>();
-            tick = new List<int>();
-            quavers = new List<int>();
-            beats = new List<int>();
-            changeNotes = new List<MeasureChange>();
-            this.initialQuaver = initialQuaver;
-            this.initialBeat = initialBeat;
+            Bar = new List<int>();
+            Tick = new List<int>();
+            Quavers = new List<int>();
+            Beats = new List<int>();
+            ChangeNotes = new List<MeasureChange>();
+            this.InitialQuavers = initialQuaver;
+            this.InitialBeats = initialBeat;
         }
 
         /// <summary>
@@ -62,53 +62,14 @@
         /// <param name="beats"></param>
         public MeasureChanges(List<int> bar, List<int> tick, List<int> quavers, List<int> beats)
         {
-            this.bar = bar;
-            this.tick = tick;
-            this.quavers = quavers;
-            this.initialQuaver = quavers[0];
-            this.beats = beats;
-            this.initialBeat = beats[0];
-            changeNotes = new List<MeasureChange>();
-        }
-
-        /// <summary>
-        /// Return this.Bar
-        /// </summary>
-        public List<int> Bar
-        {
-            get { return bar; }
-        }
-
-        /// <summary>
-        /// Return this.Tick
-        /// </summary>
-        public List<int> Tick
-        {
-            get { return tick; }
-        }
-
-        /// <summary>
-        /// Return this.Quavers
-        /// </summary>
-        public List<int> Quavers
-        {
-            get { return quavers; }
-        }
-
-        /// <summary>
-        /// Return this.Beats
-        /// </summary>
-        public List<int> Beats
-        {
-            get { return beats; }
-        }
-
-        public List<MeasureChange> ChangeNotes
-        {
-            get { return changeNotes; }
-        }
-
-        
+            this.Bar = bar;
+            this.Tick = tick;
+            this.Quavers = quavers;
+            this.InitialQuavers = quavers[0];
+            this.Beats = beats;
+            this.InitialBeats = beats[0];
+            ChangeNotes = new List<MeasureChange>();
+        }      
 
         /// <summary>
         /// Add new measure changes to MeasureChanges
@@ -119,10 +80,10 @@
         /// <param name="beats">Beat which changes</param>
         public void Add(int bar, int tick, int quavers, int beats)
         {
-            this.bar.Add(bar);
-            this.tick.Add(tick);
-            this.quavers.Add(quavers);
-            this.beats.Add(beats);
+            this.Bar.Add(bar);
+            this.Tick.Add(tick);
+            this.Quavers.Add(quavers);
+            this.Beats.Add(beats);
         }
 
         /// <summary>
@@ -132,31 +93,31 @@
         {
             get
             {
-                return "MET_DEF" + "\t" + this.initialQuaver + "\t" + this.initialBeat + "\n";
+                return "MET_DEF" + "\t" + this.InitialQuavers + "\t" + this.InitialBeats + "\n";
             }
         }
 
         public bool CheckValidity()
         {
-            bool result = bar.IndexOf(0) == 0;
-            result = result && tick.IndexOf(0) == 0;
-            result = result && !quavers[0].Equals(null);
-            result = result && !beats[0].Equals(null);
+            bool result = Bar.IndexOf(0) == 0;
+            result = result && Tick.IndexOf(0) == 0;
+            result = result && !Quavers[0].Equals(null);
+            result = result && !Beats[0].Equals(null);
             return result;
         }
 
         public string Compose()
         {
             string result = "";
-            if (bar.Count == 0)
+            if (Bar.Count == 0)
             {
                 result += "MET" + "\t" + 0 + "\t" + 0 + "\t" + 4 + "\t" + 4 + "\n";
             }
             else
             {
-                for (int i = 0; i < bar.Count; i++)
+                for (int i = 0; i < Bar.Count; i++)
                 {
-                    result += "MET" + "\t" + bar[i] + "\t" + tick[i] + "\t" + quavers[i] + "\t" + beats[i] + "\n";
+                    result += "MET" + "\t" + Bar[i] + "\t" + Tick[i] + "\t" + Quavers[i] + "\t" + Beats[i] + "\n";
                 }
             }
             return result;

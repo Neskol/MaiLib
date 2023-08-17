@@ -12,39 +12,39 @@ namespace MaiLib
      /// Stores difficulty keywords
      /// </summary>
      /// <value>Difficulty</value>
-        public static readonly string[] difficulty = { "Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
+        public static readonly string[] Difficulty = { "Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
 
         /// <summary>
         /// Stores chart collections
         /// </summary>
-        private List<Chart> charts;
+        private List<Chart> Charts;
 
         /// <summary>
         /// Stores global information
         /// </summary>
-        private Dictionary<string, string> information;
+        private Dictionary<string, string> Information;
 
         /// <summary>
         /// Stores read in music XML file
         /// </summary>
-        private XmlInformation musicXml;
+        private XmlInformation MusicXML;
 
         /// <summary>
         /// Stores the path separator
         /// </summary>
-        private string globalSep;
+        private string GlobalSep;
 
         /// <summary>
         /// Stores the rotate dictionary
         /// </summary>
-        private Dictionary<string, string> rotateDictionary = new Dictionary<string, string> { { "17", "UpSideDown" }, { "305", "LeftToRight" }, { "417", "Clockwise90" } };
+        private Dictionary<string, string> RotateDictionary = new Dictionary<string, string> { { "17", "UpSideDown" }, { "305", "LeftToRight" }, { "417", "Clockwise90" } };
 
         /// <summary>
         /// Access the path separator
         /// </summary>
         public string GlobalSep
         {
-            get { return this.globalSep; }
+            get { return this.GlobalSep; }
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace MaiLib
         /// </summary>
         public List<Chart> Charts
         {
-            get { return this.charts; }
-            set { this.charts = value; }
+            get { return this.Charts; }
+            set { this.Charts = value; }
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace MaiLib
         /// </summary>
         public Dictionary<string, string> Information
         {
-            get { return this.information; }
-            set { this.information = value; }
+            get { return this.Information; }
+            set { this.Information = value; }
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace MaiLib
         /// </summary>
         public XmlInformation MusicXml
         {
-            get { return this.musicXml; }
-            set { this.musicXml = value; }
+            get { return this.MusicXML; }
+            set { this.MusicXML = value; }
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace MaiLib
         /// </summary>
         public string[] Difficulty
         {
-            get { return difficulty; }
+            get { return Difficulty; }
         }
 
         /// <summary>
@@ -104,11 +104,11 @@ namespace MaiLib
         {
             get
             {
-                return this.rotateDictionary;
+                return this.RotateDictionary;
             }
             set
             {
-                this.rotateDictionary = value;
+                this.RotateDictionary = value;
             }
         }
 
@@ -122,18 +122,18 @@ namespace MaiLib
         public Compiler(string location, string targetLocation)
         {
             compiledChart = new();
-            charts = new List<Chart>();
-            this.musicXml = new XmlInformation(location);
-            musicXml.Update();
-            this.information = musicXml.Information;
+            Charts = new List<Chart>();
+            this.MusicXML = new XmlInformation(location);
+            MusicXML.Update();
+            this.Information = MusicXML.Information;
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                globalSep = "\\";
+                GlobalSep = "\\";
             }
             else
             {
-                globalSep = "/";
+                GlobalSep = "/";
             }
         }
 
@@ -143,23 +143,23 @@ namespace MaiLib
         public Compiler()
         {
             compiledChart = new();
-            charts = new List<Chart>();
-            information = new Dictionary<string, string>();
-            this.musicXml = new XmlInformation();
+            Charts = new List<Chart>();
+            Information = new Dictionary<string, string>();
+            this.MusicXML = new XmlInformation();
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                globalSep = "\\";
+                GlobalSep = "\\";
             }
             else
             {
-                globalSep = "/";
+                GlobalSep = "/";
             }
         }
 
         public bool CheckValidity()
         {
             bool result = true;
-            foreach (Chart x in charts)
+            foreach (Chart x in Charts)
             {
                 result = result && x.CheckValidity();
             }
@@ -184,7 +184,7 @@ namespace MaiLib
 
         public void TakeInformation(Dictionary<string, string> information)
         {
-            this.information = information;
+            this.Information = information;
         }
 
         /// <summary>
@@ -195,11 +195,11 @@ namespace MaiLib
         {
             BPMChanges bpmTable = new BPMChanges();
             bool foundTable = false;
-            for (int i = 0; i < this.charts.Count && !foundTable; i++)
+            for (int i = 0; i < this.Charts.Count && !foundTable; i++)
             {
-                if (this.charts[i] != null)
+                if (this.Charts[i] != null)
                 {
-                    bpmTable = this.charts[i].BPMChanges;
+                    bpmTable = this.Charts[i].BPMChanges;
                     foundTable = true;
                 }
             }
@@ -215,21 +215,21 @@ namespace MaiLib
         {
             if (!isUtage)
             {
-                return this.charts[4].FirstNote ?? throw new NullReferenceException("Null first note: master chart is invalid");
+                return this.Charts[4].FirstNote ?? throw new NullReferenceException("Null first note: master chart is invalid");
             }
             else if (isUtage)
             {
                 Note? firstNote;
                 bool foundFirstNote = false;
-                for (int i = this.charts.Count; i >= 0 && !foundFirstNote; i++)
+                for (int i = this.Charts.Count; i >= 0 && !foundFirstNote; i++)
                 {
-                    if (this.charts[i] != null)
+                    if (this.Charts[i] != null)
                     {
-                        firstNote = this.charts[i].FirstNote;
+                        firstNote = this.Charts[i].FirstNote;
                         foundFirstNote = true;
                     }
                 }
-                return this.charts[0].FirstNote ?? throw new NullReferenceException("Null first note: utage chart is invalid");
+                return this.Charts[0].FirstNote ?? throw new NullReferenceException("Null first note: utage chart is invalid");
             }
             else throw new NullReferenceException("This compiler contains invalid Master Chart and is not Utage Chart: no first note is returned");
         }
@@ -241,11 +241,11 @@ namespace MaiLib
         public string GenerateOneLineSummary()
         {
             string result = "";
-            if (this.charts.Equals(null))
+            if (this.Charts.Equals(null))
             {
                 throw new NullReferenceException("This compiler has empty chat list!");
             }
-            result += "(" + this.information["Music ID"] + ")" + this.information["Name"] + ", " + this.information["Genre"] + ", ";
+            result += "(" + this.Information["Music ID"] + ")" + this.Information["Name"] + ", " + this.Information["Genre"] + ", ";
             if (!this.Information["Easy"].Equals(""))
             {
                 result += this.Information["Easy"] + "/";
