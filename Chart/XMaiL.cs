@@ -1,106 +1,104 @@
-using System;
 using System.Xml;
 
-namespace MaiLib
+namespace MaiLib;
+
+/// <summary>
+///     Using xml to store maicharts
+/// </summary>
+public class XMaiL : Chart, ICompiler
 {
     /// <summary>
-    /// Using xml to store maicharts
+    ///     Storage of Xml file
     /// </summary>
-    public class XMaiL : Chart, ICompiler
+    private readonly XmlDocument StoredXMailL;
+
+    /// <summary>
+    ///     Default constructor
+    /// </summary>
+    public XMaiL()
     {
-        /// <summary>
-        /// Storage of Xml file
-        /// </summary>
-        private XmlDocument StoredXMailL;
+        Notes = new List<Note>();
+        BPMChanges = new BPMChanges();
+        MeasureChanges = new MeasureChanges();
+        StoredChart = new List<List<Note>>();
+        Information = new Dictionary<string, string>();
+        StoredXMailL = new XmlDocument();
+        Update();
+    }
 
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public XMaiL()
-        {
-            this.Notes = new List<Note>();
-            this.BPMChanges = new BPMChanges();
-            this.MeasureChanges = new MeasureChanges();
-            this.StoredChart = new List<List<Note>>();
-            this.Information = new Dictionary<string, string>();
-            this.StoredXMailL = new XmlDocument();
-            this.Update();
-        }
+    /// <summary>
+    ///     Construct XMaiL with given notes, bpm change definitions and measure change definitions.
+    /// </summary>
+    /// <param name="notes">Notes in XMaiL</param>
+    /// <param name="bpmChanges">BPM Changes: Initial BPM is NEEDED!</param>
+    /// <param name="measureChanges">Measure Changes: Initial Measure is NEEDED!</param>
+    public XMaiL(List<Note> notes, BPMChanges bpmChanges, MeasureChanges measureChanges)
+    {
+        Notes = notes;
+        BPMChanges = bpmChanges;
+        MeasureChanges = measureChanges;
+        StoredChart = new List<List<Note>>();
+        Information = new Dictionary<string, string>();
+        StoredXMailL = new XmlDocument();
+        Update();
+    }
 
-        /// <summary>
-        /// Construct XMaiL with given notes, bpm change definitions and measure change definitions.
-        /// </summary>
-        /// <param name="notes">Notes in XMaiL</param>
-        /// <param name="bpmChanges">BPM Changes: Initial BPM is NEEDED!</param>
-        /// <param name="measureChanges">Measure Changes: Initial Measure is NEEDED!</param>
-        public XMaiL(List<Note> notes, BPMChanges bpmChanges, MeasureChanges measureChanges)
-        {
-            this.Notes = notes;
-            this.BPMChanges = bpmChanges;
-            this.MeasureChanges = measureChanges;
-            this.StoredChart = new List<List<Note>>();
-            this.Information = new Dictionary<string, string>();
-            this.StoredXMailL = new XmlDocument();
-            this.Update();
-        }
+    /// <summary>
+    ///     Construct XMaiL with tokens given
+    /// </summary>
+    /// <param name="tokens">Tokens given</param>
+    public XMaiL(string[] tokens)
+    {
+        var takenIn = new Ma2Parser().ChartOfToken(tokens);
+        Notes = takenIn.Notes;
+        BPMChanges = takenIn.BPMChanges;
+        MeasureChanges = takenIn.MeasureChanges;
+        StoredChart = new List<List<Note>>();
+        Information = new Dictionary<string, string>();
+        StoredXMailL = new XmlDocument();
+        Update();
+    }
 
-        /// <summary>
-        /// Construct XMaiL with tokens given
-        /// </summary>
-        /// <param name="tokens">Tokens given</param>
-        public XMaiL(string[] tokens)
-        {
-            Chart takenIn = new Ma2Parser().ChartOfToken(tokens);
-            this.Notes = takenIn.Notes;
-            this.BPMChanges = takenIn.BPMChanges;
-            this.MeasureChanges = takenIn.MeasureChanges;
-            this.StoredChart = new List<List<Note>>();
-            this.Information = new Dictionary<string, string>();
-            this.StoredXMailL = new XmlDocument();
-            this.Update();
-        }
+    /// <summary>
+    ///     Construct XMaiL with existing values
+    /// </summary>
+    /// <param name="takenIn">Existing good brother</param>
+    public XMaiL(Chart takenIn)
+    {
+        Notes = takenIn.Notes;
+        BPMChanges = takenIn.BPMChanges;
+        MeasureChanges = takenIn.MeasureChanges;
+        StoredChart = new List<List<Note>>();
+        Information = new Dictionary<string, string>();
+        StoredXMailL = new XmlDocument();
+        Update();
+    }
 
-        /// <summary>
-        /// Construct XMaiL with existing values
-        /// </summary>
-        /// <param name="takenIn">Existing good brother</param>
-        public XMaiL(Chart takenIn)
-        {
-            this.Notes = takenIn.Notes;
-            this.BPMChanges = takenIn.BPMChanges;
-            this.MeasureChanges = takenIn.MeasureChanges;
-            this.StoredChart = new List<List<Note>>();
-            this.Information = new Dictionary<string, string>();
-            this.StoredXMailL = new XmlDocument();
-            this.Update();
-        }
+    public override bool CheckValidity()
+    {
+        var result = this == null;
+        // Not yet implemented
+        return result;
+    }
 
-        public override bool CheckValidity()
-        {
-            bool result = this == null;
-            // Not yet implemented
-            return result;
-        }
-        
-        public override string Compose()
-        {
-            return this.StoredXMailL.ToString() ?? throw new NullReferenceException();
-        }
+    public override string Compose()
+    {
+        return StoredXMailL.ToString() ?? throw new NullReferenceException();
+    }
 
-        public override string Compose(BPMChanges bpm, MeasureChanges measure)
-        {
-            throw new NotImplementedException();
-        }
+    public override string Compose(BPMChanges bpm, MeasureChanges measure)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override void Update()
-        {
-            XmlDeclaration xmlDecl = this.StoredXMailL.CreateXmlDeclaration("1.0", "UTF-8", null);
-            this.StoredXMailL.AppendChild(xmlDecl);
-            XmlElement root = this.StoredXMailL.CreateElement("XMaiL");
-            XmlAttribute rootVersion = this.StoredXMailL.CreateAttribute("1.0");
-            root.Attributes.Append(rootVersion);
-            this.StoredXMailL.AppendChild(root);
-            XmlElement information = this.StoredXMailL.CreateElement("TrackInformation");
-        }
+    public override void Update()
+    {
+        var xmlDecl = StoredXMailL.CreateXmlDeclaration("1.0", "UTF-8", null);
+        StoredXMailL.AppendChild(xmlDecl);
+        var root = StoredXMailL.CreateElement("XMaiL");
+        var rootVersion = StoredXMailL.CreateAttribute("1.0");
+        root.Attributes.Append(rootVersion);
+        StoredXMailL.AppendChild(root);
+        var information = StoredXMailL.CreateElement("TrackInformation");
     }
 }

@@ -1,123 +1,111 @@
-﻿using System.Diagnostics.Contracts;
+﻿namespace MaiLib;
 
-namespace MaiLib
+/// <summary>
+///     BPMChange note for Simai
+/// </summary>
+public class BPMChange : Note
 {
     /// <summary>
-    /// BPMChange note for Simai
+    ///     Construct Empty
     /// </summary>
-    public class BPMChange : Note
+    public BPMChange()
     {
+        NoteType = "BPM";
+        Key = "";
+        Bar = 0;
+        Tick = 0;
+        BPM = 0;
+        Update();
+    }
 
-        /// <summary>
-        /// Construct Empty
-        /// </summary>
-        public BPMChange()
+    /// <summary>
+    ///     Construct BPMChange with given bar, tick, BPM
+    /// </summary>
+    /// <param name="bar">Bar</param>
+    /// <param name="startTime">tick</param>
+    /// <param name="BPM">BPM</param>
+    public BPMChange(int bar, int startTime, double BPM)
+    {
+        Bar = bar;
+        Tick = startTime;
+        this.BPM = BPM;
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct BPMChange with take in value
+    /// </summary>
+    /// <param name="takeIn">Take in BPMChange</param>
+    public BPMChange(BPMChange takeIn)
+    {
+        Bar = takeIn.Bar;
+        Tick = takeIn.Tick;
+        BPM = takeIn.BPM;
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct BPMChange with take in value
+    /// </summary>
+    /// <param name="takeIn">Take in note</param>
+    public BPMChange(Note takeIn)
+    {
+        Bar = takeIn.Bar;
+        Tick = takeIn.Tick;
+        Update();
+    }
+
+    public override string NoteGenre => "BPM";
+
+    public override bool IsNote => true;
+
+    public override string NoteSpecificGenre => "BPM";
+
+
+    public override bool CheckValidity()
+    {
+        return BPM != 0;
+    }
+
+    public override string Compose(int format)
+    {
+        var result = "";
+        if (format == 0) result += "(" + BPM + ")";
+        //result += "(" + this.BPM + "_" + this.Bar + "_" + this.Tick + ")";
+        //else result += "(" + this.BPM + "_" + this.Bar + "_" + this.Tick + ")";
+        return result;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        var result = false;
+        if (this == obj && this == null)
         {
-            this.NoteType = "BPM";
-            this.Key = "";
-            this.Bar = 0;
-            this.Tick = 0;
-            this.BPM = 0;
-            this.Update();
+            result = true;
         }
-
-        /// <summary>
-        /// Construct BPMChange with given bar, tick, BPM
-        /// </summary>
-        /// <param name="bar">Bar</param>
-        /// <param name="startTime">tick</param>
-        /// <param name="BPM">BPM</param>
-        public BPMChange(int bar, int startTime, double BPM)
+        else if (this != null && obj != null)
         {
-            this.Bar = bar;
-            this.Tick = startTime;
-            this.BPM = BPM;
-            this.Update();
-        }
-
-        /// <summary>
-        /// Construct BPMChange with take in value
-        /// </summary>
-        /// <param name="takeIn">Take in BPMChange</param>
-        public BPMChange(BPMChange takeIn)
-        {
-            this.Bar = takeIn.Bar;
-            this.Tick = takeIn.Tick;
-            this.BPM = takeIn.BPM;
-            this.Update();
-        }
-
-        /// <summary>
-        /// Construct BPMChange with take in value
-        /// </summary>
-        /// <param name="takeIn">Take in note</param>
-        public BPMChange(Note takeIn)
-        {
-            this.Bar = takeIn.Bar;
-            this.Tick = takeIn.Tick;
-            this.Update();
-        }
-
-
-        public override bool CheckValidity()
-        {
-            return this.BPM != 0;
-        }
-
-        public override string Compose(int format)
-        {
-            string result = "";
-            if (format == 0)
-            {
-                result += "(" + this.BPM + ")";
-                //result += "(" + this.BPM + "_" + this.Bar + "_" + this.Tick + ")";
-            }
-            //else result += "(" + this.BPM + "_" + this.Bar + "_" + this.Tick + ")";
-            return result;
-        }
-
-        public override string NoteGenre => "BPM";
-
-        public override bool IsNote => true;
-
-        public override string NoteSpecificGenre => "BPM";
-
-        public override bool Equals(object? obj)
-        {
-            bool result = false;
-            if (this == obj && this == null)
-            {
+            var candidate = (BPMChange)obj;
+            if (GetHashCode() == candidate.GetHashCode())
                 result = true;
-            }
-            else if (this != null && obj != null)
-            {
-                BPMChange candidate = (BPMChange)obj;
-                if (this.GetHashCode() == candidate.GetHashCode())
-                {
+            else if (Bar == candidate.Bar)
+                if (Tick == candidate.Tick && BPM == candidate.BPM)
                     result = true;
-                }
-                else if (this.Bar == candidate.Bar)
-                {
-                    if (this.Tick == candidate.Tick && this.BPM == candidate.BPM)
-                    {
-                        result = true;
-                    }
-                }
-            }
-            return result;
         }
 
-        public override Note NewInstance()
-        {
-            Note result = new BPMChange(this);
-            return result;
-        }
+        return result;
+    }
 
-        public override int GetHashCode()
-        {
-            // string hash = this.Bar + "0" + this.Tick + "0" + this.BPM;
-            // return int.Parse(hash);
-            return base.GetHashCode();
-        }
+    public override Note NewInstance()
+    {
+        Note result = new BPMChange(this);
+        return result;
+    }
+
+    public override int GetHashCode()
+    {
+        // string hash = this.Bar + "0" + this.Tick + "0" + this.BPM;
+        // return int.Parse(hash);
+        return base.GetHashCode();
     }
 }

@@ -1,194 +1,194 @@
-using System.ComponentModel;
-using System.Diagnostics.Metrics;
-using System.Net.Cache;
-using System.Reflection;
-using System.Xml;
+namespace MaiLib;
 
-namespace MaiLib
+public class SlideEachSet : Note
 {
-    public class SlideEachSet : Note
+    public List<Slide> InternalSlides;
+
+    public SlideEachSet()
     {
-        public Note? SlideStart{ get; set; }
-        public List<Slide> InternalSlides;
-        public override string NoteSpecificGenre => "SLIDE_EACH";
+        InternalSlides = new List<Slide>();
+        Update();
+    }
 
-        public override string NoteGenre => "SLIDE";
-
-        public Note? FirstIdentifier {get { if (this.SlideStart != null) return this.SlideStart; else return this.InternalSlides.Count > 0 ? this.InternalSlides.First() :null; } }
-        public Note? FirstSlide => this.InternalSlides.First();
-        public Note? LastSlide => this.InternalSlides.Last();
-
-        public override bool IsNote => true;
-
-        public SlideEachSet() : base()
+    public SlideEachSet(Note x) : base(x)
+    {
+        SlideStart = x.NoteSpecificGenre.Equals("SLIDE_START") ? x : null;
+        InternalSlides = new List<Slide>();
+        if (x.NoteSpecificGenre.Equals("SLIDE_EACH"))
         {
-            this.InternalSlides = new();
-            this.Update();
+            var candidate = x as SlideEachSet ?? throw new InvalidOperationException("This is not a SLIDE EACH");
+            InternalSlides.AddRange(candidate.InternalSlides);
+        }
+        else if (x.NoteSpecificGenre.Equals("SLIDE"))
+        {
+            var candidate = x as Slide ?? throw new InvalidOperationException("This is not a SLIDE");
+            InternalSlides.Add(candidate);
         }
 
-        public SlideEachSet(Note x):base(x)
+        Update();
+    }
+
+    public SlideEachSet(int bar, int startTime, Note slideStart, List<Slide> internalSlides) : base(slideStart)
+    {
+        SlideStart = slideStart;
+        InternalSlides = new List<Slide>(internalSlides);
+        if (internalSlides.Count > 0)
         {
-            this.SlideStart = x.NoteSpecificGenre.Equals("SLIDE_START") ? x : null;
-            this.InternalSlides = new();
-            if (x.NoteSpecificGenre.Equals("SLIDE_EACH"))
-            {
-                SlideEachSet candidate = x as SlideEachSet ?? throw new InvalidOperationException("This is not a SLIDE EACH");
-                this.InternalSlides.AddRange(candidate.InternalSlides);
-            }
-            else if (x.NoteSpecificGenre.Equals("SLIDE"))
-            {
-                Slide candidate = x as Slide ?? throw new InvalidOperationException("This is not a SLIDE");
-                this.InternalSlides.Add(candidate);
-            }
-            this.Update();
+            EndKey = InternalSlides.Last().EndKey;
+            NoteType = "SLIDE_EACH";
+            Bar = bar;
+            Tick = startTime;
+            WaitLength = InternalSlides.Last().WaitLength;
+            LastLength = InternalSlides.Last().LastLength;
+            Delayed = WaitLength != 96;
         }
 
-        public SlideEachSet(int bar, int startTime, Note slideStart, List<Slide> internalSlides):base(slideStart)
+        Update();
+    }
+
+    public Note? SlideStart { get; set; }
+    public override string NoteSpecificGenre => "SLIDE_EACH";
+
+    public override string NoteGenre => "SLIDE";
+
+    public Note? FirstIdentifier
+    {
+        get
         {
-            this.SlideStart = slideStart;
-            this.InternalSlides=new(internalSlides);
-            if (internalSlides.Count>0)
-            {
-                this.EndKey = this.InternalSlides.Last().EndKey;
-                this.NoteType = "SLIDE_EACH";
-                this.Bar = bar;
-                this.Tick = startTime;
-                this.WaitLength = this.InternalSlides.Last().WaitLength;
-                this.LastLength = this.InternalSlides.Last().LastLength;
-                this.Delayed = this.WaitLength != 96;
-            }
-            this.Update();
+            if (SlideStart != null) return SlideStart;
+            return InternalSlides.Count > 0 ? InternalSlides.First() : null;
+        }
+    }
+
+    public Note? FirstSlide => InternalSlides.First();
+    public Note? LastSlide => InternalSlides.Last();
+
+    public override bool IsNote => true;
+
+    public void AddCandidateNote(Tap x)
+    {
+        if (x.NoteSpecificGenre.Equals("SLIDE_START") && (InternalSlides.Count == 0 || (InternalSlides.Count > 0 &&
+                InternalSlides.First().Key.Equals(x.Key) && x.IsOfSameTime(InternalSlides.First()))))
+            SlideStart = x;
+        else throw new InvalidOperationException("THE INTAKE NOTE IS NOT VALID SLIDE START");
+    }
+
+    public void AddCandidateNote(Slide x)
+    {
+        if ((SlideStart == null && InternalSlides.Count == 0) ||
+            (SlideStart != null && x.Key.Equals(SlideStart.Key) && x.IsOfSameTime(SlideStart)) ||
+            (InternalSlides.Count > 0 && InternalSlides.First().Key.Equals(x.Key) &&
+             x.IsOfSameTime(InternalSlides.First())))
+            InternalSlides.Add(x);
+        else throw new InvalidOperationException("THE INTAKE NOTE IS NOT VALID SLIDE OR THIS NOTE IS NOT VALID");
+    }
+
+    public void AddCandidateNote(List<Slide> x)
+    {
+        foreach (var candidate in x) AddCandidateNote(candidate);
+    }
+
+    public bool TryAddCandidateNote(Tap x)
+    {
+        var result = false;
+        if (FirstIdentifier != null && x.Key.Equals(FirstIdentifier.Key) && FirstIdentifier.IsOfSameTime(x))
+        {
+            result = true;
+            AddCandidateNote(x);
         }
 
-        public void AddCandidateNote(Tap x)
+        return result;
+    }
+
+    public bool TryAddCandidateNote(Slide x)
+    {
+        var result = false;
+        if (FirstIdentifier != null && x.Key.Equals(FirstIdentifier.Key) && FirstIdentifier.IsOfSameTime(x))
         {
-            if (x.NoteSpecificGenre.Equals("SLIDE_START") && (this.InternalSlides.Count ==0 || (this.InternalSlides.Count >0 && this.InternalSlides.First().Key.Equals(x.Key)&&x.IsOfSameTime(this.InternalSlides.First()))))
-            {
-                this.SlideStart = x;
-            }
-            else throw new InvalidOperationException("THE INTAKE NOTE IS NOT VALID SLIDE START");
+            result = true;
+            AddCandidateNote(x);
         }
 
-        public void AddCandidateNote(Slide x)
-        {
-            if ((this.SlideStart==null && this.InternalSlides.Count == 0) || (this.SlideStart!= null && x.Key.Equals(this.SlideStart.Key)&& x.IsOfSameTime(this.SlideStart)) || (this.InternalSlides.Count > 0 && this.InternalSlides.First().Key.Equals(x.Key)&&x.IsOfSameTime(this.InternalSlides.First())))
+        return result;
+    }
+
+    public bool TryAddCandidateNote(List<Slide> x)
+    {
+        var result = false;
+        foreach (var candidate in x)
+            if (FirstIdentifier != null && candidate.Key.Equals(FirstIdentifier.Key) &&
+                FirstIdentifier.IsOfSameTime(candidate))
             {
-                this.InternalSlides.Add(x);
+                result = result || true;
+                AddCandidateNote(candidate);
             }
-            else throw new InvalidOperationException("THE INTAKE NOTE IS NOT VALID SLIDE OR THIS NOTE IS NOT VALID");
-        }
 
-        public void AddCandidateNote(List<Slide> x)
-        {
-            foreach (Slide candidate in x)
+        return result;
+    }
+
+    public override bool CheckValidity()
+    {
+        var result = SlideStart == null || SlideStart.NoteSpecificGenre.Equals("SLIDE_START");
+
+        if (SlideStart == null && InternalSlides == null) result = false;
+        else if (SlideStart != null && InternalSlides.Count > 0 &&
+                 !InternalSlides.First().IsOfSameTime(SlideStart)) result = false;
+        else if (InternalSlides.Count > 0)
+            foreach (var x in InternalSlides)
             {
-                this.AddCandidateNote(candidate);
-            }
-        }
-
-        public bool TryAddCandidateNote(Tap x)
-        {
-            bool result = false;
-            if (this.FirstIdentifier != null && x.Key.Equals(this.FirstIdentifier.Key)&&this.FirstIdentifier.IsOfSameTime(x))
-            {
-                result = true;
-                this.AddCandidateNote(x);
-            }
-            return result;
-        }
-
-        public bool TryAddCandidateNote(Slide x)
-        {
-            bool result = false;
-            if (this.FirstIdentifier != null && x.Key.Equals(this.FirstIdentifier.Key) && this.FirstIdentifier.IsOfSameTime(x))
-            {
-                result = true;
-                this.AddCandidateNote(x);
-            }
-            return result;
-        }
-
-        public bool TryAddCandidateNote(List<Slide> x)
-        {
-            bool result = false;
-            foreach (Slide candidate in x)
-            {
-                if (this.FirstIdentifier != null && candidate.Key.Equals(this.FirstIdentifier.Key) && this.FirstIdentifier.IsOfSameTime(candidate))
-                {
-                    result = result || true;
-                    this.AddCandidateNote(candidate);
-                }
-            }
-            return result;
-        }
-
-        public override bool CheckValidity()
-        {
-            bool result = this.SlideStart == null || this.SlideStart.NoteSpecificGenre.Equals("SLIDE_START");
-
-            if (this.SlideStart == null && this.InternalSlides == null) result = false;
-            else if (this.SlideStart!=null && this.InternalSlides.Count>0 && !this.InternalSlides.First().IsOfSameTime(this.SlideStart)) result = false;
-            else if (this.InternalSlides.Count>0) foreach(Slide x in this.InternalSlides)
-            {
-                Note referencingNote = this.SlideStart == null ? this.InternalSlides.First() : this.SlideStart;
+                var referencingNote = SlideStart == null ? InternalSlides.First() : SlideStart;
                 result = result && x.IsOfSameTime(referencingNote);
             }
 
-            return result;
-        }
+        return result;
+    }
 
-        public override void Flip(string method)
+    public override void Flip(string method)
+    {
+        if (SlideStart != null) SlideStart.Flip(method);
+        for (var i = 0; i < InternalSlides.Count; i++) InternalSlides[i].Flip(method);
+        Update();
+    }
+
+    public bool ContainsSlide(Note slide)
+    {
+        return InternalSlides.Contains(slide);
+    }
+
+    public override string Compose(int format)
+    {
+        var result = "";
+        var separateSymbol = "";
+        switch (format)
         {
-            if (this.SlideStart!=null) this.SlideStart.Flip(method);
-            for (int i = 0; i < this.InternalSlides.Count;i++)
-            {
-                this.InternalSlides[i].Flip(method);
-            }
-            this.Update();
+            case 0:
+                separateSymbol = "*";
+                if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "$";
+                else if (InternalSlides.Count > 0 && SlideStart == null)
+                    result += new Tap(InternalSlides.First()).Compose(format) + "!";
+                else if (SlideStart != null) result += SlideStart.Compose(format);
+                break;
+            case 1:
+                throw new InvalidOperationException("Ma2 does not support this feature");
+            default:
+                if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "\n";
+                else if (InternalSlides.Count > 0 && SlideStart == null)
+                    result += new Tap(InternalSlides.First()).Compose(format) + "\n";
+                else if (SlideStart != null) result += SlideStart.Compose(format);
+                separateSymbol = "\n";
+                break;
         }
 
-        public bool ContainsSlide(Note slide)
-        {
-            return this.InternalSlides.Contains(slide);
-        }
+        for (var i = 0; i < InternalSlides.Count; i++)
+            if (i < InternalSlides.Count - 1)
+                result += InternalSlides[i].Compose(format) + separateSymbol;
+            else result += InternalSlides[i].Compose(format);
 
-        public override string Compose(int format)
-        {
-            string result = "";
-            string separateSymbol = "";
-            switch (format)
-            {
-                case 0:
-                    separateSymbol = "*";
-                    if (this.InternalSlides.Count == 0 && this.SlideStart!=null) result += this.SlideStart.Compose(format) + "$";
-                    else if (this.InternalSlides.Count>0 && this.SlideStart == null) result += new Tap(this.InternalSlides.First()).Compose(format) + "!";
-                    else if (this.SlideStart != null) result += this.SlideStart.Compose(format);
-                    break;
-                case 1:
-                    throw new InvalidOperationException("Ma2 does not support this feature");
-                default:
-                    if (this.InternalSlides.Count == 0 && this.SlideStart != null) result += this.SlideStart.Compose(format) + "\n";
-                    else if (this.InternalSlides.Count > 0 && this.SlideStart == null) result += new Tap(this.InternalSlides.First()).Compose(format)+"\n";
-                    else if (this.SlideStart != null) result += this.SlideStart.Compose(format);
-                    separateSymbol = "\n";
-                    break;
-            }
+        return result;
+    }
 
-            for (int i = 0; i < this.InternalSlides.Count;i++)
-            {
-                if (i<this.InternalSlides.Count-1)
-                {
-                    result += this.InternalSlides[i].Compose(format) + separateSymbol;
-                }
-                else result += this.InternalSlides[i].Compose(format);
-            }
-            
-            return result;
-        }
-
-        public override Note NewInstance()
-        {
-            return new SlideEachSet(this);
-        }
+    public override Note NewInstance()
+    {
+        return new SlideEachSet(this);
     }
 }

@@ -1,83 +1,74 @@
-﻿namespace MaiLib
+﻿namespace MaiLib;
+
+/// <summary>
+///     Defines measure change note that indicates a measure change in bar.
+/// </summary>
+public class MeasureChange : Note
 {
     /// <summary>
-    /// Defines measure change note that indicates a measure change in bar.
+    ///     Construct Empty
     /// </summary>
-    public class MeasureChange : Note
+    public MeasureChange()
     {
-        private int quaver;
+        Tick = 0;
+        Quaver = 0;
+        Update();
+    }
 
-        /// <summary>
-        /// Construct Empty
-        /// </summary>
-        public MeasureChange()
-        {
-            this.Tick = 0;
-            this.quaver = 0;
-            this.Update();
-        }
+    /// <summary>
+    ///     Construct BPMChange with given bar, tick, BPM
+    /// </summary>
+    /// <param name="bar">Bar</param>
+    /// <param name="tick">Tick</param>
+    /// <param name="Quaver">Quaver</param>
+    public MeasureChange(int bar, int tick, int quaver)
+    {
+        Bar = bar;
+        Tick = tick;
+        Quaver = quaver;
+        Update();
+    }
 
-        /// <summary>
-        /// Construct BPMChange with given bar, tick, BPM
-        /// </summary>
-        /// <param name="bar">Bar</param>
-        /// <param name="tick">Tick</param>
-        /// <param name="Quaver">Quaver</param>
-        public MeasureChange(int bar, int tick, int quaver)
-        {
-            this.Bar = bar;
-            this.Tick = tick;
-            this.quaver = quaver;
-            this.Update();
-        }
+    /// <summary>
+    ///     Construct measureChange from another takeIn
+    /// </summary>
+    /// <param name="takeIn">Another measure change note</param>
+    public MeasureChange(MeasureChange takeIn)
+    {
+        Bar = takeIn.Bar;
+        Tick = takeIn.Tick;
+        Quaver = takeIn.Quaver;
+        Update();
+    }
 
-        /// <summary>
-        /// Construct measureChange from another takeIn
-        /// </summary>
-        /// <param name="takeIn">Another measure change note</param>
-        public MeasureChange(MeasureChange takeIn)
-        {
-            this.Bar = takeIn.Bar;
-            this.Tick = takeIn.Tick;
-            this.quaver = takeIn.Quaver;
-            this.Update();
-        }
+    /// <summary>
+    ///     Return this.quaver
+    /// </summary>
+    /// <value>Quaver</value>
+    public int Quaver { get; }
 
-        /// <summary>
-        /// Return this.quaver
-        /// </summary>
-        /// <value>Quaver</value>
-        public int Quaver
-        {
-            get { return this.quaver; }
-        }
+    public override string NoteGenre => "MEASURE";
 
-        public override bool CheckValidity()
-        {
-            return this.quaver > 0;
-        }
+    public override bool IsNote => false;
 
-        public override string Compose(int format)
-        {
-            string result = "";
-            if (format == 0)
-            {
-                result += "{" + this.Quaver + "}";
-                //result += "{" + this.Quaver+"_"+this.Tick + "}";
-            }
-            return result;
-        }
+    public override string NoteSpecificGenre => "MEASURE";
 
-        public override Note NewInstance()
-        {
-            Note result = new MeasureChange(this);
-            return result;
-        }
+    public override bool CheckValidity()
+    {
+        return Quaver > 0;
+    }
 
-        public override string NoteGenre => "MEASURE";
+    public override string Compose(int format)
+    {
+        var result = "";
+        if (format == 0) result += "{" + Quaver + "}";
+        //result += "{" + this.Quaver+"_"+this.Tick + "}";
+        return result;
+    }
 
-        public override bool IsNote => false;
-
-        public override string NoteSpecificGenre => "MEASURE";
+    public override Note NewInstance()
+    {
+        Note result = new MeasureChange(this);
+        return result;
     }
 }

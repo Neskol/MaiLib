@@ -1,151 +1,138 @@
-﻿using System.Dynamic;
-using System.Globalization;
+﻿namespace MaiLib;
 
-namespace MaiLib
+public class BPMChanges
 {
-    public class BPMChanges
+    /// <summary>
+    ///     Construct with changes listed
+    /// </summary>
+    /// <param name="bar">Bar which contains changes</param>
+    /// <param name="tick">Tick in bar contains changes</param>
+    /// <param name="bpm">Specified BPM changes</param>
+    public BPMChanges(List<int> bar, List<int> tick, List<double> bpm)
     {
-        public List<BPMChange> ChangeNotes { get; private set; }
-
-        /// <summary>
-        /// Construct with changes listed
-        /// </summary>
-        /// <param name="bar">Bar which contains changes</param>
-        /// <param name="tick">Tick in bar contains changes</param>
-        /// <param name="bpm">Specified BPM changes</param>
-        public BPMChanges(List<int> bar, List<int> tick, List<double> bpm)
+        ChangeNotes = new List<BPMChange>();
+        for (var i = 0; i < bar.Count; i++)
         {
-            this.ChangeNotes = new List<BPMChange>();
-            for (int i = 0; i < bar.Count; i++)
+            BPMChange candidate = new(bar[i], tick[i], bpm[i]);
+            ChangeNotes.Add(candidate);
+        }
+
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct empty BPMChange List
+    /// </summary>
+    public BPMChanges()
+    {
+        ChangeNotes = new List<BPMChange>();
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct BPMChanges with existing one
+    /// </summary>
+    /// <param name="takenIn"></param>
+    public BPMChanges(BPMChanges takenIn)
+    {
+        ChangeNotes = new List<BPMChange>();
+        foreach (var candidate in takenIn.ChangeNotes) ChangeNotes.Add(candidate);
+    }
+
+    public List<BPMChange> ChangeNotes { get; private set; }
+
+    /// <summary>
+    ///     Returns first definitions
+    /// </summary>
+    public string InitialChange
+    {
+        get
+        {
+            if (ChangeNotes.Count > 4)
             {
-                BPMChange candidate = new(bar[i], tick[i], bpm[i]);
-                this.ChangeNotes.Add(candidate);
-            }
-            this.Update();
-        }
-
-        /// <summary>
-        /// Construct empty BPMChange List
-        /// </summary>
-        public BPMChanges()
-        {
-            this.ChangeNotes = new List<BPMChange>();
-            this.Update();
-        }
-
-        /// <summary>
-        /// Construct BPMChanges with existing one
-        /// </summary>
-        /// <param name="takenIn"></param>
-        public BPMChanges(BPMChanges takenIn)
-        {
-            this.ChangeNotes = new List<BPMChange>();
-            foreach (BPMChange candidate in takenIn.ChangeNotes)
-            {
-                this.ChangeNotes.Add(candidate);
-            }
-        }
-
-        
-
-        /// <summary>
-        /// Add BPMChange to change notes
-        /// </summary>
-        /// <param name="takeIn"></param>
-        public void Add(BPMChange takeIn)
-        {
-            this.ChangeNotes.Add(takeIn);
-            this.Update();
-        }
-
-        /// <summary>
-        /// Compose change notes according to BPMChanges
-        /// </summary>
-        public void Update()
-        {
-            List<BPMChange> adjusted = new();
-            Note lastNote = new Rest();
-            foreach (BPMChange x in this.ChangeNotes)
-            {
-                if (!(x.Bar == lastNote.Bar && x.Tick == lastNote.Tick && x.BPM == lastNote.BPM))
+                var result = "BPM_DEF" + "\t";
+                for (var x = 0; x < 4; x++)
                 {
-                    adjusted.Add(x);
-                    lastNote = x;
+                    result = result + string.Format("{0:F3}", ChangeNotes[x].BPM);
+                    result += "\t";
                 }
-            }
-            // Console.WriteLine(adjusted.Count);
-            this.ChangeNotes = new List<BPMChange>();
-            foreach(BPMChange x in adjusted)
-            {
-                this.ChangeNotes.Add(x);
-            }
-            if (this.ChangeNotes.Count!=adjusted.Count)
-            {
-                throw new Exception("Adjusted BPM Note number not matching");
-            }
-        }
 
-        /// <summary>
-        /// Returns first definitions
-        /// </summary>
-        public string InitialChange
-        {
-            get
+                return result + "\n";
+            }
+            else
             {
-                if (ChangeNotes.Count > 4)
+                var times = 0;
+                var result = "BPM_DEF" + "\t";
+                foreach (var x in ChangeNotes)
                 {
-                    string result = "BPM_DEF" + "\t";
-                    for (int x = 0; x < 4; x++)
-                    {
-                        result = result + String.Format("{0:F3}", this.ChangeNotes[x].BPM);
-                        result += "\t";
-                    }
-                    return result + "\n";
+                    result += string.Format("{0:F3}", x.BPM);
+                    result += "\t";
+                    times++;
                 }
-                else
+
+                while (times < 4)
                 {
-                    int times = 0;
-                    string result = "BPM_DEF" + "\t";
-                    foreach (BPMChange x in ChangeNotes)
-                    {
-                        result += String.Format("{0:F3}", x.BPM);
-                        result += "\t";
-                        times++;
-                    }
-                    while (times < 4)
-                    {
-                        result += String.Format("{0:F3}", this.ChangeNotes[0].BPM);
-                        result += "\t";
-                        times++;
-                    }
-                    return result + "\n";
+                    result += string.Format("{0:F3}", ChangeNotes[0].BPM);
+                    result += "\t";
+                    times++;
                 }
+
+                return result + "\n";
             }
         }
+    }
 
-        /// <summary>
-        /// See if the BPMChange is valid
-        /// </summary>
-        /// <returns>True if valid, false elsewise</returns>
-        public bool CheckValidity()
-        {
-            bool result = true;
-            return result;
-        }
 
-        /// <summary>
-        /// Compose BPMChanges in beginning of MA2
-        /// </summary>
-        /// <returns></returns>
-        public string Compose()
-        {
-            string result = "";
-            for (int i = 0; i < ChangeNotes.Count; i++)
+    /// <summary>
+    ///     Add BPMChange to change notes
+    /// </summary>
+    /// <param name="takeIn"></param>
+    public void Add(BPMChange takeIn)
+    {
+        ChangeNotes.Add(takeIn);
+        Update();
+    }
+
+    /// <summary>
+    ///     Compose change notes according to BPMChanges
+    /// </summary>
+    public void Update()
+    {
+        List<BPMChange> adjusted = new();
+        Note lastNote = new Rest();
+        foreach (var x in ChangeNotes)
+            if (!(x.Bar == lastNote.Bar && x.Tick == lastNote.Tick && x.BPM == lastNote.BPM))
             {
-                result += "BPM" + "\t" + this.ChangeNotes[i].Bar + "\t" + this.ChangeNotes[i].Tick + "\t" + this.ChangeNotes[i].BPM + "\n";
-                //result += "BPM" + "\t" + bar[i] + "\t" + tick[i] + "\t" + String.Format("{0:F3}", bpm[i])+"\n";
+                adjusted.Add(x);
+                lastNote = x;
             }
-            return result;
-        }
+
+        // Console.WriteLine(adjusted.Count);
+        ChangeNotes = new List<BPMChange>();
+        foreach (var x in adjusted) ChangeNotes.Add(x);
+        if (ChangeNotes.Count != adjusted.Count) throw new Exception("Adjusted BPM Note number not matching");
+    }
+
+    /// <summary>
+    ///     See if the BPMChange is valid
+    /// </summary>
+    /// <returns>True if valid, false elsewise</returns>
+    public bool CheckValidity()
+    {
+        var result = true;
+        return result;
+    }
+
+    /// <summary>
+    ///     Compose BPMChanges in beginning of MA2
+    /// </summary>
+    /// <returns></returns>
+    public string Compose()
+    {
+        var result = "";
+        for (var i = 0; i < ChangeNotes.Count; i++)
+            result += "BPM" + "\t" + ChangeNotes[i].Bar + "\t" + ChangeNotes[i].Tick + "\t" + ChangeNotes[i].BPM + "\n";
+        //result += "BPM" + "\t" + bar[i] + "\t" + tick[i] + "\t" + String.Format("{0:F3}", bpm[i])+"\n";
+        return result;
     }
 }

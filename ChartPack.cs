@@ -1,25 +1,23 @@
-using System;
-
 namespace MaiLib;
 
 /// <summary>
-/// Construct a collection to store charts in relate of SD and DX.
+///     Construct a collection to store charts in relate of SD and DX.
 /// </summary>
 public abstract class ChartPack : Chart, IChart
 {
     /// <summary>
-    /// Stores SD and DX chart
-    /// [0] SD [1] DX
-    /// </summary>
-    private List<Chart>[] sddxCharts;
-
-    /// <summary>
-    /// Stores shared information
+    ///     Stores shared information
     /// </summary>
     private TrackInformation? globalInformation;
 
     /// <summary>
-    /// Default constructor
+    ///     Stores SD and DX chart
+    ///     [0] SD [1] DX
+    /// </summary>
+    private List<Chart>[] sddxCharts;
+
+    /// <summary>
+    ///     Default constructor
     /// </summary>
     public ChartPack()
     {
@@ -27,35 +25,23 @@ public abstract class ChartPack : Chart, IChart
     }
 
     /// <summary>
-    /// Accesses this.sddxCharts
+    ///     Accesses this.sddxCharts
     /// </summary>
     /// <value>this.sddxCharts</value>
     public List<Chart>[] SDDXCharts
     {
-        get
-        {
-            return this.sddxCharts;
-        }
-        set
-        {
-            this.sddxCharts=value;
-        }
+        get => sddxCharts;
+        set => sddxCharts = value;
     }
 
     /// <summary>
-    /// Accesses this.globalInformation
+    ///     Accesses this.globalInformation
     /// </summary>
     /// <value>this.globalInformation</value>
     public TrackInformation? GlobalInformation
     {
-        get
-        {
-            return this.globalInformation;
-        }
-        set
-        {
-            this.globalInformation=value;
-        }
+        get => globalInformation;
+        set => globalInformation = value;
     }
 
     // public abstract bool CheckValidity();
