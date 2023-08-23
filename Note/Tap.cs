@@ -5,6 +5,7 @@
 /// </summary>
 public class Tap : Note
 {
+    #region TypeEnums
     /// <summary>
     ///     The allowed tap type
     /// </summary>
@@ -36,23 +37,25 @@ public class Tap : Note
     /// </summary>
     /// <value></value>
     private readonly string[] allowedType = { "TAP", "STR", "BRK", "BST", "XTP", "XST", "TTP", "NST" };
+    #endregion
 
     /// <summary>
     ///     Stores if the Touch note have special effect
     /// </summary>
-    private int specialEffect;
+    public int SpecialEffect { get; private set; }
 
     /// <summary>
     ///     Stores how big the note is: M1 for Regular and L1 for large
     /// </summary>
-    private string touchSize;
+    public string TouchSize { get; private set; }
 
     /// <summary>
     ///     Empty Constructor Tap Note
     /// </summary>
     public Tap()
     {
-        touchSize = "M1";
+        TouchSize = "M1";
+        NoteGenre = NoteGeneralCategories.Tap;
         Update();
     }
 
@@ -69,8 +72,9 @@ public class Tap : Note
         Key = key;
         Bar = bar;
         Tick = startTime;
-        specialEffect = 0;
-        touchSize = "M1";
+        SpecialEffect = 0;
+        TouchSize = "M1";
+        NoteGenre = NoteGeneralCategories.Tap;
         Update();
     }
 
@@ -89,8 +93,8 @@ public class Tap : Note
         Key = key;
         Bar = bar;
         Tick = startTime;
-        this.specialEffect = specialEffect;
-        this.touchSize = touchSize;
+        SpecialEffect = specialEffect;
+        TouchSize = touchSize;
         Update();
     }
 
@@ -101,13 +105,13 @@ public class Tap : Note
     /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
     public Tap(Note inTake)
     {
-        NoteType = inTake.NoteGenre.Equals("TAP") ? inTake.NoteType : "TAP";
+        NoteType = inTake.NoteGenre is NoteGeneralCategories.Tap ? inTake.NoteType : "TAP";
         Key = inTake.Key;
         EndKey = inTake.EndKey;
         Bar = inTake.Bar;
         Tick = inTake.Tick;
         TickStamp = inTake.TickStamp;
-        TickTimeStamp = inTake.TickTimeStamp;
+        TimeStamp = inTake.TimeStamp;
         LastLength = inTake.LastLength;
         LastTickStamp = inTake.LastTickStamp;
         LastTimeStamp = inTake.LastTimeStamp;
@@ -117,87 +121,49 @@ public class Tap : Note
         CalculatedLastTime = inTake.CalculatedLastTime;
         CalculatedLastTime = inTake.CalculatedLastTime;
         TickBPMDisagree = inTake.TickBPMDisagree;
-        BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
-        if (inTake.NoteGenre == "TAP")
+        if (inTake.NoteSpecificGenre is NoteSpecificCategories.TapTouch)
         {
-            touchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
+            TouchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
             SpecialEffect = ((Tap)inTake).SpecialEffect;
         }
         else
         {
-            touchSize = "M1";
+            TouchSize = "M1";
             SpecialEffect = 0;
         }
     }
 
-
-    /// <summary>
-    ///     Return this.specialEffect
-    /// </summary>
-    public int SpecialEffect
-    {
-        get => specialEffect;
-        set => specialEffect = value;
-    }
-
-    /// <summary>
-    ///     Return this.touchSize
-    /// </summary>
-    public string TouchSize
-    {
-        get => touchSize;
-        set => touchSize = value;
-    }
-
-    public override string NoteGenre => "TAP";
-
     public override bool IsNote =>
-        // if (this.NoteType.Equals("NST"))
-        // {
-        //     return false;
-        // }
-        // else return true;
         true;
 
-    public override string NoteSpecificGenre
+    public override NoteSpecificCategories NoteSpecificGenre
     {
         get
         {
-            var result = "";
+            NoteSpecificCategories result = NoteSpecificCategories.Tap;
             switch (NoteType)
             {
-                case "TAP":
-                    result += "TAP";
-                    break;
                 case "STR":
-                    result += "SLIDE_START";
-                    break;
-                case "BRK":
-                    result += "TAP";
-                    break;
                 case "BST":
-                    result += "SLIDE_START";
-                    break;
-                case "XTP":
-                    result += "TAP";
-                    break;
-                case "XST":
-                    result += "SLIDE_START";
+                case "NST":
+                case "NSS":
+                    result = NoteSpecificCategories.TapStart;
                     break;
                 case "TTP":
-                    result += "TAP";
+                case "XTP":
+                    result = NoteSpecificCategories.TapTouch;
                     break;
-                case "NST":
-                    result += "SLIDE_START";
-                    break;
-                case "NSS":
-                    result += "SLIDE_START";
+                case "TAP":
+                case "BRK":
+                case "XST":
+                default:
+                    result = NoteSpecificCategories.Tap;
                     break;
             }
-
             return result;
         }
+        protected set { }
     }
 
     public override bool CheckValidity()
@@ -212,69 +178,49 @@ public class Tap : Note
     public override string Compose(int format)
     {
         var result = "";
-        // if (format == 1 && !(this.NoteType.Equals("TTP")) && !((this.NoteType.Equals("NST"))||this.NoteType.Equals("NSS")))
-        // {
-        //     result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
-        // }
-        // else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
-        // {
-        //     result = ""; //NST and NSS is just a place holder for slide
-        // }
-        if (format == 1 && !NoteType.Equals("TTP"))
+        if (format == 1 && NoteSpecificGenre is not NoteSpecificCategories.TapTouch)
             result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key;
-        else if (format == 1 && NoteType.Equals("TTP"))
+        else if (format == 1 && NoteSpecificGenre is NoteSpecificCategories.TapTouch)
             result = NoteType + "\t" +
                      Bar + "\t" +
                      Tick + "\t" +
-                     Key.ToCharArray()[1] + "\t" +
+                     KeyNum + "\t" +
                      Key.ToCharArray()[0] + "\t" +
-                     specialEffect + "\t" +
-                     touchSize; //M1 for regular note and L1 for Larger Note
+                     SpecialEffect + "\t" +
+                     TouchSize; //M1 for regular note and L1 for Larger Note
         else if (format == 0)
-            switch (NoteType)
+        {
+            switch (NoteSpecificGenre)
             {
-                case "TAP":
-                    result += (int.Parse(Key) + 1).ToString();
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                case NoteSpecificCategories.Tap:
+                case NoteSpecificCategories.TapStart:
+                    result += (KeyNum + 1).ToString();
                     break;
-                case "STR":
-                    result += (int.Parse(Key) + 1).ToString();
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                case NoteSpecificCategories.TapTouch:
+                    result += KeyGroup + (KeyNum + 1);
                     break;
-                case "BRK":
-                    result += (int.Parse(Key) + 1) + "b";
+                default:
+                    throw new InvalidCastException("This TAP does not belongs to any category");
+            }
+            switch (NoteSpecialState)
+            {
+                case SpecialState.Break:
+                    result += "b";
                     break;
-                case "BST":
-                    result += (int.Parse(Key) + 1) + "b";
+                case SpecialState.EX:
+                    result += "x";
                     break;
-                case "XTP":
-                    result += (int.Parse(Key) + 1) + "x";
+                case SpecialState.BreakEX:
+                    result += "bx";
                     break;
-                case "XST":
-                    result += (int.Parse(Key) + 1) + "x";
+                case SpecialState.Fireworks:
+                    result += "f";
                     break;
-                case "NST":
-                    result += (int.Parse(Key) + 1) + "!";
-                    break;
-                case "TTP":
-                    result += Key.ToCharArray()[1] + (Convert.ToInt32(Key.Substring(0, 1)) + 1).ToString();
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    if (SpecialEffect == 1) result += "f";
+                case SpecialState.SingularStart:
+                    result += "!";
                     break;
             }
-
+        }
         //result += "_" + this.Tick;
         return result;
     }

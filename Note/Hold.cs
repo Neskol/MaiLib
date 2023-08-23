@@ -5,6 +5,7 @@
 /// </summary>
 public class Hold : Note
 {
+    #region TypeEnums
     public enum HoldType
     {
         /// <summary>
@@ -23,16 +24,17 @@ public class Hold : Note
     /// </summary>
     /// <value></value>
     private readonly string[] allowedType = { "HLD", "XHO", "THO" };
+    #endregion
 
     /// <summary>
     ///     Stores if this Touch Hold have special effect
     /// </summary>
-    private readonly int specialEffect;
+    public int SpecialEffect { get; protected set; }
 
     /// <summary>
     ///     Stores the size of touch hold
     /// </summary>
-    private readonly string touchSize;
+    public string TouchSize { get; protected set; }
 
     /// <summary>
     ///     Construct a Hold Note
@@ -49,8 +51,9 @@ public class Hold : Note
         Bar = bar;
         Tick = startTime;
         LastLength = lastTime;
-        specialEffect = 0;
-        touchSize = "M1";
+        SpecialEffect = 0;
+        TouchSize = "M1";
+        NoteGenre = NoteGeneralCategories.Hold;
         Update();
     }
 
@@ -71,8 +74,9 @@ public class Hold : Note
         Bar = bar;
         Tick = startTime;
         LastLength = lastTime;
-        this.specialEffect = specialEffect;
-        this.touchSize = touchSize;
+        SpecialEffect = specialEffect;
+        TouchSize = touchSize;
+        NoteGenre = NoteGeneralCategories.Hold;
         Update();
     }
 
@@ -89,7 +93,7 @@ public class Hold : Note
         Bar = inTake.Bar;
         Tick = inTake.Tick;
         TickStamp = inTake.TickStamp;
-        TickTimeStamp = inTake.TickTimeStamp;
+        TimeStamp = inTake.TimeStamp;
         LastLength = inTake.LastLength;
         LastTickStamp = inTake.LastTickStamp;
         LastTimeStamp = inTake.LastTimeStamp;
@@ -99,42 +103,42 @@ public class Hold : Note
         CalculatedLastTime = inTake.CalculatedLastTime;
         CalculatedLastTime = inTake.CalculatedLastTime;
         TickBPMDisagree = inTake.TickBPMDisagree;
-        BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
-        if (inTake.NoteGenre == "HOLD")
+        if (inTake.NoteGenre == NoteGeneralCategories.Hold)
         {
-            touchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();
-            specialEffect = ((Hold)inTake).SpecialEffect;
+            TouchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();
+            SpecialEffect = ((Hold)inTake).SpecialEffect;
         }
         else
         {
-            touchSize = "M1";
-            specialEffect = 0;
+            TouchSize = "M1";
+            SpecialEffect = 0;
         }
+        NoteGenre = NoteGeneralCategories.Hold;
+        Update();
     }
-
-    /// <summary>
-    ///     Returns if the note comes with Special Effect
-    /// </summary>
-    /// <value>0 if no, 1 if yes</value>
-    public int SpecialEffect => specialEffect;
-
-    /// <summary>
-    ///     Returns the size of the note
-    /// </summary>
-    /// <value>M1 if regular, L1 if large</value>
-    public string TouchSize => touchSize;
-
-    public override string NoteGenre => "HOLD";
 
     public override bool IsNote => true;
 
-    public override string NoteSpecificGenre
+    public override NoteSpecificCategories NoteSpecificGenre
     {
         get
         {
-            var result = "HOLD";
+            var result = NoteSpecificCategories.Hold;
+            switch (NoteType)
+            {
+                case "THO":
+                    result =  NoteSpecificCategories.HoldTouch;
+                    break;
+                default:
+                    result = NoteSpecificCategories.Hold;
+                    break;
+
+            }
             return result;
+        }
+        protected set
+        {
         }
     }
 
@@ -156,41 +160,41 @@ public class Hold : Note
         }
         else if (format == 1 && NoteType.Equals("THO"))
         {
-            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key.ToCharArray()[0] + "\t" + LastLength + "\t" +
-                     Key.ToCharArray()[1] + "\t" + SpecialEffect + "\tM1"; //M1 for regular note and L1 for Larger Note
+            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" +
+                     KeyGroup + "\t" + SpecialEffect + "\t" + TouchSize; //M1 for regular note and L1 for Larger Note
         }
         else if (format == 0)
         {
-            switch (NoteType)
+            switch (NoteSpecificGenre)
             {
-                case "HLD":
-                    result += Convert.ToInt32(Key) + 1;
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    result += "h";
+                case NoteSpecificCategories.Hold:
+                    result += (KeyNum + 1).ToString() + "h";
                     break;
-                case "XHO":
-                    result += Convert.ToInt32(Key) + 1 + "xh";
+                case NoteSpecificCategories.HoldTouch:
+                    result += KeyGroup + (KeyNum + 1) + "h";
                     break;
-                case "THO":
-                    result += Key.ToCharArray()[1] + (Convert.ToInt32(Key.Substring(0, 1)) + 1).ToString();
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    if (SpecialEffect == 1) result += "f";
-                    result += "h";
+                default:
+                    throw new InvalidCastException("This TAP does not belongs to any category");
+            }
+            switch (NoteSpecialState)
+            {
+                case SpecialState.Break:
+                    result += "b";
+                    break;
+                case SpecialState.EX:
+                    result += "x";
+                    break;
+                case SpecialState.BreakEX:
+                    result += "bx";
+                    break;
+                case SpecialState.Fireworks:
+                    result += "f";
+                    break;
+                case SpecialState.SingularStart:
+                    result += "!";
                     break;
             }
-
-            if (TickBPMDisagree || Delayed)
-                result += GenerateAppropriateLength(FixedLastLength);
-            else
-                result += GenerateAppropriateLength(LastLength);
+            result += GenerateAppropriateLength(LastLength);
         }
 
         return result;

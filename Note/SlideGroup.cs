@@ -139,7 +139,7 @@ public class SlideGroup : Slide
             Bar = inTake.Bar;
             Tick = inTake.Tick;
             TickStamp = inTake.TickStamp;
-            TickTimeStamp = inTake.TickTimeStamp;
+            TimeStamp = inTake.TimeStamp;
             LastLength = inTake.LastLength;
             LastTickStamp = inTake.LastTickStamp;
             LastTimeStamp = inTake.LastTimeStamp;

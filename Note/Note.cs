@@ -5,47 +5,20 @@
 /// </summary>
 public abstract class Note : IEquatable<Note>, INote, IComparable
 {
-    public enum SpecialState
-    {
-        /// <summary>
-        ///     Normal note, nothing special
-        /// </summary>
-        Normal,
-
-        /// <summary>
-        ///     Break note
-        /// </summary>
-        Break,
-
-        /// <summary>
-        ///     EX Note
-        /// </summary>
-        EX,
-
-        /// <summary>
-        ///     EX Break
-        /// </summary>
-        BreakEX,
-
-        /// <summary>
-        ///     Connecting Slide
-        /// </summary>
-        ConnectingSlide
-    }
 
     /// <summary>
     ///     Construct an empty note
     /// </summary>
-    public Note()
+    protected Note()
     {
         NoteType = "";
         Key = "";
         EndKey = "";
+        Definition = 384;
         Bar = 0;
         Tick = 0;
-        FixedTick = 0;
         TickStamp = 0;
-        TickTimeStamp = 0.0;
+        TimeStamp = 0.0;
         LastLength = 0;
         LastTickStamp = 0;
         LastTimeStamp = 0.0;
@@ -55,7 +28,6 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         CalculatedLastTime = 0.0;
         CalculatedWaitTime = 0.0;
         TickBPMDisagree = false;
-        BPM = 0;
         BPMChangeNotes = new List<BPMChange>();
     }
 
@@ -63,7 +35,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     Construct a note from other note
     /// </summary>
     /// <param name="inTake">The intake note</param>
-    public Note(Note inTake)
+    protected Note(Note inTake)
     {
         NoteType = inTake.NoteType;
         Key = inTake.Key;
@@ -71,7 +43,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         Bar = inTake.Bar;
         Tick = inTake.Tick;
         TickStamp = inTake.TickStamp;
-        TickTimeStamp = inTake.TickTimeStamp;
+        TimeStamp = inTake.TimeStamp;
         LastLength = inTake.LastLength;
         LastTickStamp = inTake.LastTickStamp;
         LastTimeStamp = inTake.LastTimeStamp;
@@ -81,74 +53,67 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         CalculatedLastTime = inTake.CalculatedLastTime;
         CalculatedLastTime = inTake.CalculatedLastTime;
         TickBPMDisagree = inTake.TickBPMDisagree;
-        BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
     }
 
     /// <summary>
     ///     The note type
     /// </summary>
-    public string NoteType { get; set; }
+    public string NoteType { get; protected set; }
 
     /// <summary>
     ///     The key
     /// </summary>
-    public string Key { get; set; }
+    public string Key { get; protected set; }
 
     /// <summary>
     ///     The end key
     /// </summary>
-    public string EndKey { get; set; }
+    public string EndKey { get; protected set; }
 
     /// <summary>
     ///     The bar
     /// </summary>
-    public int Bar { get => this.TickStamp/this.Definition }
+    public int Bar
+    {
+        get;
+        protected set;
+    }
 
     /// <summary>
     ///     The start time
     /// </summary>
-    public int Tick { get; set; }
-
-    /// <summary>
-    ///     Start time fixed to BPM
-    /// </summary>
-    public int FixedTick { get; set; }
+    public int Tick { get; protected set; }
 
     /// <summary>
     ///     The absolute Tick Calculated by this.bar*384+this.Tick
     /// </summary>
-    public int TickStamp { get; set; }
+    public int TickStamp { get; protected set; }
 
     /// <summary>
     ///     The start time stamp
     /// </summary>
-    public double TickTimeStamp { get; set; }
+    public double TimeStamp { get; protected set; }
 
     /// <summary>
     ///     The Wait length
     /// </summary>
-    public int WaitLength { get; set; }
+    public int WaitLength { get; protected set; }
 
     /// <summary>
     ///     The stamp of Wait time ends in Ticks
     /// </summary>
-    public int WaitTickStamp { get; set; }
+    public int WaitTickStamp { get; protected set; }
 
     /// <summary>
     ///     The Calculated Wait time in seconds
     /// </summary>
-    public double CalculatedWaitTime { get; set; }
+    public double CalculatedWaitTime { get; protected set; }
 
     /// <summary>
     ///     The Last length
     /// </summary>
-    public int LastLength { get; set; }
-
-    /// <summary>
-    ///     Fixed Tick Last length with fixed BPM
-    /// </summary>
-    public int FixedLastLength { get; set; }
+    public int LastLength { get; protected set; }
 
     /// <summary>
     ///     The stamp when the Last time ends in Ticks
@@ -158,55 +123,60 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     The stamp when the Last time ends in seconds
     /// </summary>
-    public double LastTimeStamp { get; set; }
+    public double LastTimeStamp { get; protected set; }
 
     /// <summary>
     ///     The Calculated Last time
     /// </summary>
-    public double CalculatedLastTime { get; set; }
+    public double CalculatedLastTime { get; protected set; }
 
     /// <summary>
     ///     Stores if the BPM of Wait or Last Tick is in different BPM
     /// </summary>
-    public bool TickBPMDisagree { get; set; }
+    public bool TickBPMDisagree { get; protected set; }
 
     /// <summary>
     ///     The delayed
     /// </summary>
-    public bool Delayed { get; set; }
+    public bool Delayed { get; protected set; }
 
     /// <summary>
     ///     The BPM
     /// </summary>
-    public double BPM { get; set; }
+    public double BPM => this.BPMChangeNotes.Count == 0 ? 0 : this.BPMChangeNotes.First().BPM;
 
     /// <summary>
     ///     The stamp when the Wait time ends in seconds
     /// </summary>
-    public double WaitTimeStamp { get; set; }
+    public double WaitTimeStamp { get; protected set; }
 
     /// <summary>
     ///     The previous note
     /// </summary>
-    public Note? Prev { get; set; }
+    public Note? Prev { get; protected set; }
 
     /// <summary>
     ///     The next note
     /// </summary>
-    public Note? Next { get; set; }
+    public Note? Next { get; protected set; }
 
     /// <summary>
     ///     Stores all BPM change prior to this
     /// </summary>
     public List<BPMChange> BPMChangeNotes { get; set; }
 
-    public SpecialState NoteSpecialState { get; set; }
+    /// <summary>
+    /// The special state of the note: usually for festival
+    /// </summary>
+    public SpecialState NoteSpecialState { get; protected set; }
+
+    public int Definition { get; set; }
 
     /// <summary>
     ///     Get the number value of Key
     /// </summary>
     /// <value>Number value of Key 0-7, exclude key group</value>
-    public int KeyNum => int.Parse(Key.ToCharArray()[0].ToString());
+    public int KeyNum => this.Key.Equals("") ? -1 : int.Parse(Key.ToCharArray()[0].ToString());
 
     /// <summary>
     ///     Get the key group of the key - only for touch notes
@@ -230,7 +200,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     {
         get
         {
-            var result = 0;
+            int result = -1;
             if (!EndKey.Equals("")) result = int.Parse(EndKey.ToCharArray()[0].ToString());
             return result;
         }
@@ -240,13 +210,13 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     Return this.SpecificType
     /// </summary>
     /// <returns>string of specific genre (specific type of Tap, Slide, etc.)</returns>
-    public abstract string NoteSpecificGenre { get; }
+    public abstract NoteSpecificCategories NoteSpecificGenre { get; protected set; }
 
     /// <summary>
     ///     Return this.noteGenre
     /// </summary>
     /// <returns>string of note genre (general category of TAP, SLIDE and HOLD)</returns>
-    public abstract string NoteGenre { get; }
+    public NoteGeneralCategories NoteGenre { get; protected set; }
 
     /// <summary>
     ///     Return if this is a true note
@@ -259,43 +229,6 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         var result = 0;
 
         var another = obj as Note ?? throw new NullReferenceException("Note is not defined");
-
-        //else if (this.NoteSpecificType().Equals("SLIDE")&&(this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD")) && this.Tick == another.Tick && this.bar == another.Bar)
-        //{
-        //    result = -1;
-        //}
-        //else if (this.NoteSpecificType().Equals("SLIDE_START") && (another.NoteSpecificType().Equals("TAP") || another.NoteSpecificType().Equals("HOLD")) && this.Tick == another.Tick && this.bar == another.Bar)
-        //{
-        //    Console.WriteLine("STAR AND TAP");
-        //    result = 1;
-        //    Console.WriteLine(this.NoteSpecificType() + ".compareTo(" + another.NoteSpecificType() + ") is" + result);
-        //    //Console.ReadKey();
-        //}
-        //if (this.Bar==another.Bar&&this.Tick==another.Tick)
-        //{
-        //    if (this.NoteGenre().Equals("BPM"))
-        //    {
-        //        result = -1;
-        //    }
-        //    else if (this.NoteGenre().Equals("MEASURE"))
-        //    {
-        //        result = 1;
-        //    }
-        //    else if ((this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD"))&&another.NoteSpecificType().Equals("SLIDE_START"))
-        //    {
-        //        result= -1;
-        //    }
-        //}
-        //else
-        //{
-        //    if (this.bar != another.Bar)
-        //    {
-        //        result = this.bar.CompareTo(another.Bar);
-        //        //Console.WriteLine("this.compareTo(another) is" + result);
-        //        //Console.ReadKey();
-        //    }
-        //    else result = this.Tick.CompareTo(another.Tick);
-        //}
         if (Bar != another.Bar)
         {
             result = Bar.CompareTo(another.Bar);
@@ -306,12 +239,8 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         }
         else
         {
-            if (NoteSpecificGenre.Equals("BPM"))
+            if (NoteSpecificGenre is NoteSpecificCategories.BPM)
                 result = -1;
-            //else if (this.NoteSpecificType().Equals("SLIDE")&&another.NoteSpecificType().Equals("SLIDE_START")&&this.Key.Equals(another.Key))
-            //{
-            //    result = 1;
-            //}
             else result = 0;
         }
 
@@ -320,16 +249,15 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
     public bool Equals(Note? other)
     {
-        var result = false;
-        if (other != null &&
-            NoteType.Equals(other.NoteType) &&
-            Key.Equals(other.Key) &&
-            EndKey.Equals(other.EndKey) &&
-            Bar == other.Bar &&
-            Tick == other.Tick &&
-            LastLength == other.LastLength &&
-            BPM == other.BPM)
-            result = true;
+        double bpmDiffTolerance = 0.00001;
+        bool result = other != null &&
+                      NoteType.Equals(other.NoteType) &&
+                      Key.Equals(other.Key) &&
+                      EndKey.Equals(other.EndKey) &&
+                      Bar == other.Bar &&
+                      Tick == other.Tick &&
+                      LastLength == other.LastLength &&
+                      Math.Abs(BPM - other.BPM) < bpmDiffTolerance;
         return result;
     }
 
@@ -339,7 +267,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
     public virtual void Flip(string method)
     {
-        if (Key != null && !Key.Equals("") && !(Key.Count() > 1 && Key.ToCharArray()[1] == 'C'))
+        if (!Key.Equals("") && !(Key.Length > 1 && Key.ToCharArray()[1] == 'C'))
         {
             #region FlipConditions
 
@@ -828,27 +756,24 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         Update();
     }
 
-    public virtual bool Update()
+    //TODO: Update update method
+    public virtual void Update()
     {
         // Console.WriteLine("This note has BPM note number of " + this.BPMChangeNotes.Count());
         var result = false;
-        TickStamp = Bar * 384 + Tick;
-        while (Tick >= 384)
+        TickStamp = Bar * Definition + Tick;
+        while (Tick >= Definition)
         {
-            Tick -= 384;
+            Tick -= Definition;
             Bar++;
         }
 
         // string noteInformation = "This note is "+this.NoteType+", in Tick "+ this.TickStamp+", ";
-        //this.TickTimeStamp = this.GetTimeStamp(this.TickStamp);
+        //this.TimeStamp = this.GetTimeStamp(this.TickStamp);
         WaitTickStamp = TickStamp + WaitLength;
         //this.WaitTimeStamp = this.GetTimeStamp(this.WaitTickStamp);
         LastTickStamp = WaitTickStamp + LastLength;
         //this.LastTimeStamp = this.GetTimeStamp(this.LastTickStamp);
-        if (!(NoteType.Equals("SLIDE") || NoteType.Equals("HOLD")))
-            result = true;
-        else if (CalculatedLastTime > 0 && CalculatedWaitTime > 0) result = true;
-        return result;
     }
 
     public double GetTimeStamp(int overallTick)
@@ -920,9 +845,8 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     public string GenerateAppropriateLength(int length)
     {
         var result = "";
-        const int definition = 384;
-        var divisor = GCD(definition, length);
-        int quaver = definition / divisor, beat = length / divisor;
+        var divisor = GCD(Definition, length);
+        int quaver = Definition / divisor, beat = length / divisor;
         result = "[" + quaver + ":" + beat + "]";
         return result;
     }
@@ -950,12 +874,12 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         var duration = Math.Round(LastTimeStamp - WaitTimeStamp, 4);
         switch (NoteGenre)
         {
-            case "SLIDE":
-                var sustain = Math.Round(WaitTimeStamp - TickTimeStamp, 4);
+            case NoteGeneralCategories.Hold:
+                var sustain = Math.Round(WaitTimeStamp - TimeStamp, 4);
                 result = "[" + sustain + "##" + duration + "]";
                 break;
-            case "HOLD":
-                double startTime = Math.Round(startTime = TickTimeStamp, 4);
+            case NoteGeneralCategories.Slide:
+                double startTime = Math.Round(startTime = TimeStamp, 4);
                 result = "[" + startTime + "##" + duration + "]";
                 break;
         }
@@ -976,7 +900,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
     public override bool Equals(object? obj)
     {
-        var result = (this == null && obj == null) || (this != null && obj != null);
+        var result = (this == null && obj == null) || (this != null && obj != null && obj is Note);
         if (result && obj != null)
         {
             var localNote = (Note)obj;
@@ -984,10 +908,5 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         }
 
         return result;
-    }
-
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
     }
 }

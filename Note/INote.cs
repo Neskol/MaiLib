@@ -21,7 +21,7 @@ internal interface INote
     ///     Updates this note instance.
     /// </summary>
     /// <returns>True if Calculated Times is defined, false otherwise</returns>
-    bool Update();
+    void Update();
 
     /// <summary>
     ///     Flip the note according to the method specified

@@ -164,7 +164,7 @@ public abstract class Chart : IChart
                 // Console.WriteLine(x.Compose(0));
                 //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
                 //x.Update();
-                //x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
+                //x.TimeStamp = this.GetTimeStamp(x.TickStamp);
                 //x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
                 // x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
                 if (x.Bar == i)
@@ -203,11 +203,11 @@ public abstract class Chart : IChart
                             x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
                             x.Update();
-                            if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
+                            if (x.TimeStamp == 0) x.TimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedLastTime == 0)
                             {
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
-                                x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
+                                x.CalculatedLastTime = x.LastTimeStamp - x.TimeStamp;
                                 x.FixedLastLength =
                                     (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp)));
                             }
@@ -232,17 +232,17 @@ public abstract class Chart : IChart
                                                 GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
                             x.Update();
-                            if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
+                            if (x.TimeStamp == 0) x.TimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedWaitTime == 0)
                             {
                                 x.WaitTimeStamp = GetTimeStamp(x.WaitTickStamp);
-                                x.CalculatedWaitTime = x.WaitTimeStamp - x.TickTimeStamp;
+                                x.CalculatedWaitTime = x.WaitTimeStamp - x.TimeStamp;
                             }
 
                             if (x.CalculatedLastTime == 0)
                             {
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
-                                x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
+                                x.CalculatedLastTime = x.LastTimeStamp - x.TimeStamp;
                                 x.FixedLastLength =
                                     (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp)));
                             }
@@ -288,7 +288,7 @@ public abstract class Chart : IChart
                     bar.Add(x);
                     if (!x.NoteGenre.Equals("SLIDE")) lastNote = x;
                     realLastNote = x;
-                    timeStamp += x.TickTimeStamp;
+                    timeStamp += x.TimeStamp;
                 }
             }
 
