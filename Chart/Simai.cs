@@ -61,13 +61,18 @@ public class Simai : Chart
         List<Note> adjusted = new();
         List<Slide> connectedSlides = new();
         List<Slide> slideNotesOfChart = new();
+        List<Slide> processedSlideOfChart = new();
+        Dictionary<Slide, bool> processedSlideDic = new();
 
         var maximumBar = 0;
         foreach (var candidate in Notes)
         {
             maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
             if (candidate.NoteSpecificGenre.Equals("SLIDE") || candidate.NoteSpecificGenre.Equals("SLIDE_GROUP"))
+            {
                 slideNotesOfChart.Add((Slide)candidate);
+                processedSlideDic.Add((Slide)candidate, false);
+            }
             else adjusted.Add(candidate);
         }
 
@@ -93,19 +98,58 @@ public class Simai : Chart
                         currentGroup.AddConnectingSlide(candidate);
                         connectedSlides.Add(candidate);
                         processedSlides++;
+                        processedSlideDic[candidate] = true;
                     }
                 }
 
-                if (currentGroup.SlideCount > 1) adjusted.Add(currentGroup);
-                else adjusted.Add(parentSlide);
+                if (currentGroup.SlideCount > 1)
+                {
+                    adjusted.Add(currentGroup);
+                    processedSlideOfChart.Add(currentGroup);
+                    processedSlideDic[parentSlide] = true;
+                }
+                else
+                {
+                    adjusted.Add(parentSlide);
+                    processedSlideOfChart.Add(parentSlide);
+                    processedSlideDic[parentSlide] = true;
+                }
+                processedSlides++;
+            }
+        }
+
+        // This for loop shouldn't be here: compromise of each connecting slide
+        foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
+        {
+            if (!x.Value)
+            {
+                Slide normalSlide = new Slide(x.Key);
+                normalSlide.NoteSpecialState = Note.SpecialState.Normal;
+                adjusted.Add(normalSlide);
                 processedSlides++;
             }
         }
 
         //For verification only: check if slide count is correct
         if (processedSlides != slideNotesOfChart.Count)
+        {
+            slideNotesOfChart.Sort((p, q) => p.TickStamp.CompareTo(q.TickStamp));
+            processedSlideOfChart.Sort((p, q) => p.TickStamp.CompareTo(q.TickStamp));
+            string errorMsg = "Slide(s) were skipped during processing: \n";
+            foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
+            {
+                if (!x.Value)
+                {
+                    errorMsg += x.Key.Compose(1) + ", " + x.Key.TickStamp;
+                    if (x.Key.NoteSpecialState is Note.SpecialState.ConnectingSlide)
+                    {
+                        errorMsg += ", and it is a connecting slide";
+                    }
+                }
+            }
             throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +
-                                                ", Actual:" + processedSlides);
+                                                ", Actual:" + processedSlides +", Skipped: "+ processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
+        }
         Notes = new List<Note>(adjusted);
     }
 
