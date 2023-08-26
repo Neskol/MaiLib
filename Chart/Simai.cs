@@ -76,28 +76,28 @@ public class Simai : Chart
             else adjusted.Add(candidate);
         }
 
-        /// If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
+        // If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
 
-        var processedSlides = 0;
+        var processedSlidesCount = 0;
 
-        for (var i = 0; i < slideNotesOfChart.Count; i++)
+        foreach (KeyValuePair<Slide,bool> parentPair in processedSlideDic)
         {
-            var parentSlide = slideNotesOfChart[i];
+            var parentSlide = parentPair.Key;
             maximumBar = parentSlide.Bar > maximumBar ? parentSlide.Bar : maximumBar;
-            if (parentSlide.NoteSpecialState != Note.SpecialState.ConnectingSlide)
+            if (!parentPair.Value && parentSlide.NoteSpecialState != Note.SpecialState.ConnectingSlide)
             {
                 SlideGroup currentGroup = new();
                 currentGroup.AddConnectingSlide(parentSlide);
-                for (var j = i == 0 ? 1 : 0; j < slideNotesOfChart.Count; j += j + 1 == i ? 2 : 1)
+                foreach (KeyValuePair<Slide,bool> candidatePair in processedSlideDic)
                 {
-                    var candidate = slideNotesOfChart[j];
-                    if (candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide &&
+                    var candidate = candidatePair.Key;
+                    if (candidate != parentSlide && candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide &&
                         candidate.TickStamp == currentGroup.LastSlide.LastTickStamp &&
-                        candidate.Key.Equals(currentGroup.LastSlide.EndKey) && !connectedSlides.Contains(candidate))
+                        candidate.Key.Equals(currentGroup.LastSlide.EndKey) && !candidatePair.Value)
                     {
                         currentGroup.AddConnectingSlide(candidate);
                         connectedSlides.Add(candidate);
-                        processedSlides++;
+                        processedSlidesCount++;
                         processedSlideDic[candidate] = true;
                     }
                 }
@@ -114,7 +114,7 @@ public class Simai : Chart
                     processedSlideOfChart.Add(parentSlide);
                     processedSlideDic[parentSlide] = true;
                 }
-                processedSlides++;
+                processedSlidesCount++;
             }
         }
 
@@ -126,12 +126,12 @@ public class Simai : Chart
                 Slide normalSlide = new Slide(x.Key);
                 normalSlide.NoteSpecialState = Note.SpecialState.Normal;
                 adjusted.Add(normalSlide);
-                processedSlides++;
+                processedSlidesCount++;
             }
         }
 
         //For verification only: check if slide count is correct
-        if (processedSlides != slideNotesOfChart.Count)
+        if (processedSlidesCount != slideNotesOfChart.Count)
         {
             slideNotesOfChart.Sort((p, q) => p.TickStamp.CompareTo(q.TickStamp));
             processedSlideOfChart.Sort((p, q) => p.TickStamp.CompareTo(q.TickStamp));
@@ -147,8 +147,19 @@ public class Simai : Chart
                     }
                 }
             }
+
+            errorMsg += "\n------------\nComposedSlides: \n";
+            foreach (Slide x in processedSlideOfChart)
+            {
+                errorMsg += x.Compose(0) + "\n";
+                if (x is SlideGroup)
+                {
+                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup).LastSlide.Compose(1)+"\n";
+                }
+
+            }
             throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +
-                                                ", Actual:" + processedSlides +", Skipped: "+ processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
+                                                ", Actual:" + processedSlidesCount +", Skipped: "+ processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
         }
         Notes = new List<Note>(adjusted);
     }
