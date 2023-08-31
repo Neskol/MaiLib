@@ -38,6 +38,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// </summary>
     public double WaitTimeStamp;
 
+#region Constructors
     /// <summary>
     ///     Construct an empty note
     /// </summary>
@@ -89,6 +90,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
     }
+    #endregion
 
     /// <summary>
     ///     The note type

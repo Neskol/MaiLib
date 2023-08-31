@@ -17,7 +17,7 @@ public class BPMChange : Note
         BPM = 0;
         Update();
     }
-
+#region Constructors
     /// <summary>
     ///     Construct BPMChange with given bar, tick, BPM
     /// </summary>
@@ -54,6 +54,7 @@ public class BPMChange : Note
         Tick = takeIn.Tick;
         Update();
     }
+#endregion
 
     public override string NoteGenre => "BPM";
 

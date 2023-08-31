@@ -5,6 +5,7 @@
 /// </summary>
 internal class Rest : Note
 {
+    #region Constructors
     /// <summary>
     ///     Construct empty
     /// </summary>
@@ -42,6 +43,7 @@ internal class Rest : Note
         BPMChangeNotes = n.BPMChangeNotes;
         Update();
     }
+    #endregion
 
     public override string NoteGenre => "REST";
 

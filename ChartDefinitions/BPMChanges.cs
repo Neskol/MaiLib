@@ -2,6 +2,7 @@
 
 public class BPMChanges
 {
+    #region Constructors
     /// <summary>
     ///     Construct with changes listed
     /// </summary>
@@ -38,6 +39,7 @@ public class BPMChanges
         ChangeNotes = new List<BPMChange>();
         foreach (var candidate in takenIn.ChangeNotes) ChangeNotes.Add(candidate);
     }
+    #endregion
 
     public List<BPMChange> ChangeNotes { get; private set; }
 

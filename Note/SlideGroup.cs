@@ -2,6 +2,7 @@
 
 public class SlideGroup : Slide
 {
+    #region Constructors
     public SlideGroup()
     {
         InternalSlides = new List<Slide>();
@@ -26,6 +27,7 @@ public class SlideGroup : Slide
         NoteSpecialState = SpecialState.Normal;
         Update();
     }
+    #endregion
 
     public int SlideCount => this == null ? 0 : InternalSlides.Count;
 

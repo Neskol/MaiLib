@@ -5,6 +5,7 @@
 /// </summary>
 public class Ma2 : Chart, ICompiler
 {
+    #region Constructors
     /// <summary>
     ///     Default Constructor.
     /// </summary>
@@ -77,6 +78,7 @@ public class Ma2 : Chart, ICompiler
         Information = new Dictionary<string, string>(takenIn.Information);
         Update();
     }
+    #endregion
 
     public override bool CheckValidity()
     {

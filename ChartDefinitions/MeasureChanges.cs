@@ -5,6 +5,7 @@
 /// </summary>
 public class MeasureChanges
 {
+    #region Constructors
     /// <summary>
     ///     Construct an empty Measure Change
     /// </summary>
@@ -62,6 +63,7 @@ public class MeasureChanges
         InitialBeats = beats[0];
         ChangeNotes = new List<MeasureChange>();
     }
+    #endregion
 
     public List<int> Bar { get; }
     public List<int> Tick { get; }
