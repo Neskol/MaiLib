@@ -56,6 +56,7 @@ public class Tap : Note
         Update();
     }
 
+#region Constructor
     /// <summary>
     ///     Construct a Tap note
     /// </summary>
@@ -130,7 +131,7 @@ public class Tap : Note
             SpecialEffect = 0;
         }
     }
-
+#endregion
 
     /// <summary>
     ///     Return this.specialEffect

@@ -68,6 +68,7 @@ public abstract class TrackInformation : IXmlUtility
     /// </summary>
     private XmlDocument takeInValue;
 
+#region Constructors
     /// <summary>
     ///     Empty constructor
     /// </summary>
@@ -78,6 +79,7 @@ public abstract class TrackInformation : IXmlUtility
         FormatInformation();
         Update();
     }
+    #endregion
 
     /// <summary>
     ///     Return the track name

@@ -5,6 +5,7 @@
 /// </summary>
 public class MeasureChange : Note
 {
+    #region Constructors
     /// <summary>
     ///     Construct Empty
     /// </summary>
@@ -40,6 +41,7 @@ public class MeasureChange : Note
         Quaver = takeIn.Quaver;
         Update();
     }
+    #endregion
 
     /// <summary>
     ///     Return this.quaver

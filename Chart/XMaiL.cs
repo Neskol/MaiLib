@@ -12,6 +12,7 @@ public class XMaiL : Chart, ICompiler
     /// </summary>
     private readonly XmlDocument StoredXMailL;
 
+#region Constructors
     /// <summary>
     ///     Default constructor
     /// </summary>
@@ -73,7 +74,7 @@ public class XMaiL : Chart, ICompiler
         StoredXMailL = new XmlDocument();
         Update();
     }
-
+#endregion
     public override bool CheckValidity()
     {
         var result = this == null;

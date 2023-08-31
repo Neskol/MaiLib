@@ -4,6 +4,7 @@ public class SlideEachSet : Note
 {
     public List<Slide> InternalSlides;
 
+#region Constructors
     public SlideEachSet()
     {
         InternalSlides = new List<Slide>();
@@ -45,6 +46,7 @@ public class SlideEachSet : Note
 
         Update();
     }
+    #endregion
 
     public Note? SlideStart { get; set; }
     public override string NoteSpecificGenre => "SLIDE_EACH";

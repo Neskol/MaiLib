@@ -7,6 +7,7 @@ namespace MaiLib;
 /// </summary>
 public class XmlInformation : TrackInformation, IXmlUtility
 {
+    #region Constructors
     /// <summary>
     ///     Using take in Xml to store trackInformation:
     /// </summary>
@@ -29,6 +30,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
             }
         }
     }
+    #endregion
 
     public override void Update()
     {

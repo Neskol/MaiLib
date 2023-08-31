@@ -104,12 +104,11 @@ public class Slide : Note
     private readonly string[] allowedType =
         { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
 
+#region Constructors
     /// <summary>
     ///     Empty Constructor
     /// </summary>
-    public Slide()
-    {
-    }
+    public Slide(){}
 
     /// <summary>
     ///     Construct a Slide Note (Valid only if Start Key matches a start!)
@@ -161,6 +160,7 @@ public class Slide : Note
         BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
     }
+    #endregion
 
     public override string NoteGenre => "SLIDE";
 

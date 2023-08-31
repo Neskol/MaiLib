@@ -2,6 +2,7 @@ namespace MaiLib;
 
 public class Simai : Chart
 {
+    #region Constructors
     /// <summary>
     ///     Empty constructor
     /// </summary>
@@ -55,6 +56,7 @@ public class Simai : Chart
         Information = new Dictionary<string, string>();
         Update();
     }
+    #endregion
 
     public void ComposeSlideGroup()
     {

@@ -17,6 +17,7 @@ public abstract class Compiler : ICompiler
     public Dictionary<string, string> RotateDictionary = new()
         { { "17", "UpSideDown" }, { "305", "LeftToRight" }, { "417", "Clockwise90" } };
 
+#region Constructors
     /// <summary>
     ///     Construct compiler of a single song.
     /// </summary>
@@ -50,6 +51,7 @@ public abstract class Compiler : ICompiler
         else
             GlobalSep = "/";
     }
+    #endregion
 
     /// <summary>
     ///     Stores chart collections
