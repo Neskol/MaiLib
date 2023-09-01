@@ -992,4 +992,30 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     {
         return base.GetHashCode();
     }
+
+        /// <summary>
+    /// Copies all note properties of copyFrom to copyTo
+    /// </summary>
+    /// <param name="copyTo"></param>
+    /// <param name="copyFrom"></param>
+    public static void Copy(Note copyTo, Note copyFrom) {
+        copyTo.NoteType = copyFrom.NoteType;
+        copyTo.Key = copyFrom.Key;
+        copyTo.EndKey = copyFrom.EndKey;
+        copyTo.Bar = copyFrom.Bar;
+        copyTo.Tick = copyFrom.Tick;
+        copyTo.TickStamp = copyFrom.TickStamp;
+        copyTo.TickTimeStamp = copyFrom.TickTimeStamp;
+        copyTo.LastLength = copyFrom.LastLength;
+        copyTo.LastTickStamp = copyFrom.LastTickStamp;
+        copyTo.LastTimeStamp = copyFrom.LastTimeStamp;
+        copyTo.WaitLength = copyFrom.WaitLength;
+        copyTo.WaitTickStamp = copyFrom.WaitTickStamp;
+        copyTo.WaitTimeStamp = copyFrom.WaitTimeStamp;
+        copyTo.CalculatedLastTime = copyFrom.CalculatedLastTime;
+        copyTo.CalculatedLastTime = copyFrom.CalculatedLastTime;
+        copyTo.TickBPMDisagree = copyFrom.TickBPMDisagree;
+        copyTo.BPM = copyFrom.BPM;
+        copyTo.BPMChangeNotes = copyFrom.BPMChangeNotes;
+    }
 }

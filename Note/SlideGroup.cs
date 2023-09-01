@@ -135,24 +135,7 @@ public class SlideGroup : Slide
         if (SlideCount > 0 && (Key == null || Key != InternalSlides[0].Key))
         {
             Note inTake = InternalSlides[0];
-            NoteType = inTake.NoteType;
-            Key = inTake.Key;
-            EndKey = inTake.EndKey;
-            Bar = inTake.Bar;
-            Tick = inTake.Tick;
-            TickStamp = inTake.TickStamp;
-            TickTimeStamp = inTake.TickTimeStamp;
-            LastLength = inTake.LastLength;
-            LastTickStamp = inTake.LastTickStamp;
-            LastTimeStamp = inTake.LastTimeStamp;
-            WaitLength = inTake.WaitLength;
-            WaitTickStamp = inTake.WaitTickStamp;
-            WaitTimeStamp = inTake.WaitTimeStamp;
-            CalculatedLastTime = inTake.CalculatedLastTime;
-            CalculatedLastTime = inTake.CalculatedLastTime;
-            TickBPMDisagree = inTake.TickBPMDisagree;
-            BPM = inTake.BPM;
-            BPMChangeNotes = inTake.BPMChangeNotes;
+            Note.Copy(this, inTake);
         }
 
         return result;

@@ -102,24 +102,8 @@ public class Tap : Note
     /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
     public Tap(Note inTake)
     {
-        NoteType = inTake.NoteGenre.Equals("TAP") ? inTake.NoteType : "TAP";
-        Key = inTake.Key;
-        EndKey = inTake.EndKey;
-        Bar = inTake.Bar;
-        Tick = inTake.Tick;
-        TickStamp = inTake.TickStamp;
-        TickTimeStamp = inTake.TickTimeStamp;
-        LastLength = inTake.LastLength;
-        LastTickStamp = inTake.LastTickStamp;
-        LastTimeStamp = inTake.LastTimeStamp;
-        WaitLength = inTake.WaitLength;
-        WaitTickStamp = inTake.WaitTickStamp;
-        WaitTimeStamp = inTake.WaitTimeStamp;
-        CalculatedLastTime = inTake.CalculatedLastTime;
-        CalculatedLastTime = inTake.CalculatedLastTime;
-        TickBPMDisagree = inTake.TickBPMDisagree;
-        BPM = inTake.BPM;
-        BPMChangeNotes = inTake.BPMChangeNotes;
+        Note.Copy(this, inTake);
+        //NoteType = inTake.NoteGenre.Equals("TAP") ? inTake.NoteType : "TAP";
         if (inTake.NoteGenre == "TAP")
         {
             touchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
@@ -129,6 +113,7 @@ public class Tap : Note
         {
             touchSize = "M1";
             SpecialEffect = 0;
+            NoteType = "TAP";
         }
     }
 #endregion

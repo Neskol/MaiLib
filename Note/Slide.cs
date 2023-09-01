@@ -141,24 +141,7 @@ public class Slide : Note
     /// <param name="inTake">The intake note</param>
     public Slide(Note inTake)
     {
-        NoteType = inTake.NoteType;
-        Key = inTake.Key;
-        EndKey = inTake.EndKey;
-        Bar = inTake.Bar;
-        Tick = inTake.Tick;
-        TickStamp = inTake.TickStamp;
-        TickTimeStamp = inTake.TickTimeStamp;
-        LastLength = inTake.LastLength;
-        LastTickStamp = inTake.LastTickStamp;
-        LastTimeStamp = inTake.LastTimeStamp;
-        WaitLength = inTake.WaitLength;
-        WaitTickStamp = inTake.WaitTickStamp;
-        WaitTimeStamp = inTake.WaitTimeStamp;
-        CalculatedLastTime = inTake.CalculatedLastTime;
-        CalculatedLastTime = inTake.CalculatedLastTime;
-        TickBPMDisagree = inTake.TickBPMDisagree;
-        BPM = inTake.BPM;
-        BPMChangeNotes = inTake.BPMChangeNotes;
+        Note.Copy(this, inTake);
     }
     #endregion
 

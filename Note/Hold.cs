@@ -34,6 +34,7 @@ public class Hold : Note
     /// </summary>
     private readonly string touchSize;
 
+#region Constructors
     /// <summary>
     ///     Construct a Hold Note
     /// </summary>
@@ -83,24 +84,7 @@ public class Hold : Note
     /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
     public Hold(Note inTake)
     {
-        NoteType = inTake.NoteType;
-        Key = inTake.Key;
-        EndKey = inTake.EndKey;
-        Bar = inTake.Bar;
-        Tick = inTake.Tick;
-        TickStamp = inTake.TickStamp;
-        TickTimeStamp = inTake.TickTimeStamp;
-        LastLength = inTake.LastLength;
-        LastTickStamp = inTake.LastTickStamp;
-        LastTimeStamp = inTake.LastTimeStamp;
-        WaitLength = inTake.WaitLength;
-        WaitTickStamp = inTake.WaitTickStamp;
-        WaitTimeStamp = inTake.WaitTimeStamp;
-        CalculatedLastTime = inTake.CalculatedLastTime;
-        CalculatedLastTime = inTake.CalculatedLastTime;
-        TickBPMDisagree = inTake.TickBPMDisagree;
-        BPM = inTake.BPM;
-        BPMChangeNotes = inTake.BPMChangeNotes;
+        Note.Copy(this, inTake);
         if (inTake.NoteGenre == "HOLD")
         {
             touchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();
@@ -112,6 +96,7 @@ public class Hold : Note
             specialEffect = 0;
         }
     }
+    #endregion
 
     /// <summary>
     ///     Returns if the note comes with Special Effect
