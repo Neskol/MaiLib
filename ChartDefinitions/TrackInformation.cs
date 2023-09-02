@@ -15,10 +15,10 @@ public abstract class TrackInformation : IXmlUtility
     {
         "1", "2", "3", "4", "5", "6", "7", "7+", "8", "8+", "9", "9+", "10", "10+", "11", "11+", "12", "12+", "13",
         "13+", "14", "14+", "15", "15+"
-    };
+    }; // TODO: Convert to enum
 
     public static readonly string[] difficulty =
-        { "Basic", "Advance", "Expert", "Master", "Remaster", "Utage", "Easy" };
+        { "Basic", "Advance", "Expert", "Master", "Remaster", "Utage", "Easy" }; // TODO: Convert to enum
 
     public static readonly string[] addVersion = { "Ver1.00.00" };
 
@@ -26,7 +26,7 @@ public abstract class TrackInformation : IXmlUtility
     ///     Stores the genre name used in information
     /// </summary>
     /// <value>103 = Touhou, 105 = maimai</value>
-    public static readonly string[] genre = { "東方Project", "maimai" };
+    public static readonly string[] genre = { "東方Project", "maimai" }; // TODO: Convert to enum
 
     /// <summary>
     ///     Stores prover maimai versions
@@ -39,14 +39,14 @@ public abstract class TrackInformation : IXmlUtility
         "maimai FiNALE", "maimai DX", "maimai DX PLUS", "maimai DX Splash", "maimai DX Splash PLUS",
         "maimai DX UNiVERSE", "maimai DX UNiVERSE PLUS", "maimai DX FESTiVAL", "maimai DX FESTiVAL PLUS",
         "maimai DX FESTiVAL PLUS"
-    };
+    }; // TODO: Convert to enum
 
     public static readonly string[] shortVersion =
     {
         "maimai", "PLUS", "GreeN", "GreeN PLUS", "ORANGE", "ORANGE PLUS", "PiNK", "PiNK PLUS", "MURASAKi",
         "MURASAKi PLUS", "MiLK", "MiLK PLUS", "FiNALE", "DX", "DX PLUS", "DX Splash", "DX Splash PLUS", "DX UNiVERSE",
         "DX UNiVERSE PLUS", "FESTiVAL", "FESTiVAL PLUS", "FESTiVAL PLUS"
-    };
+    }; // TODO: Convert to enum
 
     public static string[] versionArray;
     public static Dictionary<string, string> netOpenNameDic = new();
