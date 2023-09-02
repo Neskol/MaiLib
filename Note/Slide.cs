@@ -141,7 +141,7 @@ public class Slide : Note
     /// <param name="inTake">The intake note</param>
     public Slide(Note inTake)
     {
-        Note.Copy(this, inTake);
+        inTake.CopyOver(this);
     }
     #endregion
 

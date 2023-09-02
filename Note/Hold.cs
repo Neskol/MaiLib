@@ -84,7 +84,7 @@ public class Hold : Note
     /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
     public Hold(Note inTake)
     {
-        Note.Copy(this, inTake);
+        inTake.CopyOver(this);
         if (inTake.NoteGenre == "HOLD")
         {
             touchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();

@@ -102,7 +102,7 @@ public class Tap : Note
     /// <exception cref="NullReferenceException">Will raise exception if touch size is null</exception>
     public Tap(Note inTake)
     {
-        Note.Copy(this, inTake);
+        inTake.CopyOver(this);
         //NoteType = inTake.NoteGenre.Equals("TAP") ? inTake.NoteType : "TAP";
         if (inTake.NoteGenre == "TAP")
         {

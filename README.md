@@ -2,7 +2,7 @@
 
 ## A library for processing maimai charts
 
-> One example implementation is MaichartConverter, which converts between Simai and Ma2. Please
+> One example implementation of this library is MaichartConverter, which converts between Simai and Ma2. Please
 > see [MaichartConverter](https://github.com/Neskol/MaichartConverter) for more information.
 
 ### Build
@@ -12,7 +12,7 @@
 
 ### Usage
 
-- The most basic part of this is `Chart` - you can use this to construct different charts.
+- The most basic part of this is `Chart`. You can use this base class to construct different charts.
 - This library follows the Tokenizer-Parser-Compiler format to process files, and uses an Abstract Syntax Tree for grammar
   decomposition when implementing Simai and Ma2 formats. If you wish to add additional formats, please make sure you
   also process files in the same fashion as this library, and ensure that all methods within the `ITokenizer`, `IParser`,
@@ -26,14 +26,14 @@
 
 ## Additional notice for Simai compatability
 
-- As always, I think Simai is a language more focusing on charting rather than interpreting. I still have no idea why
-  there isn't a UI-based charting tool, instead we have to learn this unsecure and unintuitive language, especially after
+- As always, I think Simai is a language more focused on charting rather than interpreting. I still have no idea why
+  there isn't a UI-based charting tool. Instead we have to learn this unsecure and unintuitive language, especially after
   Festival added new features. This makes interpreting Simai a huge PAIN since the way it converts between ticks and
   times is vague and honestly unreasonable.
 - For example, it defines a Slide note as having a wait time of 1 beat or one 1/4 note (or a crotchet for those in the music community)
-  after its start tap. If your Slide note starts longer or shorter than 1 quaver of current BPM, you will have to: a) change
-  the BPM for that specific Slide or b) define the time by [wait time##last time] - and calculating that is extremely
-  time consuming.
+  after its start tap. If your Slide note starts longer or shorter than 1 quaver of the current BPM, you will have to: a) change
+  the BPM for that specific Slide or b) define the time by [wait time##last time] (and calculating that is extremely
+  time consuming).
 - I hope someone develops a language better than Simai to use as a intermediate language between coding and charting.
   Thank you.
 
@@ -49,8 +49,8 @@
 - All paths, reguardless of operating system, should end with a path separator like "/" or "\". Do not include the quotation marks in the path.
 - If you have difficulty using the commands, please refer to `VSCode launch.json` where I included several examples.
 - The whole program was initially planned to convert from ma2 to simai, and all other features were developed after that,
-  so there is a HUGE amount of compromises in code design which makes it hard to read (but works so far). It would be
-  most kind of you if you would like to help me in fixing that.
+  so there is a HUGE amount of compromises in the code's design which makes it hard to read (but works so far). It would be
+  most kind of you if you could help me in fixing that.
 
 ### Disclaimer
 

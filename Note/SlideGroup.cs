@@ -135,7 +135,7 @@ public class SlideGroup : Slide
         if (SlideCount > 0 && (Key == null || Key != InternalSlides[0].Key))
         {
             Note inTake = InternalSlides[0];
-            Note.Copy(this, inTake);
+            inTake.CopyOver(this);
         }
 
         return result;
