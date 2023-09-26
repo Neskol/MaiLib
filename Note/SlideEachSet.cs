@@ -171,7 +171,12 @@ public class SlideEachSet : Note
                 else if (SlideStart != null) result += SlideStart.Compose(format);
                 break;
             case 1:
-                throw new InvalidOperationException("Ma2 does not support this feature");
+                if( SlideStart != null) SlideStart.Compose(format);
+                foreach (Slide x in InternalSlides)
+                {
+                    x.Compose(format);
+                }
+                break;
             default:
                 if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "\n";
                 else if (InternalSlides.Count > 0 && SlideStart == null)
