@@ -228,7 +228,7 @@ public class Slide : Note
             if (TickBPMDisagree || Delayed)
             {
                 //result += GenerateAppropriateLength(this.LastLength, this.BPM);
-                if (NoteSpecialState != SpecialState.ConnectingSlide && WaitLength != 96)
+                if (NoteSpecialState != SpecialState.ConnectingSlide)
                     result += GenerateAppropriateLength(LastLength, BPM);
                 else result += GenerateAppropriateLength(FixedLastLength);
             }
