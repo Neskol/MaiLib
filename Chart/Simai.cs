@@ -1,4 +1,5 @@
 namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 public class Simai : Chart
 {
@@ -86,14 +87,14 @@ public class Simai : Chart
         {
             var parentSlide = parentPair.Key;
             maximumBar = parentSlide.Bar > maximumBar ? parentSlide.Bar : maximumBar;
-            if (!parentPair.Value && parentSlide.NoteSpecialState != Note.SpecialState.ConnectingSlide)
+            if (!parentPair.Value && parentSlide.NoteSpecialState != SpecialState.ConnectingSlide)
             {
                 SlideGroup currentGroup = new();
                 currentGroup.AddConnectingSlide(parentSlide);
                 foreach (KeyValuePair<Slide,bool> candidatePair in processedSlideDic)
                 {
                     var candidate = candidatePair.Key;
-                    if (candidate != parentSlide && candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide &&
+                    if (candidate != parentSlide && candidate.NoteSpecialState == SpecialState.ConnectingSlide &&
                         candidate.TickStamp == currentGroup.LastSlide.LastTickStamp &&
                         candidate.Key.Equals(currentGroup.LastSlide.EndKey) && !candidatePair.Value)
                     {
@@ -126,7 +127,7 @@ public class Simai : Chart
             if (!x.Value)
             {
                 Slide normalSlide = new Slide(x.Key);
-                normalSlide.NoteSpecialState = Note.SpecialState.Normal;
+                normalSlide.NoteSpecialState = SpecialState.Normal;
                 adjusted.Add(normalSlide);
                 processedSlidesCount++;
             }
@@ -143,7 +144,7 @@ public class Simai : Chart
                 if (!x.Value)
                 {
                     errorMsg += x.Key.Compose(1) + ", " + x.Key.TickStamp;
-                    if (x.Key.NoteSpecialState is Note.SpecialState.ConnectingSlide)
+                    if (x.Key.NoteSpecialState is SpecialState.ConnectingSlide)
                     {
                         errorMsg += ", and it is a connecting slide";
                     }

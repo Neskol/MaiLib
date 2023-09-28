@@ -1,42 +1,11 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Tap note
 /// </summary>
 public class Tap : Note
 {
-    /// <summary>
-    ///     The allowed tap type
-    /// </summary>
-    public enum TapType
-    {
-        /// <summary>
-        ///     Normal tap
-        /// </summary>
-        TAP,
-
-        /// <summary>
-        ///     Start of a slide
-        /// </summary>
-        STR,
-
-        /// <summary>
-        ///     Start of a slide but have no consecutive slide following
-        /// </summary>
-        NST,
-
-        /// <summary>
-        ///     Touch Note
-        /// </summary>
-        TTP
-    }
-
-    /// <summary>
-    ///     Stores enums of accepting tap notes
-    /// </summary>
-    /// <value></value>
-    private readonly string[] allowedType = { "TAP", "STR", "BRK", "BST", "XTP", "XST", "TTP", "NST" };
-
     /// <summary>
     ///     Stores if the Touch note have special effect
     /// </summary>
@@ -186,13 +155,10 @@ public class Tap : Note
         }
     }
 
+    //TODO: REWRITE THIS
     public override bool CheckValidity()
     {
-        var result = false;
-        foreach (var x in allowedType) result = result || NoteType.Equals(x);
-        result = result && NoteType.Length == 3;
-        result = result && Key.Length <= 2;
-        return result;
+        return true;
     }
 
     public override string Compose(int format)

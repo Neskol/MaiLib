@@ -1,37 +1,11 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Basic note
 /// </summary>
 public abstract class Note : IEquatable<Note>, INote, IComparable
 {
-    public enum SpecialState
-    {
-        /// <summary>
-        ///     Normal note, nothing special
-        /// </summary>
-        Normal,
-
-        /// <summary>
-        ///     Break note
-        /// </summary>
-        Break,
-
-        /// <summary>
-        ///     EX Note
-        /// </summary>
-        EX,
-
-        /// <summary>
-        ///     EX Break
-        /// </summary>
-        BreakEX,
-
-        /// <summary>
-        ///     Connecting Slide
-        /// </summary>
-        ConnectingSlide
-    }
 
     /// <summary>
     ///     The stamp when the Wait time ends in seconds
@@ -92,6 +66,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     }
     #endregion
 
+    #region Fields
     /// <summary>
     ///     The note type
     /// </summary>
@@ -255,6 +230,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// </summary>
     /// <returns>True if is TAP,HOLD or SLIDE, false otherwise</returns>
     public abstract bool IsNote { get; }
+    #endregion
 
     public int CompareTo(object? obj)
     {

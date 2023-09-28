@@ -1,4 +1,5 @@
 namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Parse charts in Simai format
@@ -31,7 +32,7 @@ public class SimaiParser : IParser
     }
 
     public Chart ChartOfToken(string[] tokens)
-        // Note: here chart will only return syntax after &inote_x= and each token is separated by ","
+    // Note: here chart will only return syntax after &inote_x= and each token is separated by ","
     {
         var notes = new List<Note>();
         var bpmChanges = new BPMChanges();
@@ -423,7 +424,7 @@ public class SimaiParser : IParser
         result.BPM = bpm;
         if (isConnectingSlide)
         {
-            result.NoteSpecialState = Note.SpecialState.ConnectingSlide;
+            result.NoteSpecialState = SpecialState.ConnectingSlide;
             result.Key = connectedSlideStart;
         }
 
@@ -461,7 +462,7 @@ public class SimaiParser : IParser
             if (token.Contains("_"))
                 result = new Tap("STR", bar, tick, keyCandidate.ToString());
             else result = new Tap("TAP", bar, tick, keyCandidate.ToString());
-            result.NoteSpecialState = Note.SpecialState.BreakEX;
+            result.NoteSpecialState = SpecialState.BreakEX;
         }
         else if (isEXTap)
         {
@@ -469,7 +470,7 @@ public class SimaiParser : IParser
             if (token.Contains("_"))
                 result = new Tap("XST", bar, tick, keyCandidate.ToString());
             else result = new Tap("XTP", bar, tick, keyCandidate.ToString());
-            result.NoteSpecialState = Note.SpecialState.EX;
+            result.NoteSpecialState = SpecialState.EX;
         }
         else if (isBreak)
         {
@@ -477,7 +478,7 @@ public class SimaiParser : IParser
             if (token.Contains("_"))
                 result = new Tap("BST", bar, tick, keyCandidate.ToString());
             else result = new Tap("BRK", bar, tick, keyCandidate.ToString());
-            result.NoteSpecialState = Note.SpecialState.Break;
+            result.NoteSpecialState = SpecialState.Break;
         }
         else
         {
@@ -777,7 +778,7 @@ public class SimaiParser : IParser
             //         result[0] = result[0] + "_";
             //         result[1] = "-" + result[1];
             //     }
-            //     //Add rest of slide: components after * is always 
+            //     //Add rest of slide: components after * is always
             //     if (components.Length > 1)
             //     {
             //         for (int i = 1; i < components.Length; i++)

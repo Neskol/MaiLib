@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Give enums of parameters of Standard Keys
@@ -225,21 +226,21 @@ public class Ma2Parser : IParser
             switch (specialProperty)
             {
                 case "BR":
-                    result.NoteSpecialState = Note.SpecialState.Break;
+                    result.NoteSpecialState = SpecialState.Break;
                     break;
                 case "EX":
-                    result.NoteSpecialState = Note.SpecialState.EX;
+                    result.NoteSpecialState = SpecialState.EX;
                     break;
                 case "BX":
-                    result.NoteSpecialState = Note.SpecialState.BreakEX;
+                    result.NoteSpecialState = SpecialState.BreakEX;
                     break;
                 case "CN":
-                    result.NoteSpecialState = Note.SpecialState.ConnectingSlide;
+                    result.NoteSpecialState = SpecialState.ConnectingSlide;
                     break;
                 case "NM":
                 case "":
                 default:
-                    result.NoteSpecialState = Note.SpecialState.Normal;
+                    result.NoteSpecialState = SpecialState.Normal;
                     break;
             }
         }
@@ -274,7 +275,7 @@ public class Ma2Parser : IParser
         }
 
         if (bpm > 0.0) result.BPM = bpm;
-        result.NoteSpecialState = result.NoteType.Equals("XHO") ? Note.SpecialState.EX : Note.SpecialState.Normal;
+        result.NoteSpecialState = result.NoteType.Equals("XHO") ? SpecialState.EX : SpecialState.Normal;
         return (Hold)result;
     }
 
@@ -347,12 +348,12 @@ public class Ma2Parser : IParser
         if (bpm > 0.0) result.BPM = bpm;
         result.NoteSpecialState = result.NoteType.Equals("XTP")
                                   || result.NoteType.Equals("XST")
-            ? Note.SpecialState.EX
-            : Note.SpecialState.Normal;
+            ? SpecialState.EX
+            : SpecialState.Normal;
         result.NoteSpecialState = result.NoteType.Equals("BRK")
                                   || result.NoteType.Equals("BST")
-            ? Note.SpecialState.Break
-            : Note.SpecialState.Normal;
+            ? SpecialState.Break
+            : SpecialState.Normal;
         return (Tap)result;
     }
 

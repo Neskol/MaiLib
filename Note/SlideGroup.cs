@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 public class SlideGroup : Slide
 {

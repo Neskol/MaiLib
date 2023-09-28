@@ -1,29 +1,11 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Constructs Hold Note
 /// </summary>
 public class Hold : Note
 {
-    public enum HoldType
-    {
-        /// <summary>
-        ///     Normal Hold
-        /// </summary>
-        HLD,
-
-        /// <summary>
-        ///     Touch Hold
-        /// </summary>
-        THO
-    }
-
-    /// <summary>
-    ///     Stores enums of accepting Hold type
-    /// </summary>
-    /// <value></value>
-    private readonly string[] allowedType = { "HLD", "XHO", "THO" };
-
     /// <summary>
     ///     Stores if this Touch Hold have special effect
     /// </summary>
@@ -123,13 +105,10 @@ public class Hold : Note
         }
     }
 
+    //TODO: REWRITE THIS
     public override bool CheckValidity()
     {
-        var result = false;
-        foreach (var x in allowedType) result = result || NoteType.Equals(x);
-        result = result && NoteType.Length == 3;
-        result = result && Key.Length <= 2;
-        return result;
+        return true;
     }
 
     public override string Compose(int format)

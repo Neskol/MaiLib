@@ -1,110 +1,12 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Construct a Slide note (With START!)
 /// </summary>
 public class Slide : Note
 {
-    /// <summary>
-    ///     Defines the special property of the slide
-    /// </summary>
-    public enum SlideProperty
-    {
-        /// <summary>
-        ///     Normal Slide
-        /// </summary>
-        Normal,
-
-        /// <summary>
-        ///     Slide without Start Tap
-        /// </summary>
-        NoStart,
-
-        /// <summary>
-        ///     Connecting Slide
-        /// </summary>
-        Connecting
-    }
-
-    /// <summary>
-    ///     Defines what type of slide could be used
-    /// </summary>
-    public enum SlideType
-    {
-        #region SlideDescription
-
-        /// <summary>
-        ///     Straight Slide
-        /// </summary>
-        SI_,
-
-        /// <summary>
-        ///     Left circle slide aka Counterclockwise
-        /// </summary>
-        SCL,
-
-        /// <summary>
-        ///     Right circle slide aka Clockwise
-        /// </summary>
-        SCR,
-
-        /// <summary>
-        ///     Line not intercepting Crossing Center
-        /// </summary>
-        SV_,
-
-        /// <summary>
-        ///     U Star Left
-        /// </summary>
-        SUL,
-
-        /// <summary>
-        ///     U Star Right
-        /// </summary>
-        SUR,
-
-        /// <summary>
-        ///     Wifi Star
-        /// </summary>
-        SF_,
-
-        /// <summary>
-        ///     Inflecting Line Left
-        /// </summary>
-        SLL,
-
-        /// <summary>
-        ///     Inflecting Line Right
-        /// </summary>
-        SLR,
-
-        /// <summary>
-        ///     Self-winding Left
-        /// </summary>
-        SXL,
-
-        /// <summary>
-        ///     Self-winding Right
-        /// </summary>
-        SXR,
-
-        /// <summary>
-        ///     S Star
-        /// </summary>
-        SSL,
-
-        /// <summary>
-        ///     Z Star
-        /// </summary>
-        SSR
-
-        #endregion
-    }
-
-    private readonly string[] allowedType =
-        { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
-
-#region Constructors
+    #region Constructors
     /// <summary>
     ///     Empty Constructor
     /// </summary>
@@ -151,13 +53,10 @@ public class Slide : Note
 
     public override string NoteSpecificGenre => "SLIDE";
 
+    //TODO: REWRITE THIS
     public override bool CheckValidity()
     {
-        var result = false;
-        foreach (var x in allowedType) result = result || NoteType.Equals(x);
-        result = result && NoteType.Length == 3;
-        result = result && Key.Length <= 2;
-        return result;
+        return true;
     }
 
     public override string Compose(int format)
