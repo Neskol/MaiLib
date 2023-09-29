@@ -12,53 +12,68 @@ public class NoteEnum
     /// </summary>
     public enum SpecialState
     {
-        /// <summary>
-        ///     Normal note, nothing special
-        /// </summary>
+        [Description("Normal note, nothing special")]
         Normal,
 
-        /// <summary>
-        ///     Break note
-        /// </summary>
+        [Description("Break note")]
         Break,
 
-        /// <summary>
-        ///     EX Note
-        /// </summary>
+        [Description("EX Note")]
         EX,
 
-        /// <summary>
-        ///     EX Break
-        /// </summary>
+        [Description("EX Break")]
         BreakEX,
 
-        /// <summary>
-        ///     Connecting Slide
-        /// </summary>
+        [Description("Connecting Slide")]
         ConnectingSlide
     }
 
+    /// <summary>
+    /// Defines the possible Note Type
+    /// </summary>
     public enum NoteType
     {
         // TAP Enums
         [Description("Normal Tap Note")]
         TAP,
-
         [Description("Start of a Slide as Tap")]
         STR,
-
         [Description("Slide start but has no consecutive slides follows it")]
         NST,
-
         [Description("Touch Tap")]
         TTP,
 
         // Hold Enums
         [Description("Normal Hold")]
         HLD,
-
         [Description("Touch Hold")]
-        THO
+        THO,
         // Slide Enums
+        [Description("Straight Star")]
+        SI_,
+        [Description("Circular Star Left")]
+        SCL,
+        [Description("Circular Star Right")]
+        SCR,
+        [Description("Line not intercepting Crossing Center")]
+        SV_,
+        [Description("Line not intercepting Crossing Center")]
+        SUL,
+        [Description("Line not intercepting Crossing Center")]
+        SUR,
+        [Description("WIFI Star")]
+        SF_,
+        [Description("Inflecting Line Left")]
+        SLL,
+        [Description("Inflecting Line Right")]
+        SLR,
+        [Description("Self-winding Left")]
+        SXL,
+        [Description("Self-winding Right")]
+        SXR,
+        [Description("Line not intercepting Crossing Center")]
+        SSL,
+        [Description("Line not intercepting Crossing Center")]
+        SSR
     }
 }
