@@ -5,25 +5,6 @@ namespace MaiLib;
 /// </summary>
 public abstract class Chart : IChart
 {
-    /// <summary>
-    ///     Allowed HOLD notes
-    /// </summary>
-    /// <value>HOLD defs</value>
-    public readonly string[] HoldTypes = { "HLD", "THO", "XHO" };
-
-    /// <summary>
-    ///     Allowed SLIDE notes
-    /// </summary>
-    /// <value>SLIDE defs</value>
-    public readonly string[] SlideTypes =
-        { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
-
-    /// <summary>
-    ///     Allowed TAP notes
-    /// </summary>
-    /// <value>TAP defs</value>
-    public readonly string[] TapTypes = { "TAP", "STR", "TTP", "XTP", "XST" };
-
     //Theoretical Rating = (Difference in 100-down and Max score)/100-down
 
     /// <summary>
