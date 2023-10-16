@@ -270,7 +270,7 @@ public class Ma2Parser : IParser
         if (candidate[(int)DxTapParam.Type].Contains("THO")) //Basically all THO falls in this line
         {
             var noteSize = candidate.Count() > 7 ? candidate[(int)DxHoldParam.NoteSize] : "M1";
-            bool specialEffect = int.Parse(candidate[(int)DxTapParam.SpecialEffect]) == 1;
+            bool specialEffect = int.Parse(candidate[(int)DxHoldParam.SpecialEffect]) == 1;
             result = new Hold(typeCandidate,
                 bar,
                 tick,
