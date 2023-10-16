@@ -1,3 +1,4 @@
+using static MaiLib.NoteEnum;
 namespace MaiLib;
 
 public class SlideEachSet : Note
@@ -36,7 +37,7 @@ public class SlideEachSet : Note
         if (internalSlides.Count > 0)
         {
             EndKey = InternalSlides.Last().EndKey;
-            NoteType = "SLIDE_EACH";
+            NoteType = NoteType.SLIDE_EACH;
             Bar = bar;
             Tick = startTime;
             WaitLength = InternalSlides.Last().WaitLength;
@@ -49,9 +50,9 @@ public class SlideEachSet : Note
     #endregion
 
     public Note? SlideStart { get; set; }
-    public override string NoteSpecificGenre => "SLIDE_EACH";
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.SLIDE_EACH;
 
-    public override string NoteGenre => "SLIDE";
+    public override NoteGenre NoteGenre => NoteGenre.SLIDE;
 
     public Note? FirstIdentifier
     {
@@ -145,7 +146,7 @@ public class SlideEachSet : Note
         return result;
     }
 
-    public override void Flip(string method)
+    public override void Flip(FlipMethod method)
     {
         if (SlideStart != null) SlideStart.Flip(method);
         for (var i = 0; i < InternalSlides.Count; i++) InternalSlides[i].Flip(method);

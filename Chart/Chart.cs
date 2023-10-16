@@ -1,4 +1,5 @@
 namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     A class holding notes and information to form a chart
@@ -158,14 +159,14 @@ public abstract class Chart : IChart
                     var delay = x.Bar * Definition + x.Tick + x.WaitLength + x.LastLength;
                     switch (x.NoteSpecificGenre)
                     {
-                        case "BPM":
+                        case NoteSpecificGenre.BPM:
                             currentBPM = x.BPM;
                             break;
-                        case "MEASURE":
+                        case NoteSpecificGenre.MEASURE:
                             break;
-                        case "REST":
+                        case NoteSpecificGenre.REST:
                             break;
-                        case "TAP":
+                        case NoteSpecificGenre.TAP:
                             TapNumber++;
                             if (x.NoteSpecificGenre.Equals("XTP")) IsDxChart = false;
                             if (x.NoteType.Equals("TTP"))
@@ -179,7 +180,7 @@ public abstract class Chart : IChart
                             }
 
                             break;
-                        case "HOLD":
+                        case NoteSpecificGenre.HOLD:
                             HoldNumber++;
                             x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
@@ -203,10 +204,10 @@ public abstract class Chart : IChart
                             }
 
                             break;
-                        case "SLIDE_START":
+                        case NoteSpecificGenre.SLIDE_START:
                             TapNumber++;
                             break;
-                        case "SLIDE":
+                        case NoteSpecificGenre.SLIDE:
                             SlideNumber++;
                             x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.WaitTickStamp) ||
                                                 GetBPMByTick(x.WaitTickStamp) != GetBPMByTick(x.LastTickStamp) ||
@@ -339,47 +340,31 @@ public abstract class Chart : IChart
                 Note copy;
                 switch (x.NoteGenre)
                 {
-                    case "TAP":
-                    case "SLIDE_START":
+                    case NoteGenre.TAP:
                         copy = new Tap(x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
-                        // if (copy.ConsecutiveSlide!=null)
-                        // {
-                        //     copy.ConsecutiveSlide.Bar += overallTick / 384;
-                        //     copy.ConsecutiveSlide.Tick += overallTick % 384;
-                        // }
                         copy.Update();
                         break;
-                    case "HOLD":
+                    case NoteGenre.HOLD:
                         copy = new Hold(x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
                         copy.Update();
                         break;
-                    case "SLIDE":
+                    case NoteGenre.SLIDE:
                         copy = new Slide(x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
-                        // if (copy.SlideStart != null)
-                        // {
-                        //     copy.SlideStart.Bar += overallTick / 384;
-                        //     copy.SlideStart.Tick += overallTick % 384;
-                        // }
-                        // if (copy.ConsecutiveSlide != null)
-                        // {
-                        //     copy.ConsecutiveSlide.Bar += overallTick / 384;
-                        //     copy.ConsecutiveSlide.Tick += overallTick % 384;
-                        // }
                         copy.Update();
                         break;
-                    case "BPM":
+                    case NoteGenre.BPM:
                         copy = new BPMChange(x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
                         copy.Update();
                         break;
-                    case "MEASURE":
+                    case NoteGenre.MEASURE:
                         copy = new MeasureChange((MeasureChange)x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
@@ -407,7 +392,7 @@ public abstract class Chart : IChart
         ShiftByOffset(overallTick);
     }
 
-    public void RotateNotes(string method)
+    public void RotateNotes(FlipMethod method)
     {
         foreach (var x in Notes) x.Flip(method);
         Update();
@@ -569,7 +554,7 @@ public abstract class Chart : IChart
 
             if (writeRest)
                 //Console.WriteLine("There is no note at tick " + i + " of bar " + barNumber + ", Adding one");
-                eachSet.Add(new Rest("RST", barNumber, i));
+                eachSet.Add(new Rest(barNumber, i));
             result.AddRange(eachSet);
         }
 

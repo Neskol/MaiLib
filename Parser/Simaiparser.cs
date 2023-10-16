@@ -132,11 +132,16 @@ public class SimaiParser : IParser
         lastTick *= times;
         Hold candidate;
         key.Replace("h", "");
+        bool noteTypeIsValid = Enum.TryParse(holdType, out NoteType typeCandidate);
+        if (!noteTypeIsValid)
+        {
+            throw new Exception("Note type is invalid: Token given = " + holdType);
+        }
         //Console.WriteLine(key);
         if (holdType.Equals("THO"))
-            candidate = new Hold(holdType, bar, tick, key, lastTick, specialEffect, "M1");
+            candidate = new Hold(NoteType.THO, bar, tick, key, lastTick, specialEffect == 1, "M1");
         else
-            candidate = new Hold(holdType, bar, tick, key, lastTick);
+            candidate = new Hold(typeCandidate, bar, tick, key, lastTick);
         candidate.BPM = bpm;
         return candidate;
     }
@@ -202,7 +207,7 @@ public class SimaiParser : IParser
 
     public Note NoteOfToken(string token, int bar, int tick, double bpm)
     {
-        Note result = new Rest("RST", bar, tick);
+        Note result = new Rest(bar, tick);
         var isRest = token.Equals("");
         var isBPM = token.Contains(")");
         var isMeasure = token.Contains("}");
@@ -255,7 +260,7 @@ public class SimaiParser : IParser
         var endKeyCandidate = "";
         var sustainSymbol = 0;
         var sustainCandidate = "";
-        var noteType = "";
+        NoteType noteType = NoteType.RST;
         var isConnectingSlide = token.Contains("CN");
         var connectedSlideStart = isConnectingSlide ? token.Split("CN")[1] : "";
         // if (isConnectingSlide) Console.ReadKey();
@@ -269,42 +274,42 @@ public class SimaiParser : IParser
             endKeyCandidate = token.Substring(2, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SXR";
+            noteType = NoteType.SXR;
         }
         else if (token.Contains("q"))
         {
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SUR";
+            noteType = NoteType.SUR;
         }
         else if (token.Contains("pp"))
         {
             endKeyCandidate = token.Substring(2, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SXL";
+            noteType = NoteType.SXL;
         }
         else if (token.Contains("p"))
         {
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SUL";
+            noteType = NoteType.SUL;
         }
         else if (token.Contains("v"))
         {
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SV_";
+            noteType = NoteType.SV_;
         }
         else if (token.Contains("w"))
         {
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SF_";
+            noteType = NoteType.SF_;
         }
         else if (token.Contains("<"))
         {
@@ -315,8 +320,8 @@ public class SimaiParser : IParser
                 PreviousSlideStart.Key.Equals("1") ||
                 PreviousSlideStart.Key.Equals("6") ||
                 PreviousSlideStart.Key.Equals("7"))
-                noteType = "SCL";
-            else noteType = "SCR";
+                noteType = NoteType.SCL;
+            else noteType = NoteType.SCR;
         }
         else if (token.Contains(">"))
         {
@@ -327,22 +332,22 @@ public class SimaiParser : IParser
                 PreviousSlideStart.Key.Equals("1") ||
                 PreviousSlideStart.Key.Equals("6") ||
                 PreviousSlideStart.Key.Equals("7"))
-                noteType = "SCR";
-            else noteType = "SCL";
+                noteType = NoteType.SCR;
+            else noteType = NoteType.SCL;
         }
         else if (token.Contains("s"))
         {
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SSL";
+            noteType = NoteType.SSL;
         }
         else if (token.Contains("z"))
         {
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SSR";
+            noteType = NoteType.SSR;
         }
         else if (token.Contains("V"))
         {
@@ -373,8 +378,8 @@ public class SimaiParser : IParser
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             if (isSLL)
-                noteType = "SLL";
-            else if (isSLR) noteType = "SLR";
+                noteType = NoteType.SLL;
+            else if (isSLR) noteType = NoteType.SLR;
             if (!(isSLL || isSLR))
             {
                 Console.WriteLine("Start Key:" + slideStartCandidate.Key);
@@ -390,7 +395,7 @@ public class SimaiParser : IParser
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            noteType = "SI_";
+            noteType = NoteType.SI_;
         }
 
         //Console.WriteLine("Key Candidate: "+keyCandidate);
@@ -452,40 +457,17 @@ public class SimaiParser : IParser
         {
             var hasSpecialEffect = token.Contains("f");
             var keyCandidate = int.Parse(token.Substring(1, 1)) - 1;
-            if (hasSpecialEffect)
-                result = new Tap("TTP", bar, tick, keyCandidate + token.Substring(0, 1), 1, "M1");
-            else result = new Tap("TTP", bar, tick, keyCandidate + token.Substring(0, 1), 0, "M1");
-        }
-        else if (isEXBreak)
-        {
-            var keyCandidate = int.Parse(token.Substring(0, 1)) - 1;
-            if (token.Contains("_"))
-                result = new Tap("STR", bar, tick, keyCandidate.ToString());
-            else result = new Tap("TAP", bar, tick, keyCandidate.ToString());
-            result.NoteSpecialState = SpecialState.BreakEX;
-        }
-        else if (isEXTap)
-        {
-            var keyCandidate = int.Parse(token.Substring(0, 1)) - 1;
-            if (token.Contains("_"))
-                result = new Tap("XST", bar, tick, keyCandidate.ToString());
-            else result = new Tap("XTP", bar, tick, keyCandidate.ToString());
-            result.NoteSpecialState = SpecialState.EX;
-        }
-        else if (isBreak)
-        {
-            var keyCandidate = int.Parse(token.Substring(0, 1)) - 1;
-            if (token.Contains("_"))
-                result = new Tap("BST", bar, tick, keyCandidate.ToString());
-            else result = new Tap("BRK", bar, tick, keyCandidate.ToString());
-            result.NoteSpecialState = SpecialState.Break;
+            result = new Tap(NoteType.TTP, bar, tick, keyCandidate + token.Substring(0, 1), hasSpecialEffect, "M1");
         }
         else
         {
             var keyCandidate = int.Parse(token.Substring(0, 1)) - 1;
             if (token.Contains("_"))
-                result = new Tap("STR", bar, tick, keyCandidate.ToString());
-            else if (!token.Equals("")) result = new Tap("TAP", bar, tick, keyCandidate.ToString());
+                result = new Tap(NoteType.STR, bar, tick, keyCandidate.ToString());
+            else result = new Tap(NoteType.TAP, bar, tick, keyCandidate.ToString());
+            if (isEXBreak) result.NoteSpecialState = SpecialState.BreakEX;
+            else if (isEXTap) result.NoteSpecialState = SpecialState.EX;
+            else if (isBreak) result.NoteSpecialState = SpecialState.Break;
         }
 
         result.BPM = bpm;

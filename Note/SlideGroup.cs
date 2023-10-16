@@ -32,7 +32,7 @@ public class SlideGroup : Slide
 
     public int SlideCount => this == null ? 0 : InternalSlides.Count;
 
-    public override string NoteSpecificGenre => "SLIDE_GROUP";
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.SLIDE_GROUP;
 
     public List<Slide> InternalSlides { get; }
 
@@ -45,7 +45,7 @@ public class SlideGroup : Slide
         Update();
     }
 
-    public override void Flip(string method)
+    public override void Flip(FlipMethod method)
     {
         foreach (var x in InternalSlides)
             x.Flip(method);

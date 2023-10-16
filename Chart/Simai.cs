@@ -243,11 +243,11 @@ public class Simai : Chart
             {
                 switch (lastNote.NoteSpecificGenre)
                 {
-                    case "MEASURE":
+                    case NoteSpecificGenre.MEASURE:
                         currentQuaver = (lastNote as MeasureChange ??
                                          throw new Exception("This note is not measure change")).Quaver;
                         break;
-                    case "BPM":
+                    case NoteSpecificGenre.BPM:
                         break;
                     default:
                         if (x.IsOfSameTime(lastNote))
