@@ -241,10 +241,10 @@ public class Simai : Chart
             //result += bar[1].Bar;
             foreach (var x in bar)
             {
-                if (x.Bar == 6)
-                {
-                    Console.WriteLine("This is bar 6");
-                }
+                //if (x.Bar == 6)
+                //{
+                //    Console.WriteLine("This is bar 6");
+                //}
                 switch (lastNote.NoteSpecificGenre)
                 {
                     case NoteSpecificGenre.MEASURE:

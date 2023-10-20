@@ -46,6 +46,10 @@ public class SimaiParser : IParser
             var eachPairCandidates = EachGroupOfToken(tokens[i]);
             foreach (var eachNote in eachPairCandidates)
             {
+                if (bar == 6)
+                {
+                    Console.WriteLine("This is bar 6");
+                }
                 var noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
                 var containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
                 var containsMeasure = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE;
