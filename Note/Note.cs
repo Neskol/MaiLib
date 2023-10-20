@@ -37,6 +37,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         TickBPMDisagree = false;
         BPM = 0;
         BPMChangeNotes = new List<BPMChange>();
+        TouchSize = "M1";
     }
 
     /// <summary>
@@ -63,6 +64,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         TickBPMDisagree = inTake.TickBPMDisagree;
         BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
+        TouchSize = "M1";
     }
     #endregion
 

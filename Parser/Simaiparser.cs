@@ -47,7 +47,7 @@ public class SimaiParser : IParser
             foreach (var eachNote in eachPairCandidates)
             {
                 var noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
-                var containsBPM = noteCandidate.NoteSpecificGenre.Equals("BPM");
+                var containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
                 var containsMeasure = noteCandidate.NoteSpecificGenre.Equals("MEASURE");
 
                 if (containsBPM)

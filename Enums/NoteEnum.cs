@@ -1,4 +1,5 @@
 using System.ComponentModel;
+
 namespace MaiLib;
 
 /// <summary>
@@ -11,19 +12,19 @@ public class NoteEnum
     /// </summary>
     public enum SpecialState
     {
-        [Description("Normal note, nothing special")]
+        /// <value>Normal note, nothing special</value>
         Normal,
 
-        [Description("Break note")]
+        /// <value>Break note</value>
         Break,
 
-        [Description("EX Note")]
+        /// <value>EX Note</value>
         EX,
 
-        [Description("EX Break")]
+        /// <value>EX Break</value>
         BreakEX,
 
-        [Description("Connecting Slide")]
+        /// <value>Connecting Slide</value>
         ConnectingSlide
     }
 
@@ -62,57 +63,76 @@ public class NoteEnum
     public enum NoteType
     {
         // Dummy Rest Note
-        [Description("Rest Note")]
+        /// <value>Rest Note</value>
         RST,
 
         // TAP Enums
-        [Description("Normal Tap Note")]
+        /// <value>Normal Tap Note</value>
         TAP,
-        [Description("Start of a Slide as Tap")]
+
+        /// <value>Start of a Slide as Tap</value>
         STR,
-        [Description("Imaginary Slide Start that does not appear in a slide")]
+
+        /// <value>Imaginary Slide Start that does not appear in a slide</value>
         NST,
-        [Description("Singular Sldie Start but does not have consecutive slide")]
+
+        /// <value>Singular Sldie Start but does not have consecutive slide</value>
         NSS,
-        [Description("Touch Tap")]
+
+        /// <value>Touch Tap</value>
         TTP,
 
         // Hold Enums
-        [Description("Normal Hold")]
+        /// <value>Normal Hold</value>
         HLD,
-        [Description("EX Hold")]
+
+        /// <value>EX Hold</value>
         XHO,
-        [Description("Touch Hold")]
+
+        /// <value>Touch Hold</value>
         THO,
 
         // Slide Enums
-        [Description("Straight Star")]
+        /// <value>Straight Star</value>
         SI_,
-        [Description("Circular Star Left")]
+
+        /// <value>Circular Star Left</value>
         SCL,
-        [Description("Circular Star Right")]
+
+        /// <value>Circular Star Right</value>
         SCR,
-        [Description("Line not intercepting Crossing Center")]
+
+        /// <value>Line not intercepting Crossing Center</value>
         SV_,
-        [Description("Line not intercepting Crossing Center")]
+
+        /// <value>Line not intercepting Crossing Center</value>
         SUL,
-        [Description("Line not intercepting Crossing Center")]
+
+        /// <value>Line not intercepting Crossing Center</value>
         SUR,
-        [Description("WIFI Star")]
+
+        /// <value>WIFI Star</value>
         SF_,
-        [Description("Inflecting Line Left")]
+
+        /// <value>Inflecting Line Left</value>
         SLL,
-        [Description("Inflecting Line Right")]
+
+        /// <value>Inflecting Line Right</value>
         SLR,
-        [Description("Self-winding Left")]
+
+        /// <value>Self-winding Left</value>
         SXL,
-        [Description("Self-winding Right")]
+
+        /// <value>Self-winding Right</value>
         SXR,
-        [Description("Line not intercepting Crossing Center")]
+
+        /// <value>Line not intercepting Crossing Center</value>
         SSL,
-        [Description("Line not intercepting Crossing Center")]
+
+        /// <value>Line not intercepting Crossing Center</value>
         SSR,
-        [Description("Composite Slide Each")]
+
+        /// <value>Composite Slide Each</value>
         SLIDE_EACH,
 
         //Function Notes
