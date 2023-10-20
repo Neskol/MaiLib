@@ -241,6 +241,10 @@ public class Simai : Chart
             //result += bar[1].Bar;
             foreach (var x in bar)
             {
+                if (x.Bar == 6)
+                {
+                    Console.WriteLine("This is bar 6");
+                }
                 switch (lastNote.NoteSpecificGenre)
                 {
                     case NoteSpecificGenre.MEASURE:
@@ -250,7 +254,7 @@ public class Simai : Chart
                     case NoteSpecificGenre.BPM:
                         break;
                     default:
-                        if (x.IsOfSameTime(lastNote))
+                        if (x.IsOfSameTime(lastNote) && x.IsNote && lastNote.IsNote)
                         {
                             result += "/";
                         }
