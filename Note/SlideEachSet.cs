@@ -5,7 +5,7 @@ public class SlideEachSet : Note
 {
     public List<Slide> InternalSlides;
 
-#region Constructors
+    #region Constructors
     public SlideEachSet()
     {
         InternalSlides = new List<Slide>();
@@ -14,14 +14,14 @@ public class SlideEachSet : Note
 
     public SlideEachSet(Note x) : base(x)
     {
-        SlideStart = x.NoteSpecificGenre.Equals("SLIDE_START") ? x : null;
+        SlideStart = x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ? x : null;
         InternalSlides = new List<Slide>();
-        if (x.NoteSpecificGenre.Equals("SLIDE_EACH"))
+        if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_EACH)
         {
             var candidate = x as SlideEachSet ?? throw new InvalidOperationException("This is not a SLIDE EACH");
             InternalSlides.AddRange(candidate.InternalSlides);
         }
-        else if (x.NoteSpecificGenre.Equals("SLIDE"))
+        else if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE)
         {
             var candidate = x as Slide ?? throw new InvalidOperationException("This is not a SLIDE");
             InternalSlides.Add(candidate);
@@ -70,7 +70,7 @@ public class SlideEachSet : Note
 
     public void AddCandidateNote(Tap x)
     {
-        if (x.NoteSpecificGenre.Equals("SLIDE_START") && (InternalSlides.Count == 0 || (InternalSlides.Count > 0 &&
+        if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START && (InternalSlides.Count == 0 || (InternalSlides.Count > 0 &&
                 InternalSlides.First().Key.Equals(x.Key) && x.IsOfSameTime(InternalSlides.First()))))
             SlideStart = x;
         else throw new InvalidOperationException("THE INTAKE NOTE IS NOT VALID SLIDE START");
@@ -131,7 +131,7 @@ public class SlideEachSet : Note
 
     public override bool CheckValidity()
     {
-        var result = SlideStart == null || SlideStart.NoteSpecificGenre.Equals("SLIDE_START");
+        var result = SlideStart == null || SlideStart.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START;
 
         if (SlideStart == null && InternalSlides == null) result = false;
         else if (SlideStart != null && InternalSlides.Count > 0 &&
@@ -172,7 +172,7 @@ public class SlideEachSet : Note
                 else if (SlideStart != null) result += SlideStart.Compose(format);
                 break;
             case 1:
-                if( SlideStart != null) SlideStart.Compose(format);
+                if (SlideStart != null) SlideStart.Compose(format);
                 foreach (Slide x in InternalSlides)
                 {
                     x.Compose(format);

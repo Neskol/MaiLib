@@ -142,7 +142,7 @@ public abstract class Chart : IChart
                     bar.Add(x); //Extract the first BPM change in bar to the beginning of the bar
             foreach (var x in Notes)
             {
-                if (FirstNote == null && !(x.NoteType.Equals("BPM") || x.NoteType.Equals("MEASURE"))) FirstNote = x;
+                if (FirstNote == null && !(x.NoteType is NoteType.BPM || x.NoteType is NoteType.MEASURE)) FirstNote = x;
                 // Console.WriteLine(x.Compose(0));
                 //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
                 //x.Update();
@@ -168,7 +168,7 @@ public abstract class Chart : IChart
                             break;
                         case NoteSpecificGenre.TAP:
                             TapNumber++;
-                            if (x.NoteSpecificGenre.Equals("XTP")) IsDxChart = false;
+                            if (x.NoteSpecialState is SpecialState.EX) IsDxChart = false;
                             if (x.NoteType.Equals("TTP"))
                             {
                                 TouchNumber++;
@@ -333,8 +333,8 @@ public abstract class Chart : IChart
     {
         var updatedNotes = new List<Note>();
         foreach (var x in Notes)
-            if (!x.NoteType.Equals("BPM") || !x.NoteGenre.Equals("MEASURE") ||
-                (x.NoteType.Equals("BPM") && x.Bar != 0 && x.Tick != 0) ||
+            if (x.NoteType is not NoteType.BPM || !x.NoteGenre.Equals("MEASURE") ||
+                (x.NoteType is NoteType.BPM && x.Bar != 0 && x.Tick != 0) ||
                 (x.NoteGenre.Equals("MEASURE") && x.Bar != 0 && x.Tick != 0))
             {
                 Note copy;
@@ -419,7 +419,7 @@ public abstract class Chart : IChart
         foreach (var x in bar)
         {
             if (!startTimeList.Contains(x.Tick)) startTimeList.Add(x.Tick);
-            if (x.NoteType.Equals("BPM"))
+            if (x.NoteType is NoteType.BPM)
             {
                 //Console.WriteLine(x.Compose(0));
             }
@@ -501,7 +501,7 @@ public abstract class Chart : IChart
             {
                 if (x.Tick == i && x.IsNote && !(x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
                 {
-                    if (x.NoteSpecificGenre.Equals("BPM"))
+                    if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
                         bpm = x;
                     }
@@ -516,7 +516,7 @@ public abstract class Chart : IChart
                 }
                 else if (x.Tick == i && x.IsNote && (x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
                 {
-                    if (x.NoteSpecificGenre.Equals("BPM"))
+                    if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
                         bpm = x;
                         //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
@@ -531,7 +531,7 @@ public abstract class Chart : IChart
                     }
                 }
 
-                if (!x.NoteSpecificGenre.Equals("BPM") && !x.NoteSpecificGenre.Equals("SLIDE_START"))
+                if (x.NoteSpecificGenre is not NoteSpecificGenre.BPM && x.NoteSpecificGenre is not NoteSpecificGenre.SLIDE_START)
                     lastNote = x.NewInstance();
             }
 

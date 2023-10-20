@@ -48,7 +48,7 @@ public class SimaiParser : IParser
             {
                 var noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
                 var containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
-                var containsMeasure = noteCandidate.NoteSpecificGenre.Equals("MEASURE");
+                var containsMeasure = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE;
 
                 if (containsBPM)
                 {
@@ -246,7 +246,7 @@ public class SimaiParser : IParser
             else if (!token.Equals("E") && !token.Equals(""))
             {
                 result = TapOfToken(token, bar, tick, bpm);
-                if (result.NoteSpecificGenre.Equals("SLIDE_START")) PreviousSlideStart = (Tap)result;
+                if (result.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START) PreviousSlideStart = (Tap)result;
             }
         }
 
