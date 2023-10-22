@@ -4,7 +4,7 @@ using static NoteEnum;
 /// <summary>
 ///     Construct Rest Note solely for Simai
 /// </summary>
-internal class Rest : Note
+public class Rest : Note
 {
     #region Constructors
     /// <summary>

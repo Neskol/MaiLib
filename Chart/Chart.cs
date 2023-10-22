@@ -248,7 +248,7 @@ public abstract class Chart : IChart
                     }
 
                     x.BPM = currentBPM;
-                    //if (x.NoteGenre.Equals("SLIDE") && !lastNote.NoteSpecificType.Equals("SLIDE_START"))
+                    //if (x.NoteGenre is NoteGenre.SLIDE && !lastNote.NoteSpecificType.Equals("SLIDE_START"))
                     //{
                     //    x.Prev = new Tap("NST", x.Bar, x.Tick, x.Key);
                     //    lastNote.Next = x.Prev;
@@ -257,7 +257,7 @@ public abstract class Chart : IChart
                     // // lastNote.Next = x;
                     // // x.Prev = lastNote;
                     // // x.Prev.Next = x;
-                    //if ((!x.NoteGenre.Equals("SLIDE")) && x.Prev.NoteType.Equals("STR")&&x.Prev.ConsecutiveSlide == null)
+                    //if ((!x.NoteGenre is NoteGenre.SLIDE) && x.Prev.NoteType.Equals("STR")&&x.Prev.ConsecutiveSlide == null)
                     //{
                     //    Console.WriteLine("Found NSS");
                     //    Console.WriteLine("This note's note type: " + x.NoteType);
@@ -268,7 +268,7 @@ public abstract class Chart : IChart
                     //    x.Prev.NoteType = "NSS";
                     //}
                     bar.Add(x);
-                    if (!x.NoteGenre.Equals("SLIDE")) lastNote = x;
+                    if (x.NoteGenre is not NoteGenre.SLIDE) lastNote = x;
                     realLastNote = x;
                     timeStamp += x.TickTimeStamp;
                 }
@@ -730,7 +730,7 @@ public abstract class Chart : IChart
         result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
         result += "This note has overall tick of " + inTake.TickStamp +
                   ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";
-        if (inTake.NoteGenre.Equals("SLIDE"))
+        if (inTake.NoteGenre is NoteGenre.SLIDE)
         {
             result += "This note has wait length of " + inTake.WaitLength + ", and therefor, its wait tick stamp is " +
                       inTake.WaitTickStamp + " with wait time stamp of " +

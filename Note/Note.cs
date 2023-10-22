@@ -18,7 +18,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// </summary>
     public Note()
     {
-        NoteType = NoteType.TAP;
+        NoteType = NoteType.RST;
         Key = "";
         EndKey = "";
         Bar = 0;
@@ -38,6 +38,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         BPM = 0;
         BPMChangeNotes = new List<BPMChange>();
         TouchSize = "M1";
+        NoteSpecialState = SpecialState.Normal;
     }
 
     /// <summary>
@@ -290,7 +291,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         }
         else
         {
-            if (NoteSpecificGenre.Equals("BPM"))
+            if (NoteSpecificGenre is NoteSpecificGenre.BPM)
                 result = -1;
             //else if (this.NoteSpecificType().Equals("SLIDE")&&another.NoteSpecificType().Equals("SLIDE_START")&&this.Key.Equals(another.Key))
             //{
@@ -765,7 +766,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
                             break;
                     }
 
-                    if (NoteGenre.Equals("SLIDE"))
+                    if (NoteGenre is NoteGenre.SLIDE)
                         switch (NoteType)
                         {
                             case NoteType.SCL:
