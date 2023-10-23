@@ -210,7 +210,8 @@ public class Ma2Parser : IParser
                       || noteTypeCandidate.Contains("SLR")
                       || noteTypeCandidate.Contains("SXL")
                       || noteTypeCandidate.Contains("SXR")
-                      || noteTypeCandidate.Contains("SSL");
+                      || noteTypeCandidate.Contains("SSL")
+                      || noteTypeCandidate.Contains("SSR");
         if (isTap)
             result = TapOfToken(token);
         else if (isHold)
@@ -249,11 +250,7 @@ public class Ma2Parser : IParser
                 case "CN":
                     result.NoteSpecialState = SpecialState.ConnectingSlide;
                     break;
-                case "NM":
-                case "":
-                default:
-                    result.NoteSpecialState = SpecialState.Normal;
-                    break;
+                //NM does not need extra case
             }
         }
 
@@ -342,7 +339,29 @@ public class Ma2Parser : IParser
     {
         Note result = new Rest();
         var candidate = token.Split('\t');
+        // Resolves 1.03 to 1.04 issue
+        SpecialState specialState = SpecialState.Normal;
+        switch (candidate[(int)DxTapParam.Type])
+        {
+            case "XST":
+                candidate[(int)DxTapParam.Type] = "STR";
+                specialState = SpecialState.EX;
+                break;
+            case "XTP":
+                candidate[(int)DxTapParam.Type] = "TAP";
+                specialState = SpecialState.EX;
+                break;
+            case "BST":
+                candidate[(int)DxTapParam.Type] = "STR";
+                specialState = SpecialState.Break;
+                break;
+            case "BRK":
+                candidate[(int)DxTapParam.Type] = "TAP";
+                specialState = SpecialState.Break;
+                break;
+        }
         bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
+        if (!noteTypeIsValid) throw new Exception("Given Note Type is not valid. Given: "+ candidate[(int)DxTapParam.Type]);
         if (candidate[(int)StdParam.Type].Contains("TTP"))
         {
             var noteSize = candidate.Length > 7 ? candidate[7] : "M1";
@@ -361,16 +380,7 @@ public class Ma2Parser : IParser
                 int.Parse(candidate[(int)StdParam.Tick]),
                 candidate[(int)StdParam.Key]);
         }
-
-        if (bpm > 0.0) result.BPM = bpm;
-        result.NoteSpecialState = result.NoteType.Equals("XTP")
-                                  || result.NoteType.Equals("XST")
-            ? SpecialState.EX
-            : SpecialState.Normal;
-        result.NoteSpecialState = result.NoteType.Equals("BRK")
-                                  || result.NoteType.Equals("BST")
-            ? SpecialState.Break
-            : SpecialState.Normal;
+        result.NoteSpecialState = specialState;
         return (Tap)result;
     }
 

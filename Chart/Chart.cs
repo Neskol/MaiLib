@@ -333,9 +333,9 @@ public abstract class Chart : IChart
     {
         var updatedNotes = new List<Note>();
         foreach (var x in Notes)
-            if (x.NoteType is not NoteType.BPM || !x.NoteGenre.Equals("MEASURE") ||
+            if (x.NoteType is not NoteType.BPM || x.NoteGenre is not NoteGenre.MEASURE ||
                 (x.NoteType is NoteType.BPM && x.Bar != 0 && x.Tick != 0) ||
-                (x.NoteGenre.Equals("MEASURE") && x.Bar != 0 && x.Tick != 0))
+                (x.NoteGenre is NoteGenre.MEASURE && x.Bar != 0 && x.Tick != 0))
             {
                 Note copy;
                 switch (x.NoteGenre)
@@ -575,7 +575,7 @@ public abstract class Chart : IChart
         Note potentialFirstChange = new Rest();
         {
             for (var i = 0; !hasFirstBPMChange && i < result.Count(); i++)
-                if (result[i].NoteGenre.Equals("BPM") && result[i].Tick == 0)
+                if (result[i].NoteGenre is NoteGenre.BPM && result[i].Tick == 0)
                 {
                     changedResult.Add(result[i]);
                     potentialFirstChange = result[i];
