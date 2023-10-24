@@ -107,19 +107,37 @@ public class SimaiParser : IParser
         //     string[] secondCandidates = sustainCandidate.Split("##");
 
         // }
+        SpecialState specialState = SpecialState.Normal;
         if (keyCandidate.Contains("C"))
         {
             holdType = "THO";
             key = "0C";
             if (keyCandidate.Contains("f")) specialEffect = 1;
         }
+        else if (keyCandidate.Contains("x")&&keyCandidate.Contains("b"))
+        {
+            key = keyCandidate.Replace("h", "");
+            key = key.Replace("x", "");
+            key = key.Replace("b", "");
+            key = (int.Parse(key) - 1).ToString();
+            holdType = "HLD";
+            specialState = SpecialState.BreakEX;
+        }
+        else if (keyCandidate.Contains("b"))
+        {
+            key = keyCandidate.Replace("h", "");
+            key = key.Replace("b", "");
+            key = (int.Parse(key) - 1).ToString();
+            holdType = "HLD";
+            specialState = SpecialState.Break;
+        }
         else if (keyCandidate.Contains("x"))
         {
             key = keyCandidate.Replace("h", "");
             key = key.Replace("x", "");
-            Console.WriteLine(key);
             key = (int.Parse(key) - 1).ToString();
-            holdType = "XHO";
+            holdType = "HLD";
+            specialState = SpecialState.EX;
         }
         else
         {
@@ -135,7 +153,6 @@ public class SimaiParser : IParser
         var times = int.Parse(lastTimeCandidates[1]);
         lastTick *= times;
         Hold candidate;
-        key.Replace("h", "");
         bool noteTypeIsValid = Enum.TryParse(holdType, out NoteType typeCandidate);
         if (!noteTypeIsValid)
         {
@@ -147,6 +164,7 @@ public class SimaiParser : IParser
         else
             candidate = new Hold(typeCandidate, bar, tick, key, lastTick);
         candidate.BPM = bpm;
+        candidate.NoteSpecialState = specialState;
         return candidate;
     }
 

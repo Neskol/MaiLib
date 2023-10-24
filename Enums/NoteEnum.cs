@@ -86,9 +86,6 @@ public class NoteEnum
         /// <value>Normal Hold</value>
         HLD,
 
-        /// <value>EX Hold</value>
-        XHO,
-
         /// <value>Touch Hold</value>
         THO,
 

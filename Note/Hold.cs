@@ -107,9 +107,6 @@ public class Hold : Note
                     else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
                     result += "h";
                     break;
-                case NoteType.XHO:
-                    result += Convert.ToInt32(Key) + 1 + "xh";
-                    break;
                 case NoteType.THO:
                     result += Key.ToCharArray()[1] + (Convert.ToInt32(Key.Substring(0, 1)) + 1).ToString();
                     if (NoteSpecialState == SpecialState.Break)
