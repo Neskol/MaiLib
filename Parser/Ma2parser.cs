@@ -188,6 +188,7 @@ public class Ma2Parser : IParser
         {
             fesNoteState = noteTypeCandidate.Substring(0, 2); // First 2 characters are note state
             noteTypeCandidate = noteTypeCandidate.Substring(2);
+            token = token.Substring(2);
         }
         var isTap = noteTypeCandidate.Contains("TAP")
                     || noteTypeCandidate.Contains("STR")
@@ -263,7 +264,17 @@ public class Ma2Parser : IParser
     {
         Note result = new Rest();
         var candidate = token.Split('\t');
+        SpecialState specialState = SpecialState.Normal;
+        switch (candidate[(int)DxTapParam.Type])
+        {
+            case "XHO":
+                candidate[(int)DxTapParam.Type] = "HLD";
+                specialState = SpecialState.EX;
+                break;
+        }
+
         bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
+        if (!noteTypeIsValid) throw new Exception("The given note type is invalid. Type provided: " + candidate[(int)DxTapParam.Type]);
         if (candidate[(int)DxTapParam.Type].Contains("THO")) //Basically all THO falls in this line
         {
             var noteSize = candidate.Count() > 7 ? candidate[(int)DxHoldParam.NoteSize] : "M1";
@@ -286,7 +297,7 @@ public class Ma2Parser : IParser
         }
 
         if (bpm > 0.0) result.BPM = bpm;
-        result.NoteSpecialState = result.NoteType.Equals("XHO") ? SpecialState.EX : SpecialState.Normal;
+        result.NoteSpecialState = specialState;
         return (Hold)result;
     }
 
