@@ -225,18 +225,17 @@ public class Ma2Parser : IParser
             result.Bar++;
         }
 
-        var candidate = token.Split('\t');
-        if (candidate[(int)DxTapParam.Type].Length > 3)
+        if (!fesNoteState.Equals(""))
         {
-            bool noteTypeIsValid = Enum.TryParse(noteTypeCandidate, out NoteType noteTypeEnum);
-            if (noteTypeIsValid)
-            {
-                result.NoteType = noteTypeEnum;
-            }
-            else
-            {
-                throw new Exception("Given note type is invalid. Note Type provided: "+noteTypeCandidate);
-            }
+            // bool noteTypeIsValid = Enum.TryParse(noteTypeCandidate, out NoteType noteTypeEnum);
+            // if (noteTypeIsValid)
+            // {
+            //     result.NoteType = noteTypeEnum;
+            // }
+            // else
+            // {
+            //     throw new Exception("Given note type is invalid. Note Type provided: "+noteTypeCandidate);
+            // }
             switch (fesNoteState)
             {
                 case "BR":
@@ -313,6 +312,7 @@ public class Ma2Parser : IParser
     {
         var candidate = token.Split('\t');
         bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
+        if (!noteTypeIsValid) throw new Exception("Given Note Type is not valid. Given: "+ candidate[(int)DxTapParam.Type]);
         if (!slideStart.Key.Equals(candidate[(int)StdParam.Key]) || slideStart.Bar != bar || slideStart.Tick != tick)
             //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
             //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
