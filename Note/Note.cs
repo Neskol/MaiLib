@@ -6,12 +6,6 @@ using static MaiLib.NoteEnum;
 /// </summary>
 public abstract class Note : IEquatable<Note>, INote, IComparable
 {
-
-    /// <summary>
-    ///     The stamp when the Wait time ends in seconds
-    /// </summary>
-    public double WaitTimeStamp;
-
     #region Constructors
     /// <summary>
     ///     Construct an empty note
@@ -109,6 +103,11 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     The start time stamp
     /// </summary>
     public double TickTimeStamp { get; set; }
+
+    /// <summary>
+    ///     The stamp when the Wait time ends in seconds
+    /// </summary>
+    public double WaitTimeStamp;
 
     /// <summary>
     ///     The Wait length
@@ -245,6 +244,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
         var another = obj as Note ?? throw new NullReferenceException("Note is not defined");
 
+        #region PreviousCompareTo
         //else if (this.NoteSpecificType().Equals("SLIDE")&&(this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD")) && this.Tick == another.Tick && this.bar == another.Bar)
         //{
         //    result = -1;
@@ -281,6 +281,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         //    }
         //    else result = this.Tick.CompareTo(another.Tick);
         //}
+        #endregion
         if (Bar != another.Bar)
         {
             result = Bar.CompareTo(another.Bar);

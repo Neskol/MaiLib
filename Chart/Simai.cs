@@ -1,5 +1,7 @@
 namespace MaiLib;
 using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
+using System.Text;
 
 public class Simai : Chart
 {
@@ -9,11 +11,8 @@ public class Simai : Chart
     /// </summary>
     public Simai()
     {
-        Notes = new List<Note>();
-        BPMChanges = new BPMChanges();
-        MeasureChanges = new MeasureChanges();
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Simai;
     }
 
     /// <summary>
@@ -27,7 +26,6 @@ public class Simai : Chart
         Notes = new List<Note>(chart.Notes);
         BPMChanges = new BPMChanges(chart.BPMChanges);
         MeasureChanges = new MeasureChanges(chart.MeasureChanges);
-        StoredChart = new List<List<Note>>();
         Information = new Dictionary<string, string>(chart.Information);
         Update();
     }
@@ -43,8 +41,6 @@ public class Simai : Chart
         Notes = notes;
         BPMChanges = bpmChanges;
         MeasureChanges = measureChanges;
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
         Update();
     }
 
@@ -53,8 +49,6 @@ public class Simai : Chart
         Notes = takenIn.Notes;
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
         Update();
     }
     #endregion
@@ -217,7 +211,7 @@ public class Simai : Chart
 
     public override string Compose()
     {
-        var result = "";
+        StringBuilder result = new StringBuilder();
         var delayBar = TotalDelay / 384 + 2;
         //Console.WriteLine(chart.Compose());
         //foreach (BPMChange x in chart.BPMChanges.ChangeNotes)
@@ -255,22 +249,22 @@ public class Simai : Chart
                     default:
                         if (x.IsOfSameTime(lastNote) && x.IsNote && lastNote.IsNote)
                         {
-                            result += "/";
+                            result.Append("/");
                         }
                         else
                         {
-                            result += ",";
+                            result.Append(",");
                             commaCompiled++;
                         }
 
                         break;
                 }
 
-                result += x.Compose(0);
+                result.Append(x.Compose(0));
                 lastNote = x;
             }
 
-            result += ",\n";
+            result.Append(",\n");
             commaCompiled++;
             if (commaCompiled != currentQuaver)
             {
@@ -283,9 +277,9 @@ public class Simai : Chart
             }
         }
 
-        for (var i = 0; i < delayBar + 1; i++) result += "{1},\n";
-        result += "E\n";
-        return result;
+        for (var i = 0; i < delayBar + 1; i++) result.Append("{1},\n");
+        result.Append("E\n");
+        return result.ToString();
     }
 
     public override bool CheckValidity()

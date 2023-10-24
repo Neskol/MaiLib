@@ -11,4 +11,11 @@ public class ChartEnum
         DXFestival,
         DXUtage
     }
+
+    public enum ChartVersion{
+        Simai,
+        SimaiFes,
+        Ma2_103,
+        Ma2_104
+    }
 }

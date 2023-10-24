@@ -1,5 +1,6 @@
 namespace MaiLib;
 using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
 
 /// <summary>
 ///     A class holding notes and information to form a chart
@@ -21,7 +22,19 @@ public abstract class Chart : IChart
         IsDxChart = false;
         Definition = 384;
         UnitScore = new[] { 500, 1000, 1500, 2000, 2500 };
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Ma2_103;
     }
+
+    /// <summary>
+    /// Defines the chart type by enums
+    /// </summary>
+    public ChartType ChartType { get; protected set; }
+
+    /// <summary>
+    /// Defines the chart version by enums
+    /// </summary>
+    public ChartVersion ChartVersion { get; protected set; }
 
     /// <summary>
     ///     Stores all notes
