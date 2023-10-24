@@ -6,17 +6,7 @@ using static MaiLib.NoteEnum;
 /// </summary>
 public class Hold : Note
 {
-    /// <summary>
-    ///     Stores if this Touch Hold have special effect
-    /// </summary>
-    private readonly int specialEffect;
-
-    /// <summary>
-    ///     Stores the size of touch hold
-    /// </summary>
-    private readonly string touchSize;
-
-#region Constructors
+    #region Constructors
     /// <summary>
     ///     Construct a Hold Note
     /// </summary>
@@ -25,15 +15,15 @@ public class Hold : Note
     /// <param name="bar">Bar of the hold note</param>
     /// <param name="startTime">Tick of the hold note</param>
     /// <param name="lastTime">Last time of the hold note</param>
-    public Hold(string noteType, int bar, int startTime, string key, int lastTime)
+    public Hold(NoteType noteType, int bar, int startTime, string key, int lastTime)
     {
         NoteType = noteType;
         Key = key;
         Bar = bar;
         Tick = startTime;
         LastLength = lastTime;
-        specialEffect = 0;
-        touchSize = "M1";
+        SpecialEffect = false;
+        TouchSize = "M1";
         Update();
     }
 
@@ -47,15 +37,15 @@ public class Hold : Note
     /// <param name="lastTime">Last time of the hold note</param>
     /// <param name="specialEffect">Store if the touch note ends with special effect</param>
     /// <param name="touchSize">Determines how large the touch note is</param>
-    public Hold(string noteType, int bar, int startTime, string key, int lastTime, int specialEffect, string touchSize)
+    public Hold(NoteType noteType, int bar, int startTime, string key, int lastTime, bool specialEffect, string touchSize)
     {
         NoteType = noteType;
         Key = key;
         Bar = bar;
         Tick = startTime;
         LastLength = lastTime;
-        this.specialEffect = specialEffect;
-        this.touchSize = touchSize;
+        SpecialEffect = specialEffect;
+        TouchSize = touchSize;
         Update();
     }
 
@@ -67,43 +57,24 @@ public class Hold : Note
     public Hold(Note inTake)
     {
         inTake.CopyOver(this);
-        if (inTake.NoteGenre == "HOLD")
+        if (inTake.NoteGenre is not NoteEnum.NoteGenre.HOLD)
         {
-            touchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();
-            specialEffect = ((Hold)inTake).SpecialEffect;
+            TouchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();
+            SpecialEffect = ((Hold)inTake).SpecialEffect;
         }
         else
         {
-            touchSize = "M1";
-            specialEffect = 0;
+            TouchSize = "M1";
+            SpecialEffect = false;
         }
     }
     #endregion
 
-    /// <summary>
-    ///     Returns if the note comes with Special Effect
-    /// </summary>
-    /// <value>0 if no, 1 if yes</value>
-    public int SpecialEffect => specialEffect;
-
-    /// <summary>
-    ///     Returns the size of the note
-    /// </summary>
-    /// <value>M1 if regular, L1 if large</value>
-    public string TouchSize => touchSize;
-
-    public override string NoteGenre => "HOLD";
+    public override NoteGenre NoteGenre => NoteGenre.HOLD;
 
     public override bool IsNote => true;
 
-    public override string NoteSpecificGenre
-    {
-        get
-        {
-            var result = "HOLD";
-            return result;
-        }
-    }
+    public override NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.HOLD;
 
     //TODO: REWRITE THIS
     public override bool CheckValidity()
@@ -127,7 +98,7 @@ public class Hold : Note
         {
             switch (NoteType)
             {
-                case "HLD":
+                case NoteType.HLD:
                     result += Convert.ToInt32(Key) + 1;
                     if (NoteSpecialState == SpecialState.Break)
                         result += "b";
@@ -136,17 +107,14 @@ public class Hold : Note
                     else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
                     result += "h";
                     break;
-                case "XHO":
-                    result += Convert.ToInt32(Key) + 1 + "xh";
-                    break;
-                case "THO":
+                case NoteType.THO:
                     result += Key.ToCharArray()[1] + (Convert.ToInt32(Key.Substring(0, 1)) + 1).ToString();
                     if (NoteSpecialState == SpecialState.Break)
                         result += "b";
                     else if (NoteSpecialState == SpecialState.EX)
                         result += "x";
                     else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    if (SpecialEffect == 1) result += "f";
+                    if (SpecialEffect) result += "f";
                     result += "h";
                     break;
             }

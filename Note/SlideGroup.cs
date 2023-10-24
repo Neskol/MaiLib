@@ -32,7 +32,7 @@ public class SlideGroup : Slide
 
     public int SlideCount => this == null ? 0 : InternalSlides.Count;
 
-    public override string NoteSpecificGenre => "SLIDE_GROUP";
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.SLIDE_GROUP;
 
     public List<Slide> InternalSlides { get; }
 
@@ -45,7 +45,7 @@ public class SlideGroup : Slide
         Update();
     }
 
-    public override void Flip(string method)
+    public override void Flip(FlipMethod method)
     {
         foreach (var x in InternalSlides)
             x.Flip(method);
@@ -66,17 +66,20 @@ public class SlideGroup : Slide
     public override string Compose(int format)
     {
         var result = "";
-        if (format == 0)
-        {
-            foreach (var x in InternalSlides)
-                // Note localSlideStart = x.SlideStart != null ? x.SlideStart : new Tap("NST", x.Bar, x.Tick, x.Key);
-                result += x.Compose(format);
-        }
-        else
-        {
-            Console.WriteLine("Invalid slide group located at bar " + Bar + " tick " + Tick);
-            throw new InvalidOperationException("MA2 IS NOT COMPATIBLE WITH SLIDE GROUP");
-        }
+        // if (format == 0)
+        // {
+        //     foreach (var x in InternalSlides)
+        //         // Note localSlideStart = x.SlideStart != null ? x.SlideStart : new Tap("NST", x.Bar, x.Tick, x.Key);
+        //         result += x.Compose(format);
+        // }
+        // else
+        // {
+        //     Console.WriteLine("Invalid slide group located at bar " + Bar + " tick " + Tick);
+        //     throw new InvalidOperationException("MA2 IS NOT COMPATIBLE WITH SLIDE GROUP");
+        // }
+        foreach (var x in InternalSlides)
+            // Note localSlideStart = x.SlideStart != null ? x.SlideStart : new Tap("NST", x.Bar, x.Tick, x.Key);
+            result += x.Compose(format);
 
         return result;
     }

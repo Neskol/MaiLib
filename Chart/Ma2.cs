@@ -1,4 +1,5 @@
-﻿namespace MaiLib;
+﻿using static MaiLib.NoteEnum;
+namespace MaiLib;
 
 /// <summary>
 ///     Implementation of chart in ma2 format.
@@ -128,13 +129,13 @@ public class Ma2 : Chart, ICompiler
         foreach (var x in Notes)
             switch (x.NoteSpecificGenre)
             {
-                case "SLIDE_EACH":
+                case NoteEnum.NoteSpecificGenre.SLIDE_EACH:
                     var candidate = x as SlideEachSet ??
                                     throw new InvalidOperationException("THIS IS NOT A SLIDE EACH");
                     if (candidate.SlideStart != null) adjusted.Add(candidate.SlideStart);
                     if (candidate.InternalSlides.Count > 0) slideCandidates.AddRange(candidate.InternalSlides);
                     break;
-                case "SLIDE_GROUP":
+                case NoteEnum.NoteSpecificGenre.SLIDE_GROUP:
                     var groupCandidate = x as SlideGroup ??
                                          throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
                     if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
@@ -147,7 +148,7 @@ public class Ma2 : Chart, ICompiler
         foreach (var x in slideCandidates)
             switch (x.NoteSpecificGenre)
             {
-                case "SLIDE_GROUP":
+                case NoteSpecificGenre.SLIDE_GROUP:
                     var groupCandidate = x as SlideGroup ??
                                          throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
                     if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);

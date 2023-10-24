@@ -10,7 +10,7 @@ public class Slide : Note
     /// <summary>
     ///     Empty Constructor
     /// </summary>
-    public Slide(){}
+    public Slide() { }
 
     /// <summary>
     ///     Construct a Slide Note (Valid only if Start Key matches a start!)
@@ -24,7 +24,7 @@ public class Slide : Note
     /// <param name="startTime">Start Time</param>
     /// <param name="lastTime">Last Time</param>
     /// <param name="endKey">0-7</param>
-    public Slide(string noteType, int bar, int startTime, string key, int waitTime, int lastTime, string endKey)
+    public Slide(NoteType noteType, int bar, int startTime, string key, int waitTime, int lastTime, string endKey)
     {
         NoteType = noteType;
         Key = key;
@@ -47,11 +47,11 @@ public class Slide : Note
     }
     #endregion
 
-    public override string NoteGenre => "SLIDE";
+    public override NoteGenre NoteGenre => NoteGenre.SLIDE;
 
     public override bool IsNote => true;
 
-    public override string NoteSpecificGenre => "SLIDE";
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.SLIDE;
 
     //TODO: REWRITE THIS
     public override bool CheckValidity()
@@ -71,49 +71,49 @@ public class Slide : Note
         {
             switch (NoteType)
             {
-                case "SI_":
+                case NoteType.SI_:
                     result += "-";
                     break;
-                case "SV_":
+                case NoteType.SV_:
                     result += "v";
                     break;
-                case "SF_":
+                case NoteType.SF_:
                     result += "w";
                     break;
-                case "SCL":
+                case NoteType.SCL:
                     if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
                         result += "<";
                     else
                         result += ">";
                     break;
-                case "SCR":
+                case NoteType.SCR:
                     if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
                         result += ">";
                     else
                         result += "<";
                     break;
-                case "SUL":
+                case NoteType.SUL:
                     result += "p";
                     break;
-                case "SUR":
+                case NoteType.SUR:
                     result += "q";
                     break;
-                case "SSL":
+                case NoteType.SSL:
                     result += "s";
                     break;
-                case "SSR":
+                case NoteType.SSR:
                     result += "z";
                     break;
-                case "SLL":
+                case NoteType.SLL:
                     result += "V" + GenerateInflection(this);
                     break;
-                case "SLR":
+                case NoteType.SLR:
                     result += "V" + GenerateInflection(this);
                     break;
-                case "SXL":
+                case NoteType.SXL:
                     result += "pp";
                     break;
-                case "SXR":
+                case NoteType.SXR:
                     result += "qq";
                     break;
             }
@@ -150,9 +150,9 @@ public class Slide : Note
     public static int GenerateInflection(Note x)
     {
         var result = int.Parse(x.Key) + 1;
-        if (x.NoteType.Equals("SLR"))
+        if (x.NoteType is NoteType.SLR)
             result += 2;
-        else if (x.NoteType.Equals("SLL")) result -= 2;
+        else if (x.NoteType is NoteType.SLL) result -= 2;
 
         if (result > 8)
             result -= 8;
@@ -166,10 +166,10 @@ public class Slide : Note
             else if (result <= 4) result += 4;
 
             //Deal with note type;
-            if (x.NoteType.Equals("SLL"))
-                x.NoteType = "SLR";
-            else if (x.NoteType.Equals("SLR"))
-                x.NoteType = "SLL";
+            if (x.NoteType is NoteType.SLL)
+                x.NoteType = NoteType.SLR;
+            else if (x.NoteType is NoteType.SLR)
+                x.NoteType = NoteType.SLL;
             else
                 throw new InvalidDataException("INFLECTION POINT IS THE SAME WITH ONE OF THE KEY!");
         }

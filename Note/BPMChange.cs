@@ -10,7 +10,7 @@ public class BPMChange : Note
     /// </summary>
     public BPMChange()
     {
-        NoteType = "BPM";
+        NoteType = NoteEnum.NoteType.BPM;
         Key = "";
         Bar = 0;
         Tick = 0;
@@ -56,11 +56,11 @@ public class BPMChange : Note
     }
 #endregion
 
-    public override string NoteGenre => "BPM";
+    public override NoteEnum.NoteGenre NoteGenre => NoteEnum.NoteGenre.BPM;
 
     public override bool IsNote => true;
 
-    public override string NoteSpecificGenre => "BPM";
+    public override NoteEnum.NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.BPM;
 
 
     public override bool CheckValidity()

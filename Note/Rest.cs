@@ -1,9 +1,10 @@
 ﻿namespace MaiLib;
+using static NoteEnum;
 
 /// <summary>
 ///     Construct Rest Note solely for Simai
 /// </summary>
-internal class Rest : Note
+public class Rest : Note
 {
     #region Constructors
     /// <summary>
@@ -11,7 +12,7 @@ internal class Rest : Note
     /// </summary>
     public Rest()
     {
-        NoteType = "RST";
+        NoteType = NoteType.RST;
         Bar = 0;
         Tick = 0;
         Update();
@@ -20,12 +21,11 @@ internal class Rest : Note
     /// <summary>
     ///     Construct Rest Note with given information
     /// </summary>
-    /// <param name="noteType">Note Type to take in</param>
     /// <param name="bar">Bar to take in</param>
     /// <param name="startTime">Start to take in</param>
-    public Rest(string noteType, int bar, int startTime)
+    public Rest(int bar, int startTime)
     {
-        NoteType = noteType;
+        NoteType = NoteType.RST;
         Bar = bar;
         Tick = startTime;
         Update();
@@ -37,7 +37,7 @@ internal class Rest : Note
     /// <param name="n">Note to take in</param>
     public Rest(Note n)
     {
-        NoteType = "RST";
+        NoteType = NoteType.RST;
         Bar = n.Bar;
         Tick = n.Tick;
         BPMChangeNotes = n.BPMChangeNotes;
@@ -45,11 +45,11 @@ internal class Rest : Note
     }
     #endregion
 
-    public override string NoteGenre => "REST";
+    public override NoteGenre NoteGenre => NoteGenre.REST;
 
     public override bool IsNote => false;
 
-    public override string NoteSpecificGenre => "REST";
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.REST;
 
     public override bool CheckValidity()
     {

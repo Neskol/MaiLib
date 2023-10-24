@@ -182,29 +182,37 @@ public class Ma2Parser : IParser
     public Note NoteOfToken(string token, int bar, int tick, double bpm)
     {
         Note result = new Rest();
-        var isTap = token.Split('\t')[(int)StdParam.Type].Contains("TAP")
-                    || token.Split('\t')[(int)StdParam.Type].Contains("STR")
-                    || token.Split('\t')[(int)StdParam.Type].Contains("TTP")
-                    || token.Split('\t')[(int)StdParam.Type].Equals("XTP")
-                    || token.Split('\t')[(int)StdParam.Type].Equals("XST")
-                    || token.Split('\t')[(int)StdParam.Type].Equals("BRK")
-                    || token.Split('\t')[(int)StdParam.Type].Equals("BST");
-        var isHold = token.Split('\t')[(int)StdParam.Type].Contains("HLD")
-                     || token.Split('\t')[(int)StdParam.Type].Equals("XHO")
-                     || token.Split('\t')[(int)StdParam.Type].Contains("THO");
-        var isSlide = token.Split('\t')[(int)StdParam.Type].Contains("SI_")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SV_")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SF_")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SCL")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SCR")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SUL")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SUR")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SLL")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SLR")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SXL")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SXR")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SSL")
-                      || token.Split('\t')[(int)StdParam.Type].Contains("SSR");
+        string noteTypeCandidate = token.Split('\t')[(int)StdParam.Type];
+        string fesNoteState = "";
+        if (noteTypeCandidate.Length > 3)
+        {
+            fesNoteState = noteTypeCandidate.Substring(0, 2); // First 2 characters are note state
+            noteTypeCandidate = noteTypeCandidate.Substring(2);
+            token = token.Substring(2);
+        }
+        var isTap = noteTypeCandidate.Contains("TAP")
+                    || noteTypeCandidate.Contains("STR")
+                    || noteTypeCandidate.Contains("TTP")
+                    || noteTypeCandidate.Equals("XTP")
+                    || noteTypeCandidate.Equals("XST")
+                    || noteTypeCandidate.Equals("BRK")
+                    || noteTypeCandidate.Equals("BST");
+        var isHold = noteTypeCandidate.Contains("HLD")
+                     || noteTypeCandidate.Equals("XHO")
+                     || noteTypeCandidate.Contains("THO");
+        var isSlide = noteTypeCandidate.Contains("SI_")
+                      || noteTypeCandidate.Contains("SV_")
+                      || noteTypeCandidate.Contains("SF_")
+                      || noteTypeCandidate.Contains("SCL")
+                      || noteTypeCandidate.Contains("SCR")
+                      || noteTypeCandidate.Contains("SUL")
+                      || noteTypeCandidate.Contains("SUR")
+                      || noteTypeCandidate.Contains("SLL")
+                      || noteTypeCandidate.Contains("SLR")
+                      || noteTypeCandidate.Contains("SXL")
+                      || noteTypeCandidate.Contains("SXR")
+                      || noteTypeCandidate.Contains("SSL")
+                      || noteTypeCandidate.Contains("SSR");
         if (isTap)
             result = TapOfToken(token);
         else if (isHold)
@@ -217,13 +225,18 @@ public class Ma2Parser : IParser
             result.Bar++;
         }
 
-        var candidate = token.Split('\t');
-        if (candidate[(int)DxTapParam.Type].Length > 3)
+        if (!fesNoteState.Equals(""))
         {
-            var specialProperty = "";
-            specialProperty = candidate[(int)DxTapParam.Type].Substring(0, 2);
-            result.NoteType = result.NoteType.Substring(2);
-            switch (specialProperty)
+            // bool noteTypeIsValid = Enum.TryParse(noteTypeCandidate, out NoteType noteTypeEnum);
+            // if (noteTypeIsValid)
+            // {
+            //     result.NoteType = noteTypeEnum;
+            // }
+            // else
+            // {
+            //     throw new Exception("Given note type is invalid. Note Type provided: "+noteTypeCandidate);
+            // }
+            switch (fesNoteState)
             {
                 case "BR":
                     result.NoteSpecialState = SpecialState.Break;
@@ -237,16 +250,12 @@ public class Ma2Parser : IParser
                 case "CN":
                     result.NoteSpecialState = SpecialState.ConnectingSlide;
                     break;
-                case "NM":
-                case "":
-                default:
-                    result.NoteSpecialState = SpecialState.Normal;
-                    break;
+                //NM does not need extra case
             }
         }
 
         if (bpm > 0.0) result.BPM = bpm;
-        if (result.NoteSpecificGenre.Equals("SLIDE_START")) PreviousSlideStart = (Tap)result;
+        if (result.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START) PreviousSlideStart = (Tap)result;
         return result;
     }
 
@@ -254,20 +263,32 @@ public class Ma2Parser : IParser
     {
         Note result = new Rest();
         var candidate = token.Split('\t');
+        SpecialState specialState = SpecialState.Normal;
+        switch (candidate[(int)DxTapParam.Type])
+        {
+            case "XHO":
+                candidate[(int)DxTapParam.Type] = "HLD";
+                specialState = SpecialState.EX;
+                break;
+        }
+
+        bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
+        if (!noteTypeIsValid) throw new Exception("The given note type is invalid. Type provided: " + candidate[(int)DxTapParam.Type]);
         if (candidate[(int)DxTapParam.Type].Contains("THO")) //Basically all THO falls in this line
         {
             var noteSize = candidate.Count() > 7 ? candidate[(int)DxHoldParam.NoteSize] : "M1";
-            result = new Hold(candidate[(int)DxHoldParam.Type],
+            bool specialEffect = int.Parse(candidate[(int)DxHoldParam.SpecialEffect]) == 1;
+            result = new Hold(typeCandidate,
                 bar,
                 tick,
                 candidate[(int)DxHoldParam.Key] + candidate[(int)DxHoldParam.KeyGroup],
                 int.Parse(candidate[(int)DxHoldParam.LastTime]),
-                int.Parse(candidate[(int)DxHoldParam.SpecialEffect]),
+                specialEffect,
                 noteSize);
         }
         else
         {
-            result = new Hold(candidate[(int)StdParam.Type],
+            result = new Hold(typeCandidate,
                 int.Parse(candidate[(int)StdParam.Bar]),
                 int.Parse(candidate[(int)StdParam.Tick]),
                 candidate[(int)StdParam.Key],
@@ -275,7 +296,7 @@ public class Ma2Parser : IParser
         }
 
         if (bpm > 0.0) result.BPM = bpm;
-        result.NoteSpecialState = result.NoteType.Equals("XHO") ? SpecialState.EX : SpecialState.Normal;
+        result.NoteSpecialState = specialState;
         return (Hold)result;
     }
 
@@ -290,13 +311,15 @@ public class Ma2Parser : IParser
     public Slide SlideOfToken(string token, int bar, int tick, Note slideStart, double bpm)
     {
         var candidate = token.Split('\t');
+        bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
+        if (!noteTypeIsValid) throw new Exception("Given Note Type is not valid. Given: "+ candidate[(int)DxTapParam.Type]);
         if (!slideStart.Key.Equals(candidate[(int)StdParam.Key]) || slideStart.Bar != bar || slideStart.Tick != tick)
             //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
             //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
             //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
             //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
-            PreviousSlideStart = new Tap("NST", bar, tick, candidate[(int)StdParam.Key]);
-        var result = new Slide(candidate[(int)StdParam.Type],
+            PreviousSlideStart = new Tap(NoteType.NST, bar, tick, candidate[(int)StdParam.Key]);
+        var result = new Slide(typeCandidate,
             bar,
             tick,
             slideStart.Key,
@@ -318,7 +341,7 @@ public class Ma2Parser : IParser
             //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
             //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
             //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
-            PreviousSlideStart = new Tap("NST", bar, tick, candidate[(int)StdParam.Key]);
+            PreviousSlideStart = new Tap(NoteType.NST, bar, tick, candidate[(int)StdParam.Key]);
         return SlideOfToken(token, bar, tick, PreviousSlideStart, 0.0);
     }
 
@@ -327,33 +350,48 @@ public class Ma2Parser : IParser
     {
         Note result = new Rest();
         var candidate = token.Split('\t');
+        // Resolves 1.03 to 1.04 issue
+        SpecialState specialState = SpecialState.Normal;
+        switch (candidate[(int)DxTapParam.Type])
+        {
+            case "XST":
+                candidate[(int)DxTapParam.Type] = "STR";
+                specialState = SpecialState.EX;
+                break;
+            case "XTP":
+                candidate[(int)DxTapParam.Type] = "TAP";
+                specialState = SpecialState.EX;
+                break;
+            case "BST":
+                candidate[(int)DxTapParam.Type] = "STR";
+                specialState = SpecialState.Break;
+                break;
+            case "BRK":
+                candidate[(int)DxTapParam.Type] = "TAP";
+                specialState = SpecialState.Break;
+                break;
+        }
+        bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
+        if (!noteTypeIsValid) throw new Exception("Given Note Type is not valid. Given: "+ candidate[(int)DxTapParam.Type]);
         if (candidate[(int)StdParam.Type].Contains("TTP"))
         {
             var noteSize = candidate.Length > 7 ? candidate[7] : "M1";
-            result = new Tap(candidate[(int)DxTapParam.Type],
+            bool specialEffect = int.Parse(candidate[(int)DxTapParam.SpecialEffect]) == 1;
+            result = new Tap(typeCandidate,
                 bar,
                 tick,
                 candidate[(int)DxTapParam.Key] + candidate[(int)DxTapParam.KeyGroup],
-                int.Parse(candidate[(int)DxTapParam.SpecialEffect]),
+                specialEffect,
                 noteSize);
         }
         else
         {
-            result = new Tap(candidate[(int)StdParam.Type],
+            result = new Tap(typeCandidate,
                 int.Parse(candidate[(int)StdParam.Bar]),
                 int.Parse(candidate[(int)StdParam.Tick]),
                 candidate[(int)StdParam.Key]);
         }
-
-        if (bpm > 0.0) result.BPM = bpm;
-        result.NoteSpecialState = result.NoteType.Equals("XTP")
-                                  || result.NoteType.Equals("XST")
-            ? SpecialState.EX
-            : SpecialState.Normal;
-        result.NoteSpecialState = result.NoteType.Equals("BRK")
-                                  || result.NoteType.Equals("BST")
-            ? SpecialState.Break
-            : SpecialState.Normal;
+        result.NoteSpecialState = specialState;
         return (Tap)result;
     }
 

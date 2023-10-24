@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using static MaiLib.NoteEnum;
 
 namespace MaiLib;
 
@@ -76,7 +77,18 @@ public class SimaiCompiler : Compiler
         foreach (var ma2file in ma2files)
         {
             var chartCandidate = new Ma2(ma2file);
-            if (rotate) chartCandidate.RotateNotes(rotateParameter);
+            if (rotate)
+            {
+                bool rotateParameterIsValid = Enum.TryParse(rotateParameter, out FlipMethod rotateParameterEnum);
+                if (rotateParameterIsValid)
+                {
+                    chartCandidate.RotateNotes((rotateParameterEnum));
+                }
+                else
+                {
+                    throw new Exception("The given rotation method is invalid. Given: "+rotateParameter);
+                }
+            }
             Charts.Add(chartCandidate);
         }
 

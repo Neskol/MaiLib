@@ -71,7 +71,7 @@ public class Simai : Chart
         foreach (var candidate in Notes)
         {
             maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
-            if (candidate.NoteSpecificGenre.Equals("SLIDE") || candidate.NoteSpecificGenre.Equals("SLIDE_GROUP"))
+            if (candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE || candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP)
             {
                 slideNotesOfChart.Add((Slide)candidate);
                 processedSlideDic.Add((Slide)candidate, false);
@@ -83,7 +83,7 @@ public class Simai : Chart
 
         var processedSlidesCount = 0;
 
-        foreach (KeyValuePair<Slide,bool> parentPair in processedSlideDic)
+        foreach (KeyValuePair<Slide, bool> parentPair in processedSlideDic)
         {
             var parentSlide = parentPair.Key;
             maximumBar = parentSlide.Bar > maximumBar ? parentSlide.Bar : maximumBar;
@@ -91,7 +91,7 @@ public class Simai : Chart
             {
                 SlideGroup currentGroup = new();
                 currentGroup.AddConnectingSlide(parentSlide);
-                foreach (KeyValuePair<Slide,bool> candidatePair in processedSlideDic)
+                foreach (KeyValuePair<Slide, bool> candidatePair in processedSlideDic)
                 {
                     var candidate = candidatePair.Key;
                     if (candidate != parentSlide && candidate.NoteSpecialState == SpecialState.ConnectingSlide &&
@@ -157,12 +157,11 @@ public class Simai : Chart
                 errorMsg += x.Compose(0) + "\n";
                 if (x is SlideGroup)
                 {
-                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup).LastSlide.Compose(1)+"\n";
+                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(0))).LastSlide.Compose(1) + "\n";
                 }
-
             }
             throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +
-                                                ", Actual:" + processedSlidesCount +", Skipped: "+ processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
+                                                ", Actual:" + processedSlidesCount + ", Skipped: " + processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
         }
         Notes = new List<Note>(adjusted);
     }
@@ -175,13 +174,13 @@ public class Simai : Chart
         foreach (var x in Notes)
         {
             var eachCandidateCombined = false;
-            if (!(x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START") ||
-                  x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
+            if (!(x.NoteSpecificGenre is NoteSpecificGenre.SLIDE || x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ||
+                  x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
             {
                 adjusted.Add(x);
                 processedNotes++;
             }
-            else if (composedCandidates.Count > 0 && x.NoteSpecificGenre.Equals("SLIDE_START"))
+            else if (composedCandidates.Count > 0 && x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START)
             {
                 foreach (var parent in composedCandidates)
                 {
@@ -192,7 +191,7 @@ public class Simai : Chart
                 }
             }
             else if (composedCandidates.Count > 0 &&
-                     (x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
+                     (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE || x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
             {
                 foreach (var parent in composedCandidates)
                 {
@@ -202,9 +201,9 @@ public class Simai : Chart
                 }
             }
 
-            if (!eachCandidateCombined && (x.NoteSpecificGenre.Equals("SLIDE") ||
-                                           x.NoteSpecificGenre.Equals("SLIDE_START") ||
-                                           x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
+            if (!eachCandidateCombined && (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE ||
+                                           x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ||
+                                           x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
             {
                 composedCandidates.Add(new SlideEachSet(x));
                 processedNotes++;
@@ -227,7 +226,7 @@ public class Simai : Chart
         //}
         var firstBpm = new List<Note>();
         foreach (var bpm in Notes)
-            if (bpm.NoteSpecificGenre.Equals("BPM"))
+            if (bpm.NoteSpecificGenre is NoteSpecificGenre.BPM)
                 firstBpm.Add(bpm);
         // if (firstBpm.Count > 1)
         // {
@@ -241,16 +240,20 @@ public class Simai : Chart
             //result += bar[1].Bar;
             foreach (var x in bar)
             {
+                //if (x.Bar == 6)
+                //{
+                //    Console.WriteLine("This is bar 6");
+                //}
                 switch (lastNote.NoteSpecificGenre)
                 {
-                    case "MEASURE":
+                    case NoteSpecificGenre.MEASURE:
                         currentQuaver = (lastNote as MeasureChange ??
                                          throw new Exception("This note is not measure change")).Quaver;
                         break;
-                    case "BPM":
+                    case NoteSpecificGenre.BPM:
                         break;
                     default:
-                        if (x.IsOfSameTime(lastNote))
+                        if (x.IsOfSameTime(lastNote) && x.IsNote && lastNote.IsNote)
                         {
                             result += "/";
                         }
