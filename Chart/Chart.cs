@@ -1,29 +1,12 @@
 namespace MaiLib;
+using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
 
 /// <summary>
 ///     A class holding notes and information to form a chart
 /// </summary>
 public abstract class Chart : IChart
 {
-    /// <summary>
-    ///     Allowed HOLD notes
-    /// </summary>
-    /// <value>HOLD defs</value>
-    public readonly string[] HoldTypes = { "HLD", "THO", "XHO" };
-
-    /// <summary>
-    ///     Allowed SLIDE notes
-    /// </summary>
-    /// <value>SLIDE defs</value>
-    public readonly string[] SlideTypes =
-        { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
-
-    /// <summary>
-    ///     Allowed TAP notes
-    /// </summary>
-    /// <value>TAP defs</value>
-    public readonly string[] TapTypes = { "TAP", "STR", "TTP", "XTP", "XST" };
-
     //Theoretical Rating = (Difference in 100-down and Max score)/100-down
 
     /// <summary>
@@ -39,7 +22,19 @@ public abstract class Chart : IChart
         IsDxChart = false;
         Definition = 384;
         UnitScore = new[] { 500, 1000, 1500, 2000, 2500 };
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Ma2_103;
     }
+
+    /// <summary>
+    /// Defines the chart type by enums
+    /// </summary>
+    public ChartType ChartType { get; protected set; }
+
+    /// <summary>
+    /// Defines the chart version by enums
+    /// </summary>
+    public ChartVersion ChartVersion { get; protected set; }
 
     /// <summary>
     ///     Stores all notes
@@ -160,7 +155,7 @@ public abstract class Chart : IChart
                     bar.Add(x); //Extract the first BPM change in bar to the beginning of the bar
             foreach (var x in Notes)
             {
-                if (FirstNote == null && !(x.NoteType.Equals("BPM") || x.NoteType.Equals("MEASURE"))) FirstNote = x;
+                if (FirstNote == null && !(x.NoteType is NoteType.BPM || x.NoteType is NoteType.MEASURE)) FirstNote = x;
                 // Console.WriteLine(x.Compose(0));
                 //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
                 //x.Update();
@@ -177,16 +172,16 @@ public abstract class Chart : IChart
                     var delay = x.Bar * Definition + x.Tick + x.WaitLength + x.LastLength;
                     switch (x.NoteSpecificGenre)
                     {
-                        case "BPM":
+                        case NoteSpecificGenre.BPM:
                             currentBPM = x.BPM;
                             break;
-                        case "MEASURE":
+                        case NoteSpecificGenre.MEASURE:
                             break;
-                        case "REST":
+                        case NoteSpecificGenre.REST:
                             break;
-                        case "TAP":
+                        case NoteSpecificGenre.TAP:
                             TapNumber++;
-                            if (x.NoteSpecificGenre.Equals("XTP")) IsDxChart = false;
+                            if (x.NoteSpecialState is SpecialState.EX) IsDxChart = false;
                             if (x.NoteType.Equals("TTP"))
                             {
                                 TouchNumber++;
@@ -198,7 +193,7 @@ public abstract class Chart : IChart
                             }
 
                             break;
-                        case "HOLD":
+                        case NoteSpecificGenre.HOLD:
                             HoldNumber++;
                             x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
@@ -222,10 +217,10 @@ public abstract class Chart : IChart
                             }
 
                             break;
-                        case "SLIDE_START":
+                        case NoteSpecificGenre.SLIDE_START:
                             TapNumber++;
                             break;
-                        case "SLIDE":
+                        case NoteSpecificGenre.SLIDE:
                             SlideNumber++;
                             x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.WaitTickStamp) ||
                                                 GetBPMByTick(x.WaitTickStamp) != GetBPMByTick(x.LastTickStamp) ||
@@ -266,7 +261,7 @@ public abstract class Chart : IChart
                     }
 
                     x.BPM = currentBPM;
-                    //if (x.NoteGenre.Equals("SLIDE") && !lastNote.NoteSpecificType.Equals("SLIDE_START"))
+                    //if (x.NoteGenre is NoteGenre.SLIDE && !lastNote.NoteSpecificType.Equals("SLIDE_START"))
                     //{
                     //    x.Prev = new Tap("NST", x.Bar, x.Tick, x.Key);
                     //    lastNote.Next = x.Prev;
@@ -275,7 +270,7 @@ public abstract class Chart : IChart
                     // // lastNote.Next = x;
                     // // x.Prev = lastNote;
                     // // x.Prev.Next = x;
-                    //if ((!x.NoteGenre.Equals("SLIDE")) && x.Prev.NoteType.Equals("STR")&&x.Prev.ConsecutiveSlide == null)
+                    //if ((!x.NoteGenre is NoteGenre.SLIDE) && x.Prev.NoteType.Equals("STR")&&x.Prev.ConsecutiveSlide == null)
                     //{
                     //    Console.WriteLine("Found NSS");
                     //    Console.WriteLine("This note's note type: " + x.NoteType);
@@ -286,7 +281,7 @@ public abstract class Chart : IChart
                     //    x.Prev.NoteType = "NSS";
                     //}
                     bar.Add(x);
-                    if (!x.NoteGenre.Equals("SLIDE")) lastNote = x;
+                    if (x.NoteGenre is not NoteGenre.SLIDE) lastNote = x;
                     realLastNote = x;
                     timeStamp += x.TickTimeStamp;
                 }
@@ -351,54 +346,38 @@ public abstract class Chart : IChart
     {
         var updatedNotes = new List<Note>();
         foreach (var x in Notes)
-            if (!x.NoteType.Equals("BPM") || !x.NoteGenre.Equals("MEASURE") ||
-                (x.NoteType.Equals("BPM") && x.Bar != 0 && x.Tick != 0) ||
-                (x.NoteGenre.Equals("MEASURE") && x.Bar != 0 && x.Tick != 0))
+            if (x.NoteType is not NoteType.BPM || x.NoteGenre is not NoteGenre.MEASURE ||
+                (x.NoteType is NoteType.BPM && x.Bar != 0 && x.Tick != 0) ||
+                (x.NoteGenre is NoteGenre.MEASURE && x.Bar != 0 && x.Tick != 0))
             {
                 Note copy;
                 switch (x.NoteGenre)
                 {
-                    case "TAP":
-                    case "SLIDE_START":
+                    case NoteGenre.TAP:
                         copy = new Tap(x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
-                        // if (copy.ConsecutiveSlide!=null)
-                        // {
-                        //     copy.ConsecutiveSlide.Bar += overallTick / 384;
-                        //     copy.ConsecutiveSlide.Tick += overallTick % 384;
-                        // }
                         copy.Update();
                         break;
-                    case "HOLD":
+                    case NoteGenre.HOLD:
                         copy = new Hold(x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
                         copy.Update();
                         break;
-                    case "SLIDE":
+                    case NoteGenre.SLIDE:
                         copy = new Slide(x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
-                        // if (copy.SlideStart != null)
-                        // {
-                        //     copy.SlideStart.Bar += overallTick / 384;
-                        //     copy.SlideStart.Tick += overallTick % 384;
-                        // }
-                        // if (copy.ConsecutiveSlide != null)
-                        // {
-                        //     copy.ConsecutiveSlide.Bar += overallTick / 384;
-                        //     copy.ConsecutiveSlide.Tick += overallTick % 384;
-                        // }
                         copy.Update();
                         break;
-                    case "BPM":
+                    case NoteGenre.BPM:
                         copy = new BPMChange(x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
                         copy.Update();
                         break;
-                    case "MEASURE":
+                    case NoteGenre.MEASURE:
                         copy = new MeasureChange((MeasureChange)x);
                         copy.Bar += overallTick / 384;
                         copy.Tick += overallTick % 384;
@@ -426,7 +405,7 @@ public abstract class Chart : IChart
         ShiftByOffset(overallTick);
     }
 
-    public void RotateNotes(string method)
+    public void RotateNotes(FlipMethod method)
     {
         foreach (var x in Notes) x.Flip(method);
         Update();
@@ -453,7 +432,7 @@ public abstract class Chart : IChart
         foreach (var x in bar)
         {
             if (!startTimeList.Contains(x.Tick)) startTimeList.Add(x.Tick);
-            if (x.NoteType.Equals("BPM"))
+            if (x.NoteType is NoteType.BPM)
             {
                 //Console.WriteLine(x.Compose(0));
             }
@@ -535,7 +514,7 @@ public abstract class Chart : IChart
             {
                 if (x.Tick == i && x.IsNote && !(x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
                 {
-                    if (x.NoteSpecificGenre.Equals("BPM"))
+                    if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
                         bpm = x;
                     }
@@ -550,7 +529,7 @@ public abstract class Chart : IChart
                 }
                 else if (x.Tick == i && x.IsNote && (x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
                 {
-                    if (x.NoteSpecificGenre.Equals("BPM"))
+                    if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
                         bpm = x;
                         //Console.WriteLine("A note was found at tick " + i + " of bar " + barNumber + ", it is "+x.NoteType);
@@ -565,7 +544,7 @@ public abstract class Chart : IChart
                     }
                 }
 
-                if (!x.NoteSpecificGenre.Equals("BPM") && !x.NoteSpecificGenre.Equals("SLIDE_START"))
+                if (x.NoteSpecificGenre is not NoteSpecificGenre.BPM && x.NoteSpecificGenre is not NoteSpecificGenre.SLIDE_START)
                     lastNote = x.NewInstance();
             }
 
@@ -588,7 +567,7 @@ public abstract class Chart : IChart
 
             if (writeRest)
                 //Console.WriteLine("There is no note at tick " + i + " of bar " + barNumber + ", Adding one");
-                eachSet.Add(new Rest("RST", barNumber, i));
+                eachSet.Add(new Rest(barNumber, i));
             result.AddRange(eachSet);
         }
 
@@ -609,7 +588,7 @@ public abstract class Chart : IChart
         Note potentialFirstChange = new Rest();
         {
             for (var i = 0; !hasFirstBPMChange && i < result.Count(); i++)
-                if (result[i].NoteGenre.Equals("BPM") && result[i].Tick == 0)
+                if (result[i].NoteGenre is NoteGenre.BPM && result[i].Tick == 0)
                 {
                     changedResult.Add(result[i]);
                     potentialFirstChange = result[i];
@@ -764,7 +743,7 @@ public abstract class Chart : IChart
         result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
         result += "This note has overall tick of " + inTake.TickStamp +
                   ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";
-        if (inTake.NoteGenre.Equals("SLIDE"))
+        if (inTake.NoteGenre is NoteGenre.SLIDE)
         {
             result += "This note has wait length of " + inTake.WaitLength + ", and therefor, its wait tick stamp is " +
                       inTake.WaitTickStamp + " with wait time stamp of " +

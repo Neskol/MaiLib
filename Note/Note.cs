@@ -1,50 +1,18 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Basic note
 /// </summary>
 public abstract class Note : IEquatable<Note>, INote, IComparable
 {
-    public enum SpecialState
-    {
-        /// <summary>
-        ///     Normal note, nothing special
-        /// </summary>
-        Normal,
-
-        /// <summary>
-        ///     Break note
-        /// </summary>
-        Break,
-
-        /// <summary>
-        ///     EX Note
-        /// </summary>
-        EX,
-
-        /// <summary>
-        ///     EX Break
-        /// </summary>
-        BreakEX,
-
-        /// <summary>
-        ///     Connecting Slide
-        /// </summary>
-        ConnectingSlide
-    }
-
-    /// <summary>
-    ///     The stamp when the Wait time ends in seconds
-    /// </summary>
-    public double WaitTimeStamp;
-
-#region Constructors
+    #region Constructors
     /// <summary>
     ///     Construct an empty note
     /// </summary>
     public Note()
     {
-        NoteType = "";
+        NoteType = NoteType.RST;
         Key = "";
         EndKey = "";
         Bar = 0;
@@ -63,6 +31,8 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         TickBPMDisagree = false;
         BPM = 0;
         BPMChangeNotes = new List<BPMChange>();
+        TouchSize = "M1";
+        NoteSpecialState = SpecialState.Normal;
     }
 
     /// <summary>
@@ -89,13 +59,15 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         TickBPMDisagree = inTake.TickBPMDisagree;
         BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
+        TouchSize = "M1";
     }
     #endregion
 
+    #region Fields
     /// <summary>
     ///     The note type
     /// </summary>
-    public string NoteType { get; set; }
+    public NoteType NoteType { get; set; }
 
     /// <summary>
     ///     The key
@@ -131,6 +103,11 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     The start time stamp
     /// </summary>
     public double TickTimeStamp { get; set; }
+
+    /// <summary>
+    ///     The stamp when the Wait time ends in seconds
+    /// </summary>
+    public double WaitTimeStamp;
 
     /// <summary>
     ///     The Wait length
@@ -187,6 +164,10 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// </summary>
     public double BPM { get; set; }
 
+    public bool SpecialEffect { get; protected set; }
+
+    public string TouchSize { get; protected set; }
+
     /// <summary>
     ///     The previous note
     /// </summary>
@@ -242,19 +223,20 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     Return this.SpecificType
     /// </summary>
     /// <returns>string of specific genre (specific type of Tap, Slide, etc.)</returns>
-    public abstract string NoteSpecificGenre { get; }
+    public abstract NoteSpecificGenre NoteSpecificGenre { get; }
 
     /// <summary>
     ///     Return this.noteGenre
     /// </summary>
     /// <returns>string of note genre (general category of TAP, SLIDE and HOLD)</returns>
-    public abstract string NoteGenre { get; }
+    public abstract NoteGenre NoteGenre { get; }
 
     /// <summary>
     ///     Return if this is a true note
     /// </summary>
     /// <returns>True if is TAP,HOLD or SLIDE, false otherwise</returns>
     public abstract bool IsNote { get; }
+    #endregion
 
     public int CompareTo(object? obj)
     {
@@ -262,6 +244,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
         var another = obj as Note ?? throw new NullReferenceException("Note is not defined");
 
+        #region PreviousCompareTo
         //else if (this.NoteSpecificType().Equals("SLIDE")&&(this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD")) && this.Tick == another.Tick && this.bar == another.Bar)
         //{
         //    result = -1;
@@ -298,6 +281,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         //    }
         //    else result = this.Tick.CompareTo(another.Tick);
         //}
+        #endregion
         if (Bar != another.Bar)
         {
             result = Bar.CompareTo(another.Bar);
@@ -308,7 +292,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         }
         else
         {
-            if (NoteSpecificGenre.Equals("BPM"))
+            if (NoteSpecificGenre is NoteSpecificGenre.BPM)
                 result = -1;
             //else if (this.NoteSpecificType().Equals("SLIDE")&&another.NoteSpecificType().Equals("SLIDE_START")&&this.Key.Equals(another.Key))
             //{
@@ -339,7 +323,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
     public abstract string Compose(int format);
 
-    public virtual void Flip(string method)
+    public virtual void Flip(FlipMethod method)
     {
         if (Key != null && !Key.Equals("") && !(Key.Count() > 1 && Key.ToCharArray()[1] == 'C'))
         {
@@ -347,7 +331,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
             switch (method)
             {
-                case "Clockwise90":
+                case FlipMethod.Clockwise90:
                     switch (KeyNum)
                     {
                         case 0:
@@ -405,7 +389,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
                     }
 
                     break;
-                case "Clockwise180":
+                case FlipMethod.Clockwise180:
                     switch (KeyNum)
                     {
                         case 0:
@@ -463,7 +447,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
                     }
 
                     break;
-                case "Counterclockwise90":
+                case FlipMethod.Counterclockwise90:
                     switch (KeyNum)
                     {
                         case 0:
@@ -521,7 +505,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
                     }
 
                     break;
-                case "Counterclockwise180":
+                case FlipMethod.Counterclockwise180:
                     switch (KeyNum)
                     {
                         case 0:
@@ -579,8 +563,8 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
                     }
 
                     break;
-                case "UpSideDown":
-                    if (NoteType.Equals("TTP") && (KeyGroup.Equals("E") || KeyGroup.Equals("D")))
+                case FlipMethod.UpSideDown:
+                    if (NoteType is NoteType.TTP && (KeyGroup.Equals("E") || KeyGroup.Equals("D")))
                         switch (KeyNum)
                         {
                             case 0:
@@ -663,43 +647,43 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
                             break;
                     }
 
-                    if (NoteGenre.Equals("SLIDE"))
+                    if (NoteGenre is NoteGenre.SLIDE)
                         switch (NoteType)
                         {
-                            case "SCL":
-                                NoteType = "SCR";
+                            case NoteType.SCL:
+                                NoteType = NoteType.SCR;
                                 break;
-                            case "SCR":
-                                NoteType = "SCL";
+                            case NoteType.SCR:
+                                NoteType = NoteType.SCL;
                                 break;
-                            case "SUL":
-                                NoteType = "SUR";
+                            case NoteType.SUL:
+                                NoteType = NoteType.SUR;
                                 break;
-                            case "SUR":
-                                NoteType = "SUL";
+                            case NoteType.SUR:
+                                NoteType = NoteType.SUL;
                                 break;
-                            case "SLL":
-                                NoteType = "SLR";
+                            case NoteType.SLL:
+                                NoteType = NoteType.SLR;
                                 break;
-                            case "SLR":
-                                NoteType = "SLL";
+                            case NoteType.SLR:
+                                NoteType = NoteType.SLL;
                                 break;
-                            case "SXL":
-                                NoteType = "SXR";
+                            case NoteType.SXL:
+                                NoteType = NoteType.SXR;
                                 break;
-                            case "SXR":
-                                NoteType = "SXL";
+                            case NoteType.SXR:
+                                NoteType = NoteType.SXL;
                                 break;
-                            case "SSL":
-                                NoteType = "SSR";
+                            case NoteType.SSL:
+                                NoteType = NoteType.SSR;
                                 break;
-                            case "SSR":
-                                NoteType = "SSL";
+                            case NoteType.SSR:
+                                NoteType = NoteType.SSL;
                                 break;
                         }
 
                     break;
-                case "LeftToRight":
+                case FlipMethod.LeftToRight:
                     if (NoteType.Equals("TTP") && (KeyGroup.Equals("E") || KeyGroup.Equals("D")))
                         switch (KeyNum)
                         {
@@ -783,38 +767,38 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
                             break;
                     }
 
-                    if (NoteGenre.Equals("SLIDE"))
+                    if (NoteGenre is NoteGenre.SLIDE)
                         switch (NoteType)
                         {
-                            case "SCL":
-                                NoteType = "SCR";
+                            case NoteType.SCL:
+                                NoteType = NoteType.SCR;
                                 break;
-                            case "SCR":
-                                NoteType = "SCL";
+                            case NoteType.SCR:
+                                NoteType = NoteType.SCL;
                                 break;
-                            case "SUL":
-                                NoteType = "SUR";
+                            case NoteType.SUL:
+                                NoteType = NoteType.SUR;
                                 break;
-                            case "SUR":
-                                NoteType = "SUL";
+                            case NoteType.SUR:
+                                NoteType = NoteType.SUL;
                                 break;
-                            case "SLL":
-                                NoteType = "SLR";
+                            case NoteType.SLL:
+                                NoteType = NoteType.SLR;
                                 break;
-                            case "SLR":
-                                NoteType = "SLL";
+                            case NoteType.SLR:
+                                NoteType = NoteType.SLL;
                                 break;
-                            case "SXL":
-                                NoteType = "SXR";
+                            case NoteType.SXL:
+                                NoteType = NoteType.SXR;
                                 break;
-                            case "SXR":
-                                NoteType = "SXL";
+                            case NoteType.SXR:
+                                NoteType = NoteType.SXL;
                                 break;
-                            case "SSL":
-                                NoteType = "SSR";
+                            case NoteType.SSL:
+                                NoteType = NoteType.SSR;
                                 break;
-                            case "SSR":
-                                NoteType = "SSL";
+                            case NoteType.SSR:
+                                NoteType = NoteType.SSL;
                                 break;
                         }
 
@@ -952,11 +936,11 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         var duration = Math.Round(LastTimeStamp - WaitTimeStamp, 4);
         switch (NoteGenre)
         {
-            case "SLIDE":
+            case NoteGenre.SLIDE:
                 var sustain = Math.Round(WaitTimeStamp - TickTimeStamp, 4);
                 result = "[" + sustain + "##" + duration + "]";
                 break;
-            case "HOLD":
+            case NoteGenre.HOLD:
                 double startTime = Math.Round(startTime = TickTimeStamp, 4);
                 result = "[" + startTime + "##" + duration + "]";
                 break;
@@ -993,12 +977,13 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         return base.GetHashCode();
     }
 
-        /// <summary>
+    /// <summary>
     /// Copies all note properties of copyFrom to copyTo
     /// </summary>
     /// <param name="copyTo"></param>
     /// <param name="copyFrom"></param>
-    public void CopyOver(Note copyTo) {
+    public void CopyOver(Note copyTo)
+    {
         copyTo.NoteType = this.NoteType;
         copyTo.Key = this.Key;
         copyTo.EndKey = this.EndKey;

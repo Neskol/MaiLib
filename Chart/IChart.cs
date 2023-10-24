@@ -39,7 +39,7 @@ internal interface IChart
     ///     Rotate the notes by specified method.
     /// </summary>
     /// <param name="method">Clockwise90, Clockwise 180, Counterclockwise90, Counterclockwise 180, UpSideDown, LeftToRight</param>
-    void RotateNotes(string method);
+    void RotateNotes(NoteEnum.FlipMethod method);
 
     /// <summary>
     ///     Get appropriate time stamp of given tick

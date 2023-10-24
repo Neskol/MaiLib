@@ -27,7 +27,7 @@ internal interface INote
     ///     Flip the note according to the method specified
     /// </summary>
     /// <param name="method">UpSideDown, LeftToRight, Clockwise90/180, Counterclockwise90/180</param>
-    void Flip(string method);
+    void Flip(NoteEnum.FlipMethod method);
 
     /// <summary>
     ///     Give time stamp given overall tick

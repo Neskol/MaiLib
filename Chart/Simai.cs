@@ -1,4 +1,7 @@
 namespace MaiLib;
+using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
+using System.Text;
 
 public class Simai : Chart
 {
@@ -8,11 +11,8 @@ public class Simai : Chart
     /// </summary>
     public Simai()
     {
-        Notes = new List<Note>();
-        BPMChanges = new BPMChanges();
-        MeasureChanges = new MeasureChanges();
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Simai;
     }
 
     /// <summary>
@@ -26,7 +26,6 @@ public class Simai : Chart
         Notes = new List<Note>(chart.Notes);
         BPMChanges = new BPMChanges(chart.BPMChanges);
         MeasureChanges = new MeasureChanges(chart.MeasureChanges);
-        StoredChart = new List<List<Note>>();
         Information = new Dictionary<string, string>(chart.Information);
         Update();
     }
@@ -42,8 +41,6 @@ public class Simai : Chart
         Notes = notes;
         BPMChanges = bpmChanges;
         MeasureChanges = measureChanges;
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
         Update();
     }
 
@@ -52,8 +49,6 @@ public class Simai : Chart
         Notes = takenIn.Notes;
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
         Update();
     }
     #endregion
@@ -70,7 +65,7 @@ public class Simai : Chart
         foreach (var candidate in Notes)
         {
             maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
-            if (candidate.NoteSpecificGenre.Equals("SLIDE") || candidate.NoteSpecificGenre.Equals("SLIDE_GROUP"))
+            if (candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE || candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP)
             {
                 slideNotesOfChart.Add((Slide)candidate);
                 processedSlideDic.Add((Slide)candidate, false);
@@ -82,18 +77,18 @@ public class Simai : Chart
 
         var processedSlidesCount = 0;
 
-        foreach (KeyValuePair<Slide,bool> parentPair in processedSlideDic)
+        foreach (KeyValuePair<Slide, bool> parentPair in processedSlideDic)
         {
             var parentSlide = parentPair.Key;
             maximumBar = parentSlide.Bar > maximumBar ? parentSlide.Bar : maximumBar;
-            if (!parentPair.Value && parentSlide.NoteSpecialState != Note.SpecialState.ConnectingSlide)
+            if (!parentPair.Value && parentSlide.NoteSpecialState != SpecialState.ConnectingSlide)
             {
                 SlideGroup currentGroup = new();
                 currentGroup.AddConnectingSlide(parentSlide);
-                foreach (KeyValuePair<Slide,bool> candidatePair in processedSlideDic)
+                foreach (KeyValuePair<Slide, bool> candidatePair in processedSlideDic)
                 {
                     var candidate = candidatePair.Key;
-                    if (candidate != parentSlide && candidate.NoteSpecialState == Note.SpecialState.ConnectingSlide &&
+                    if (candidate != parentSlide && candidate.NoteSpecialState == SpecialState.ConnectingSlide &&
                         candidate.TickStamp == currentGroup.LastSlide.LastTickStamp &&
                         candidate.Key.Equals(currentGroup.LastSlide.EndKey) && !candidatePair.Value)
                     {
@@ -126,7 +121,7 @@ public class Simai : Chart
             if (!x.Value)
             {
                 Slide normalSlide = new Slide(x.Key);
-                normalSlide.NoteSpecialState = Note.SpecialState.Normal;
+                normalSlide.NoteSpecialState = SpecialState.Normal;
                 adjusted.Add(normalSlide);
                 processedSlidesCount++;
             }
@@ -143,7 +138,7 @@ public class Simai : Chart
                 if (!x.Value)
                 {
                     errorMsg += x.Key.Compose(1) + ", " + x.Key.TickStamp;
-                    if (x.Key.NoteSpecialState is Note.SpecialState.ConnectingSlide)
+                    if (x.Key.NoteSpecialState is SpecialState.ConnectingSlide)
                     {
                         errorMsg += ", and it is a connecting slide";
                     }
@@ -156,12 +151,11 @@ public class Simai : Chart
                 errorMsg += x.Compose(0) + "\n";
                 if (x is SlideGroup)
                 {
-                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup).LastSlide.Compose(1)+"\n";
+                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(0))).LastSlide.Compose(1) + "\n";
                 }
-
             }
             throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +
-                                                ", Actual:" + processedSlidesCount +", Skipped: "+ processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
+                                                ", Actual:" + processedSlidesCount + ", Skipped: " + processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
         }
         Notes = new List<Note>(adjusted);
     }
@@ -174,13 +168,13 @@ public class Simai : Chart
         foreach (var x in Notes)
         {
             var eachCandidateCombined = false;
-            if (!(x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_START") ||
-                  x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
+            if (!(x.NoteSpecificGenre is NoteSpecificGenre.SLIDE || x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ||
+                  x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
             {
                 adjusted.Add(x);
                 processedNotes++;
             }
-            else if (composedCandidates.Count > 0 && x.NoteSpecificGenre.Equals("SLIDE_START"))
+            else if (composedCandidates.Count > 0 && x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START)
             {
                 foreach (var parent in composedCandidates)
                 {
@@ -191,7 +185,7 @@ public class Simai : Chart
                 }
             }
             else if (composedCandidates.Count > 0 &&
-                     (x.NoteSpecificGenre.Equals("SLIDE") || x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
+                     (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE || x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
             {
                 foreach (var parent in composedCandidates)
                 {
@@ -201,9 +195,9 @@ public class Simai : Chart
                 }
             }
 
-            if (!eachCandidateCombined && (x.NoteSpecificGenre.Equals("SLIDE") ||
-                                           x.NoteSpecificGenre.Equals("SLIDE_START") ||
-                                           x.NoteSpecificGenre.Equals("SLIDE_GROUP")))
+            if (!eachCandidateCombined && (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE ||
+                                           x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ||
+                                           x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
             {
                 composedCandidates.Add(new SlideEachSet(x));
                 processedNotes++;
@@ -217,7 +211,7 @@ public class Simai : Chart
 
     public override string Compose()
     {
-        var result = "";
+        StringBuilder result = new StringBuilder();
         var delayBar = TotalDelay / 384 + 2;
         //Console.WriteLine(chart.Compose());
         //foreach (BPMChange x in chart.BPMChanges.ChangeNotes)
@@ -226,7 +220,7 @@ public class Simai : Chart
         //}
         var firstBpm = new List<Note>();
         foreach (var bpm in Notes)
-            if (bpm.NoteSpecificGenre.Equals("BPM"))
+            if (bpm.NoteSpecificGenre is NoteSpecificGenre.BPM)
                 firstBpm.Add(bpm);
         // if (firstBpm.Count > 1)
         // {
@@ -240,33 +234,37 @@ public class Simai : Chart
             //result += bar[1].Bar;
             foreach (var x in bar)
             {
+                //if (x.Bar == 6)
+                //{
+                //    Console.WriteLine("This is bar 6");
+                //}
                 switch (lastNote.NoteSpecificGenre)
                 {
-                    case "MEASURE":
+                    case NoteSpecificGenre.MEASURE:
                         currentQuaver = (lastNote as MeasureChange ??
                                          throw new Exception("This note is not measure change")).Quaver;
                         break;
-                    case "BPM":
+                    case NoteSpecificGenre.BPM:
                         break;
                     default:
-                        if (x.IsOfSameTime(lastNote))
+                        if (x.IsOfSameTime(lastNote) && x.IsNote && lastNote.IsNote)
                         {
-                            result += "/";
+                            result.Append("/");
                         }
                         else
                         {
-                            result += ",";
+                            result.Append(",");
                             commaCompiled++;
                         }
 
                         break;
                 }
 
-                result += x.Compose(0);
+                result.Append(x.Compose(0));
                 lastNote = x;
             }
 
-            result += ",\n";
+            result.Append(",\n");
             commaCompiled++;
             if (commaCompiled != currentQuaver)
             {
@@ -279,9 +277,9 @@ public class Simai : Chart
             }
         }
 
-        for (var i = 0; i < delayBar + 1; i++) result += "{1},\n";
-        result += "E\n";
-        return result;
+        for (var i = 0; i < delayBar + 1; i++) result.Append("{1},\n");
+        result.Append("E\n");
+        return result.ToString();
     }
 
     public override bool CheckValidity()

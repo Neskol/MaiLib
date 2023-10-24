@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Tap note
@@ -6,53 +7,12 @@
 public class Tap : Note
 {
     /// <summary>
-    ///     The allowed tap type
-    /// </summary>
-    public enum TapType
-    {
-        /// <summary>
-        ///     Normal tap
-        /// </summary>
-        TAP,
-
-        /// <summary>
-        ///     Start of a slide
-        /// </summary>
-        STR,
-
-        /// <summary>
-        ///     Start of a slide but have no consecutive slide following
-        /// </summary>
-        NST,
-
-        /// <summary>
-        ///     Touch Note
-        /// </summary>
-        TTP
-    }
-
-    /// <summary>
-    ///     Stores enums of accepting tap notes
-    /// </summary>
-    /// <value></value>
-    private readonly string[] allowedType = { "TAP", "STR", "BRK", "BST", "XTP", "XST", "TTP", "NST" };
-
-    /// <summary>
-    ///     Stores if the Touch note have special effect
-    /// </summary>
-    private int specialEffect;
-
-    /// <summary>
-    ///     Stores how big the note is: M1 for Regular and L1 for large
-    /// </summary>
-    private string touchSize;
-
-    /// <summary>
     ///     Empty Constructor Tap Note
     /// </summary>
     public Tap()
     {
-        touchSize = "M1";
+        TouchSize = "M1";
+        SpecialEffect = false;
         Update();
     }
 
@@ -64,14 +24,14 @@ public class Tap : Note
     /// <param name="key">0-7 representing each key</param>
     /// <param name="bar">Bar location</param>
     /// <param name="startTime">Start Location</param>
-    public Tap(string noteType, int bar, int startTime, string key)
+    public Tap(NoteType noteType, int bar, int startTime, string key)
     {
         NoteType = noteType;
         Key = key;
         Bar = bar;
         Tick = startTime;
-        specialEffect = 0;
-        touchSize = "M1";
+        SpecialEffect = false;
+        TouchSize = "M1";
         Update();
     }
 
@@ -84,14 +44,14 @@ public class Tap : Note
     /// <param name="key">Key</param>
     /// <param name="specialEffect">Effect after touch</param>
     /// <param name="touchSize">L=larger notes M=Regular</param>
-    public Tap(string noteType, int bar, int startTime, string key, int specialEffect, string touchSize)
+    public Tap(NoteType noteType, int bar, int startTime, string key, bool specialEffect, string touchSize)
     {
         NoteType = noteType;
         Key = key;
         Bar = bar;
         Tick = startTime;
-        this.specialEffect = specialEffect;
-        this.touchSize = touchSize;
+        SpecialEffect = specialEffect;
+        TouchSize = touchSize;
         Update();
     }
 
@@ -104,39 +64,21 @@ public class Tap : Note
     {
         inTake.CopyOver(this);
         //NoteType = inTake.NoteGenre.Equals("TAP") ? inTake.NoteType : "TAP";
-        if (inTake.NoteGenre == "TAP")
+        if (inTake.NoteGenre is NoteEnum.NoteGenre.TAP)
         {
-            touchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
+            TouchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
             SpecialEffect = ((Tap)inTake).SpecialEffect;
         }
         else
         {
-            touchSize = "M1";
-            SpecialEffect = 0;
-            NoteType = "TAP";
+            TouchSize = "M1";
+            SpecialEffect = false;
+            NoteType = NoteType.TAP;
         }
     }
 #endregion
 
-    /// <summary>
-    ///     Return this.specialEffect
-    /// </summary>
-    public int SpecialEffect
-    {
-        get => specialEffect;
-        set => specialEffect = value;
-    }
-
-    /// <summary>
-    ///     Return this.touchSize
-    /// </summary>
-    public string TouchSize
-    {
-        get => touchSize;
-        set => touchSize = value;
-    }
-
-    public override string NoteGenre => "TAP";
+    public override NoteGenre NoteGenre => NoteGenre.TAP;
 
     public override bool IsNote =>
         // if (this.NoteType.Equals("NST"))
@@ -146,53 +88,33 @@ public class Tap : Note
         // else return true;
         true;
 
-    public override string NoteSpecificGenre
+    public override NoteSpecificGenre NoteSpecificGenre
     {
         get
         {
-            var result = "";
+            NoteSpecificGenre result;
             switch (NoteType)
             {
-                case "TAP":
-                    result += "TAP";
+
+                case NoteType.STR:
+                case NoteType.NST:
+                case NoteType.NSS:
+                    result = NoteSpecificGenre.SLIDE_START;
                     break;
-                case "STR":
-                    result += "SLIDE_START";
-                    break;
-                case "BRK":
-                    result += "TAP";
-                    break;
-                case "BST":
-                    result += "SLIDE_START";
-                    break;
-                case "XTP":
-                    result += "TAP";
-                    break;
-                case "XST":
-                    result += "SLIDE_START";
-                    break;
-                case "TTP":
-                    result += "TAP";
-                    break;
-                case "NST":
-                    result += "SLIDE_START";
-                    break;
-                case "NSS":
-                    result += "SLIDE_START";
+                case NoteType.TTP:
+                case NoteType.TAP:
+                default:
+                    result = NoteSpecificGenre.TAP;
                     break;
             }
-
             return result;
         }
     }
 
+    //TODO: REWRITE THIS
     public override bool CheckValidity()
     {
-        var result = false;
-        foreach (var x in allowedType) result = result || NoteType.Equals(x);
-        result = result && NoteType.Length == 3;
-        result = result && Key.Length <= 2;
-        return result;
+        return true;
     }
 
     public override string Compose(int format)
@@ -214,12 +136,12 @@ public class Tap : Note
                      Tick + "\t" +
                      Key.ToCharArray()[1] + "\t" +
                      Key.ToCharArray()[0] + "\t" +
-                     specialEffect + "\t" +
-                     touchSize; //M1 for regular note and L1 for Larger Note
+                     SpecialEffect + "\t" +
+                     TouchSize; //M1 for regular note and L1 for Larger Note
         else if (format == 0)
             switch (NoteType)
             {
-                case "TAP":
+                case NoteType.TAP:
                     result += (int.Parse(Key) + 1).ToString();
                     if (NoteSpecialState == SpecialState.Break)
                         result += "b";
@@ -227,7 +149,18 @@ public class Tap : Note
                         result += "x";
                     else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
                     break;
-                case "STR":
+                case NoteType.NSS:
+                    result += (int.Parse(Key) + 1).ToString() + "$";
+                    if (NoteSpecialState == SpecialState.Break)
+                        result += "b";
+                    else if (NoteSpecialState == SpecialState.EX)
+                        result += "x";
+                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                    break;
+                case NoteType.NST:
+                    result += (int.Parse(Key) + 1).ToString() + "!";
+                    break;
+                case NoteType.STR:
                     result += (int.Parse(Key) + 1).ToString();
                     if (NoteSpecialState == SpecialState.Break)
                         result += "b";
@@ -235,29 +168,14 @@ public class Tap : Note
                         result += "x";
                     else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
                     break;
-                case "BRK":
-                    result += (int.Parse(Key) + 1) + "b";
-                    break;
-                case "BST":
-                    result += (int.Parse(Key) + 1) + "b";
-                    break;
-                case "XTP":
-                    result += (int.Parse(Key) + 1) + "x";
-                    break;
-                case "XST":
-                    result += (int.Parse(Key) + 1) + "x";
-                    break;
-                case "NST":
-                    result += (int.Parse(Key) + 1) + "!";
-                    break;
-                case "TTP":
+                case NoteType.TTP:
                     result += Key.ToCharArray()[1] + (Convert.ToInt32(Key.Substring(0, 1)) + 1).ToString();
                     if (NoteSpecialState == SpecialState.Break)
                         result += "b";
                     else if (NoteSpecialState == SpecialState.EX)
                         result += "x";
                     else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    if (SpecialEffect == 1) result += "f";
+                    if (SpecialEffect) result += "f";
                     break;
             }
 

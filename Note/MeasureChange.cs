@@ -49,11 +49,11 @@ public class MeasureChange : Note
     /// <value>Quaver</value>
     public int Quaver { get; }
 
-    public override string NoteGenre => "MEASURE";
+    public override NoteEnum.NoteGenre NoteGenre => NoteEnum.NoteGenre.MEASURE;
 
     public override bool IsNote => false;
 
-    public override string NoteSpecificGenre => "MEASURE";
+    public override NoteEnum.NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.MEASURE;
 
     public override bool CheckValidity()
     {

@@ -1,114 +1,16 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
 
 /// <summary>
 ///     Construct a Slide note (With START!)
 /// </summary>
 public class Slide : Note
 {
-    /// <summary>
-    ///     Defines the special property of the slide
-    /// </summary>
-    public enum SlideProperty
-    {
-        /// <summary>
-        ///     Normal Slide
-        /// </summary>
-        Normal,
-
-        /// <summary>
-        ///     Slide without Start Tap
-        /// </summary>
-        NoStart,
-
-        /// <summary>
-        ///     Connecting Slide
-        /// </summary>
-        Connecting
-    }
-
-    /// <summary>
-    ///     Defines what type of slide could be used
-    /// </summary>
-    public enum SlideType
-    {
-        #region SlideDescription
-
-        /// <summary>
-        ///     Straight Slide
-        /// </summary>
-        SI_,
-
-        /// <summary>
-        ///     Left circle slide aka Counterclockwise
-        /// </summary>
-        SCL,
-
-        /// <summary>
-        ///     Right circle slide aka Clockwise
-        /// </summary>
-        SCR,
-
-        /// <summary>
-        ///     Line not intercepting Crossing Center
-        /// </summary>
-        SV_,
-
-        /// <summary>
-        ///     U Star Left
-        /// </summary>
-        SUL,
-
-        /// <summary>
-        ///     U Star Right
-        /// </summary>
-        SUR,
-
-        /// <summary>
-        ///     Wifi Star
-        /// </summary>
-        SF_,
-
-        /// <summary>
-        ///     Inflecting Line Left
-        /// </summary>
-        SLL,
-
-        /// <summary>
-        ///     Inflecting Line Right
-        /// </summary>
-        SLR,
-
-        /// <summary>
-        ///     Self-winding Left
-        /// </summary>
-        SXL,
-
-        /// <summary>
-        ///     Self-winding Right
-        /// </summary>
-        SXR,
-
-        /// <summary>
-        ///     S Star
-        /// </summary>
-        SSL,
-
-        /// <summary>
-        ///     Z Star
-        /// </summary>
-        SSR
-
-        #endregion
-    }
-
-    private readonly string[] allowedType =
-        { "SI_", "SV_", "SF_", "SCL", "SCR", "SUL", "SUR", "SLL", "SLR", "SXL", "SXR", "SSL", "SSR" };
-
-#region Constructors
+    #region Constructors
     /// <summary>
     ///     Empty Constructor
     /// </summary>
-    public Slide(){}
+    public Slide() { }
 
     /// <summary>
     ///     Construct a Slide Note (Valid only if Start Key matches a start!)
@@ -122,7 +24,7 @@ public class Slide : Note
     /// <param name="startTime">Start Time</param>
     /// <param name="lastTime">Last Time</param>
     /// <param name="endKey">0-7</param>
-    public Slide(string noteType, int bar, int startTime, string key, int waitTime, int lastTime, string endKey)
+    public Slide(NoteType noteType, int bar, int startTime, string key, int waitTime, int lastTime, string endKey)
     {
         NoteType = noteType;
         Key = key;
@@ -145,19 +47,16 @@ public class Slide : Note
     }
     #endregion
 
-    public override string NoteGenre => "SLIDE";
+    public override NoteGenre NoteGenre => NoteGenre.SLIDE;
 
     public override bool IsNote => true;
 
-    public override string NoteSpecificGenre => "SLIDE";
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.SLIDE;
 
+    //TODO: REWRITE THIS
     public override bool CheckValidity()
     {
-        var result = false;
-        foreach (var x in allowedType) result = result || NoteType.Equals(x);
-        result = result && NoteType.Length == 3;
-        result = result && Key.Length <= 2;
-        return result;
+        return true;
     }
 
     public override string Compose(int format)
@@ -172,49 +71,49 @@ public class Slide : Note
         {
             switch (NoteType)
             {
-                case "SI_":
+                case NoteType.SI_:
                     result += "-";
                     break;
-                case "SV_":
+                case NoteType.SV_:
                     result += "v";
                     break;
-                case "SF_":
+                case NoteType.SF_:
                     result += "w";
                     break;
-                case "SCL":
+                case NoteType.SCL:
                     if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
                         result += "<";
                     else
                         result += ">";
                     break;
-                case "SCR":
+                case NoteType.SCR:
                     if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
                         result += ">";
                     else
                         result += "<";
                     break;
-                case "SUL":
+                case NoteType.SUL:
                     result += "p";
                     break;
-                case "SUR":
+                case NoteType.SUR:
                     result += "q";
                     break;
-                case "SSL":
+                case NoteType.SSL:
                     result += "s";
                     break;
-                case "SSR":
+                case NoteType.SSR:
                     result += "z";
                     break;
-                case "SLL":
+                case NoteType.SLL:
                     result += "V" + GenerateInflection(this);
                     break;
-                case "SLR":
+                case NoteType.SLR:
                     result += "V" + GenerateInflection(this);
                     break;
-                case "SXL":
+                case NoteType.SXL:
                     result += "pp";
                     break;
-                case "SXR":
+                case NoteType.SXR:
                     result += "qq";
                     break;
             }
@@ -251,9 +150,9 @@ public class Slide : Note
     public static int GenerateInflection(Note x)
     {
         var result = int.Parse(x.Key) + 1;
-        if (x.NoteType.Equals("SLR"))
+        if (x.NoteType is NoteType.SLR)
             result += 2;
-        else if (x.NoteType.Equals("SLL")) result -= 2;
+        else if (x.NoteType is NoteType.SLL) result -= 2;
 
         if (result > 8)
             result -= 8;
@@ -267,10 +166,10 @@ public class Slide : Note
             else if (result <= 4) result += 4;
 
             //Deal with note type;
-            if (x.NoteType.Equals("SLL"))
-                x.NoteType = "SLR";
-            else if (x.NoteType.Equals("SLR"))
-                x.NoteType = "SLL";
+            if (x.NoteType is NoteType.SLL)
+                x.NoteType = NoteType.SLR;
+            else if (x.NoteType is NoteType.SLR)
+                x.NoteType = NoteType.SLL;
             else
                 throw new InvalidDataException("INFLECTION POINT IS THE SAME WITH ONE OF THE KEY!");
         }

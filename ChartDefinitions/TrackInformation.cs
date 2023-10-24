@@ -48,7 +48,7 @@ public abstract class TrackInformation : IXmlUtility
         "DX UNiVERSE PLUS", "FESTiVAL", "FESTiVAL PLUS", "FESTiVAL PLUS"
     }; // TODO: Convert to enum
 
-    public static string[] versionArray;
+    // public static string[] versionArray;
     public static Dictionary<string, string> netOpenNameDic = new();
     public static Dictionary<string, string> releaseTagNameDic = new();
     public static Dictionary<string, string> rightsInfoDic = new();

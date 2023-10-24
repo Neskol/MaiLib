@@ -1,4 +1,7 @@
 ﻿namespace MaiLib;
+using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
+using System.Text;
 
 /// <summary>
 ///     Implementation of chart in ma2 format.
@@ -11,11 +14,8 @@ public class Ma2 : Chart, ICompiler
     /// </summary>
     public Ma2()
     {
-        Notes = new List<Note>();
-        BPMChanges = new BPMChanges();
-        MeasureChanges = new MeasureChanges();
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
+        ChartType = ChartType.Standard;
+        ChartType = ChartType.DX;
     }
 
     /// <summary>
@@ -29,8 +29,6 @@ public class Ma2 : Chart, ICompiler
         Notes = new List<Note>(notes);
         BPMChanges = new BPMChanges(bpmChanges);
         MeasureChanges = new MeasureChanges(measureChanges);
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
         Update();
     }
 
@@ -89,32 +87,38 @@ public class Ma2 : Chart, ICompiler
 
     public override string Compose()
     {
-        var result = "";
-        const string header1 = "VERSION\t0.00.00\t1.03.00\nFES_MODE\t0\n";
-        const string header2 = "RESOLUTION\t384\nCLK_DEF\t384\nCOMPATIBLE_CODE\tMA2\n";
-        result += header1;
-        result += BPMChanges.InitialChange;
-        result += MeasureChanges.InitialChange;
-        result += header2;
-        result += "\n";
+        Update();
+        StringBuilder result = new StringBuilder();
+        string targetVersion;
+        switch (ChartVersion)
+        {
+            case ChartVersion.Ma2_103:
+                targetVersion = "1.03.00";
+                break;
+            case ChartVersion.Ma2_104:
+                targetVersion = "1.04.00";
+                break;
+            default:
+                throw new InvalidOperationException("Given Chart Type is not valid for MA2 composition. Type given: " + ChartVersion);
+        }
+        string header1 = "VERSION\t0.00.00\t" + targetVersion + "\nFES_MODE\t0\n";
+        string header2 = "RESOLUTION\t" + Definition + "\nCLK_DEF\t" + Definition + "\nCOMPATIBLE_CODE\tMA2\n";
+        result.Append(header1);
+        result.Append(BPMChanges.InitialChange);
+        result.Append(MeasureChanges.InitialChange);
+        result.Append(header2);
+        result.Append("\n");
 
-        result += BPMChanges.Compose();
-        result += MeasureChanges.Compose();
-        result += "\n";
+        result.Append(BPMChanges.Compose());
+        result.Append(MeasureChanges.Compose());
+        result.Append("\n");
 
-        //foreach (Note x in this.Notes)
-        //{
-        //    if (!x.Compose(1).Equals(""))
-        //    {
-        //        result += x.Compose(1) + "\n";
-        //    }
-        //}
         foreach (var bar in StoredChart)
-        foreach (var x in bar)
-            if (!x.Compose(1).Equals(""))
-                result += x.Compose(1) + "\n";
-        result += "\n";
-        return result;
+            foreach (var x in bar)
+                if (!x.Compose(1).Equals(""))
+                    result.Append(x.Compose(1) + "\n");
+        result.Append("\n");
+        return result.ToString();
     }
 
     /// <summary>
@@ -128,13 +132,13 @@ public class Ma2 : Chart, ICompiler
         foreach (var x in Notes)
             switch (x.NoteSpecificGenre)
             {
-                case "SLIDE_EACH":
+                case NoteEnum.NoteSpecificGenre.SLIDE_EACH:
                     var candidate = x as SlideEachSet ??
                                     throw new InvalidOperationException("THIS IS NOT A SLIDE EACH");
                     if (candidate.SlideStart != null) adjusted.Add(candidate.SlideStart);
                     if (candidate.InternalSlides.Count > 0) slideCandidates.AddRange(candidate.InternalSlides);
                     break;
-                case "SLIDE_GROUP":
+                case NoteEnum.NoteSpecificGenre.SLIDE_GROUP:
                     var groupCandidate = x as SlideGroup ??
                                          throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
                     if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
@@ -147,7 +151,7 @@ public class Ma2 : Chart, ICompiler
         foreach (var x in slideCandidates)
             switch (x.NoteSpecificGenre)
             {
-                case "SLIDE_GROUP":
+                case NoteSpecificGenre.SLIDE_GROUP:
                     var groupCandidate = x as SlideGroup ??
                                          throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
                     if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
@@ -168,22 +172,38 @@ public class Ma2 : Chart, ICompiler
     /// <returns>Good Brother with override array</returns>
     public override string Compose(BPMChanges bpm, MeasureChanges measure)
     {
-        var result = "";
-        const string header1 = "VERSION\t0.00.00\t1.03.00\nFES_MODE\t0\n";
-        const string header2 = "RESOLUTION\t384\nCLK_DEF\t384\nCOMPATIBLE_CODE\tMA2\n";
-        result += header1;
-        result += bpm.InitialChange;
-        result += measure.InitialChange;
-        result += header2;
-        result += "\n";
+        Update();
+        StringBuilder result = new StringBuilder();
+        string targetVersion;
+        switch (ChartVersion)
+        {
+            case ChartVersion.Ma2_103:
+                targetVersion = "1.03.00";
+                break;
+            case ChartVersion.Ma2_104:
+                targetVersion = "1.04.00";
+                break;
+            default:
+                throw new InvalidOperationException("Given Chart Type is not valid for MA2 composition. Type given: " + ChartVersion);
+        }
+        string header1 = "VERSION\t0.00.00\t" + targetVersion + "\nFES_MODE\t0\n";
+        string header2 = "RESOLUTION\t" + Definition + "\nCLK_DEF\t" + Definition + "\nCOMPATIBLE_CODE\tMA2\n";
+        result.Append(header1);
+        result.Append(bpm.InitialChange);
+        result.Append(measure.InitialChange);
+        result.Append(header2);
+        result.Append("\n");
 
-        result += bpm.Compose();
-        result += measure.Compose();
-        result += "\n";
+        result.Append(bpm.Compose());
+        result.Append(measure.Compose());
+        result.Append("\n");
 
-        foreach (var y in Notes) result += y.Compose(1) + "\n";
-        result += "\n";
-        return result;
+        foreach (var bar in StoredChart)
+            foreach (var x in bar)
+                if (!x.Compose(1).Equals(""))
+                    result.Append(x.Compose(1) + "\n");
+        result.Append("\n");
+        return result.ToString();
     }
 
     public override void Update()
