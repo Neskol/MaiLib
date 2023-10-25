@@ -43,6 +43,8 @@ public class Simai : Chart
         Notes = notes;
         BPMChanges = bpmChanges;
         MeasureChanges = measureChanges;
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Simai;
         Update();
     }
 
@@ -51,6 +53,8 @@ public class Simai : Chart
         Notes = takenIn.Notes;
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Simai;
         Update();
     }
     #endregion
