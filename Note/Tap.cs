@@ -164,8 +164,8 @@ public class Tap : Note
                 result = NoteType is NoteType.TTP ? typeCandidate + "\t" +
                  Bar + "\t" +
                  Tick + "\t" +
-                 KeyGroup + "\t" +
                  KeyNum + "\t" +
+                 KeyGroup + "\t" +
                  (SpecialEffect? 1:0) + "\t" +
                  TouchSize : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
                 break;
@@ -189,8 +189,8 @@ public class Tap : Note
                 result = NoteType is NoteType.TTP ? typeCandidate + "\t" +
                  Bar + "\t" +
                  Tick + "\t" +
-                 KeyGroup + "\t" +
                  KeyNum + "\t" +
+                 KeyGroup + "\t" +
                  (SpecialEffect ? 1 : 0) + "\t" +
                  TouchSize : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
                 break;

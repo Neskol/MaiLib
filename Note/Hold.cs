@@ -112,6 +112,25 @@ public class Hold : Note
                         result = typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
                         break;
                     case ChartVersion.Ma2_104:
+                        switch (NoteSpecialState)
+                        {
+                            case SpecialState.EX:
+                                result += "EX";
+                                break;
+                            case SpecialState.Break:
+                                result += "BR";
+                                break;
+                            case SpecialState.BreakEX:
+                                result += "BX";
+                                break;
+                            case SpecialState.ConnectingSlide:
+                                result += "CN";
+                                break;
+                            default:
+                                result += "NM";
+                                break;
+                        }
+                        result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
                         break;
                 }
                 break;
