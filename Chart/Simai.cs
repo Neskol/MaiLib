@@ -27,6 +27,8 @@ public class Simai : Chart
         BPMChanges = new BPMChanges(chart.BPMChanges);
         MeasureChanges = new MeasureChanges(chart.MeasureChanges);
         Information = new Dictionary<string, string>(chart.Information);
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Simai;
         Update();
     }
 

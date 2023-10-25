@@ -15,7 +15,7 @@ public class Ma2 : Chart, ICompiler
     public Ma2()
     {
         ChartType = ChartType.Standard;
-        ChartType = ChartType.DX;
+        ChartVersion = ChartVersion.Ma2_103;
     }
 
     /// <summary>
@@ -29,6 +29,8 @@ public class Ma2 : Chart, ICompiler
         Notes = new List<Note>(notes);
         BPMChanges = new BPMChanges(bpmChanges);
         MeasureChanges = new MeasureChanges(measureChanges);
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Ma2_103;
         Update();
     }
 
@@ -45,6 +47,8 @@ public class Ma2 : Chart, ICompiler
         MeasureChanges = new MeasureChanges(takenIn.MeasureChanges);
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Ma2_103;
         Update();
     }
 
@@ -60,6 +64,8 @@ public class Ma2 : Chart, ICompiler
         MeasureChanges = takenIn.MeasureChanges;
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Ma2_103;
         Update();
     }
 
@@ -74,6 +80,8 @@ public class Ma2 : Chart, ICompiler
         MeasureChanges = new MeasureChanges(takenIn.MeasureChanges);
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Ma2_103;
         Update();
     }
     #endregion
