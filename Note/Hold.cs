@@ -100,6 +100,7 @@ public class Hold : Note
                         else if (NoteSpecialState == SpecialState.EX)
                             result += "x";
                         else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                        if (SpecialEffect) result += "f";
                         result += "h";
                         if (TickBPMDisagree || Delayed)
                             result += GenerateAppropriateLength(FixedLastLength);

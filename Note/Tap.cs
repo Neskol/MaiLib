@@ -147,6 +147,7 @@ public class Tap : Note
                 else if (NoteSpecialState == SpecialState.EX)
                     result += "x";
                 else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                if (SpecialEffect) result += "f";
                 if (format is ChartVersion.Debug) result += "_" + Tick;
                 break;
             case ChartVersion.Ma2_103:
