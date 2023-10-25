@@ -1,4 +1,6 @@
 ﻿namespace MaiLib;
+using static NoteEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     Defines measure change note that indicates a measure change in bar.
@@ -11,6 +13,7 @@ public class MeasureChange : Note
     /// </summary>
     public MeasureChange()
     {
+        NoteType = NoteType.MEASURE;
         Tick = 0;
         Quaver = 0;
         Update();
@@ -24,6 +27,7 @@ public class MeasureChange : Note
     /// <param name="Quaver">Quaver</param>
     public MeasureChange(int bar, int tick, int quaver)
     {
+        NoteType = NoteType.MEASURE;
         Bar = bar;
         Tick = tick;
         Quaver = quaver;
@@ -36,6 +40,7 @@ public class MeasureChange : Note
     /// <param name="takeIn">Another measure change note</param>
     public MeasureChange(MeasureChange takeIn)
     {
+        NoteType = NoteType.MEASURE;
         Bar = takeIn.Bar;
         Tick = takeIn.Tick;
         Quaver = takeIn.Quaver;
@@ -60,12 +65,18 @@ public class MeasureChange : Note
         return Quaver > 0;
     }
 
-    public override string Compose(int format)
+    public override string Compose(ChartVersion format)
     {
-        var result = "";
-        if (format == 0) result += "{" + Quaver + "}";
-        //result += "{" + this.Quaver+"_"+this.Tick + "}";
-        return result;
+        switch (format)
+        {
+            case ChartVersion.Simai:
+            case ChartVersion.SimaiFes:
+                return "{" + Quaver + "}";
+            case ChartVersion.Debug:
+                return "{" + Quaver + "_" + Tick + "}";
+            default:
+                return "";
+        }
     }
 
     public override Note NewInstance()

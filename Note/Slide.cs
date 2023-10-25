@@ -1,5 +1,6 @@
 ﻿namespace MaiLib;
 using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
 
 /// <summary>
 ///     Construct a Slide note (With START!)
@@ -59,86 +60,112 @@ public class Slide : Note
         return true;
     }
 
-    public override string Compose(int format)
+    public override string Compose(ChartVersion format)
     {
         var result = "";
-        if (format == 1)
+        switch (format)
         {
-            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength + "\t" +
+            case ChartVersion.Simai:
+            case ChartVersion.SimaiFes:
+            default:
+                switch (NoteType)
+                {
+                    #region DetailedSlideTypes
+                    case NoteType.SI_:
+                        result += "-";
+                        break;
+                    case NoteType.SV_:
+                        result += "v";
+                        break;
+                    case NoteType.SF_:
+                        result += "w";
+                        break;
+                    case NoteType.SCL:
+                        if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
+                            result += "<";
+                        else
+                            result += ">";
+                        break;
+                    case NoteType.SCR:
+                        if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
+                            result += ">";
+                        else
+                            result += "<";
+                        break;
+                    case NoteType.SUL:
+                        result += "p";
+                        break;
+                    case NoteType.SUR:
+                        result += "q";
+                        break;
+                    case NoteType.SSL:
+                        result += "s";
+                        break;
+                    case NoteType.SSR:
+                        result += "z";
+                        break;
+                    case NoteType.SLL:
+                        result += "V" + GenerateInflection(this);
+                        break;
+                    case NoteType.SLR:
+                        result += "V" + GenerateInflection(this);
+                        break;
+                    case NoteType.SXL:
+                        result += "pp";
+                        break;
+                    case NoteType.SXR:
+                        result += "qq";
+                        break;
+                        #endregion
+                }
+
+                result += (EndKeyNum + 1).ToString();
+                if (NoteSpecialState == SpecialState.Break)
+                    result += "b";
+                else if (NoteSpecialState == SpecialState.EX)
+                    result += "x";
+                else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                if (TickBPMDisagree || Delayed)
+                {
+                    //result += GenerateAppropriateLength(this.LastLength, this.BPM);
+                    if (NoteSpecialState != SpecialState.ConnectingSlide)
+                        result += GenerateAppropriateLength(LastLength, BPM);
+                    else result += GenerateAppropriateLength(FixedLastLength);
+                }
+                else
+                {
+                    result += GenerateAppropriateLength(LastLength);
+                }
+                if (format is ChartVersion.Debug)
+                {
+                    result += "_" + this.Tick;
+                    result += "_" + this.Key;
+                }
+                break;
+            case ChartVersion.Ma2_103:
+                result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength + "\t" +
                      EndKey;
+                break;
+            case ChartVersion.Ma2_104:
+                switch (NoteSpecialState)
+                {
+                    case SpecialState.EX:
+                        result += "EX";
+                        break;
+                    case SpecialState.Break:
+                        result += "BR";
+                        break;
+                    case SpecialState.BreakEX:
+                        result += "BX";
+                        break;
+                    case SpecialState.ConnectingSlide:
+                        result += "CN";
+                        break;
+                }
+                result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength + "\t" +
+                 EndKey;
+                break;
         }
-        else if (format == 0)
-        {
-            switch (NoteType)
-            {
-                case NoteType.SI_:
-                    result += "-";
-                    break;
-                case NoteType.SV_:
-                    result += "v";
-                    break;
-                case NoteType.SF_:
-                    result += "w";
-                    break;
-                case NoteType.SCL:
-                    if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
-                        result += "<";
-                    else
-                        result += ">";
-                    break;
-                case NoteType.SCR:
-                    if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
-                        result += ">";
-                    else
-                        result += "<";
-                    break;
-                case NoteType.SUL:
-                    result += "p";
-                    break;
-                case NoteType.SUR:
-                    result += "q";
-                    break;
-                case NoteType.SSL:
-                    result += "s";
-                    break;
-                case NoteType.SSR:
-                    result += "z";
-                    break;
-                case NoteType.SLL:
-                    result += "V" + GenerateInflection(this);
-                    break;
-                case NoteType.SLR:
-                    result += "V" + GenerateInflection(this);
-                    break;
-                case NoteType.SXL:
-                    result += "pp";
-                    break;
-                case NoteType.SXR:
-                    result += "qq";
-                    break;
-            }
-
-            result += (Convert.ToInt32(EndKey) + 1).ToString();
-            if (NoteSpecialState == SpecialState.Break)
-                result += "b";
-            else if (NoteSpecialState == SpecialState.EX)
-                result += "x";
-            else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-            if (TickBPMDisagree || Delayed)
-            {
-                //result += GenerateAppropriateLength(this.LastLength, this.BPM);
-                if (NoteSpecialState != SpecialState.ConnectingSlide)
-                    result += GenerateAppropriateLength(LastLength, BPM);
-                else result += GenerateAppropriateLength(FixedLastLength);
-            }
-            else
-            {
-                result += GenerateAppropriateLength(LastLength);
-            }
-            //result += "_" + this.Tick;
-            //result += "_" + this.Key;
-        }
-
         return result;
     }
 
@@ -149,7 +176,7 @@ public class Slide : Note
     /// <returns>Infection point of this note</returns>
     public static int GenerateInflection(Note x)
     {
-        var result = int.Parse(x.Key) + 1;
+        var result = x.KeyNum + 1;
         if (x.NoteType is NoteType.SLR)
             result += 2;
         else if (x.NoteType is NoteType.SLL) result -= 2;
@@ -158,7 +185,7 @@ public class Slide : Note
             result -= 8;
         else if (result < 1) result += 8;
 
-        if (result == int.Parse(x.Key) + 1 || result == int.Parse(x.EndKey) + 1)
+        if (result == x.KeyNum + 1 || result == x.EndKeyNum + 1)
         {
             //Deal with result;
             if (result > 4)
@@ -171,7 +198,7 @@ public class Slide : Note
             else if (x.NoteType is NoteType.SLR)
                 x.NoteType = NoteType.SLL;
             else
-                throw new InvalidDataException("INFLECTION POINT IS THE SAME WITH ONE OF THE KEY!");
+                throw new InvalidDataException("INFLECTION CANNOT BE USED OTHER THAN SLL AND SLR!");
         }
 
         return result;

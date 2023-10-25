@@ -13,6 +13,7 @@ public class ChartEnum
     }
 
     public enum ChartVersion{
+        Debug,
         Simai,
         SimaiFes,
         Ma2_103,

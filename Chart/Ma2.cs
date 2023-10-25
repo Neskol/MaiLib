@@ -115,8 +115,8 @@ public class Ma2 : Chart, ICompiler
 
         foreach (var bar in StoredChart)
             foreach (var x in bar)
-                if (!x.Compose(1).Equals(""))
-                    result.Append(x.Compose(1) + "\n");
+                if (!x.Compose(ChartVersion).Equals(""))
+                    result.Append(x.Compose(ChartVersion) + "\n");
         result.Append("\n");
         return result.ToString();
     }
@@ -200,8 +200,8 @@ public class Ma2 : Chart, ICompiler
 
         foreach (var bar in StoredChart)
             foreach (var x in bar)
-                if (!x.Compose(1).Equals(""))
-                    result.Append(x.Compose(1) + "\n");
+                if (!x.Compose(ChartVersion).Equals(""))
+                    result.Append(x.Compose(ChartVersion) + "\n");
         result.Append("\n");
         return result.ToString();
     }

@@ -1,5 +1,6 @@
 ﻿namespace MaiLib;
 using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
 
 /// <summary>
 ///     Constructs Hold Note
@@ -82,49 +83,71 @@ public class Hold : Note
         return true;
     }
 
-    public override string Compose(int format)
+    public override string Compose(ChartVersion format)
     {
         var result = "";
-        if (format == 1 && !NoteType.Equals("THO"))
+        switch (NoteType)
         {
-            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
+            case NoteType.HLD:
+                switch (format)
+                {
+                    case ChartVersion.Simai:
+                    case ChartVersion.SimaiFes:
+                    default:
+                        result += KeyNum + 1;
+                        if (NoteSpecialState == SpecialState.Break)
+                            result += "b";
+                        else if (NoteSpecialState == SpecialState.EX)
+                            result += "x";
+                        else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                        result += "h";
+                        if (TickBPMDisagree || Delayed)
+                            result += GenerateAppropriateLength(FixedLastLength);
+                        else
+                            result += GenerateAppropriateLength(LastLength);
+                        if (format is ChartVersion.Debug) result += "_" + Tick;
+                        break;
+                    case ChartVersion.Ma2_103:
+                        string typeCandidate = NoteSpecialState is SpecialState.EX || NoteSpecialState is SpecialState.BreakEX ? "XHO" : NoteType.ToString();
+                        result = typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
+                        break;
+                    case ChartVersion.Ma2_104:
+                        break;
+                }
+                break;
+            case NoteType.THO:
+                switch (format)
+                {
+                    case ChartVersion.Simai:
+                    case ChartVersion.SimaiFes:
+                    default:
+                        result += KeyGroup + (KeyNum + 1).ToString();
+                        if (NoteSpecialState == SpecialState.Break)
+                            result += "b";
+                        else if (NoteSpecialState == SpecialState.EX)
+                            result += "x";
+                        else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                        result += "h";
+                        if (TickBPMDisagree || Delayed)
+                            result += GenerateAppropriateLength(FixedLastLength);
+                        else
+                            result += GenerateAppropriateLength(LastLength);
+                        if (format is ChartVersion.Debug) result += "_" + Tick;
+                        break;
+                    case ChartVersion.Ma2_103:
+                        result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" + KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
+                        break;
+                    case ChartVersion.Ma2_104:
+                        if (NoteSpecialState == SpecialState.Break)
+                            result += "BR";
+                        else if (NoteSpecialState == SpecialState.EX)
+                            result += "EX";
+                        else if (NoteSpecialState == SpecialState.BreakEX) result += "BX";
+                        result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" + KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
+                        break;
+                }
+                break;
         }
-        else if (format == 1 && NoteType.Equals("THO"))
-        {
-            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key.ToCharArray()[0] + "\t" + LastLength + "\t" +
-                     Key.ToCharArray()[1] + "\t" + SpecialEffect + "\tM1"; //M1 for regular note and L1 for Larger Note
-        }
-        else if (format == 0)
-        {
-            switch (NoteType)
-            {
-                case NoteType.HLD:
-                    result += Convert.ToInt32(Key) + 1;
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    result += "h";
-                    break;
-                case NoteType.THO:
-                    result += Key.ToCharArray()[1] + (Convert.ToInt32(Key.Substring(0, 1)) + 1).ToString();
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    if (SpecialEffect) result += "f";
-                    result += "h";
-                    break;
-            }
-
-            if (TickBPMDisagree || Delayed)
-                result += GenerateAppropriateLength(FixedLastLength);
-            else
-                result += GenerateAppropriateLength(LastLength);
-        }
-
         return result;
     }
 

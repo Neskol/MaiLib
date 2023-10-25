@@ -1,5 +1,6 @@
 ﻿namespace MaiLib;
 using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
 
 /// <summary>
 ///     Basic note
@@ -319,9 +320,36 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         return result;
     }
 
+    /// <summary>
+    /// Copies all note properties of copyFrom to copyTo
+    /// </summary>
+    /// <param name="copyTo"></param>
+    /// <param name="copyFrom"></param>
+    public void CopyOver(Note copyTo)
+    {
+        copyTo.NoteType = this.NoteType;
+        copyTo.Key = this.Key;
+        copyTo.EndKey = this.EndKey;
+        copyTo.Bar = this.Bar;
+        copyTo.Tick = this.Tick;
+        copyTo.TickStamp = this.TickStamp;
+        copyTo.TickTimeStamp = this.TickTimeStamp;
+        copyTo.LastLength = this.LastLength;
+        copyTo.LastTickStamp = this.LastTickStamp;
+        copyTo.LastTimeStamp = this.LastTimeStamp;
+        copyTo.WaitLength = this.WaitLength;
+        copyTo.WaitTickStamp = this.WaitTickStamp;
+        copyTo.WaitTimeStamp = this.WaitTimeStamp;
+        copyTo.CalculatedLastTime = this.CalculatedLastTime;
+        copyTo.CalculatedLastTime = this.CalculatedLastTime;
+        copyTo.TickBPMDisagree = this.TickBPMDisagree;
+        copyTo.BPM = this.BPM;
+        copyTo.BPMChangeNotes = this.BPMChangeNotes;
+    }
+
     public abstract bool CheckValidity();
 
-    public abstract string Compose(int format);
+    public abstract string Compose(ChartVersion format);
 
     public virtual void Flip(FlipMethod method)
     {
@@ -966,7 +994,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         if (result && obj != null)
         {
             var localNote = (Note)obj;
-            result = TickStamp == localNote.TickStamp && Compose(1).Equals(localNote.Compose(1));
+            result = TickStamp == localNote.TickStamp && Compose(ChartVersion.Ma2_104).Equals(localNote.Compose(ChartVersion.Ma2_104));
         }
 
         return result;
@@ -975,32 +1003,5 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     public override int GetHashCode()
     {
         return base.GetHashCode();
-    }
-
-    /// <summary>
-    /// Copies all note properties of copyFrom to copyTo
-    /// </summary>
-    /// <param name="copyTo"></param>
-    /// <param name="copyFrom"></param>
-    public void CopyOver(Note copyTo)
-    {
-        copyTo.NoteType = this.NoteType;
-        copyTo.Key = this.Key;
-        copyTo.EndKey = this.EndKey;
-        copyTo.Bar = this.Bar;
-        copyTo.Tick = this.Tick;
-        copyTo.TickStamp = this.TickStamp;
-        copyTo.TickTimeStamp = this.TickTimeStamp;
-        copyTo.LastLength = this.LastLength;
-        copyTo.LastTickStamp = this.LastTickStamp;
-        copyTo.LastTimeStamp = this.LastTimeStamp;
-        copyTo.WaitLength = this.WaitLength;
-        copyTo.WaitTickStamp = this.WaitTickStamp;
-        copyTo.WaitTimeStamp = this.WaitTimeStamp;
-        copyTo.CalculatedLastTime = this.CalculatedLastTime;
-        copyTo.CalculatedLastTime = this.CalculatedLastTime;
-        copyTo.TickBPMDisagree = this.TickBPMDisagree;
-        copyTo.BPM = this.BPM;
-        copyTo.BPMChangeNotes = this.BPMChangeNotes;
     }
 }

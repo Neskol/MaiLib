@@ -576,9 +576,9 @@ public abstract class Chart : IChart
             var error = "";
             error += "Bar notes not match in bar: " + barNumber + "\n";
             error += "Expected: " + RealNoteNumber(bar) + "\n";
-            foreach (var x in bar) error += x.Compose(1) + "\n";
+            foreach (var x in bar) error += x.Compose(ChartVersion.Debug) + "\n";
             error += "\nActual: " + RealNoteNumber(result) + "\n";
-            foreach (var y in result) error += y.Compose(1) + "\n";
+            foreach (var y in result) error += y.Compose(ChartVersion.Debug) + "\n";
             Console.WriteLine(error);
             throw new Exception("NOTE NUMBER IS NOT MATCHING");
         }
@@ -739,7 +739,7 @@ public abstract class Chart : IChart
     public static string GetNoteDetail(BPMChanges bpmChanges, Note inTake)
     {
         var result = "";
-        result += inTake.Compose(1) + "\n";
+        result += inTake.Compose(ChartVersion.Debug) + "\n";
         result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
         result += "This note has overall tick of " + inTake.TickStamp +
                   ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";

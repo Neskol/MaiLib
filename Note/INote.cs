@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+using static MaiLib.ChartEnum;
 
 /// <summary>
 ///     Provide interface and basic functions for Notes
@@ -9,7 +10,7 @@ internal interface INote
     ///     Convert note to string for writing
     /// </summary>
     /// <param name="format">0 if Simai, 1 if Ma2</param>
-    string Compose(int format);
+    string Compose(ChartVersion format);
 
     /// <summary>
     ///     See if current note has all information needed

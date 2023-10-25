@@ -1,10 +1,13 @@
 ﻿namespace MaiLib;
+using static NoteEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     BPMChange note for Simai
 /// </summary>
 public class BPMChange : Note
 {
+    #region Constructors
     /// <summary>
     ///     Construct Empty
     /// </summary>
@@ -17,7 +20,6 @@ public class BPMChange : Note
         BPM = 0;
         Update();
     }
-#region Constructors
     /// <summary>
     ///     Construct BPMChange with given bar, tick, BPM
     /// </summary>
@@ -26,6 +28,7 @@ public class BPMChange : Note
     /// <param name="BPM">BPM</param>
     public BPMChange(int bar, int startTime, double BPM)
     {
+        NoteType = NoteEnum.NoteType.BPM;
         Bar = bar;
         Tick = startTime;
         this.BPM = BPM;
@@ -38,6 +41,7 @@ public class BPMChange : Note
     /// <param name="takeIn">Take in BPMChange</param>
     public BPMChange(BPMChange takeIn)
     {
+        NoteType = NoteEnum.NoteType.BPM;
         Bar = takeIn.Bar;
         Tick = takeIn.Tick;
         BPM = takeIn.BPM;
@@ -50,6 +54,7 @@ public class BPMChange : Note
     /// <param name="takeIn">Take in note</param>
     public BPMChange(Note takeIn)
     {
+        NoteType = NoteEnum.NoteType.BPM;
         Bar = takeIn.Bar;
         Tick = takeIn.Tick;
         Update();
@@ -68,13 +73,18 @@ public class BPMChange : Note
         return BPM != 0;
     }
 
-    public override string Compose(int format)
+    public override string Compose(ChartVersion format)
     {
-        var result = "";
-        if (format == 0) result += "(" + BPM + ")";
-        //result += "(" + this.BPM + "_" + this.Bar + "_" + this.Tick + ")";
-        //else result += "(" + this.BPM + "_" + this.Bar + "_" + this.Tick + ")";
-        return result;
+        switch (format)
+        {
+            case ChartVersion.Simai:
+            case ChartVersion.SimaiFes:
+                return "(" + BPM + ")";
+            case ChartVersion.Debug:
+                return "(" + BPM + "_" + Tick + ")";
+            default:
+                return "";
+        }
     }
 
     public override bool Equals(object? obj)

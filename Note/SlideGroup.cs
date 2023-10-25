@@ -1,5 +1,6 @@
 ﻿namespace MaiLib;
 using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
 
 public class SlideGroup : Slide
 {
@@ -63,7 +64,7 @@ public class SlideGroup : Slide
     /// </summary>
     /// <param name="format">0 if simai, 1 if ma2</param>
     /// <returns>the composed simai slide group</returns>
-    public override string Compose(int format)
+    public override string Compose(ChartVersion format)
     {
         var result = "";
         // if (format == 0)

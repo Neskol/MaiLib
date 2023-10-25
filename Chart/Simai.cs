@@ -137,7 +137,7 @@ public class Simai : Chart
             {
                 if (!x.Value)
                 {
-                    errorMsg += x.Key.Compose(1) + ", " + x.Key.TickStamp;
+                    errorMsg += x.Key.Compose(ChartVersion.Debug) + ", " + x.Key.TickStamp;
                     if (x.Key.NoteSpecialState is SpecialState.ConnectingSlide)
                     {
                         errorMsg += ", and it is a connecting slide";
@@ -148,10 +148,10 @@ public class Simai : Chart
             errorMsg += "\n------------\nComposedSlides: \n";
             foreach (Slide x in processedSlideOfChart)
             {
-                errorMsg += x.Compose(0) + "\n";
+                errorMsg += x.Compose(ChartVersion.Debug) + "\n";
                 if (x is SlideGroup)
                 {
-                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(0))).LastSlide.Compose(1) + "\n";
+                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(ChartVersion.Debug))).LastSlide.Compose(ChartVersion.Debug) + "\n";
                 }
             }
             throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +
@@ -260,7 +260,7 @@ public class Simai : Chart
                         break;
                 }
 
-                result.Append(x.Compose(0));
+                result.Append(x.Compose(ChartVersion));
                 lastNote = x;
             }
 
@@ -269,7 +269,7 @@ public class Simai : Chart
             if (commaCompiled != currentQuaver)
             {
                 Console.WriteLine("Notes in bar: " + bar[0].Bar);
-                foreach (var x in bar) Console.WriteLine(x.Compose(1));
+                foreach (var x in bar) Console.WriteLine(x.Compose(ChartVersion.Debug));
                 Console.WriteLine(result);
                 Console.WriteLine("Expected comma number: " + currentQuaver);
                 Console.WriteLine("Actual comma number: " + commaCompiled);
