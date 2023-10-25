@@ -161,6 +161,9 @@ public class Slide : Note
                     case SpecialState.ConnectingSlide:
                         result += "CN";
                         break;
+                    default:
+                        result += "NM";
+                        break;
                 }
                 result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength + "\t" +
                  EndKey;

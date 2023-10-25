@@ -34,7 +34,7 @@ public abstract class Chart : IChart
     /// <summary>
     /// Defines the chart version by enums
     /// </summary>
-    public ChartVersion ChartVersion { get; protected set; }
+    public ChartVersion ChartVersion { get; set; }
 
     /// <summary>
     ///     Stores all notes

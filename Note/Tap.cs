@@ -182,6 +182,9 @@ public class Tap : Note
                     case SpecialState.BreakEX:
                         typeCandidate = "BX" + typeCandidate;
                         break;
+                    default:
+                        typeCandidate = "NM" + typeCandidate;
+                        break;
                 }
                 result = NoteType is NoteType.TTP ? typeCandidate + "\t" +
                  Bar + "\t" +

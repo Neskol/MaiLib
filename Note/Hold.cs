@@ -138,11 +138,24 @@ public class Hold : Note
                         result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" + KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
                         break;
                     case ChartVersion.Ma2_104:
-                        if (NoteSpecialState == SpecialState.Break)
-                            result += "BR";
-                        else if (NoteSpecialState == SpecialState.EX)
-                            result += "EX";
-                        else if (NoteSpecialState == SpecialState.BreakEX) result += "BX";
+                        switch (NoteSpecialState)
+                        {
+                            case SpecialState.EX:
+                                result += "EX";
+                                break;
+                            case SpecialState.Break:
+                                result += "BR";
+                                break;
+                            case SpecialState.BreakEX:
+                                result += "BX";
+                                break;
+                            case SpecialState.ConnectingSlide:
+                                result += "CN";
+                                break;
+                            default:
+                                result += "NM";
+                                break;
+                        }
                         result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" + KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
                         break;
                 }
