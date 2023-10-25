@@ -37,6 +37,55 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     }
 
     /// <summary>
+    /// Base Note Constructor with all fields
+    /// </summary>
+    /// <param name="type">Note Type</param>
+    /// <param name="key">Key/Start Key</param>
+    /// <param name="endKey">End Key for Slides</param>
+    /// <param name="bar">Bar of the note</param>
+    /// <param name="tick">Tick of the note</param>
+    /// <param name="fixedTick">Tick fixed to BPM</param>
+    /// <param name="tickStamp">Bar * Definition + Tick</param>
+    /// <param name="tickTimeStamp">Exact time of Tick</param>
+    /// <param name="lastLength">Sustaining length</param>
+    /// <param name="lastTickStamp">End sustain tick</param>
+    /// <param name="lastTimeStamp">Exact time of the end of sustain</param>
+    /// <param name="waitLength">Wait Length</param>
+    /// <param name="waitTickStamp">End wait tick</param>
+    /// <param name="waitTimeStamp">Exact time of wait tick</param>
+    /// <param name="calculatedLastTime">Last time calculated in exact time</param>
+    /// <param name="calculatedWaitTime">Wait time calculated in exact time</param>
+    /// <param name="tickBPMDisagree">Bool which BPM change happened between start and end</param>
+    /// <param name="bpm">BPM</param>
+    /// <param name="bpmChangeNotes">Change notes of the BPM</param>
+    /// <param name="touchSize">Touch Size: M1 or L1</param>
+    /// <param name="noteSpecialState">Special state of the note</param>
+    public Note(NoteType type, string key, string endKey, int bar, int tick, int fixedTick, int tickStamp, double tickTimeStamp,int lastLength, int lastTickStamp, double lastTimeStamp, int waitLength, int waitTickStamp, int waitTimeStamp, double calculatedLastTime, double calculatedWaitTime, bool tickBPMDisagree, double bpm, List<BPMChange> bpmChangeNotes, string touchSize, SpecialState noteSpecialState)
+    {
+        NoteType = type;
+        Key = key;
+        EndKey = endKey;
+        Bar = bar;
+        Tick = tick;
+        FixedTick = fixedTick;
+        TickStamp = tickStamp;
+        TickTimeStamp = tickTimeStamp;
+        LastLength = lastLength;
+        LastTickStamp = lastTickStamp;
+        LastTimeStamp = lastTimeStamp;
+        WaitLength = waitLength;
+        WaitTickStamp = waitTickStamp;
+        WaitTimeStamp = waitTimeStamp;
+        CalculatedLastTime = calculatedLastTime;
+        CalculatedWaitTime = calculatedWaitTime;
+        TickBPMDisagree = tickBPMDisagree;
+        BPM = bpm;
+        BPMChangeNotes = bpmChangeNotes;
+        TouchSize = touchSize;
+        NoteSpecialState = noteSpecialState;
+    }
+
+    /// <summary>
     ///     Construct a note from other note
     /// </summary>
     /// <param name="inTake">The intake note</param>
