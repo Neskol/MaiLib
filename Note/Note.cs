@@ -109,6 +109,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         TickBPMDisagree = inTake.TickBPMDisagree;
         BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
+        NoteSpecialState = inTake.NoteSpecialState;
         TouchSize = "M1";
     }
     #endregion
@@ -394,6 +395,9 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         copyTo.TickBPMDisagree = this.TickBPMDisagree;
         copyTo.BPM = this.BPM;
         copyTo.BPMChangeNotes = this.BPMChangeNotes;
+        copyTo.NoteSpecialState = this.NoteSpecialState;
+        copyTo.TouchSize = this.TouchSize;
+        copyTo.SpecialEffect = this.SpecialEffect;
     }
 
     public abstract bool CheckValidity();
@@ -761,7 +765,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
                     break;
                 case FlipMethod.LeftToRight:
-                    if (NoteType.Equals("TTP") && (KeyGroup.Equals("E") || KeyGroup.Equals("D")))
+                    if (NoteType is NoteType.TTP && (KeyGroup.Equals("E") || KeyGroup.Equals("D")))
                         switch (KeyNum)
                         {
                             case 0:
@@ -908,7 +912,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         //this.WaitTimeStamp = this.GetTimeStamp(this.WaitTickStamp);
         LastTickStamp = WaitTickStamp + LastLength;
         //this.LastTimeStamp = this.GetTimeStamp(this.LastTickStamp);
-        if (!(NoteType.Equals("SLIDE") || NoteType.Equals("HOLD")))
+        if (!(NoteGenre is NoteGenre.SLIDE || NoteGenre is NoteGenre.HOLD))
             result = true;
         else if (CalculatedLastTime > 0 && CalculatedWaitTime > 0) result = true;
         return result;

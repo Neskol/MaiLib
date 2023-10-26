@@ -44,6 +44,7 @@ public class SimaiParser : IParser
         for (var i = 0; i < tokens.Length; i++)
         {
             var eachPairCandidates = EachGroupOfToken(tokens[i]);
+            int previousConnectingSlideTick = 0;
             foreach (var eachNote in eachPairCandidates)
             {
                 // if (bar == 6)
@@ -74,6 +75,12 @@ public class SimaiParser : IParser
 
                 else /*if (currentBPM > 0.0)*/
                 {
+                    if (noteCandidate.NoteSpecialState is SpecialState.ConnectingSlide)
+                    {
+                        noteCandidate.Tick += previousConnectingSlideTick;
+                        previousConnectingSlideTick += noteCandidate.LastLength;
+                        noteCandidate.Update();
+                    }
                     notes.Add(noteCandidate);
                 }
             }

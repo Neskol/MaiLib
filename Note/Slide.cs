@@ -8,6 +8,7 @@ using static MaiLib.ChartEnum;
 public class Slide : Note
 {
     #region Constructors
+
     /// <summary>
     ///     Empty Constructor
     /// </summary>

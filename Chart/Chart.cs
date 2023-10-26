@@ -182,12 +182,12 @@ public abstract class Chart : IChart
                         case NoteSpecificGenre.TAP:
                             TapNumber++;
                             if (x.NoteSpecialState is SpecialState.EX) IsDxChart = false;
-                            if (x.NoteType.Equals("TTP"))
+                            if (x.NoteType is NoteType.TTP)
                             {
                                 TouchNumber++;
                                 IsDxChart = false;
                             }
-                            else if (x.NoteType.Equals("BRK") || x.NoteType.Equals("BST"))
+                            else if (x.NoteSpecialState is SpecialState.Break || x.NoteSpecialState is SpecialState.BreakEX)
                             {
                                 BreakNumber++;
                             }
@@ -210,7 +210,7 @@ public abstract class Chart : IChart
                             if (delay > TotalDelay) TotalDelay = delay;
                             //Console.WriteLine("New delay: " + delay);
                             //Console.WriteLine(x.Compose(1));
-                            if (x.NoteType.Equals("THO"))
+                            if (x.NoteType is NoteType.THO)
                             {
                                 ThoNumber++;
                                 IsDxChart = false;
@@ -512,7 +512,7 @@ public abstract class Chart : IChart
             Note lastNote = new Rest();
             foreach (var x in bar)
             {
-                if (x.Tick == i && x.IsNote && !(x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
+                if (x.Tick == i && x.IsNote && !(x.NoteType is NoteType.TTP || x.NoteType is NoteType.THO))
                 {
                     if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
@@ -527,7 +527,7 @@ public abstract class Chart : IChart
                         lastNote.Next = x;
                     }
                 }
-                else if (x.Tick == i && x.IsNote && (x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
+                else if (x.Tick == i && x.IsNote && (x.NoteType is NoteType.TTP || x.NoteType is NoteType.THO))
                 {
                     if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
