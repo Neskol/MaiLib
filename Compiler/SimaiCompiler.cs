@@ -10,6 +10,8 @@ public class SimaiCompiler : Compiler
 {
     public bool StrictDecimalLevel { get; set; }
 
+    public string Result { get; private set; }
+
     /// <summary>
     ///     Construct compiler of a single song.
     /// </summary>
@@ -47,13 +49,8 @@ public class SimaiCompiler : Compiler
                 Charts[6] = new Ma2(location + Information.GetValueOrDefault("Utage Chart Path"));
         }
 
-        var result = Compose();
+        Result = Compose();
         //Console.WriteLine(result);
-        var sw = new StreamWriter(targetLocation + GlobalSep + "maidata.txt", false);
-        {
-            sw.WriteLine(result);
-        }
-        sw.Close();
     }
 
     /// <summary>
@@ -99,13 +96,8 @@ public class SimaiCompiler : Compiler
         var ma2List = new List<string>();
         ma2List.AddRange(ma2files);
 
-        var result = Compose(true, ma2List);
+        Result = Compose(true, ma2List);
         //Console.WriteLine(result);
-        var sw = new StreamWriter(targetLocation + GlobalSep + "maidata.txt", false);
-        {
-            sw.WriteLine(result);
-        }
-        sw.Close();
     }
 
     /// <summary>
@@ -118,6 +110,16 @@ public class SimaiCompiler : Compiler
         Charts = new List<Chart>();
         Information = new Dictionary<string, string>();
         MusicXML = new XmlInformation();
+        Result = "";
+    }
+
+    public void WriteOut(string targetLocation, bool overwrite)
+    {
+        var sw = new StreamWriter(targetLocation + GlobalSep + "maidata.txt", overwrite);
+        {
+            sw.WriteLine(Result);
+        }
+        sw.Close();
     }
 
     public override string Compose()
