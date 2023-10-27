@@ -17,9 +17,9 @@ public class SimaiCompiler : Compiler
     /// </summary>
     /// <param name="location">Folder</param>
     /// <param name="targetLocation">Output folder</param>
-    public SimaiCompiler(string location, string targetLocation)
+    public SimaiCompiler(bool strictDecimal, string location, string targetLocation)
     {
-        StrictDecimalLevel = false;
+        StrictDecimalLevel = strictDecimal;
         for (var i = 0; i < 7; i++) Charts.Add(new Simai());
         MusicXML = new XmlInformation(location);
         Information = MusicXML.Information;
@@ -125,6 +125,8 @@ public class SimaiCompiler : Compiler
     public override string Compose()
     {
         var result = "";
+        Console.WriteLine("StrictDecimal: "+StrictDecimalLevel);
+        // Console.ReadKey();
         //Add Information
         {
             var beginning = "";
@@ -154,7 +156,7 @@ public class SimaiCompiler : Compiler
                 string difficultyCandidate = easy;
                 if (StrictDecimalLevel && Information.TryGetValue("Easy Decimal", out var decimalLevel))
                 {
-                    difficultyCandidate = easy.Split("+")[0] + decimalLevel;
+                    difficultyCandidate = decimalLevel;
                 }
                 beginning += "&lv_1=" + difficultyCandidate + "\n";
                 beginning += "&des_1=" + easyMaker + "\n";
@@ -167,7 +169,7 @@ public class SimaiCompiler : Compiler
                 string difficultyCandidate = basic;
                 if (StrictDecimalLevel && Information.TryGetValue("Basic Decimal", out var decimalLevel))
                 {
-                    difficultyCandidate = basic.Split("+")[0] + decimalLevel;
+                    difficultyCandidate = decimalLevel;
                 }
                 beginning += "&lv_2=" + difficultyCandidate + "\n";
                 beginning += "&des_2=" + basicMaker + "\n";
@@ -181,7 +183,7 @@ public class SimaiCompiler : Compiler
                 string difficultyCandidate = advance;
                 if (StrictDecimalLevel && Information.TryGetValue("Advance Decimal", out var decimalLevel))
                 {
-                    difficultyCandidate = advance.Split("+")[0] + decimalLevel;
+                    difficultyCandidate = decimalLevel;
                 }
                 beginning += "&lv_3=" + difficultyCandidate + "\n";
                 beginning += "&des_3=" + advanceMaker + "\n";
@@ -195,7 +197,7 @@ public class SimaiCompiler : Compiler
                 string difficultyCandidate = expert;
                 if (StrictDecimalLevel && Information.TryGetValue("Expert Decimal", out var decimalLevel))
                 {
-                    difficultyCandidate = expert.Split("+")[0] + decimalLevel;
+                    difficultyCandidate = decimalLevel;
                 }
                 beginning += "&lv_4=" + difficultyCandidate + "\n";
                 beginning += "&des_4=" + expertMaker + "\n";
@@ -209,7 +211,7 @@ public class SimaiCompiler : Compiler
                 string difficultyCandidate = master;
                 if (StrictDecimalLevel && Information.TryGetValue("Master Decimal", out var decimalLevel))
                 {
-                    difficultyCandidate = master.Split("+")[0] + decimalLevel;
+                    difficultyCandidate = decimalLevel;
                 }
                 beginning += "&lv_5=" + difficultyCandidate + "\n";
                 beginning += "&des_5=" + masterMaker + "\n";
@@ -223,7 +225,7 @@ public class SimaiCompiler : Compiler
                 string difficultyCandidate = remaster;
                 if (StrictDecimalLevel && Information.TryGetValue("Remaster Decimal", out var decimalLevel))
                 {
-                    difficultyCandidate = remaster.Split("+")[0] + decimalLevel;
+                    difficultyCandidate = decimalLevel;
                 }
                 beginning += "&lv_6=" + difficultyCandidate + "\n";
                 beginning += "&des_6=" + remasterMaker;
