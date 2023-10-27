@@ -73,6 +73,8 @@ public class Simai : Chart
             maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
             if (candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE || candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP)
             {
+                // Slide slideCandidate = candidate as Slide ?? throw new InvalidCastException("Candidate is not a SLIDE. It is: "+candidate.Compose(ChartVersion.Debug));
+                // slideCandidate.NoteSpecialState = candidate.NoteSpecialState;
                 slideNotesOfChart.Add((Slide)candidate);
                 processedSlideDic.Add((Slide)candidate, false);
             }
@@ -122,16 +124,16 @@ public class Simai : Chart
         }
 
         // This for loop shouldn't be here: compromise of each connecting slide
-        foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
-        {
-            if (!x.Value)
-            {
-                Slide normalSlide = new Slide(x.Key);
-                normalSlide.NoteSpecialState = SpecialState.Normal;
-                adjusted.Add(normalSlide);
-                processedSlidesCount++;
-            }
-        }
+        // foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
+        // {
+        //     if (!x.Value)
+        //     {
+        //         Slide normalSlide = new Slide(x.Key);
+        //         normalSlide.NoteSpecialState = SpecialState.Normal;
+        //         adjusted.Add(normalSlide);
+        //         processedSlidesCount++;
+        //     }
+        // }
 
         //For verification only: check if slide count is correct
         if (processedSlidesCount != slideNotesOfChart.Count)
@@ -143,10 +145,10 @@ public class Simai : Chart
             {
                 if (!x.Value)
                 {
-                    errorMsg += x.Key.Compose(ChartVersion.Debug) + ", " + x.Key.TickStamp;
+                    errorMsg += x.Key.Compose(ChartVersion.Ma2_104) + ", " + x.Key.TickStamp;
                     if (x.Key.NoteSpecialState is SpecialState.ConnectingSlide)
                     {
-                        errorMsg += ", and it is a connecting slide";
+                        errorMsg += ", and it is a connecting slide\n";
                     }
                 }
             }
@@ -154,7 +156,7 @@ public class Simai : Chart
             errorMsg += "\n------------\nComposedSlides: \n";
             foreach (Slide x in processedSlideOfChart)
             {
-                errorMsg += x.Compose(ChartVersion.Debug) + "\n";
+                errorMsg += x.Compose(ChartVersion.Ma2_104) + "\n";
                 if (x is SlideGroup)
                 {
                     errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(ChartVersion.Debug))).LastSlide.Compose(ChartVersion.Debug) + "\n";

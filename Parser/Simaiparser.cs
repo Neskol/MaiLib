@@ -78,8 +78,12 @@ public class SimaiParser : IParser
                     if (noteCandidate.NoteSpecialState is SpecialState.ConnectingSlide)
                     {
                         noteCandidate.Tick += previousConnectingSlideTick;
-                        previousConnectingSlideTick += noteCandidate.LastLength;
+                        previousConnectingSlideTick = noteCandidate.Tick + noteCandidate.LastLength;
                         noteCandidate.Update();
+                    }
+                    else if (noteCandidate.NoteGenre is NoteGenre.SLIDE)
+                    {
+                        previousConnectingSlideTick = noteCandidate.Tick + noteCandidate.WaitLength + noteCandidate.LastLength;
                     }
                     notes.Add(noteCandidate);
                 }
@@ -464,6 +468,7 @@ public class SimaiParser : IParser
         {
             result.NoteSpecialState = SpecialState.ConnectingSlide;
             result.Key = connectedSlideStart;
+            result.WaitLength = 0;
         }
         else result.NoteSpecialState = noteSpecialState;
 
