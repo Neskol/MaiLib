@@ -8,6 +8,8 @@ namespace MaiLib;
 /// </summary>
 public class SimaiCompiler : Compiler
 {
+    public bool StrictDecimalLevel { get; set; }
+
     /// <summary>
     ///     Construct compiler of a single song.
     /// </summary>
@@ -15,6 +17,7 @@ public class SimaiCompiler : Compiler
     /// <param name="targetLocation">Output folder</param>
     public SimaiCompiler(string location, string targetLocation)
     {
+        StrictDecimalLevel = false;
         for (var i = 0; i < 7; i++) Charts.Add(new Simai());
         MusicXML = new XmlInformation(location);
         Information = MusicXML.Information;
@@ -61,6 +64,7 @@ public class SimaiCompiler : Compiler
     /// <param name="forUtage">True if for utage</param>
     public SimaiCompiler(string location, string targetLocation, bool forUtage)
     {
+        StrictDecimalLevel = false;
         var ma2files = Directory.GetFiles(location, "*.ma2");
         Charts = new List<Chart>();
         MusicXML = new XmlInformation(location);
@@ -109,6 +113,7 @@ public class SimaiCompiler : Compiler
     /// </summary>
     public SimaiCompiler()
     {
+        StrictDecimalLevel = false;
         for (var i = 0; i < 7; i++) Charts.Add(new Simai());
         Charts = new List<Chart>();
         Information = new Dictionary<string, string>();
@@ -144,7 +149,12 @@ public class SimaiCompiler : Compiler
             if (Information.TryGetValue("Easy", out var easy) &&
                 Information.TryGetValue("Easy Chart Maker", out var easyMaker))
             {
-                beginning += "&lv_1=" + easy + "\n";
+                string difficultyCandidate = easy;
+                if (StrictDecimalLevel && Information.TryGetValue("Easy Decimal", out var decimalLevel))
+                {
+                    difficultyCandidate = easy.Split("+")[0] + decimalLevel;
+                }
+                beginning += "&lv_1=" + difficultyCandidate + "\n";
                 beginning += "&des_1=" + easyMaker + "\n";
                 beginning += "\n";
             }
@@ -152,7 +162,12 @@ public class SimaiCompiler : Compiler
             if (Information.TryGetValue("Basic", out var basic) &&
                 Information.TryGetValue("Basic Chart Maker", out var basicMaker))
             {
-                beginning += "&lv_2=" + basic + "\n";
+                string difficultyCandidate = basic;
+                if (StrictDecimalLevel && Information.TryGetValue("Basic Decimal", out var decimalLevel))
+                {
+                    difficultyCandidate = basic.Split("+")[0] + decimalLevel;
+                }
+                beginning += "&lv_2=" + difficultyCandidate + "\n";
                 beginning += "&des_2=" + basicMaker + "\n";
                 beginning += "\n";
             }
@@ -161,7 +176,12 @@ public class SimaiCompiler : Compiler
             if (Information.TryGetValue("Advanced", out var advance) &&
                 Information.TryGetValue("Advanced Chart Maker", out var advanceMaker))
             {
-                beginning += "&lv_3=" + advance + "\n";
+                string difficultyCandidate = advance;
+                if (StrictDecimalLevel && Information.TryGetValue("Advance Decimal", out var decimalLevel))
+                {
+                    difficultyCandidate = advance.Split("+")[0] + decimalLevel;
+                }
+                beginning += "&lv_3=" + difficultyCandidate + "\n";
                 beginning += "&des_3=" + advanceMaker + "\n";
                 beginning += "\n";
             }
@@ -170,7 +190,12 @@ public class SimaiCompiler : Compiler
             if (Information.TryGetValue("Expert", out var expert) &&
                 Information.TryGetValue("Expert Chart Maker", out var expertMaker))
             {
-                beginning += "&lv_4=" + expert + "\n";
+                string difficultyCandidate = expert;
+                if (StrictDecimalLevel && Information.TryGetValue("Expert Decimal", out var decimalLevel))
+                {
+                    difficultyCandidate = expert.Split("+")[0] + decimalLevel;
+                }
+                beginning += "&lv_4=" + difficultyCandidate + "\n";
                 beginning += "&des_4=" + expertMaker + "\n";
                 beginning += "\n";
             }
@@ -179,7 +204,12 @@ public class SimaiCompiler : Compiler
             if (Information.TryGetValue("Master", out var master) &&
                 Information.TryGetValue("Master Chart Maker", out var masterMaker))
             {
-                beginning += "&lv_5=" + master + "\n";
+                string difficultyCandidate = master;
+                if (StrictDecimalLevel && Information.TryGetValue("Master Decimal", out var decimalLevel))
+                {
+                    difficultyCandidate = master.Split("+")[0] + decimalLevel;
+                }
+                beginning += "&lv_5=" + difficultyCandidate + "\n";
                 beginning += "&des_5=" + masterMaker + "\n";
                 beginning += "\n";
             }
@@ -188,7 +218,12 @@ public class SimaiCompiler : Compiler
             if (Information.TryGetValue("Remaster", out var remaster) &&
                 Information.TryGetValue("Remaster Chart Maker", out var remasterMaker))
             {
-                beginning += "&lv_6=" + remaster + "\n";
+                string difficultyCandidate = remaster;
+                if (StrictDecimalLevel && Information.TryGetValue("Remaster Decimal", out var decimalLevel))
+                {
+                    difficultyCandidate = remaster.Split("+")[0] + decimalLevel;
+                }
+                beginning += "&lv_6=" + difficultyCandidate + "\n";
                 beginning += "&des_6=" + remasterMaker;
                 beginning += "\n";
                 beginning += "\n";
