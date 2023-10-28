@@ -42,8 +42,8 @@ public class MeasureChanges
         Quavers = new List<int>();
         Beats = new List<int>();
         ChangeNotes = new List<MeasureChange>();
-        InitialQuavers = initialQuaver;
-        InitialBeats = initialBeat;
+        Quavers.Add(initialQuaver);
+        Beats.Add(initialBeat);
     }
 
     /// <summary>
@@ -58,9 +58,7 @@ public class MeasureChanges
         Bar = bar;
         Tick = tick;
         Quavers = quavers;
-        InitialQuavers = quavers[0];
         Beats = beats;
-        InitialBeats = beats[0];
         ChangeNotes = new List<MeasureChange>();
     }
     #endregion
@@ -70,8 +68,29 @@ public class MeasureChanges
     public List<int> Quavers { get; }
     public List<int> Beats { get; }
     public List<MeasureChange> ChangeNotes { get; }
-    public int InitialQuavers { get; }
-    public int InitialBeats { get; }
+    public int InitialQuavers
+    {
+        get
+        {
+            if (Quavers is null || Quavers.Count == 0)
+            {
+                return 4;
+            }
+            else return Quavers[0];
+        }
+    }
+
+    public int InitialBeats
+    {
+        get
+        {
+            if (Beats is null || Beats.Count == 0)
+            {
+                return 4;
+            }
+            else return Beats[0];
+        }
+    }
 
     /// <summary>
     ///     Return first definitions

@@ -1,5 +1,7 @@
 ﻿namespace MaiLib;
 using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
+
 
 /// <summary>
 ///     Tap note
@@ -16,7 +18,7 @@ public class Tap : Note
         Update();
     }
 
-#region Constructor
+    #region Constructor
     /// <summary>
     ///     Construct a Tap note
     /// </summary>
@@ -76,7 +78,7 @@ public class Tap : Note
             NoteType = NoteType.TAP;
         }
     }
-#endregion
+    #endregion
 
     public override NoteGenre NoteGenre => NoteGenre.TAP;
 
@@ -117,69 +119,83 @@ public class Tap : Note
         return true;
     }
 
-    public override string Compose(int format)
+    public override string Compose(ChartVersion format)
     {
         var result = "";
-        // if (format == 1 && !(this.NoteType.Equals("TTP")) && !((this.NoteType.Equals("NST"))||this.NoteType.Equals("NSS")))
-        // {
-        //     result = this.NoteType + "\t" + this.Bar + "\t" + this.Tick + "\t" + this.Key;
-        // }
-        // else if (format == 1 && (this.NoteType.Equals("NST")||this.NoteType.Equals("NSS")))
-        // {
-        //     result = ""; //NST and NSS is just a place holder for slide
-        // }
-        if (format == 1 && !NoteType.Equals("TTP"))
-            result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key;
-        else if (format == 1 && NoteType.Equals("TTP"))
-            result = NoteType + "\t" +
-                     Bar + "\t" +
-                     Tick + "\t" +
-                     Key.ToCharArray()[1] + "\t" +
-                     Key.ToCharArray()[0] + "\t" +
-                     SpecialEffect + "\t" +
-                     TouchSize; //M1 for regular note and L1 for Larger Note
-        else if (format == 0)
-            switch (NoteType)
-            {
-                case NoteType.TAP:
-                    result += (int.Parse(Key) + 1).ToString();
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    break;
-                case NoteType.NSS:
-                    result += (int.Parse(Key) + 1).ToString() + "$";
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    break;
-                case NoteType.NST:
-                    result += (int.Parse(Key) + 1).ToString() + "!";
-                    break;
-                case NoteType.STR:
-                    result += (int.Parse(Key) + 1).ToString();
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    break;
-                case NoteType.TTP:
-                    result += Key.ToCharArray()[1] + (Convert.ToInt32(Key.Substring(0, 1)) + 1).ToString();
-                    if (NoteSpecialState == SpecialState.Break)
-                        result += "b";
-                    else if (NoteSpecialState == SpecialState.EX)
-                        result += "x";
-                    else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
-                    if (SpecialEffect) result += "f";
-                    break;
-            }
-
-        //result += "_" + this.Tick;
+        switch (format)
+        {
+            case ChartVersion.Simai:
+            case ChartVersion.SimaiFes:
+            default:
+                switch (NoteType)
+                {
+                    case NoteType.NST:
+                        result += (KeyNum + 1).ToString() + "!";
+                        break;
+                    case NoteType.NSS:
+                        result += (KeyNum + 1).ToString() + "$";
+                        break;
+                    case NoteType.TTP:
+                        result += KeyGroup + (KeyNum + 1).ToString();
+                        break;
+                    default:
+                        result += (KeyNum + 1).ToString();
+                        break;
+                }
+                if (NoteSpecialState == SpecialState.Break)
+                    result += "b";
+                else if (NoteSpecialState == SpecialState.EX)
+                    result += "x";
+                else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                if (SpecialEffect) result += "f";
+                if (format is ChartVersion.Debug) result += "_" + Tick;
+                break;
+            case ChartVersion.Ma2_103:
+                string typeCandidate = NoteType.ToString();
+                switch (NoteSpecialState)
+                {
+                    case SpecialState.EX:
+                        typeCandidate = NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ? "XST" : "XTP";
+                        break;
+                    case SpecialState.Break:
+                    case SpecialState.BreakEX:
+                        typeCandidate = NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ? "BST" : "BRK";
+                        break;
+                }
+                result = NoteType is NoteType.TTP ? typeCandidate + "\t" +
+                 Bar + "\t" +
+                 Tick + "\t" +
+                 KeyNum + "\t" +
+                 KeyGroup + "\t" +
+                 (SpecialEffect? 1:0) + "\t" +
+                 TouchSize : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
+                break;
+            case ChartVersion.Ma2_104:
+                typeCandidate = NoteType.ToString();
+                switch (NoteSpecialState)
+                {
+                    case SpecialState.EX:
+                        typeCandidate = "EX" + typeCandidate;
+                        break;
+                    case SpecialState.Break:
+                        typeCandidate = "BR" + typeCandidate;
+                        break;
+                    case SpecialState.BreakEX:
+                        typeCandidate = "BX" + typeCandidate;
+                        break;
+                    default:
+                        typeCandidate = "NM" + typeCandidate;
+                        break;
+                }
+                result = NoteType is NoteType.TTP ? typeCandidate + "\t" +
+                 Bar + "\t" +
+                 Tick + "\t" +
+                 KeyNum + "\t" +
+                 KeyGroup + "\t" +
+                 (SpecialEffect ? 1 : 0) + "\t" +
+                 TouchSize : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
+                break;
+        }
         return result;
     }
 

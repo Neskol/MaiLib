@@ -34,7 +34,7 @@ public abstract class Chart : IChart
     /// <summary>
     /// Defines the chart version by enums
     /// </summary>
-    public ChartVersion ChartVersion { get; protected set; }
+    public ChartVersion ChartVersion { get; set; }
 
     /// <summary>
     ///     Stores all notes
@@ -182,12 +182,12 @@ public abstract class Chart : IChart
                         case NoteSpecificGenre.TAP:
                             TapNumber++;
                             if (x.NoteSpecialState is SpecialState.EX) IsDxChart = false;
-                            if (x.NoteType.Equals("TTP"))
+                            if (x.NoteType is NoteType.TTP)
                             {
                                 TouchNumber++;
                                 IsDxChart = false;
                             }
-                            else if (x.NoteType.Equals("BRK") || x.NoteType.Equals("BST"))
+                            else if (x.NoteSpecialState is SpecialState.Break || x.NoteSpecialState is SpecialState.BreakEX)
                             {
                                 BreakNumber++;
                             }
@@ -210,7 +210,7 @@ public abstract class Chart : IChart
                             if (delay > TotalDelay) TotalDelay = delay;
                             //Console.WriteLine("New delay: " + delay);
                             //Console.WriteLine(x.Compose(1));
-                            if (x.NoteType.Equals("THO"))
+                            if (x.NoteType is NoteType.THO)
                             {
                                 ThoNumber++;
                                 IsDxChart = false;
@@ -512,7 +512,7 @@ public abstract class Chart : IChart
             Note lastNote = new Rest();
             foreach (var x in bar)
             {
-                if (x.Tick == i && x.IsNote && !(x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
+                if (x.Tick == i && x.IsNote && !(x.NoteType is NoteType.TTP || x.NoteType is NoteType.THO))
                 {
                     if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
@@ -527,7 +527,7 @@ public abstract class Chart : IChart
                         lastNote.Next = x;
                     }
                 }
-                else if (x.Tick == i && x.IsNote && (x.NoteType.Equals("TTP") || x.NoteType.Equals("THO")))
+                else if (x.Tick == i && x.IsNote && (x.NoteType is NoteType.TTP || x.NoteType is NoteType.THO))
                 {
                     if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
@@ -576,9 +576,9 @@ public abstract class Chart : IChart
             var error = "";
             error += "Bar notes not match in bar: " + barNumber + "\n";
             error += "Expected: " + RealNoteNumber(bar) + "\n";
-            foreach (var x in bar) error += x.Compose(1) + "\n";
+            foreach (var x in bar) error += x.Compose(ChartVersion.Debug) + "\n";
             error += "\nActual: " + RealNoteNumber(result) + "\n";
-            foreach (var y in result) error += y.Compose(1) + "\n";
+            foreach (var y in result) error += y.Compose(ChartVersion.Debug) + "\n";
             Console.WriteLine(error);
             throw new Exception("NOTE NUMBER IS NOT MATCHING");
         }
@@ -739,7 +739,7 @@ public abstract class Chart : IChart
     public static string GetNoteDetail(BPMChanges bpmChanges, Note inTake)
     {
         var result = "";
-        result += inTake.Compose(1) + "\n";
+        result += inTake.Compose(ChartVersion.Debug) + "\n";
         result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
         result += "This note has overall tick of " + inTake.TickStamp +
                   ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";

@@ -1,5 +1,6 @@
 ﻿namespace MaiLib;
 using static NoteEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     Construct Rest Note solely for Simai
@@ -56,10 +57,16 @@ public class Rest : Note
         throw new NotImplementedException();
     }
 
-    public override string Compose(int format)
+    public override string Compose(ChartVersion format)
     {
         // return "r_" + this.Tick;
-        return "";
+        switch (format)
+        {
+            case ChartVersion.Debug:
+                return "r_" + Tick;
+            default:
+                return "";
+        }
     }
 
     public override Note NewInstance()

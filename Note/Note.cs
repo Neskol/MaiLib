@@ -1,5 +1,6 @@
 ﻿namespace MaiLib;
 using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
 
 /// <summary>
 ///     Basic note
@@ -36,6 +37,55 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     }
 
     /// <summary>
+    /// Base Note Constructor with all fields
+    /// </summary>
+    /// <param name="type">Note Type</param>
+    /// <param name="key">Key/Start Key</param>
+    /// <param name="endKey">End Key for Slides</param>
+    /// <param name="bar">Bar of the note</param>
+    /// <param name="tick">Tick of the note</param>
+    /// <param name="fixedTick">Tick fixed to BPM</param>
+    /// <param name="tickStamp">Bar * Definition + Tick</param>
+    /// <param name="tickTimeStamp">Exact time of Tick</param>
+    /// <param name="lastLength">Sustaining length</param>
+    /// <param name="lastTickStamp">End sustain tick</param>
+    /// <param name="lastTimeStamp">Exact time of the end of sustain</param>
+    /// <param name="waitLength">Wait Length</param>
+    /// <param name="waitTickStamp">End wait tick</param>
+    /// <param name="waitTimeStamp">Exact time of wait tick</param>
+    /// <param name="calculatedLastTime">Last time calculated in exact time</param>
+    /// <param name="calculatedWaitTime">Wait time calculated in exact time</param>
+    /// <param name="tickBPMDisagree">Bool which BPM change happened between start and end</param>
+    /// <param name="bpm">BPM</param>
+    /// <param name="bpmChangeNotes">Change notes of the BPM</param>
+    /// <param name="touchSize">Touch Size: M1 or L1</param>
+    /// <param name="noteSpecialState">Special state of the note</param>
+    public Note(NoteType type, string key, string endKey, int bar, int tick, int fixedTick, int tickStamp, double tickTimeStamp, int lastLength, int lastTickStamp, double lastTimeStamp, int waitLength, int waitTickStamp, int waitTimeStamp, double calculatedLastTime, double calculatedWaitTime, bool tickBPMDisagree, double bpm, List<BPMChange> bpmChangeNotes, string touchSize, SpecialState noteSpecialState)
+    {
+        NoteType = type;
+        Key = key;
+        EndKey = endKey;
+        Bar = bar;
+        Tick = tick;
+        FixedTick = fixedTick;
+        TickStamp = tickStamp;
+        TickTimeStamp = tickTimeStamp;
+        LastLength = lastLength;
+        LastTickStamp = lastTickStamp;
+        LastTimeStamp = lastTimeStamp;
+        WaitLength = waitLength;
+        WaitTickStamp = waitTickStamp;
+        WaitTimeStamp = waitTimeStamp;
+        CalculatedLastTime = calculatedLastTime;
+        CalculatedWaitTime = calculatedWaitTime;
+        TickBPMDisagree = tickBPMDisagree;
+        BPM = bpm;
+        BPMChangeNotes = bpmChangeNotes;
+        TouchSize = touchSize;
+        NoteSpecialState = noteSpecialState;
+    }
+
+    /// <summary>
     ///     Construct a note from other note
     /// </summary>
     /// <param name="inTake">The intake note</param>
@@ -59,6 +109,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         TickBPMDisagree = inTake.TickBPMDisagree;
         BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
+        NoteSpecialState = inTake.NoteSpecialState;
         TouchSize = "M1";
     }
     #endregion
@@ -319,9 +370,39 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         return result;
     }
 
+    /// <summary>
+    /// Copies all note properties of copyFrom to copyTo
+    /// </summary>
+    /// <param name="copyTo"></param>
+    /// <param name="copyFrom"></param>
+    public void CopyOver(Note copyTo)
+    {
+        copyTo.NoteType = this.NoteType;
+        copyTo.Key = this.Key;
+        copyTo.EndKey = this.EndKey;
+        copyTo.Bar = this.Bar;
+        copyTo.Tick = this.Tick;
+        copyTo.TickStamp = this.TickStamp;
+        copyTo.TickTimeStamp = this.TickTimeStamp;
+        copyTo.LastLength = this.LastLength;
+        copyTo.LastTickStamp = this.LastTickStamp;
+        copyTo.LastTimeStamp = this.LastTimeStamp;
+        copyTo.WaitLength = this.WaitLength;
+        copyTo.WaitTickStamp = this.WaitTickStamp;
+        copyTo.WaitTimeStamp = this.WaitTimeStamp;
+        copyTo.CalculatedLastTime = this.CalculatedLastTime;
+        copyTo.CalculatedLastTime = this.CalculatedLastTime;
+        copyTo.TickBPMDisagree = this.TickBPMDisagree;
+        copyTo.BPM = this.BPM;
+        copyTo.BPMChangeNotes = this.BPMChangeNotes;
+        copyTo.NoteSpecialState = this.NoteSpecialState;
+        copyTo.TouchSize = this.TouchSize;
+        copyTo.SpecialEffect = this.SpecialEffect;
+    }
+
     public abstract bool CheckValidity();
 
-    public abstract string Compose(int format);
+    public abstract string Compose(ChartVersion format);
 
     public virtual void Flip(FlipMethod method)
     {
@@ -684,7 +765,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
                     break;
                 case FlipMethod.LeftToRight:
-                    if (NoteType.Equals("TTP") && (KeyGroup.Equals("E") || KeyGroup.Equals("D")))
+                    if (NoteType is NoteType.TTP && (KeyGroup.Equals("E") || KeyGroup.Equals("D")))
                         switch (KeyNum)
                         {
                             case 0:
@@ -831,7 +912,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         //this.WaitTimeStamp = this.GetTimeStamp(this.WaitTickStamp);
         LastTickStamp = WaitTickStamp + LastLength;
         //this.LastTimeStamp = this.GetTimeStamp(this.LastTickStamp);
-        if (!(NoteType.Equals("SLIDE") || NoteType.Equals("HOLD")))
+        if (!(NoteGenre is NoteGenre.SLIDE || NoteGenre is NoteGenre.HOLD))
             result = true;
         else if (CalculatedLastTime > 0 && CalculatedWaitTime > 0) result = true;
         return result;
@@ -966,7 +1047,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         if (result && obj != null)
         {
             var localNote = (Note)obj;
-            result = TickStamp == localNote.TickStamp && Compose(1).Equals(localNote.Compose(1));
+            result = TickStamp == localNote.TickStamp && Compose(ChartVersion.Ma2_104).Equals(localNote.Compose(ChartVersion.Ma2_104));
         }
 
         return result;
@@ -975,32 +1056,5 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     public override int GetHashCode()
     {
         return base.GetHashCode();
-    }
-
-    /// <summary>
-    /// Copies all note properties of copyFrom to copyTo
-    /// </summary>
-    /// <param name="copyTo"></param>
-    /// <param name="copyFrom"></param>
-    public void CopyOver(Note copyTo)
-    {
-        copyTo.NoteType = this.NoteType;
-        copyTo.Key = this.Key;
-        copyTo.EndKey = this.EndKey;
-        copyTo.Bar = this.Bar;
-        copyTo.Tick = this.Tick;
-        copyTo.TickStamp = this.TickStamp;
-        copyTo.TickTimeStamp = this.TickTimeStamp;
-        copyTo.LastLength = this.LastLength;
-        copyTo.LastTickStamp = this.LastTickStamp;
-        copyTo.LastTimeStamp = this.LastTimeStamp;
-        copyTo.WaitLength = this.WaitLength;
-        copyTo.WaitTickStamp = this.WaitTickStamp;
-        copyTo.WaitTimeStamp = this.WaitTimeStamp;
-        copyTo.CalculatedLastTime = this.CalculatedLastTime;
-        copyTo.CalculatedLastTime = this.CalculatedLastTime;
-        copyTo.TickBPMDisagree = this.TickBPMDisagree;
-        copyTo.BPM = this.BPM;
-        copyTo.BPMChangeNotes = this.BPMChangeNotes;
     }
 }

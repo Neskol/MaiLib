@@ -27,6 +27,8 @@ public class Simai : Chart
         BPMChanges = new BPMChanges(chart.BPMChanges);
         MeasureChanges = new MeasureChanges(chart.MeasureChanges);
         Information = new Dictionary<string, string>(chart.Information);
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Simai;
         Update();
     }
 
@@ -41,6 +43,8 @@ public class Simai : Chart
         Notes = notes;
         BPMChanges = bpmChanges;
         MeasureChanges = measureChanges;
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Simai;
         Update();
     }
 
@@ -49,6 +53,8 @@ public class Simai : Chart
         Notes = takenIn.Notes;
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
+        ChartType = ChartType.Standard;
+        ChartVersion = ChartVersion.Simai;
         Update();
     }
     #endregion
@@ -67,6 +73,8 @@ public class Simai : Chart
             maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
             if (candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE || candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP)
             {
+                // Slide slideCandidate = candidate as Slide ?? throw new InvalidCastException("Candidate is not a SLIDE. It is: "+candidate.Compose(ChartVersion.Debug));
+                // slideCandidate.NoteSpecialState = candidate.NoteSpecialState;
                 slideNotesOfChart.Add((Slide)candidate);
                 processedSlideDic.Add((Slide)candidate, false);
             }
@@ -116,16 +124,16 @@ public class Simai : Chart
         }
 
         // This for loop shouldn't be here: compromise of each connecting slide
-        foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
-        {
-            if (!x.Value)
-            {
-                Slide normalSlide = new Slide(x.Key);
-                normalSlide.NoteSpecialState = SpecialState.Normal;
-                adjusted.Add(normalSlide);
-                processedSlidesCount++;
-            }
-        }
+        // foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
+        // {
+        //     if (!x.Value)
+        //     {
+        //         Slide normalSlide = new Slide(x.Key);
+        //         normalSlide.NoteSpecialState = SpecialState.Normal;
+        //         adjusted.Add(normalSlide);
+        //         processedSlidesCount++;
+        //     }
+        // }
 
         //For verification only: check if slide count is correct
         if (processedSlidesCount != slideNotesOfChart.Count)
@@ -137,10 +145,10 @@ public class Simai : Chart
             {
                 if (!x.Value)
                 {
-                    errorMsg += x.Key.Compose(1) + ", " + x.Key.TickStamp;
+                    errorMsg += x.Key.Compose(ChartVersion.Ma2_104) + ", " + x.Key.TickStamp;
                     if (x.Key.NoteSpecialState is SpecialState.ConnectingSlide)
                     {
-                        errorMsg += ", and it is a connecting slide";
+                        errorMsg += ", and it is a connecting slide\n";
                     }
                 }
             }
@@ -148,10 +156,10 @@ public class Simai : Chart
             errorMsg += "\n------------\nComposedSlides: \n";
             foreach (Slide x in processedSlideOfChart)
             {
-                errorMsg += x.Compose(0) + "\n";
+                errorMsg += x.Compose(ChartVersion.Ma2_104) + "\n";
                 if (x is SlideGroup)
                 {
-                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(0))).LastSlide.Compose(1) + "\n";
+                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(ChartVersion.Debug))).LastSlide.Compose(ChartVersion.Debug) + "\n";
                 }
             }
             throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +
@@ -260,7 +268,7 @@ public class Simai : Chart
                         break;
                 }
 
-                result.Append(x.Compose(0));
+                result.Append(x.Compose(ChartVersion));
                 lastNote = x;
             }
 
@@ -269,7 +277,7 @@ public class Simai : Chart
             if (commaCompiled != currentQuaver)
             {
                 Console.WriteLine("Notes in bar: " + bar[0].Bar);
-                foreach (var x in bar) Console.WriteLine(x.Compose(1));
+                foreach (var x in bar) Console.WriteLine(x.Compose(ChartVersion.Debug));
                 Console.WriteLine(result);
                 Console.WriteLine("Expected comma number: " + currentQuaver);
                 Console.WriteLine("Actual comma number: " + commaCompiled);

@@ -1,5 +1,6 @@
-using static MaiLib.NoteEnum;
 namespace MaiLib;
+using static MaiLib.NoteEnum;
+using static MaiLib.ChartEnum;
 
 public class SlideEachSet : Note
 {
@@ -158,20 +159,22 @@ public class SlideEachSet : Note
         return InternalSlides.Contains(slide);
     }
 
-    public override string Compose(int format)
+    public override string Compose(ChartVersion format)
     {
         var result = "";
         var separateSymbol = "";
         switch (format)
         {
-            case 0:
+            case ChartVersion.Simai:
+            case ChartVersion.SimaiFes:
                 separateSymbol = "*";
                 if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "$";
                 else if (InternalSlides.Count > 0 && SlideStart == null)
                     result += new Tap(InternalSlides.First()).Compose(format) + "!";
                 else if (SlideStart != null) result += SlideStart.Compose(format);
                 break;
-            case 1:
+            case ChartVersion.Ma2_103:
+            case ChartVersion.Ma2_104:
                 if (SlideStart != null) SlideStart.Compose(format);
                 foreach (Slide x in InternalSlides)
                 {

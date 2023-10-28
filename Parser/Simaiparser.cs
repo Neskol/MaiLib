@@ -44,6 +44,7 @@ public class SimaiParser : IParser
         for (var i = 0; i < tokens.Length; i++)
         {
             var eachPairCandidates = EachGroupOfToken(tokens[i]);
+            int previousConnectingSlideTick = 0;
             foreach (var eachNote in eachPairCandidates)
             {
                 // if (bar == 6)
@@ -74,6 +75,16 @@ public class SimaiParser : IParser
 
                 else /*if (currentBPM > 0.0)*/
                 {
+                    if (noteCandidate.NoteSpecialState is SpecialState.ConnectingSlide)
+                    {
+                        noteCandidate.Tick += previousConnectingSlideTick;
+                        previousConnectingSlideTick = noteCandidate.Tick + noteCandidate.LastLength;
+                        noteCandidate.Update();
+                    }
+                    else if (noteCandidate.NoteGenre is NoteGenre.SLIDE)
+                    {
+                        previousConnectingSlideTick = noteCandidate.Tick + noteCandidate.WaitLength + noteCandidate.LastLength;
+                    }
                     notes.Add(noteCandidate);
                 }
             }
@@ -289,6 +300,10 @@ public class SimaiParser : IParser
         var isEXBreak = token.Contains("b") && token.Contains("x");
         var isBreak = token.Contains("b") && !token.Contains("x");
         var isEX = !token.Contains("b") && token.Contains("x");
+        SpecialState noteSpecialState = SpecialState.Normal;
+        if (isEXBreak) noteSpecialState = SpecialState.BreakEX;
+        else if (isBreak) noteSpecialState = SpecialState.Break;
+        else if (isEX) noteSpecialState = SpecialState.EX;
         var timeAssigned = token.Contains("[");
         //Parse first section
         if (token.Contains("qq"))
@@ -453,7 +468,9 @@ public class SimaiParser : IParser
         {
             result.NoteSpecialState = SpecialState.ConnectingSlide;
             result.Key = connectedSlideStart;
+            result.WaitLength = 0;
         }
+        else result.NoteSpecialState = noteSpecialState;
 
         return (Slide)result;
     }
@@ -467,7 +484,7 @@ public class SimaiParser : IParser
     {
         var isEXBreak = token.Contains("b") && token.Contains("x");
         var isBreak = token.Contains("b") && !token.Contains("x");
-        var isEXTap = token.Contains("x") && token.Contains("b");
+        var isEXTap = token.Contains("x") && !token.Contains("b");
         var isTouch = token.Contains("A") ||
                       token.Contains("B") ||
                       token.Contains("C") ||
