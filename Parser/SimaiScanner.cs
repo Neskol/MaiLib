@@ -47,8 +47,31 @@ namespace MaiLib
                             status = NoteType.MEASURE;
                             break;
                         case '}':
+                            if (status is not NoteType.MEASURE) throw new NoteStatusNotMatchException(LineNum, CharNum, token, "Number or } expected", NoteType.MEASURE, status);
                             TokenSet.Add(status, TokenBuffer);
                             TokenBuffer = "";
+                            status = NoteType.RST;
+                            break;
+                        case '(':
+                            status = NoteType.BPM;
+                            break;
+                        case ')':
+                            if (status is not NoteType.BPM) throw new NoteStatusNotMatchException(LineNum, CharNum, token, "Number or ) expected", NoteType.BPM, status);
+                            TokenSet.Add(status, TokenBuffer);
+                            TokenBuffer = "";
+                            status = NoteType.RST;
+                            break;
+                        case 'h':
+                            status = NoteType.HLD;
+                            break;
+                        case '-':
+                            status = NoteType.SI_;
+                            break;
+                        case 'v':
+                            status = NoteType.SV_;
+                            break;
+                        case 'w':
+                            status = NoteType.SI_;
                             break;
                     }
                 }
