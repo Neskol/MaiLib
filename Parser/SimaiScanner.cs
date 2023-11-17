@@ -39,6 +39,7 @@ namespace MaiLib
             foreach (string line in IncomingChart)
             {
                 NoteType status = NoteType.RST;
+                SpecialState state = SpecialState.Normal;
                 foreach (char token in line.ToCharArray())
                 {
                     switch (token)
@@ -60,6 +61,12 @@ namespace MaiLib
                             TokenSet.Add(status, TokenBuffer);
                             TokenBuffer = "";
                             status = NoteType.RST;
+                            break;
+                        case 'b':
+                            state = state == SpecialState.EX? SpecialState.BreakEX : SpecialState.Break;
+                            break;
+                        case 'x':
+                            state = state == SpecialState.Break ? SpecialState.BreakEX : SpecialState.EX;
                             break;
                         case 'h':
                             status = NoteType.HLD;
