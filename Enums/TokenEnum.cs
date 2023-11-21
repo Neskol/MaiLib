@@ -11,15 +11,14 @@ public class TokenEnum
         LBRACKET,
         RBRACKET,
         COMMA,
-        COLON,
         SHARP,
         DOT,
-        TOUCHA,
-        TOUCHB,
-        TOUCHC,
-        TOUCHD,
-        TOUCHE,
-        TOUCHF,
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
         NUM1,
         NUM2,
         NUM3,
@@ -34,6 +33,6 @@ public class TokenEnum
         EX,
         HOLD,
         FIREWORK,
-
+        EOS
     }
 }

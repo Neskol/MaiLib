@@ -1,95 +1,154 @@
 using static MaiLib.NoteEnum;
+using static MaiLib.TokenEnum;
 namespace MaiLib
 {
     public class SimaiScanner
     {
         public string[]? IncomingChart { get; private set; }
-        public Dictionary<NoteType, string> TokenSet { get; protected set; }
         public int LineNum { get; private set; }
         public int CharNum { get; private set; }
-        public string TokenBuffer { get; private set; }
+        public TokenType CurrentToken { get; private set; }
 
         public SimaiScanner()
         {
-            TokenSet = new Dictionary<NoteType, string>();
-            TokenBuffer = "";
             LineNum = 0;
             CharNum = 0;
+            CurrentToken = TokenType.EOS;
         }
 
         public SimaiScanner(string chart)
         {
-            IncomingChart = chart.Split("\n");
-            TokenSet = new Dictionary<NoteType, string>();
-            TokenBuffer = "";
-            LineNum = 0;
-            CharNum = 0;
+            Load(chart);
         }
 
         public void Load(string chart)
         {
             IncomingChart = chart.Split("\n");
-        }
-
-        public void Scan()
-        {
-            if (IncomingChart is null) throw new NullReferenceException("The scanner is not provided with valid chart to scan.");
             LineNum = 0;
             CharNum = 0;
-            foreach (string line in IncomingChart)
+            try
             {
-                NoteType status = NoteType.RST;
-                SpecialState state = SpecialState.Normal;
-                foreach (char token in line.ToCharArray())
-                {
-                    switch (token)
-                    {
-                        case '{':
-                            status = NoteType.MEASURE;
-                            break;
-                        case '}':
-                            if (status is not NoteType.MEASURE) throw new NoteStatusNotMatchException(LineNum, CharNum, token, "Number or } expected", NoteType.MEASURE, status);
-                            TokenSet.Add(status, TokenBuffer);
-                            TokenBuffer = "";
-                            status = NoteType.RST;
-                            break;
-                        case '(':
-                            status = NoteType.BPM;
-                            break;
-                        case ')':
-                            if (status is not NoteType.BPM) throw new NoteStatusNotMatchException(LineNum, CharNum, token, "Number or ) expected", NoteType.BPM, status);
-                            TokenSet.Add(status, TokenBuffer);
-                            TokenBuffer = "";
-                            status = NoteType.RST;
-                            break;
-                        case 'b':
-                            state = state == SpecialState.EX? SpecialState.BreakEX : SpecialState.Break;
-                            break;
-                        case 'x':
-                            state = state == SpecialState.Break ? SpecialState.BreakEX : SpecialState.EX;
-                            break;
-                        case 'h':
-                            status = NoteType.HLD;
-                            break;
-                        case '-':
-                            status = NoteType.SI_;
-                            break;
-                        case 'v':
-                            status = NoteType.SV_;
-                            break;
-                        case 'w':
-                            status = NoteType.SI_;
-                            break;
-                    }
-                }
+                ScanAndAdvance();
             }
+            catch
+            {
+                CurrentToken = TokenType.EOS;
+            }
+        }
+
+        public void ScanAndAdvance()
+        {
+            if (IncomingChart is null) throw new NullReferenceException("The scanner is not provided with valid chart to scan.");
+            else if (LineNum <= IncomingChart.Length - 1 && CharNum <= IncomingChart.Last().Length - 1)
+            switch (IncomingChart[LineNum][CharNum])
+            {
+                case '(':
+                    CurrentToken = TokenType.LPAREN;
+                    break;
+                case ')':
+                    CurrentToken = TokenType.RPAREN;
+                    break;
+                case '{':
+                    CurrentToken = TokenType.LBRACE;
+                    break;
+                case '}':
+                    CurrentToken = TokenType.RBRACE;
+                    break;
+                case '[':
+                    CurrentToken = TokenType.LBRACKET;
+                    break;
+                case ']':
+                    CurrentToken = TokenType.RBRACKET;
+                    break;
+                case ',':
+                    CurrentToken = TokenType.COMMA;
+                    break;
+                case '.':
+                    CurrentToken = TokenType.DOT;
+                    break;
+                case '#':
+                    CurrentToken = TokenType.SHARP;
+                    break;
+                case 'A':
+                    CurrentToken = TokenType.A;
+                    break;
+                case 'B':
+                    CurrentToken = TokenType.B;
+                    break;
+                case 'C':
+                    CurrentToken = TokenType.C;
+                    break;
+                case 'D':
+                    CurrentToken = TokenType.D;
+                    break;
+                case 'E':
+                    CurrentToken = TokenType.E;
+                    break;
+                case 'F':
+                    CurrentToken = TokenType.F;
+                    break;
+                case '0':
+                    CurrentToken = TokenType.NUM0;
+                    break;
+                case '1':
+                    CurrentToken = TokenType.NUM1;
+                    break;
+                case '2':
+                    CurrentToken = TokenType.NUM2;
+                    break;
+                case '3':
+                    CurrentToken = TokenType.NUM3;
+                    break;
+                case '4':
+                    CurrentToken = TokenType.NUM4;
+                    break;
+                case '5':
+                    CurrentToken = TokenType.NUM5;
+                    break;
+                case '6':
+                    CurrentToken = TokenType.NUM6;
+                    break;
+                case '7':
+                    CurrentToken = TokenType.NUM7;
+                    break;
+                case '8':
+                    CurrentToken = TokenType.NUM8;
+                    break;
+                case '9':
+                    CurrentToken = TokenType.NUM9;
+                    break;
+                case 'b':
+                    CurrentToken = TokenType.BREAK;
+                    break;
+                case 'x':
+                    CurrentToken = TokenType.EX;
+                    break;
+                case 'h':
+                    CurrentToken = TokenType.HOLD;
+                    break;
+                case 'f':
+                    CurrentToken = TokenType.FIREWORK;
+                    break;
+                default:
+                    throw new UnexpectedCharacterException(LineNum, CharNum, IncomingChart[LineNum][CharNum]);
+            }
+            if (CharNum < IncomingChart[LineNum].Length - 1)
+            {
+                CharNum++;
+            }
+            else if (LineNum < IncomingChart.Length - 1)
+            {
+                CharNum = 0;
+                LineNum++;
+            }
+            else CurrentToken = TokenType.EOS;
         }
     }
 
-    public class NoteStatusNotMatchException : Exception
+    public class UnexpectedCharacterException : Exception
     {
-        public NoteStatusNotMatchException(int lineNum, int charNum, char token, string reason, NoteType expected, NoteType actual) :
-        base($"At Line {lineNum}: Unexpected char {token} at {charNum} is found. Reason: {reason}. Expected Note Tpye: {expected} but actual {actual}.")
+        public UnexpectedCharacterException(int lineNum, int charNum, char token) :
+        base($"At Line {lineNum}: Unexpected char {token} at Line {lineNum} Char {charNum}.")
         {
         }
     }
