@@ -9,6 +9,8 @@ namespace MaiLib
         public int CharNum { get; private set; }
         public TokenType CurrentToken { get; private set; }
 
+        public char CurrentChar { get => IncomingChart is null ? ' ' : IncomingChart[LineNum][CharNum]; }
+
         public SimaiScanner()
         {
             LineNum = 0;
