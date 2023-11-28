@@ -180,7 +180,7 @@ namespace MaiLib
                 {
                     CharNum++;
                 }
-                else if (LineNum < IncomingChart.Length - 1)
+                else
                 {
                     CharNum = 0;
                     LineNum++;
