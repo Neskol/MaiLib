@@ -46,6 +46,7 @@ public class TokenEnum
         EX,
         HOLD,
         FIREWORK,
-        EOS
+        EOS,
+        BLANK
     }
 }
