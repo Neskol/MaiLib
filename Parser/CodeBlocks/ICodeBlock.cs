@@ -9,4 +9,9 @@ public interface ICodeBlock
     {
         public ComponentMissingException(string codeBlock, string missedComponents) : base(String.Format("CODE BLOCK {0} MISSED FOLLOWING COMPONENTS: {1}",codeBlock,missedComponents)){}
     }
+
+    public class ExcessiveComponentsException : Exception
+    {
+        public ExcessiveComponentsException(string codeBlock, string unexpectedComponents) : base(String.Format("CODE BLOCK {0} WAS PROVIDED WITH FOLLOWING COMPONENTS MORE THAN EXPECTED: {1}",codeBlock,unexpectedComponents)){}
+    }
 }
