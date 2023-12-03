@@ -2,7 +2,7 @@ using System.Text;
 using static MaiLib.ChartEnum;
 namespace MaiLib;
 
-public class SingleNote
+public class SingleNote : ICodeBlock
 {
     public TouchNote? TouchNote { get; private set; }
     public NormalNote? NormalNote { get; private set; }
