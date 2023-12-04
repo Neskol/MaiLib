@@ -4,6 +4,7 @@ namespace MaiLib;
 public class TapComp : ICodeBlock
 {
     public Key Key { get; private set; }
+    public StartPostfix? StartPostfix { get; private set; }
     public bool IsBreak { get; private set; }
     public bool IsEx { get; private set; }
 
