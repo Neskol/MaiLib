@@ -4,36 +4,42 @@ namespace MaiLib;
 
 public class SlideConnected : ICodeBlock
 {
-    public SlideType SlideType { get; private set; }
-    public Key Key { get; private set; }
-    public SlideDuration SlideDuration { get; private set; }
     public SlideConnectedSeq? SlideConnectedSeq { get; private set; }
+    public SlideDuration? SlideDuration { get; private set; }
     public SlideConnectedMeasuredSeq? SlideConnectedMeasuredSeq { get; private set; }
+    public bool IsBreak { get; private set; }
 
-    public SlideConnected(SlideType slideType, Key key, SlideDuration slideDuration,
-        SlideConnectedSeq slideConnectedSeq)
+    public SlideConnected(SlideConnectedSeq slideConnectedSeq, bool isBreak)
     {
-        SlideType = slideType;
-        Key = key;
         SlideConnectedSeq = slideConnectedSeq;
+        IsBreak = isBreak;
     }
 
-    public SlideConnected(SlideType slideType, Key key, SlideDuration slideDuration,
-        SlideConnectedMeasuredSeq slideConnectedMeasuredSeq)
+    public SlideConnected(SlideConnectedMeasuredSeq slideConnectedMeasuredSeq, SlideDuration slideDuration, bool isBreak)
     {
-        SlideType = slideType;
-        Key = key;
         SlideConnectedMeasuredSeq = slideConnectedMeasuredSeq;
+        SlideDuration = slideDuration;
+        IsBreak = isBreak;
     }
 
     public string Compose(ChartVersion chartVersion)
     {
         StringBuilder builder = new();
-        builder.Append(SlideType.Compose(chartVersion));
-        builder.Append(Key.Compose(chartVersion));
-        builder.Append(SlideDuration.Compose(chartVersion));
-        if (SlideConnectedSeq is not null) builder.Append(SlideConnectedSeq.Compose(chartVersion));
-        else if (SlideConnectedMeasuredSeq is not null) builder.Append(SlideConnectedMeasuredSeq.Compose(chartVersion));
+        if (SlideConnectedSeq is not null)
+        {
+            builder.Append(SlideConnectedSeq.Compose(chartVersion));
+            if (IsBreak) builder.Append('b');
+        }
+        else if (SlideConnectedMeasuredSeq is not null)
+        {
+            builder.Append(SlideConnectedMeasuredSeq.Compose(chartVersion));
+            if (SlideDuration is not null)
+            {
+                builder.Append(SlideDuration.Compose(chartVersion));
+                if (IsBreak) builder.Append('b');
+            }
+            else throw new ICodeBlock.ComponentMissingException("SLIDE-CONNECTED", "SLIDE-DURATION");
+        }
         else
             throw new ICodeBlock.ComponentMissingException("SLIDE-CONNECTED",
                 "SLIDE-CONNECTED-SEQ OR SLIDE-CONNECTED-MEASURED-SEQ");
