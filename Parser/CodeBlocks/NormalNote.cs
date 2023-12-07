@@ -18,7 +18,7 @@ public class NormalNote : ICodeBlock
         HoldComp = holdComp;
     }
 
-    public NormalNote(SlidGroupComp slidGroupComp)
+    public NormalNote(SlideGroupComp slidGroupComp)
     {
         SlideGroupComp = slidGroupComp;
     }

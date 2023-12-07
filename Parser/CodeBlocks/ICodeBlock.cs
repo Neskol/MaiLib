@@ -18,6 +18,9 @@ public interface ICodeBlock
     public class UnexpectedStringSuppliedException : Exception
     {
         public UnexpectedStringSuppliedException(string codeBlock, string expectedString, string actualString) : base(
-            String.Format("CODE BLOCK {0} WAS SUPPLIED WITH UNEXPECTED STRING. EXPECTED: {1}; ACTUAL: {2}", codeBlock, expectedString, actualString));
+            String.Format("CODE BLOCK {0} WAS SUPPLIED WITH UNEXPECTED STRING. EXPECTED: {1}; ACTUAL: {2}", codeBlock,
+                expectedString, actualString))
+        {
+        }
     }
 }

@@ -2,20 +2,20 @@ using System.Text;
 using static MaiLib.ChartEnum;
 namespace MaiLib;
 
-public class SlideConnected : ICodeBlock
+public class SlideConnectedComp : ICodeBlock
 {
     public SlideConnectedSeq? SlideConnectedSeq { get; private set; }
     public SlideDuration? SlideDuration { get; private set; }
     public SlideConnectedMeasuredSeq? SlideConnectedMeasuredSeq { get; private set; }
     public bool IsBreak { get; private set; }
 
-    public SlideConnected(SlideConnectedSeq slideConnectedSeq, bool isBreak)
+    public SlideConnectedComp(SlideConnectedSeq slideConnectedSeq, bool isBreak)
     {
         SlideConnectedSeq = slideConnectedSeq;
         IsBreak = isBreak;
     }
 
-    public SlideConnected(SlideConnectedMeasuredSeq slideConnectedMeasuredSeq, SlideDuration slideDuration, bool isBreak)
+    public SlideConnectedComp(SlideConnectedMeasuredSeq slideConnectedMeasuredSeq, SlideDuration slideDuration, bool isBreak)
     {
         SlideConnectedMeasuredSeq = slideConnectedMeasuredSeq;
         SlideDuration = slideDuration;

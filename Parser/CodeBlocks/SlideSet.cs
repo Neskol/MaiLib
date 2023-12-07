@@ -24,7 +24,7 @@ public class SlideSet : ICodeBlock
         }
         else if (SlideConnectedComp is not null)
         {
-            return SlideConnectedComp.compose(chartVersion);
+            return SlideConnectedComp.Compose(chartVersion);
         }
         else throw new ICodeBlock.ComponentMissingException("SLIDE-SET", "SLIDE-COMP OR SLIDE-CONNECTED-COMP");
     }

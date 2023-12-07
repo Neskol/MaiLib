@@ -51,7 +51,7 @@ public class NoteSeq : ICodeBlock
                 builder.Append(InnerNoteSeq.Compose(chartVersion));
                 builder.Append('\n');
             }
-            else throw new ICodeBlock.ComponentMissingException("NOTE-SEQ", "CHART-DEF")
+            else throw new ICodeBlock.ComponentMissingException("NOTE-SEQ", "CHART-DEF");
         }
         else if (NoteComp is not null)
         {

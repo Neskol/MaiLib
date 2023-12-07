@@ -10,15 +10,15 @@ public class BeginSeq : ICodeBlock
 
     public BeginSeq()
     {
-        BPM = new BPMChange(0,0,120);
-        Measure = new MeasureChange(0, 0, 4);
+        BPM = new BPM(120);
+        Measure = new Measure(4);
         NoteSeq = new NoteSeq();
     }
 
     public BeginSeq(BPMChange bpm, MeasureChange measure, NoteSeq noteSeq)
     {
-        BPM = new BPMChange(0,0,120);
-        Measure = new MeasureChange(0, 0, 4);
+        BPM = new BPM(120);
+        Measure = new Measure(4);
         NoteSeq = new NoteSeq();
     }
 

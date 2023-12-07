@@ -16,7 +16,7 @@ public class SlideType : ICodeBlock
             if (suppliedString.Length != 2)
                 throw new ICodeBlock.UnexpectedStringSuppliedException("SLIDE-TYPE", "V<key>", suppliedString);
             NoteType = "V";
-            Key = new Key(suppliedString[1]);
+            InflectionKey = new Key(suppliedString[1]);
         }
         else if (_allowedStrings.Any(suppliedString.Equals))
         {
@@ -28,6 +28,6 @@ public class SlideType : ICodeBlock
 
     public string Compose(ChartVersion chartVersion)
     {
-        return Key is null? NoteType : NoteType + Key.Compose(chartVersion);
+        return InflectionKey is null? NoteType : NoteType + InflectionKey.Compose(chartVersion);
     }
 }

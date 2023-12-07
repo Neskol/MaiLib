@@ -15,7 +15,7 @@ public class SlideConnectedMeasuredSeq : ICodeBlock
         InnerSlideConnectedSeq = slideConnectedSeq;
     }
 
-    public SlideConnectedSeq(SlideType slideType, Key key)
+    public SlideConnectedMeasuredSeq(SlideType slideType, Key key)
     {
         SlideType = slideType;
         Key = key;
