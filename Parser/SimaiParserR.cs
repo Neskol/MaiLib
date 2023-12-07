@@ -5,8 +5,7 @@ using static MaiLib.NoteEnum;
 public class SimaiParserR
 {
     public int Resolution { get; private set; }
-    public int BarNum { get; private set; }
-    public int TickNum { get; private set; }
+    public int Tick { get; private set; }
     public SimaiScanner Scanner { get; private set; }
 
     public SimaiParserR()
