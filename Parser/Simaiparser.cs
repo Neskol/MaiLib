@@ -51,42 +51,59 @@ public class SimaiParser : IParser
                 // {
                 //     Console.WriteLine("This is bar 6");
                 // }
-                var noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
-                var containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
-                var containsMeasure = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE;
+                bool isSlide = eachNote.Contains("-") ||
+                                                       eachNote.Contains("v") ||
+                                                       eachNote.Contains("w") ||
+                                                       eachNote.Contains("<") ||
+                                                       eachNote.Contains(">") ||
+                                                       eachNote.Contains("p") ||
+                                                       eachNote.Contains("q") ||
+                                                       eachNote.Contains("s") ||
+                                                       eachNote.Contains("z") ||
+                                                       eachNote.Contains("V");
+                if (!isSlide)
+                {
 
-                if (containsBPM)
-                {
-                    // string bpmCandidate = eachNote.Replace("(", "").Replace(")", "");
-                    // noteCandidate = new BPMChange(bar, tick, Double.Parse(bpmCandidate));
-                    noteCandidate.Bar = bar;
-                    noteCandidate.Tick = tick;
-                    //notes.Add(changeNote);
-                    currentBPM = noteCandidate.BPM;
-                    bpmChanges.Add((BPMChange)noteCandidate);
-                }
-                else if (containsMeasure)
-                {
-                    var quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
-                    tickStep = MaximumDefinition / int.Parse(quaverCandidate);
-                    // MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
-                    //notes.Add(changeNote);
-                }
+                    var noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
+                    var containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
+                    var containsMeasure = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE;
 
-                else /*if (currentBPM > 0.0)*/
-                {
-                    if (noteCandidate.NoteSpecialState is SpecialState.ConnectingSlide)
+                    if (containsBPM)
                     {
-                        noteCandidate.Tick += previousConnectingSlideTick;
-                        previousConnectingSlideTick = noteCandidate.Tick + noteCandidate.LastLength;
-                        noteCandidate.Update();
+                        // string bpmCandidate = eachNote.Replace("(", "").Replace(")", "");
+                        // noteCandidate = new BPMChange(bar, tick, Double.Parse(bpmCandidate));
+                        noteCandidate.Bar = bar;
+                        noteCandidate.Tick = tick;
+                        //notes.Add(changeNote);
+                        currentBPM = noteCandidate.BPM;
+                        bpmChanges.Add((BPMChange)noteCandidate);
                     }
-                    else if (noteCandidate.NoteGenre is NoteGenre.SLIDE)
+                    else if (containsMeasure)
                     {
-                        previousConnectingSlideTick = noteCandidate.Tick + noteCandidate.WaitLength + noteCandidate.LastLength;
+                        var quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
+                        tickStep = MaximumDefinition / int.Parse(quaverCandidate);
+                        // MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
+                        //notes.Add(changeNote);
                     }
-                    notes.Add(noteCandidate);
+
+                    else if (!isSlide) /*if (currentBPM > 0.0)*/
+                    {
+                        if (noteCandidate.NoteSpecialState is SpecialState.ConnectingSlide)
+                        {
+                            noteCandidate.Tick += previousConnectingSlideTick;
+                            previousConnectingSlideTick = noteCandidate.Tick + noteCandidate.LastLength;
+                            noteCandidate.Update();
+                        }
+                        else if (noteCandidate.NoteGenre is NoteGenre.SLIDE)
+                        {
+                            previousConnectingSlideTick = noteCandidate.Tick + noteCandidate.WaitLength +
+                                                          noteCandidate.LastLength;
+                        }
+
+                        notes.Add(noteCandidate);
+                    }
                 }
+                else notes.AddRange(SlideGroupOfToken(eachNote,bar,tick,currentBPM));
             }
 
 
@@ -283,6 +300,46 @@ public class SimaiParser : IParser
             }
         }
 
+        return result;
+    }
+
+    public List<Note> SlideGroupOfToken(string token, int bar, int tick, double bpm)
+    {
+        int currentBar = bar;
+        int currentTick = tick;
+        List<string> extractedTokens = ExtractConnectingSlides(token);
+        Tap? slideStart = null;
+        List<Slide> slideCandidates = new();
+        foreach (string x in extractedTokens)
+        {
+            if (slideStart is null && x.Contains("_"))
+            {
+                if (slideStart is null)
+                {
+                    slideStart = TapOfToken(x.Split('_')[0],bar,tick,bpm);
+                }
+                else
+                    throw new Exception(
+                        $"Extracted connected sequence consist more than 1 slide start at bar {bar} tick {tick}: " +
+                        String.Join(", ", extractedTokens));
+            }
+            else if (slideStart is not null)
+            {
+                Slide connectCandidate = SlideOfToken(x, currentBar, currentTick, slideStart, bpm);
+                slideCandidates.Add(connectCandidate);
+                currentTick += connectCandidate.WaitLength + connectCandidate.LastLength;
+                if (currentTick >= MaximumDefinition)
+                {
+                    currentBar += currentTick / 384;
+                    currentTick %= MaximumDefinition;
+                }
+            }
+            else throw new Exception("SLIDE START IS NOT PROVIDED: " + String.Join(", ",extractedTokens));
+        }
+
+        List<Note> result = new();
+        if (slideStart is not null) result.Add(slideStart);
+        result.AddRange(slideCandidates);
         return result;
     }
 
@@ -640,7 +697,8 @@ public class SimaiParser : IParser
         else
         {
             var candidates = token.Split("*");
-            foreach (var symbol in candidates) result.AddRange(ExtractConnectingSlides(symbol));
+            // foreach (var symbol in candidates) result.AddRange(ExtractConnectingSlides(symbol));
+            result.AddRange(candidates);
         }
 
         return result;
@@ -736,6 +794,54 @@ public class SimaiParser : IParser
         if (slideCandidate.Length > 0 && !normalSlideExtracted) result.Add(slideCandidate);
         else if (slideCandidate.Length > 0 && normalSlideExtracted)
             result.Add(slideCandidate + "CN" + lastKeyCandidate);
+
+        // Post processing of slide durations
+        if (result.Count(p => p.Contains('[')) == 0)
+        {
+            throw new Exception("Extracted slides do not contain any duration setting: " + String.Join(", ", result));
+        }
+        // Catch for single duration connecting slides
+        else if (result.Count >= 3 && result.Count(p => p.Contains('[')) == 1)
+        {
+            static string ReplaceDuration(string oldValue, string newDuration)
+            {
+                string result = "";
+                bool ignoring = false;
+                foreach (char x in oldValue)
+                {
+                    ignoring = ignoring || x == '[';
+                    if (!ignoring) result += x;
+                    ignoring = ignoring && x != ']';
+                }
+
+                if (oldValue.Contains("CN")) return $"{result.Split("CN")[0]}{newDuration}CN{result.Split("CN")[1]}";
+                else return oldValue + newDuration;
+            }
+
+            string slideDurationCandidate =
+                result.Find(p => p.Contains('[')) ?? throw new Exception("Unexpected duration not found");
+            string newDurationCandidate = "[" + slideDurationCandidate.Split('[')[1].Split("CN")[0];
+            if (newDurationCandidate.Contains("##"))
+            {
+                double averageDuration = double.Parse(slideDurationCandidate.Split("##")[1].Split(']')[0]);
+                newDurationCandidate = $"[{newDurationCandidate.Split("##")[0]}##{averageDuration}]";
+            }
+            else if (newDurationCandidate.Contains(':'))
+            {
+                string durationCandidate = newDurationCandidate.Replace("[", "").Replace("]", "");
+                string[] numList = durationCandidate.Split(':');
+                int quaver = int.Parse(numList[0]) * (result.Count - 1);
+                int multiple = int.Parse(numList[1]);
+                newDurationCandidate = $"[{quaver}:{multiple}]";
+            }
+            else throw new NotImplementedException("BPM # QUAVER : MULTIPLE is not yet supported");
+
+            for (int i = 1; i < result.Count; i++)
+            {
+                result[i] = ReplaceDuration(result[i], newDurationCandidate);
+            }
+        }
+        else if (result.Count(p=>p.Contains('[')) != result.Count - 1) throw new Exception("Duration must either be assigned individually or only once: " + String.Join(", ", result));
         return result;
     }
 }
