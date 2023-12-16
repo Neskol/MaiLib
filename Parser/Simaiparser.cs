@@ -370,26 +370,26 @@ public class SimaiParser : IParser
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            // if (PreviousSlideStart.Key.Equals("0") ||
-            //     PreviousSlideStart.Key.Equals("1") ||
-            //     PreviousSlideStart.Key.Equals("6") ||
-            //     PreviousSlideStart.Key.Equals("7"))
-            //     noteType = NoteType.SCL;
-            // else noteType = NoteType.SCR;
-            noteType = NoteType.SCL;
+            if (PreviousSlideStart.Key.Equals("0") ||
+                PreviousSlideStart.Key.Equals("1") ||
+                PreviousSlideStart.Key.Equals("6") ||
+                PreviousSlideStart.Key.Equals("7"))
+                noteType = NoteType.SCL;
+            else noteType = NoteType.SCR;
+            // noteType = NoteType.SCL;
         }
         else if (token.Contains(">"))
         {
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            // if (PreviousSlideStart.Key.Equals("0") ||
-            //     PreviousSlideStart.Key.Equals("1") ||
-            //     PreviousSlideStart.Key.Equals("6") ||
-            //     PreviousSlideStart.Key.Equals("7"))
-            //     noteType = NoteType.SCR;
-            // else noteType = NoteType.SCL;
-            noteType = NoteType.SCR;
+            if (PreviousSlideStart.Key.Equals("0") ||
+                PreviousSlideStart.Key.Equals("1") ||
+                PreviousSlideStart.Key.Equals("6") ||
+                PreviousSlideStart.Key.Equals("7"))
+                noteType = NoteType.SCR;
+            else noteType = NoteType.SCL;
+            // noteType = NoteType.SCR;
         }
         else if (token.Contains("s"))
         {
@@ -542,10 +542,17 @@ public class SimaiParser : IParser
         int currentBar = bar;
         int currentTick = tick;
         Note slideStart = startNote;
+        int prevSlideKey = -1;
         List<Slide> slideCandidates = new();
         foreach (string x in extractedTokens)
         {
             Slide connectCandidate = SlideOfToken(x, currentBar, currentTick, slideStart, bpm);
+            prevSlideKey = connectCandidate.EndKeyNum;
+            int[] endPointOfConcern = { 0, 1, 6, 7 };
+            if (connectCandidate.NoteType is NoteType.SCL && endPointOfConcern.Any(p => p == prevSlideKey))
+                connectCandidate.NoteType = NoteType.SCR;
+            else if (connectCandidate.NoteType is NoteType.SCR && endPointOfConcern.Any(p => p == prevSlideKey))
+                connectCandidate.NoteType = NoteType.SCL;
             slideCandidates.Add(connectCandidate);
             currentTick += connectCandidate.WaitLength + connectCandidate.LastLength;
             if (currentTick >= MaximumDefinition)
