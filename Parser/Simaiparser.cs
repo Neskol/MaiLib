@@ -370,10 +370,8 @@ public class SimaiParser : IParser
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            if (PreviousSlideStart.Key.Equals("0") ||
-                PreviousSlideStart.Key.Equals("1") ||
-                PreviousSlideStart.Key.Equals("6") ||
-                PreviousSlideStart.Key.Equals("7"))
+            int[] endPointOfConcern = { 0, 1, 6, 7 };
+            if (endPointOfConcern.Any(p=>p == slideStartCandidate.KeyNum))
                 noteType = NoteType.SCL;
             else noteType = NoteType.SCR;
             // noteType = NoteType.SCL;
@@ -383,10 +381,8 @@ public class SimaiParser : IParser
             endKeyCandidate = token.Substring(1, 1);
             sustainSymbol = token.IndexOf("[");
             sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            if (PreviousSlideStart.Key.Equals("0") ||
-                PreviousSlideStart.Key.Equals("1") ||
-                PreviousSlideStart.Key.Equals("6") ||
-                PreviousSlideStart.Key.Equals("7"))
+            int[] endPointOfConcern = { 0, 1, 6, 7 };
+            if (endPointOfConcern.Any(p=>p == slideStartCandidate.KeyNum))
                 noteType = NoteType.SCR;
             else noteType = NoteType.SCL;
             // noteType = NoteType.SCR;
@@ -408,8 +404,8 @@ public class SimaiParser : IParser
         else if (token.Contains("V"))
         {
             endKeyCandidate = token.Substring(2, 1);
-            var sllCandidate = int.Parse(slideStartCandidate.Key) + 2;
-            var slrCandidate = int.Parse(slideStartCandidate.Key) - 2;
+            var sllCandidate = int.Parse(slideStartCandidate.Key) - 2;
+            var slrCandidate = int.Parse(slideStartCandidate.Key) + 2;
             var inflectionCandidate = int.Parse(token.Substring(1, 1)) - 1;
             ////Revalue inflection candidate
             //if (inflectionCandidate < 0)
@@ -490,6 +486,12 @@ public class SimaiParser : IParser
             result.WaitLength = 0;
         }
         else result.NoteSpecialState = noteSpecialState;
+
+        // int[] endPointOfConcern = { 0, 1, 6, 7 };
+        // if (result.NoteType is NoteType.SCL && KeyDistance(result.KeyNum,result.EndKeyNum,NoteType.SCL) > 4)
+        //     result.NoteType = NoteType.SCR;
+        // else if (result.NoteType is NoteType.SCR && KeyDistance(result.KeyNum,result.EndKeyNum,NoteType.SCL) > 4)
+        //     result.NoteType = NoteType.SCL;
 
         return (Slide)result;
     }
@@ -865,4 +867,21 @@ public class SimaiParser : IParser
            token == 's' ||
            token == 'z' ||
            token == 'V';
+
+    public static int KeyDistance(int startKey, int endKey, NoteType direction)
+    {
+        int result = startKey == endKey? 8 : 0;
+        if (result != 8) switch (direction)
+        {
+            case NoteType.SCL:
+                result = startKey - endKey;
+                if (result <= 0) result += 8;
+                break;
+            case NoteType.SCR:
+                result = endKey - startKey;
+                if (result <= 0) result += 8;
+                break;
+        }
+        return result;
+    }
 }
