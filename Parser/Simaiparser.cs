@@ -52,7 +52,7 @@ public class SimaiParser : IParser
                 // {
                 //     Console.WriteLine("This is bar 6");
                 // }
-                var noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
+                Note noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
                 var containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
                 var containsMeasure = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE;
 

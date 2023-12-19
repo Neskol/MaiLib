@@ -39,14 +39,13 @@ public class SimaiTokenizer : ITokenizer
         var takeIn = File.ReadAllLines(location);
         var storage = "";
         foreach (var line in takeIn) storage += line;
-        var result = storage.Split(",");
-        return result;
+        return TokensFromText(storage);
     }
 
     public string[] TokensFromText(string text)
     {
         var storage = text;
-        var result = storage.Split(",");
+        var result = new String(text.ToCharArray().Where(c=>!Char.IsWhiteSpace(c)).ToArray()).Split(',');
         return result;
     }
 
@@ -208,6 +207,7 @@ public class SimaiTokenizer : ITokenizer
                 var noteCandidate = item.Replace("inote_7=", "");
                 chartCandidates.Add("7", TokensFromText(noteCandidate));
             }
+            // TODO: Fix this when note >= 8
             else if (item.Contains("inote_"))
             {
                 var noteCandidate = item.Replace("inote_=", "");
