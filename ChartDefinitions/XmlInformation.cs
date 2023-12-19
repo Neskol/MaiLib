@@ -7,6 +7,7 @@ namespace MaiLib;
 /// </summary>
 public class XmlInformation : TrackInformation, IXmlUtility
 {
+    private const int UtageGenreId = 107;
     #region Constructors
     /// <summary>
     ///     Using take in Xml to store trackInformation:
@@ -34,6 +35,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
 
     public override void Update()
     {
+        int genreId = 0;
         var nameCandidate = TakeInValue.GetElementsByTagName("name");
         var bpmCandidate = TakeInValue.GetElementsByTagName("bpm");
         var chartCandidate = TakeInValue.GetElementsByTagName("Notes");
@@ -54,6 +56,54 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 TrackName = strCandidate.InnerText;
             }
 
+        foreach (XmlNode candidate in bpmCandidate)
+        {
+            if (TrackBPM.Equals("")) TrackBPM = candidate.InnerText;
+        }
+
+        foreach (XmlNode candidate in sortNameCandidate)
+        {
+            if (TrackSortName.Equals("")) TrackSortName = candidate.InnerText;
+        }
+
+        foreach (XmlNode candidate in composerCandidate)
+        {
+            if (TrackComposer.Equals(""))
+            {
+                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
+                TrackComposer = strCandidate.InnerText;
+            }
+        }
+
+        foreach (XmlNode candidate in genreCandidate)
+        {
+            if (TrackGenre.Equals(""))
+            {
+                var idCandidate = candidate["id"] ?? throw new NullReferenceException();
+                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
+                genreId = int.Parse(idCandidate.InnerText);
+                TrackGenre = strCandidate.InnerText;
+            }
+        }
+
+        foreach (XmlNode candidate in versionNumberCandidate)
+        {
+            if (TrackVersionNumber.Equals(""))
+            {
+                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
+                TrackVersionNumber = strCandidate.InnerText;
+            }
+        }
+
+        foreach (XmlNode candidate in addVersionCandidate)
+        {
+            if (TrackVersion.Equals(""))
+            {
+                var idCandidate = candidate["id"] ?? throw new NullReferenceException();
+                TrackVersion = version[int.Parse(idCandidate.InnerText)];
+            }
+        }
+
         foreach (XmlNode candidate in chartCandidate)
             try
             {
@@ -64,17 +114,33 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 {
                     var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    Information["Basic Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+
                     var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                    Information["Basic"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                        ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
-                        : "";
-                    Information["Basic Chart Maker"] = notesDesignerCandidate.InnerText;
-                    Information["Basic Chart Path"] = fileCandidate.InnerText;
+
+                    if (genreId == UtageGenreId)
+                    {
+                        Information["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+
+                        Information["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                            ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                            : "";
+                        Information["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
+                        Information["Utage Chart Path"] = fileCandidate.InnerText;
+                    }
+                    else
+                    {
+                        Information["Basic Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+
+                        Information["Basic"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                            ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                            : "";
+                        Information["Basic Chart Maker"] = notesDesignerCandidate.InnerText;
+                        Information["Basic Chart Path"] = fileCandidate.InnerText;
+                    }
                 }
                 else if (pathCandidate.InnerText.Contains("01.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
@@ -177,52 +243,6 @@ public class XmlInformation : TrackInformation, IXmlUtility
             {
                 Console.WriteLine("There is no such chart: " + ex.Message);
             }
-
-        foreach (XmlNode candidate in bpmCandidate)
-        {
-            if (TrackBPM.Equals("")) TrackBPM = candidate.InnerText;
-        }
-
-        foreach (XmlNode candidate in sortNameCandidate)
-        {
-            if (TrackSortName.Equals("")) TrackSortName = candidate.InnerText;
-        }
-
-        foreach (XmlNode candidate in composerCandidate)
-        {
-            if (TrackComposer.Equals(""))
-            {
-                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
-                TrackComposer = strCandidate.InnerText;
-            }
-        }
-
-        foreach (XmlNode candidate in genreCandidate)
-        {
-            if (TrackGenre.Equals(""))
-            {
-                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
-                TrackGenre = strCandidate.InnerText;
-            }
-        }
-
-        foreach (XmlNode candidate in versionNumberCandidate)
-        {
-            if (TrackVersionNumber.Equals(""))
-            {
-                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
-                TrackVersionNumber = strCandidate.InnerText;
-            }
-        }
-
-        foreach (XmlNode candidate in addVersionCandidate)
-        {
-            if (TrackVersion.Equals(""))
-            {
-                var idCandidate = candidate["id"] ?? throw new NullReferenceException();
-                TrackVersion = version[int.Parse(idCandidate.InnerText)];
-            }
-        }
 
         Information["SDDX Suffix"] = StandardDeluxeSuffix;
     }

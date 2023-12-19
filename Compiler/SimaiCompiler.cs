@@ -285,11 +285,16 @@ public class SimaiCompiler : Compiler
         beginning += "&des=" + Information.GetValueOrDefault("Master Chart Maker") + "\n";
         beginning += "&shortid=" + Information.GetValueOrDefault("Music ID") + "\n";
         beginning += "&genre=" + Information.GetValueOrDefault("Genre") + "\n";
-        beginning += "&cabinet=SD";
+        beginning += "&cabinet=";
+        if (MusicXML.IsDXChart)
+            beginning += "DX\n";
+        else
+            beginning += "SD\n";
         beginning += "&version=" + MusicXML.TrackVersion + "\n";
         beginning += "&ChartConverter=Neskol\n";
         beginning += "&ChartConvertTool=MaichartConverter\n";
-        beginning += "&ChartConvertToolVersion=1.0.4.0\n";
+        beginning += "&ChartConvertToolVersion=" +
+                     FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion + "\n";
         beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
         beginning += "\n";
 
