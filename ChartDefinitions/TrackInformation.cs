@@ -68,7 +68,7 @@ public abstract class TrackInformation : IXmlUtility
     /// </summary>
     private XmlDocument takeInValue;
 
-#region Constructors
+    #region Constructors
     /// <summary>
     ///     Empty constructor
     /// </summary>
@@ -218,7 +218,7 @@ public abstract class TrackInformation : IXmlUtility
                 Information["Expert Decimal"],
                 Information["Master Decimal"],
                 Information["Remaster Decimal"],
-                Information["Utage"]
+                Information["Utage Decimal"]
             };
             return result;
         }
@@ -230,7 +230,7 @@ public abstract class TrackInformation : IXmlUtility
             Information["Expert Decimal"] = value[3];
             Information["Master Decimal"] = value[4];
             Information["Remaster Decimal"] = value[5];
-            Information["Utage"] = value[6];
+            Information["Utage Decimal"] = value[6];
         }
     }
 
@@ -425,6 +425,7 @@ public abstract class TrackInformation : IXmlUtility
             { "Remaster Chart Maker", "" },
             { "Remaster Chart Path", "" },
             { "Utage", "" },
+            { "Utage Decimal", "" },
             { "Utage Chart Maker", "" },
             { "Utage Chart Path", "" },
             { "SDDX Suffix", "" }
@@ -471,6 +472,7 @@ public abstract class TrackInformation : IXmlUtility
             { "Remaster Chart Maker", "SEGA" },
             { "Remaster Chart Path", "000000_04.ma2" },
             { "Utage", "11" },
+            { "Utage Decimal", "11.0" },
             { "Utage Chart Maker", "SEGA" },
             { "Utage Chart Path", "000000_05.ma2" },
             { "SDDX Suffix", "SD" }

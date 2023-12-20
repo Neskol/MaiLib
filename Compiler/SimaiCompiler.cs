@@ -87,7 +87,7 @@ public class SimaiCompiler : Compiler
                 }
                 else
                 {
-                    throw new Exception("The given rotation method is invalid. Given: "+rotateParameter);
+                    throw new Exception("The given rotation method is invalid. Given: " + rotateParameter);
                 }
             }
             Charts.Add(chartCandidate);
@@ -145,8 +145,9 @@ public class SimaiCompiler : Compiler
             beginning += "&version=" + MusicXML.TrackVersion + "\n";
             beginning += "&ChartConverter=Neskol\n";
             beginning += "&ChartConvertTool=MaichartConverter\n";
-            beginning += "&ChartConvertToolVersion=" +
-                         FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion + "\n";
+            string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
+            if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
+            beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n";
             beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
             beginning += "\n";
 
@@ -293,9 +294,9 @@ public class SimaiCompiler : Compiler
         beginning += "&version=" + MusicXML.TrackVersion + "\n";
         beginning += "&ChartConverter=Neskol\n";
         beginning += "&ChartConvertTool=MaichartConverter\n";
-        beginning += "&ChartConvertToolVersion=" +
-                     FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion + "\n";
-        beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
+        string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
+        if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
+        beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n"; beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
         beginning += "\n";
 
         var defaultChartIndex = 7;
@@ -304,8 +305,8 @@ public class SimaiCompiler : Compiler
             defaultChartIndex = 2;
             foreach (var ma2file in ma2files)
             {
-                string difficultyCandidate = "宴";
-                if (StrictDecimalLevel && Information.TryGetValue("Advanced Decimal", out var decimalLevel))
+                string difficultyCandidate = Information["Utage"].Equals("") ? "宴" : $"{Information["Utage"]}?";
+                if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out var decimalLevel))
                 {
                     difficultyCandidate = $"{decimalLevel}?";
                 }
@@ -317,8 +318,8 @@ public class SimaiCompiler : Compiler
         }
         else
         {
-            string difficultyCandidate = "宴";
-            if (StrictDecimalLevel && Information.TryGetValue("Advanced Decimal", out var decimalLevel))
+            string difficultyCandidate = Information["Utage"].Equals("") ? "宴" : $"{Information["Utage"]}?";
+            if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out var decimalLevel))
             {
                 difficultyCandidate = $"{decimalLevel}?";
             }
