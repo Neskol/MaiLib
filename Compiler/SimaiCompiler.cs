@@ -125,7 +125,7 @@ public class SimaiCompiler : Compiler
     public override string Compose()
     {
         var result = "";
-        Console.WriteLine("StrictDecimal: "+StrictDecimalLevel);
+        // Console.WriteLine("StrictDecimal: "+StrictDecimalLevel);
         // Console.ReadKey();
         //Add Information
         {
@@ -181,7 +181,7 @@ public class SimaiCompiler : Compiler
                 Information.TryGetValue("Advanced Chart Maker", out var advanceMaker))
             {
                 string difficultyCandidate = advance;
-                if (StrictDecimalLevel && Information.TryGetValue("Advance Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Advanced Decimal", out var decimalLevel))
                 {
                     difficultyCandidate = decimalLevel;
                 }
@@ -304,8 +304,12 @@ public class SimaiCompiler : Compiler
             defaultChartIndex = 2;
             foreach (var ma2file in ma2files)
             {
-                beginning += "&lv_" + defaultChartIndex + "=" + "宴" + "\n";
-                beginning += "\n";
+                string difficultyCandidate = "宴";
+                if (StrictDecimalLevel && Information.TryGetValue("Advanced Decimal", out var decimalLevel))
+                {
+                    difficultyCandidate = $"{decimalLevel}?";
+                }
+                beginning += $"&lv_{defaultChartIndex}={difficultyCandidate}\n\n";
                 defaultChartIndex++;
             }
 
@@ -313,8 +317,12 @@ public class SimaiCompiler : Compiler
         }
         else
         {
-            beginning += "&lv_" + defaultChartIndex + "=" + "宴" + "\n";
-            beginning += "\n";
+            string difficultyCandidate = "宴";
+            if (StrictDecimalLevel && Information.TryGetValue("Advanced Decimal", out var decimalLevel))
+            {
+                difficultyCandidate = $"{decimalLevel}?";
+            }
+            beginning += $"&lv_{defaultChartIndex}={difficultyCandidate}\n\n";
         }
 
 
