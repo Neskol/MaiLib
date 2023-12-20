@@ -87,7 +87,7 @@ public class SimaiCompiler : Compiler
                 }
                 else
                 {
-                    throw new Exception("The given rotation method is invalid. Given: "+rotateParameter);
+                    throw new Exception("The given rotation method is invalid. Given: " + rotateParameter);
                 }
             }
             Charts.Add(chartCandidate);
@@ -125,7 +125,7 @@ public class SimaiCompiler : Compiler
     public override string Compose()
     {
         var result = "";
-        Console.WriteLine("StrictDecimal: "+StrictDecimalLevel);
+        // Console.WriteLine("StrictDecimal: "+StrictDecimalLevel);
         // Console.ReadKey();
         //Add Information
         {
@@ -145,8 +145,9 @@ public class SimaiCompiler : Compiler
             beginning += "&version=" + MusicXML.TrackVersion + "\n";
             beginning += "&ChartConverter=Neskol\n";
             beginning += "&ChartConvertTool=MaichartConverter\n";
-            beginning += "&ChartConvertToolVersion=" +
-                         FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion + "\n";
+            string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
+            if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
+            beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n";
             beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
             beginning += "\n";
 
@@ -181,7 +182,7 @@ public class SimaiCompiler : Compiler
                 Information.TryGetValue("Advanced Chart Maker", out var advanceMaker))
             {
                 string difficultyCandidate = advance;
-                if (StrictDecimalLevel && Information.TryGetValue("Advance Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Advanced Decimal", out var decimalLevel))
                 {
                     difficultyCandidate = decimalLevel;
                 }
@@ -285,12 +286,17 @@ public class SimaiCompiler : Compiler
         beginning += "&des=" + Information.GetValueOrDefault("Master Chart Maker") + "\n";
         beginning += "&shortid=" + Information.GetValueOrDefault("Music ID") + "\n";
         beginning += "&genre=" + Information.GetValueOrDefault("Genre") + "\n";
-        beginning += "&cabinet=SD";
+        beginning += "&cabinet=";
+        if (MusicXML.IsDXChart)
+            beginning += "DX\n";
+        else
+            beginning += "SD\n";
         beginning += "&version=" + MusicXML.TrackVersion + "\n";
         beginning += "&ChartConverter=Neskol\n";
         beginning += "&ChartConvertTool=MaichartConverter\n";
-        beginning += "&ChartConvertToolVersion=1.0.4.0\n";
-        beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
+        string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
+        if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
+        beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n"; beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
         beginning += "\n";
 
         var defaultChartIndex = 7;
@@ -299,8 +305,12 @@ public class SimaiCompiler : Compiler
             defaultChartIndex = 2;
             foreach (var ma2file in ma2files)
             {
-                beginning += "&lv_" + defaultChartIndex + "=" + "宴" + "\n";
-                beginning += "\n";
+                string difficultyCandidate = Information["Utage"].Equals("") ? "宴" : $"{Information["Utage"]}?";
+                if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out var decimalLevel))
+                {
+                    difficultyCandidate = $"{decimalLevel}?";
+                }
+                beginning += $"&lv_{defaultChartIndex}={difficultyCandidate}\n\n";
                 defaultChartIndex++;
             }
 
@@ -308,8 +318,12 @@ public class SimaiCompiler : Compiler
         }
         else
         {
-            beginning += "&lv_" + defaultChartIndex + "=" + "宴" + "\n";
-            beginning += "\n";
+            string difficultyCandidate = Information["Utage"].Equals("") ? "宴" : $"{Information["Utage"]}?";
+            if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out var decimalLevel))
+            {
+                difficultyCandidate = $"{decimalLevel}?";
+            }
+            beginning += $"&lv_{defaultChartIndex}={difficultyCandidate}\n\n";
         }
 
 

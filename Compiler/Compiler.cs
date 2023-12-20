@@ -158,9 +158,10 @@ public abstract class Compiler : ICompiler
     /// <returns></returns>
     public string GenerateOneLineSummary()
     {
+        // TODO: Shift to format
         var result = "";
         if (Charts.Equals(null)) throw new NullReferenceException("This compiler has empty chat list!");
-        result += "(" + Information["Music ID"] + ")" + Information["Name"] + ", " + Information["Genre"] + ", ";
+        result += "(" + Information["Music ID"] + ") " + Information["Name"] + ", " + Information["Genre"] + ", ";
         if (!Information["Easy"].Equals("")) result += Information["Easy"] + "/";
         if (!Information["Basic"].Equals(""))
             result += Information["Basic"];

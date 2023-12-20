@@ -2,8 +2,51 @@ namespace MaiLib;
 
 public class TokenEnum
 {
-    public enum EnumType
+    public enum TokenType
     {
-
+        LPAREN,
+        RPAREN,
+        LBRACE,
+        RBRACE,
+        LBRACKET,
+        RBRACKET,
+        LANGLE,
+        RANGLE,
+        ASTERISK,
+        COMMA,
+        COLON,
+        DASH,
+        DOLLAR,
+        SLASH,
+        SHARP,
+        DOT,
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        SV,
+        LV,
+        P,
+        Q,
+        S,
+        Z,
+        NUM1,
+        NUM2,
+        NUM3,
+        NUM4,
+        NUM5,
+        NUM6,
+        NUM7,
+        NUM8,
+        NUM9,
+        NUM0,
+        BREAK,
+        EX,
+        HOLD,
+        FIREWORK,
+        EOS,
+        BLANK
     }
 }
