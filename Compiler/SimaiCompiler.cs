@@ -59,9 +59,9 @@ public class SimaiCompiler : Compiler
     /// <param name="location">Folder</param>
     /// <param name="targetLocation">Output folder</param>
     /// <param name="forUtage">True if for utage</param>
-    public SimaiCompiler(string location, string targetLocation, bool forUtage)
+    public SimaiCompiler(bool strictDecimal, string location, string targetLocation, bool forUtage)
     {
-        StrictDecimalLevel = false;
+        StrictDecimalLevel = strictDecimal;
         var ma2files = Directory.GetFiles(location, "*.ma2");
         Charts = new List<Chart>();
         MusicXML = new XmlInformation(location);
