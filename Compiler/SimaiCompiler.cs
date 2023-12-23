@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using static MaiLib.NoteEnum;
 
 namespace MaiLib;
@@ -145,9 +146,10 @@ public class SimaiCompiler : Compiler
             beginning += "&version=" + MusicXML.TrackVersion + "\n";
             beginning += "&ChartConverter=Neskol\n";
             beginning += "&ChartConvertTool=MaichartConverter\n";
-            string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
-            if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
-            beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n";
+            // string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
+            // if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
+            // beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n";
+            beginning += Assembly.GetExecutingAssembly().GetName().Version;
             beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
             beginning += "\n";
 
