@@ -493,7 +493,12 @@ public class SimaiParser : IParser
         if (isTouch)
         {
             var hasSpecialEffect = token.Contains("f");
-            var keyCandidate = int.Parse(token.Substring(1, 1)) - 1;
+            // Simai spec allows C to substitute C1 but C1 is still highly preferable
+            int keyCandidate = 0;
+            if (!token.Contains('C'))
+            {
+                keyCandidate = int.Parse(token.Substring(1, 1)) - 1;
+            }
             result = new Tap(NoteType.TTP, bar, tick, keyCandidate + token.Substring(0, 1), hasSpecialEffect, "M1");
         }
         else
