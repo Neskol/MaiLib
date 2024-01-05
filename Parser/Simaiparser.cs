@@ -370,7 +370,7 @@ public class SimaiParser : IParser
             int scrDistance = KeyDistance(slideStartCandidate.KeyNum, endKeyNum, NoteType.SCR);
             if (sclDistance >= 4 && scrDistance >= 4)
                 throw new Exception(
-                    $"^ requires a distance 0<d<4. SCL distance: {sclDistance}, SCR distance: {scrDistance}. StartKey: {slideStartCandidate.KeyNum}, EndKey: {endKeyCandidate}");
+                    $"^ requires a distance 0<d<4. SCL distance: {sclDistance}, SCR distance: {scrDistance}. StartKey: {slideStartCandidate.KeyNum}, EndKey: {endKeyCandidate}, Token: {token}");
             else noteType = sclDistance < scrDistance ? NoteType.SCL : NoteType.SCR;
         }
         else if (token.Contains("s"))
