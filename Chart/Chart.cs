@@ -1,12 +1,15 @@
 namespace MaiLib;
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
+using System.Text;
 
 /// <summary>
 ///     A class holding notes and information to form a chart
 /// </summary>
 public abstract class Chart : IChart
 {
+    private const double Tolerance = 0.0001;
+
     //Theoretical Rating = (Difference in 100-down and Max score)/100-down
 
     /// <summary>
@@ -26,6 +29,7 @@ public abstract class Chart : IChart
         ChartVersion = ChartVersion.Ma2_103;
     }
 
+    #region Fields
     /// <summary>
     /// Defines the chart type by enums
     /// </summary>
@@ -126,6 +130,7 @@ public abstract class Chart : IChart
     ///     Stored the information of this chart, if any
     /// </summary>
     public Dictionary<string, string> Information { get; set; }
+    #endregion
 
     public abstract bool CheckValidity();
 
@@ -195,7 +200,7 @@ public abstract class Chart : IChart
                             break;
                         case NoteSpecificGenre.HOLD:
                             HoldNumber++;
-                            x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
+                            x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
                             x.Update();
                             if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
@@ -222,9 +227,9 @@ public abstract class Chart : IChart
                             break;
                         case NoteSpecificGenre.SLIDE:
                             SlideNumber++;
-                            x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.WaitTickStamp) ||
-                                                GetBPMByTick(x.WaitTickStamp) != GetBPMByTick(x.LastTickStamp) ||
-                                                GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
+                            x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.WaitTickStamp)) > Tolerance ||
+                                                Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                                                Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
                             x.Update();
                             if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
@@ -305,11 +310,25 @@ public abstract class Chart : IChart
         TotalNoteNumber += TapNumber + HoldNumber + SlideNumber;
     }
 
-    /// <summary>
-    ///     Compose chart in appropriate result.
-    /// </summary>
-    /// <returns>String of chart compiled</returns>
     public abstract string Compose();
+
+    public virtual string Compose(ChartVersion chartVersion)
+    {
+        switch (ChartVersion)
+        {
+            case ChartVersion.Simai:
+            case ChartVersion.SimaiFes:
+                return new Simai(this).Compose();
+            case ChartVersion.Ma2_103:
+                return new Ma2(this) { ChartVersion = ChartVersion.Ma2_103 }.Compose();
+            case ChartVersion.Ma2_104:
+                return new Ma2(this) { ChartVersion = ChartVersion.Ma2_104 }.Compose();
+            case ChartVersion.Debug:
+            default:
+                return new Ma2(this) { ChartVersion = ChartVersion.Debug }.Compose();
+        }
+    }
+
 
     public double GetTimeStamp(int bar, int tick)
     {
