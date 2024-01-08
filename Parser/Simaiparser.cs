@@ -283,9 +283,9 @@ public class SimaiParser : IParser
         var sustainSymbol = 0;
         var sustainCandidate = "";
         NoteType noteType = NoteType.RST;
-        var isConnectingSlide = token.Contains("CN");
-        var connectedSlideStart = isConnectingSlide ? token.Split("CN")[1] : "";
-        // if (isConnectingSlide) Console.ReadKey();
+        bool isConnectingSlide = token.Contains("CN");
+        int connectedSlideStart = isConnectingSlide ? int.Parse(token.Split("CN")[1]) : -1;
+        if (isConnectingSlide) slideStartCandidate.Key = connectedSlideStart.ToString();
         var isEXBreak = token.Contains("b") && token.Contains("x");
         var isBreak = token.Contains("b") && !token.Contains("x");
         var isEX = !token.Contains("b") && token.Contains("x");
@@ -370,7 +370,7 @@ public class SimaiParser : IParser
             int scrDistance = KeyDistance(slideStartCandidate.KeyNum, endKeyNum, NoteType.SCR);
             if (sclDistance >= 4 && scrDistance >= 4)
                 throw new Exception(
-                    $"^ requires a distance 0<d<4. SCL distance: {sclDistance}, SCR distance: {scrDistance}. StartKey: {slideStartCandidate.KeyNum}, EndKey: {endKeyCandidate}, Token: {token}");
+                    $"^ requires a distance 0<d<4. SCL distance: {sclDistance}, SCR distance: {scrDistance}. Connected Start Key: {connectedSlideStart} StartKey: {slideStartCandidate.KeyNum}, EndKey: {endKeyCandidate}, Token: {token}");
             else noteType = sclDistance < scrDistance ? NoteType.SCL : NoteType.SCR;
         }
         else if (token.Contains("s"))
@@ -459,7 +459,7 @@ public class SimaiParser : IParser
         if (isConnectingSlide)
         {
             result.NoteSpecialState = SpecialState.ConnectingSlide;
-            result.Key = connectedSlideStart;
+            result.Key = connectedSlideStart.ToString();
             result.WaitLength = 0;
         }
         else result.NoteSpecialState = noteSpecialState;
