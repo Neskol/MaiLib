@@ -17,10 +17,17 @@ internal interface IChart
     bool CheckValidity();
 
     /// <summary>
-    ///     Export this Good Brother
+    ///     Export this Chart
     /// </summary>
-    /// <returns></returns>
+    /// <returns>String representation of this chart</returns>
     string Compose();
+
+    /// <summary>
+    /// Temporarily export this chart into given format
+    /// </summary>
+    /// <param name="chartVersion">Assigned chart format</param>
+    /// <returns>String representation of this chart in assigned format</returns>
+    string Compose(ChartEnum.ChartVersion chartVersion);
 
     /// <summary>
     ///     Shift the chart notes by defined overall tick
