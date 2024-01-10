@@ -164,7 +164,7 @@ public class SimaiParser : IParser
 
         var lastTimeCandidates = sustainCandidate.Split(":");
         var quaver = int.Parse(lastTimeCandidates[0]);
-        var lastTick = 384 / quaver;
+        var lastTick = MaximumDefinition / quaver;
         var times = int.Parse(lastTimeCandidates[1]);
         lastTick *= times;
         Hold candidate;
@@ -435,7 +435,7 @@ public class SimaiParser : IParser
         {
             var lastTimeCandidates = sustainCandidate.Split(":");
             var quaver = timeAssigned ? int.Parse(lastTimeCandidates[0]) : 0;
-            var lastTick = timeAssigned ? 384 / quaver : 0;
+            var lastTick = timeAssigned ? MaximumDefinition / quaver : 0;
             var times = timeAssigned ? int.Parse(lastTimeCandidates[1]) : 0;
             lastTick *= times;
             result = new Slide(noteType, bar, tick, slideStartCandidate.Key, 96, lastTick,
@@ -499,6 +499,7 @@ public class SimaiParser : IParser
             {
                 keyCandidate = int.Parse(token.Substring(1, 1)) - 1;
             }
+
             result = new Tap(NoteType.TTP, bar, tick, keyCandidate + token.Substring(0, 1), hasSpecialEffect, "M1");
         }
         else
@@ -526,22 +527,22 @@ public class SimaiParser : IParser
         int currentBar = bar;
         int currentTick = tick;
         Note slideStart = startNote;
-        int prevSlideKey = -1;
+        // int prevSlideKey = -1;
         List<Slide> slideCandidates = new();
         foreach (string x in extractedTokens)
         {
             Slide connectCandidate = SlideOfToken(x, currentBar, currentTick, slideStart, bpm);
-            prevSlideKey = connectCandidate.EndKeyNum;
-            int[] endPointOfConcern = { 0, 1, 6, 7 };
-            if (connectCandidate.NoteType is NoteType.SCL && endPointOfConcern.Any(p => p == prevSlideKey))
-                connectCandidate.NoteType = NoteType.SCR;
-            else if (connectCandidate.NoteType is NoteType.SCR && endPointOfConcern.Any(p => p == prevSlideKey))
-                connectCandidate.NoteType = NoteType.SCL;
+            // prevSlideKey = connectCandidate.EndKeyNum;
+            // int[] endPointOfConcern = { 0, 1, 6, 7 };
+            // if (connectCandidate.NoteType is NoteType.SCL && endPointOfConcern.Any(p => p == prevSlideKey))
+            //     connectCandidate.NoteType = NoteType.SCR;
+            // else if (connectCandidate.NoteType is NoteType.SCR && endPointOfConcern.Any(p => p == prevSlideKey))
+            //     connectCandidate.NoteType = NoteType.SCL;
             slideCandidates.Add(connectCandidate);
             currentTick += connectCandidate.WaitLength + connectCandidate.LastLength;
             if (currentTick >= MaximumDefinition)
             {
-                currentBar += currentTick / 384;
+                currentBar += currentTick / MaximumDefinition;
                 currentTick %= MaximumDefinition;
             }
         }
@@ -593,7 +594,7 @@ public class SimaiParser : IParser
     }
 
     /// <summary>
-    ///     Deal with annoying and vigours Parentheses grammar of Simai
+    ///     Deal with annoying and vigorous Parentheses grammar of Simai
     /// </summary>
     /// <param name="token">Token that potentially contains multiple slide note</param>
     /// <returns>A list of strings extracts each note</returns>
@@ -638,7 +639,7 @@ public class SimaiParser : IParser
     }
 
     /// <summary>
-    ///     Deal with annoying and vigours Slide grammar of Simai
+    ///     Deal with annoying and vigorous Slide grammar of Simai
     /// </summary>
     /// <param name="token">Token that potentially contains multiple slide note</param>
     /// <returns>A list of slides extracts each note</returns>
@@ -708,6 +709,7 @@ public class SimaiParser : IParser
         var lastKeyCandidate = "";
 
         foreach (var symbol in candidates)
+        {
             // slideStartExtracted = IsSlideNotation(symbol) && result.Count > 0;
             // normalSlideExtracted = IsSlideNotation(symbol) && result.Count > 2;
             if (!slideStartExtracted && !IsSlideNotation(symbol))
@@ -753,7 +755,9 @@ public class SimaiParser : IParser
             {
                 slideCandidate += symbol;
             }
+        }
 
+        // Compensation for the last slide
         if (slideCandidate.Length > 0 && !normalSlideExtracted) result.Add(slideCandidate);
         else if (slideCandidate.Length > 0 && normalSlideExtracted)
             result.Add(slideCandidate + "CN" + lastKeyCandidate);
@@ -764,7 +768,8 @@ public class SimaiParser : IParser
             throw new Exception("Extracted slides do not contain any duration setting: " + String.Join(", ", result));
         }
         // Catch for single duration connecting slides
-        else if (result.Count >= 3 && result.Count(p => p.Contains('[')) == 1)
+        // This condition is faulty: it should be triggered when there are at least 2 slides
+        else if (result.Count >= 2 && result.Count(p => p.Contains('[')) == 1)
         {
             static string ReplaceDuration(string oldValue, string newDuration)
             {
