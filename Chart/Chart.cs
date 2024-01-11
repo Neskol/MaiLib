@@ -1,7 +1,6 @@
 namespace MaiLib;
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
-using System.Text;
 
 /// <summary>
 ///     A class holding notes and information to form a chart
@@ -133,6 +132,8 @@ public abstract class Chart : IChart
     #endregion
 
     public abstract bool CheckValidity();
+
+    public bool IsUtage { get; protected set; }
 
     /// <summary>
     ///     Update properties in Good Brother for exporting
@@ -512,6 +513,7 @@ public abstract class Chart : IChart
     /// <param name="bpmChanges">BPMChange Notes</param>
     /// <param name="barNumber">Bar number of Bar</param>
     /// <param name="minimalQuaver">Minimal interval calculated from bar</param>
+    /// <exception cref="InvalidOperationException">Returns exception if number of notes does not match after modification</exception>
     /// <returns>Finished bar</returns>
     public static List<Note> FinishBar(List<Note> bar, List<BPMChange> bpmChanges, int barNumber, int minimalQuaver)
     {
@@ -599,7 +601,7 @@ public abstract class Chart : IChart
             error += "\nActual: " + RealNoteNumber(result) + "\n";
             foreach (var y in result) error += y.Compose(ChartVersion.Debug) + "\n";
             Console.WriteLine(error);
-            throw new Exception("NOTE NUMBER IS NOT MATCHING");
+            throw new InvalidOperationException("NOTE NUMBER IS NOT MATCHING");
         }
 
         var hasFirstBPMChange = false;

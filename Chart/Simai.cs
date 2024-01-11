@@ -59,6 +59,11 @@ public class Simai : Chart
     }
     #endregion
 
+    /// <summary>
+    /// Composes slides into slide groups to deal with connected slides
+    /// </summary>
+    /// <exception cref="NullReferenceException">Returns exceptions when a note cannot be casted into slide group</exception>
+    /// <exception cref="InvalidOperationException">Returns exceptions when missing slides after composing</exception>
     public void ComposeSlideGroup()
     {
         List<Note> adjusted = new();
@@ -168,6 +173,10 @@ public class Simai : Chart
         Notes = new List<Note>(adjusted);
     }
 
+    /// <summary>
+    /// Composes slides into groups when they have same start time
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Returns exceptions when note cannot be casted into required types</exception>
     public void ComposeSlideEachGroup()
     {
         List<SlideEachSet> composedCandidates = new();
