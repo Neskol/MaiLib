@@ -897,4 +897,4 @@ public class SimaiParser : IParser
 
 public class ParsingException(Exception ex, int bar, int tick, string token, string tokenSet)
     : Exception(
-        $"Simai Parser encountered an error while parsing after bar {bar} tick {tick} when parsing token {token} in each group {tokenSet}: {ex.Message}");
+        $"Simai Parser encountered an error while parsing after bar {bar} tick {tick} when parsing token {token} in each group “{tokenSet}”: \n{ex.Message}\nOriginal Stack:\n{ex.StackTrace}\n");
