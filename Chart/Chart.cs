@@ -315,11 +315,12 @@ public abstract class Chart : IChart
 
     public virtual string Compose(ChartVersion chartVersion)
     {
-        switch (ChartVersion)
+        switch (chartVersion)
         {
             case ChartVersion.Simai:
+                return new Simai(this){ ChartVersion = ChartVersion.Simai }.Compose();
             case ChartVersion.SimaiFes:
-                return new Simai(this).Compose();
+                return new Simai(this){ ChartVersion = ChartVersion.SimaiFes }.Compose();
             case ChartVersion.Ma2_103:
                 return new Ma2(this) { ChartVersion = ChartVersion.Ma2_103 }.Compose();
             case ChartVersion.Ma2_104:
