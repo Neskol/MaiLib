@@ -465,7 +465,7 @@ public class SimaiParser : IParser
             var timeCandidates = sustainCandidate.Split("##");
             var waitLengthCandidate = timeAssigned ? double.Parse(timeCandidates[0]) : 0;
             var lastLengthCandidate = timeAssigned ? double.Parse(timeCandidates[1]) : 0;
-            var tickUnit = Chart.GetBPMTimeUnit(bpm);
+            var tickUnit = Chart.GetBPMTimeUnit(bpm, MaximumDefinition);
             var waitLength = timeAssigned ? (int)(waitLengthCandidate / tickUnit) : 0;
             var lastLength = timeAssigned ? (int)(lastLengthCandidate / tickUnit) : 0;
             result = new Slide(noteType, bar, tick, slideStartCandidate.Key, waitLength, lastLength,
