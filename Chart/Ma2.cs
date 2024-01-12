@@ -107,7 +107,7 @@ public class Ma2 : Chart, ICompiler
                 targetVersion = "1.04.00";
                 break;
             default:
-                throw new InvalidOperationException("Given Chart Type is not valid for MA2 composition. Type given: " + ChartVersion);
+                return base.Compose(ChartVersion);
         }
         string header1 = "VERSION\t0.00.00\t" + targetVersion + "\nFES_MODE\t0\n";
         string header2 = "RESOLUTION\t" + Definition + "\nCLK_DEF\t" + Definition + "\nCOMPATIBLE_CODE\tMA2\n";
@@ -192,10 +192,10 @@ public class Ma2 : Chart, ICompiler
                 targetVersion = "1.04.00";
                 break;
             default:
-                throw new InvalidOperationException("Given Chart Type is not valid for MA2 composition. Type given: " + ChartVersion);
+                return base.Compose(ChartVersion);
         }
-        string header1 = "VERSION\t0.00.00\t" + targetVersion + "\nFES_MODE\t0\n";
-        string header2 = "RESOLUTION\t" + Definition + "\nCLK_DEF\t" + Definition + "\nCOMPATIBLE_CODE\tMA2\n";
+        string header1 = $"VERSION\t0.00.00\t{targetVersion}\nFES_MODE\t{(IsUtage? 1 : 0)}\n";
+        string header2 = $"RESOLUTION\t{Definition}\nCLK_DEF\t{Definition}\nCOMPATIBLE_CODE\tMA2\n";
         result.Append(header1);
         result.Append(bpm.InitialChange);
         result.Append(measure.InitialChange);

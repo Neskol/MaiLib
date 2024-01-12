@@ -168,16 +168,16 @@ public abstract class Compiler : ICompiler
         else result += "-";
         if (!Information["Advanced"].Equals(""))
             result += "/" + Information["Advanced"];
-        else result += "-";
+        else result += "/-";
         if (!Information["Expert"].Equals(""))
             result += "/" + Information["Expert"];
-        else result += "-";
+        else result += "/-";
         if (!Information["Master"].Equals(""))
             result += "/" + Information["Master"];
-        else result += "-";
+        else result += "/-";
         if (!Information["Remaster"].Equals(""))
             result += "/" + Information["Remaster"];
-        else result += "-";
+        else result += "/-";
         if (!Information["Utage"].Equals("")) result += "\\" + Information["Utage"];
 
         return result;

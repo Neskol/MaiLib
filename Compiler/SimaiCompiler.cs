@@ -131,25 +131,24 @@ public class SimaiCompiler : Compiler
         //Add Information
         {
             var beginning = "";
-            beginning += "&title=" + Information.GetValueOrDefault("Name") +
-                         Information.GetValueOrDefault("SDDX Suffix") + "\n";
-            beginning += "&wholebpm=" + Information.GetValueOrDefault("BPM") + "\n";
-            beginning += "&artist=" + Information.GetValueOrDefault("Composer") + "\n";
-            beginning += "&des=" + Information.GetValueOrDefault("Master Chart Maker") + "\n";
-            beginning += "&shortid=" + Information.GetValueOrDefault("Music ID") + "\n";
-            beginning += "&genre=" + Information.GetValueOrDefault("Genre") + "\n";
+            beginning += $"&title={Information.GetValueOrDefault("Name")}{Information.GetValueOrDefault("SDDX Suffix")}\n";
+            beginning += $"&wholebpm={Information.GetValueOrDefault("BPM")}\n";
+            beginning += $"&artist={Information.GetValueOrDefault("Composer")}\n";
+            beginning += $"&des={Information.GetValueOrDefault("Master Chart Maker")}\n";
+            beginning += $"&shortid={Information.GetValueOrDefault("Music ID")}\n";
+            beginning += $"&genre={Information.GetValueOrDefault("Genre")}\n";
             beginning += "&cabinet=";
             if (MusicXML.IsDXChart)
                 beginning += "DX\n";
             else
                 beginning += "SD\n";
-            beginning += "&version=" + MusicXML.TrackVersion + "\n";
+            beginning += $"&version={MusicXML.TrackVersion}\n";
             beginning += "&ChartConverter=Neskol\n";
             beginning += "&ChartConvertTool=MaichartConverter\n";
             // string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
             // if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
             // beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n";
-            beginning += Assembly.GetExecutingAssembly().GetName().Version;
+            beginning += $"&ChartConvertToolVersion={Assembly.GetExecutingAssembly().GetName().Version}\n";
             beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
             beginning += "\n";
 

@@ -29,8 +29,8 @@ namespace MaiLib
             }
             catch (Exception ex)
             {
-                // CurrentToken = TokenType.EOS;
-                throw ex;
+                CurrentToken = TokenType.EOS;
+                // throw ex;
             }
         }
 

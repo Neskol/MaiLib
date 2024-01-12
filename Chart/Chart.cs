@@ -7,6 +7,8 @@ using static MaiLib.ChartEnum;
 /// </summary>
 public abstract class Chart : IChart
 {
+    private const double Tolerance = 0.0001;
+
     //Theoretical Rating = (Difference in 100-down and Max score)/100-down
 
     /// <summary>
@@ -26,6 +28,7 @@ public abstract class Chart : IChart
         ChartVersion = ChartVersion.Ma2_103;
     }
 
+    #region Fields
     /// <summary>
     /// Defines the chart type by enums
     /// </summary>
@@ -127,6 +130,12 @@ public abstract class Chart : IChart
     /// </summary>
     public Dictionary<string, string> Information { get; set; }
 
+    /// <summary>
+    /// Defines whether this chart is Utage chart
+    /// </summary>
+    public bool IsUtage { get; protected set; }
+    #endregion
+
     public abstract bool CheckValidity();
 
     /// <summary>
@@ -195,7 +204,7 @@ public abstract class Chart : IChart
                             break;
                         case NoteSpecificGenre.HOLD:
                             HoldNumber++;
-                            x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
+                            x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
                             x.Update();
                             if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
@@ -204,7 +213,7 @@ public abstract class Chart : IChart
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
                                 x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
                                 x.FixedLastLength =
-                                    (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp)));
+                                    (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp),Definition));
                             }
 
                             if (delay > TotalDelay) TotalDelay = delay;
@@ -222,9 +231,9 @@ public abstract class Chart : IChart
                             break;
                         case NoteSpecificGenre.SLIDE:
                             SlideNumber++;
-                            x.TickBPMDisagree = GetBPMByTick(x.TickStamp) != GetBPMByTick(x.WaitTickStamp) ||
-                                                GetBPMByTick(x.WaitTickStamp) != GetBPMByTick(x.LastTickStamp) ||
-                                                GetBPMByTick(x.TickStamp) != GetBPMByTick(x.LastTickStamp) ||
+                            x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.WaitTickStamp)) > Tolerance ||
+                                                Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                                                Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
                             x.Update();
                             if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
@@ -239,7 +248,7 @@ public abstract class Chart : IChart
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
                                 x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
                                 x.FixedLastLength =
-                                    (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp)));
+                                    (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp),Definition));
                             }
 
                             // if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
@@ -261,25 +270,6 @@ public abstract class Chart : IChart
                     }
 
                     x.BPM = currentBPM;
-                    //if (x.NoteGenre is NoteGenre.SLIDE && !lastNote.NoteSpecificType.Equals("SLIDE_START"))
-                    //{
-                    //    x.Prev = new Tap("NST", x.Bar, x.Tick, x.Key);
-                    //    lastNote.Next = x.Prev;
-                    //}
-                    //else
-                    // // lastNote.Next = x;
-                    // // x.Prev = lastNote;
-                    // // x.Prev.Next = x;
-                    //if ((!x.NoteGenre is NoteGenre.SLIDE) && x.Prev.NoteType.Equals("STR")&&x.Prev.ConsecutiveSlide == null)
-                    //{
-                    //    Console.WriteLine("Found NSS");
-                    //    Console.WriteLine("This note's note type: " + x.NoteType);
-                    //    Console.WriteLine(x.Compose(1));
-                    //    Console.WriteLine("Prev note's note type: " + x.Prev.NoteType);
-                    //    Console.WriteLine(x.Prev.Compose(1));
-                    //    lastNote.NoteType = "NSS";
-                    //    x.Prev.NoteType = "NSS";
-                    //}
                     bar.Add(x);
                     if (x.NoteGenre is not NoteGenre.SLIDE) lastNote = x;
                     realLastNote = x;
@@ -288,12 +278,12 @@ public abstract class Chart : IChart
             }
 
             var afterBar = new List<Note>();
-            afterBar.Add(new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar))));
+            afterBar.Add(new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar, Definition),Definition)));
             //Console.WriteLine();
             //Console.WriteLine("In bar "+i+", LeastMeasure is "+ CalculateLeastMeasure(bar)+", so quaver will be "+ CalculateQuaver(CalculateLeastMeasure(bar)));
             afterBar.AddRange(bar);
-            StoredChart.Add(FinishBar(afterBar, BPMChanges.ChangeNotes, i,
-                CalculateQuaver(CalculateLeastMeasure(bar))));
+            StoredChart.Add(FinishBar(afterBar, i,
+                CalculateQuaver(CalculateLeastMeasure(bar, Definition), Definition),Definition));
         }
 
         //Console.WriteLine("TOTAL DELAY: "+this.TotalDelay);
@@ -305,16 +295,31 @@ public abstract class Chart : IChart
         TotalNoteNumber += TapNumber + HoldNumber + SlideNumber;
     }
 
-    /// <summary>
-    ///     Compose chart in appropriate result.
-    /// </summary>
-    /// <returns>String of chart compiled</returns>
     public abstract string Compose();
+
+    public virtual string Compose(ChartVersion chartVersion)
+    {
+        switch (chartVersion)
+        {
+            case ChartVersion.Simai:
+                return new Simai(this){ ChartVersion = ChartVersion.Simai }.Compose();
+            case ChartVersion.SimaiFes:
+                return new Simai(this){ ChartVersion = ChartVersion.SimaiFes }.Compose();
+            case ChartVersion.Ma2_103:
+                return new Ma2(this) { ChartVersion = ChartVersion.Ma2_103 }.Compose();
+            case ChartVersion.Ma2_104:
+                return new Ma2(this) { ChartVersion = ChartVersion.Ma2_104 }.Compose();
+            case ChartVersion.Debug:
+            default:
+                return new Ma2(this) { ChartVersion = ChartVersion.Debug }.Compose();
+        }
+    }
+
 
     public double GetTimeStamp(int bar, int tick)
     {
         var result = 0.0;
-        var overallTick = bar * 384 + tick;
+        var overallTick = bar * Definition + tick;
         if (overallTick != 0)
         {
             var maximumBPMIndex = 0;
@@ -323,18 +328,18 @@ public abstract class Chart : IChart
                     maximumBPMIndex = i;
             if (maximumBPMIndex == 0)
             {
-                result = 60 / BPMChanges.ChangeNotes[0].BPM * 4 / 384;
+                result = 60 / BPMChanges.ChangeNotes[0].BPM * 4 / Definition;
             }
             else
             {
                 for (var i = 1; i <= maximumBPMIndex; i++)
                 {
-                    var previousTickTimeUnit = 60 / BPMChanges.ChangeNotes[i - 1].BPM * 4 / 384;
+                    var previousTickTimeUnit = 60 / BPMChanges.ChangeNotes[i - 1].BPM * 4 / Definition;
                     result += (BPMChanges.ChangeNotes[i].TickStamp - BPMChanges.ChangeNotes[i - 1].TickStamp) *
                               previousTickTimeUnit;
                 }
 
-                var tickTimeUnit = 60 / BPMChanges.ChangeNotes[maximumBPMIndex].BPM * 4 / 384;
+                var tickTimeUnit = 60 / BPMChanges.ChangeNotes[maximumBPMIndex].BPM * 4 / Definition;
                 result += (overallTick - BPMChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
             }
         }
@@ -355,32 +360,32 @@ public abstract class Chart : IChart
                 {
                     case NoteGenre.TAP:
                         copy = new Tap(x);
-                        copy.Bar += overallTick / 384;
-                        copy.Tick += overallTick % 384;
+                        copy.Bar += overallTick / Definition;
+                        copy.Tick += overallTick % Definition;
                         copy.Update();
                         break;
                     case NoteGenre.HOLD:
                         copy = new Hold(x);
-                        copy.Bar += overallTick / 384;
-                        copy.Tick += overallTick % 384;
+                        copy.Bar += overallTick / Definition;
+                        copy.Tick += overallTick % Definition;
                         copy.Update();
                         break;
                     case NoteGenre.SLIDE:
                         copy = new Slide(x);
-                        copy.Bar += overallTick / 384;
-                        copy.Tick += overallTick % 384;
+                        copy.Bar += overallTick / Definition;
+                        copy.Tick += overallTick % Definition;
                         copy.Update();
                         break;
                     case NoteGenre.BPM:
                         copy = new BPMChange(x);
-                        copy.Bar += overallTick / 384;
-                        copy.Tick += overallTick % 384;
+                        copy.Bar += overallTick / Definition;
+                        copy.Tick += overallTick % Definition;
                         copy.Update();
                         break;
                     case NoteGenre.MEASURE:
                         copy = new MeasureChange((MeasureChange)x);
-                        copy.Bar += overallTick / 384;
-                        copy.Tick += overallTick % 384;
+                        copy.Bar += overallTick / Definition;
+                        copy.Tick += overallTick % Definition;
                         copy.Update();
                         break;
                     default:
@@ -401,7 +406,7 @@ public abstract class Chart : IChart
 
     public void ShiftByOffset(int bar, int tick)
     {
-        var overallTick = bar * 384 + tick;
+        var overallTick = bar * Definition + tick;
         ShiftByOffset(overallTick);
     }
 
@@ -425,7 +430,7 @@ public abstract class Chart : IChart
     /// </summary>
     /// <param name="bar">bar to take in</param>
     /// <returns>List none 0 measure</returns>
-    public static int CalculateLeastMeasure(List<Note> bar)
+    public static int CalculateLeastMeasure(List<Note> bar, int definition)
     {
         var startTimeList = new List<int>();
         startTimeList.Add(0);
@@ -438,7 +443,7 @@ public abstract class Chart : IChart
             }
         }
 
-        if (startTimeList[startTimeList.Count - 1] != 384) startTimeList.Add(384);
+        if (startTimeList[startTimeList.Count - 1] != definition) startTimeList.Add(definition);
         var intervalCandidates = new List<int>();
         var minimalInterval = GCD(startTimeList[0], startTimeList[1]);
         for (var i = 1; i < startTimeList.Count; i++) minimalInterval = GCD(minimalInterval, startTimeList[i]);
@@ -476,10 +481,9 @@ public abstract class Chart : IChart
     /// </summary>
     /// <param name="length">Last Time</param>
     /// <returns>[Definition:Length]=[Quaver:Beat]</returns>
-    public static int CalculateQuaver(int length)
+    public static int CalculateQuaver(int length, int definition)
     {
         var result = 0;
-        const int definition = 384;
         var divisor = GCD(definition, length);
         int quaver = definition / divisor, beat = length / divisor;
         result = quaver;
@@ -490,16 +494,17 @@ public abstract class Chart : IChart
     ///     Finish Bar writing byu adding specific rest note in between.
     /// </summary>
     /// <param name="bar">Bar to finish with</param>
-    /// <param name="bpmChanges">BPMChange Notes</param>
     /// <param name="barNumber">Bar number of Bar</param>
     /// <param name="minimalQuaver">Minimal interval calculated from bar</param>
+    /// <param name="definition">Definition of chart, usually 384</param>
+    /// <exception cref="InvalidOperationException">Returns exception if number of notes does not match after modification</exception>
     /// <returns>Finished bar</returns>
-    public static List<Note> FinishBar(List<Note> bar, List<BPMChange> bpmChanges, int barNumber, int minimalQuaver)
+    public static List<Note> FinishBar(List<Note> bar, int barNumber, int minimalQuaver, int definition)
     {
         var result = new List<Note>();
         var writeRest = true;
         result.Add(bar[0]);
-        for (var i = 0; i < 384; i += 384 / minimalQuaver)
+        for (var i = 0; i < definition; i += definition / minimalQuaver)
         {
             //Separate Touch and others to prevent ordering issue
             Note bpm = new Rest();
@@ -580,7 +585,7 @@ public abstract class Chart : IChart
             error += "\nActual: " + RealNoteNumber(result) + "\n";
             foreach (var y in result) error += y.Compose(ChartVersion.Debug) + "\n";
             Console.WriteLine(error);
-            throw new Exception("NOTE NUMBER IS NOT MATCHING");
+            throw new InvalidOperationException("NOTE NUMBER IS NOT MATCHING");
         }
 
         var hasFirstBPMChange = false;
@@ -665,18 +670,18 @@ public abstract class Chart : IChart
                     foundMax = true;
             if (maximumBPMIndex == 0)
             {
-                result = GetBPMTimeUnit(BPMChanges.ChangeNotes[0].BPM) * overallTick;
+                result = GetBPMTimeUnit(BPMChanges.ChangeNotes[0].BPM, Definition) * overallTick;
             }
             else
             {
                 for (var i = 1; i <= maximumBPMIndex; i++)
                 {
-                    var previousTickTimeUnit = GetBPMTimeUnit(BPMChanges.ChangeNotes[i - 1].BPM);
+                    var previousTickTimeUnit = GetBPMTimeUnit(BPMChanges.ChangeNotes[i - 1].BPM, Definition);
                     result += (BPMChanges.ChangeNotes[i].TickStamp - BPMChanges.ChangeNotes[i - 1].TickStamp) *
                               previousTickTimeUnit;
                 }
 
-                var tickTimeUnit = GetBPMTimeUnit(BPMChanges.ChangeNotes[maximumBPMIndex].BPM);
+                var tickTimeUnit = GetBPMTimeUnit(BPMChanges.ChangeNotes[maximumBPMIndex].BPM, Definition);
                 result += (overallTick - BPMChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
             }
         }
@@ -689,7 +694,7 @@ public abstract class Chart : IChart
     /// </summary>
     /// <param name="overallTick">Note.Bar*384+Note.Tick</param>
     /// <returns>Appropriate time stamp in seconds</returns>
-    public static double GetTimeStamp(BPMChanges bpmChanges, int overallTick)
+    public static double GetTimeStamp(BPMChanges bpmChanges, int overallTick, int definition)
     {
         var result = 0.0;
         if (overallTick != 0)
@@ -700,18 +705,18 @@ public abstract class Chart : IChart
                     maximumBPMIndex = i;
             if (maximumBPMIndex == 0)
             {
-                result = GetBPMTimeUnit(bpmChanges.ChangeNotes[0].BPM) * overallTick;
+                result = GetBPMTimeUnit(bpmChanges.ChangeNotes[0].BPM, definition) * overallTick;
             }
             else
             {
                 for (var i = 1; i <= maximumBPMIndex; i++)
                 {
-                    var previousTickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[i - 1].BPM);
+                    var previousTickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[i - 1].BPM, definition);
                     result += (bpmChanges.ChangeNotes[i].TickStamp - bpmChanges.ChangeNotes[i - 1].TickStamp) *
                               previousTickTimeUnit;
                 }
 
-                var tickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[maximumBPMIndex].BPM);
+                var tickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[maximumBPMIndex].BPM, definition);
                 result += (overallTick - bpmChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
             }
         }
@@ -724,11 +729,7 @@ public abstract class Chart : IChart
     /// </summary>
     /// <param name="bpm">BPM to calculate</param>
     /// <returns>Tick Unit of BPM</returns>
-    public static double GetBPMTimeUnit(double bpm)
-    {
-        var result = 60 / bpm * 4 / 384;
-        return result;
-    }
+    public static double GetBPMTimeUnit(double bpm, int definition) => 60 / bpm * 4 / definition;
 
     /// <summary>
     ///     For debug use: print out the note's time stamp in given bpm changes
@@ -736,21 +737,21 @@ public abstract class Chart : IChart
     /// <param name="bpmChanges">The list of BPMChanges</param>
     /// <param name="inTake">The Note to test</param>
     /// <returns>String of result, consists tick time stamp, wait time stamp and last time stamp</returns>
-    public static string GetNoteDetail(BPMChanges bpmChanges, Note inTake)
+    public static string GetNoteDetail(BPMChanges bpmChanges, Note inTake, int definition)
     {
         var result = "";
         result += inTake.Compose(ChartVersion.Debug) + "\n";
         result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
         result += "This note has overall tick of " + inTake.TickStamp +
-                  ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp) + "\n";
+                  ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp, definition) + "\n";
         if (inTake.NoteGenre is NoteGenre.SLIDE)
         {
             result += "This note has wait length of " + inTake.WaitLength + ", and therefor, its wait tick stamp is " +
                       inTake.WaitTickStamp + " with wait time stamp of " +
-                      GetTimeStamp(bpmChanges, inTake.WaitTickStamp) + "\n";
+                      GetTimeStamp(bpmChanges, inTake.WaitTickStamp, definition) + "\n";
             result += "This note has last length of " + inTake.LastLength + ", and therefor, its last tick stamp is " +
                       inTake.LastTickStamp + " with last time stamp of " +
-                      GetTimeStamp(bpmChanges, inTake.LastTickStamp) + "\n";
+                      GetTimeStamp(bpmChanges, inTake.LastTickStamp, definition) + "\n";
         }
 
         return result;
