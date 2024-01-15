@@ -116,7 +116,7 @@ public class SimaiCompiler : Compiler
 
     public void WriteOut(string targetLocation, bool overwrite)
     {
-        var sw = new StreamWriter(targetLocation + GlobalSep + "maidata.txt", overwrite);
+        var sw = new StreamWriter(targetLocation + GlobalSep + "maidata.txt", !overwrite);
         {
             sw.WriteLine(Result);
         }
