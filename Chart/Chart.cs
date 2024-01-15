@@ -144,12 +144,8 @@ public abstract class Chart : IChart
     public virtual void Update()
     {
         StoredChart = new List<List<Note>>();
-        var maxBar = 0;
+        var maxBar = Notes.Count > 0 ? Notes.Max(p=>p.Bar) : 0;
         var timeStamp = 0.0;
-        if (Notes.Count > 0)
-            foreach (var x in Notes)
-                if (x.Bar > maxBar)
-                    maxBar = x.Bar;
 
         //Iterate over bar
         for (var i = 0; i <= maxBar; i++)
@@ -295,7 +291,10 @@ public abstract class Chart : IChart
         TotalNoteNumber += TapNumber + HoldNumber + SlideNumber;
     }
 
-    public abstract string Compose();
+    public virtual string Compose()
+    {
+        return Compose(ChartVersion);
+    }
 
     public virtual string Compose(ChartVersion chartVersion)
     {
@@ -792,5 +791,206 @@ public abstract class Chart : IChart
                 result = true;
 
         return result;
+    }
+
+    public void ExtractSlideEachGroup()
+    {
+        List<Note> adjusted = new();
+        List<Slide> slideCandidates = new();
+        foreach (var x in Notes)
+        {
+            switch (x.NoteSpecificGenre)
+            {
+                case NoteEnum.NoteSpecificGenre.SLIDE_EACH:
+                    var candidate = x as SlideEachSet ??
+                                    throw new InvalidOperationException("THIS IS NOT A SLIDE EACH");
+                    if (candidate.SlideStart != null) adjusted.Add(candidate.SlideStart);
+                    if (candidate.InternalSlides.Count > 0) slideCandidates.AddRange(candidate.InternalSlides);
+                    break;
+                case NoteEnum.NoteSpecificGenre.SLIDE_GROUP:
+                    var groupCandidate = x as SlideGroup ??
+                                         throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
+                    if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
+                    break;
+                default:
+                    adjusted.Add(x);
+                    break;
+            }
+        }
+
+        foreach (var x in slideCandidates)
+        {
+            switch (x.NoteSpecificGenre)
+            {
+                case NoteSpecificGenre.SLIDE_GROUP:
+                    var groupCandidate = x as SlideGroup ??
+                                         throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
+                    if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
+                    break;
+                default:
+                    adjusted.Add(x);
+                    break;
+            }
+        }
+
+        Notes = adjusted;
+    }
+
+    public void ComposeSlideGroup()
+    {
+        List<Note> adjusted = new();
+        List<Slide> connectedSlides = new();
+        List<Slide> slideNotesOfChart = new();
+        List<Slide> processedSlideOfChart = new();
+        Dictionary<Slide, bool> processedSlideDic = new();
+
+        var maximumBar = 0;
+        foreach (var candidate in Notes)
+        {
+            maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
+            if (candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE || candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP)
+            {
+                // Slide slideCandidate = candidate as Slide ?? throw new InvalidCastException("Candidate is not a SLIDE. It is: "+candidate.Compose(ChartVersion.Debug));
+                // slideCandidate.NoteSpecialState = candidate.NoteSpecialState;
+                slideNotesOfChart.Add((Slide)candidate);
+                processedSlideDic.Add((Slide)candidate, false);
+            }
+            else adjusted.Add(candidate);
+        }
+
+        // If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
+
+        var processedSlidesCount = 0;
+
+        foreach (KeyValuePair<Slide, bool> parentPair in processedSlideDic)
+        {
+            var parentSlide = parentPair.Key;
+            maximumBar = parentSlide.Bar > maximumBar ? parentSlide.Bar : maximumBar;
+            if (!parentPair.Value && parentSlide.NoteSpecialState != SpecialState.ConnectingSlide)
+            {
+                SlideGroup currentGroup = new();
+                currentGroup.AddConnectingSlide(parentSlide);
+                foreach (KeyValuePair<Slide, bool> candidatePair in processedSlideDic)
+                {
+                    var candidate = candidatePair.Key;
+                    if (candidate != parentSlide && candidate.NoteSpecialState == SpecialState.ConnectingSlide &&
+                        candidate.TickStamp == currentGroup.LastSlide.LastTickStamp &&
+                        candidate.Key.Equals(currentGroup.LastSlide.EndKey) && !candidatePair.Value)
+                    {
+                        currentGroup.AddConnectingSlide(candidate);
+                        connectedSlides.Add(candidate);
+                        processedSlidesCount++;
+                        processedSlideDic[candidate] = true;
+                    }
+                }
+
+                if (currentGroup.SlideCount > 1)
+                {
+                    adjusted.Add(currentGroup);
+                    processedSlideOfChart.Add(currentGroup);
+                    processedSlideDic[parentSlide] = true;
+                }
+                else
+                {
+                    adjusted.Add(parentSlide);
+                    processedSlideOfChart.Add(parentSlide);
+                    processedSlideDic[parentSlide] = true;
+                }
+                processedSlidesCount++;
+            }
+        }
+
+        // This for loop shouldn't be here: compromise of each connecting slide
+        // foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
+        // {
+        //     if (!x.Value)
+        //     {
+        //         Slide normalSlide = new Slide(x.Key);
+        //         normalSlide.NoteSpecialState = SpecialState.Normal;
+        //         adjusted.Add(normalSlide);
+        //         processedSlidesCount++;
+        //     }
+        // }
+
+        //For verification only: check if slide count is correct
+        if (processedSlidesCount != slideNotesOfChart.Count)
+        {
+            slideNotesOfChart.Sort((p, q) => p.TickStamp.CompareTo(q.TickStamp));
+            processedSlideOfChart.Sort((p, q) => p.TickStamp.CompareTo(q.TickStamp));
+            string errorMsg = "Slide(s) were skipped during processing: \n";
+            foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
+            {
+                if (!x.Value)
+                {
+                    errorMsg += x.Key.Compose(ChartVersion.Ma2_104) + ", " + x.Key.TickStamp;
+                    if (x.Key.NoteSpecialState is SpecialState.ConnectingSlide)
+                    {
+                        errorMsg += ", and it is a connecting slide\n";
+                    }
+                }
+            }
+
+            errorMsg += "\n------------\nComposedSlides: \n";
+            foreach (Slide x in processedSlideOfChart)
+            {
+                errorMsg += x.Compose(ChartVersion.Ma2_104) + "\n";
+                if (x is SlideGroup)
+                {
+                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(ChartVersion.Debug))).LastSlide.Compose(ChartVersion.Debug) + "\n";
+                }
+            }
+            throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +
+                                                ", Actual:" + processedSlidesCount + ", Skipped: " + processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
+        }
+        Notes = new List<Note>(adjusted);
+    }
+
+    public void ComposeSlideEachGroup()
+    {
+        List<SlideEachSet> composedCandidates = new();
+        List<Note> adjusted = new();
+        var processedNotes = 0;
+        foreach (var x in Notes)
+        {
+            var eachCandidateCombined = false;
+            if (!(x.NoteSpecificGenre is NoteSpecificGenre.SLIDE || x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ||
+                  x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
+            {
+                adjusted.Add(x);
+                processedNotes++;
+            }
+            else if (composedCandidates.Count > 0 && x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START)
+            {
+                foreach (var parent in composedCandidates)
+                {
+                    var slideStartCandidate =
+                        x as Tap ?? throw new InvalidOperationException("THIS IS NOT A SLIDE START");
+                    eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
+                    if (eachCandidateCombined) processedNotes++;
+                }
+            }
+            else if (composedCandidates.Count > 0 &&
+                     (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE || x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
+            {
+                foreach (var parent in composedCandidates)
+                {
+                    var slideStartCandidate = x as Slide ?? throw new InvalidOperationException("THIS IS NOT A SLIDE");
+                    eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
+                    if (eachCandidateCombined) processedNotes++;
+                }
+            }
+
+            if (!eachCandidateCombined && (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE ||
+                                           x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ||
+                                           x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
+            {
+                composedCandidates.Add(new SlideEachSet(x));
+                processedNotes++;
+            }
+        }
+
+        // if (processedNotes != this.Notes.Count) throw new InvalidOperationException("PROCESSED NOTES MISMATCH: Expected "+this.Notes.Count+", Actual "+processedNotes);
+        adjusted.AddRange(composedCandidates);
+        Notes = adjusted;
     }
 }

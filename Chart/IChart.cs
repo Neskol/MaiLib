@@ -54,4 +54,24 @@ internal interface IChart
     /// <returns>Time stamp of bar and note</returns>
     /// <requires>this.bpmChanges!=null</requires>
     double GetTimeStamp(int bar, int tick);
+
+    /// <summary>
+    ///     Extracts the special slide containers created by Simai
+    /// </summary>
+    /// <exception cref="InvalidOperationException">If slide container is casted wrongly, this exception will be raised</exception>
+    void ExtractSlideEachGroup();
+
+    /// <summary>
+    /// Composes slides into slide groups to deal with connected slides
+    /// </summary>
+    /// <exception cref="NullReferenceException">Returns exceptions when a note cannot be casted into slide group</exception>
+    /// <exception cref="InvalidOperationException">Returns exceptions when missing slides after composing</exception>
+    void ComposeSlideGroup();
+
+    /// <summary>
+    /// Composes slides into groups when they have same start time
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Returns exceptions when note cannot be casted into required types</exception>
+    void ComposeSlideEachGroup();
+
 }
