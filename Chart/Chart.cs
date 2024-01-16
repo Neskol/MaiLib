@@ -310,7 +310,7 @@ public abstract class Chart : IChart
                 return new Ma2(this) { ChartVersion = ChartVersion.Ma2_104 }.Compose();
             case ChartVersion.Debug:
             default:
-                return new Ma2(this) { ChartVersion = ChartVersion.Debug }.Compose();
+                return new Ma2(this) { ChartVersion = ChartVersion.Ma2_104 }.Compose();
         }
     }
 
