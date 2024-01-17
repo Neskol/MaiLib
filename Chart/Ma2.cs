@@ -87,11 +87,96 @@ public class Ma2 : Chart, ICompiler
 
     #endregion
 
+    #region Fields
+    public int NormalTapNum =>
+        Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.Normal);
+
+    public int BreakTapNum => Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.Break);
+    public int ExTapNum => Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.EX);
+    public int BreakExTapNum =>
+        Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.BreakEX);
+
+    public int NormalHoldNum =>
+        Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.Normal);
+
+    public int ExHoldNum => Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.EX);
+    public int BreakHoldNum => Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.Break);
+
+    public int BreakExHoldNum =>
+        Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.BreakEX);
+    public int NormalSlideStartNum =>
+        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.Normal);
+
+    public int BreakSlideStartNum =>
+        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.Break);
+    public int ExSlideStartNum => Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.EX);
+
+    public int BreakExSlideStartNum =>
+        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.BreakEX);
+    public int TouchTapNum => Notes.Count(p => p.NoteType is NoteType.TTP);
+    public int TouchHoldNum =>
+        Notes.Count(p => p.NoteType is NoteType.THO);
+
+    public int NormalSlideNum =>
+        Notes.Count(p => p.NoteGenre is NoteGenre.SLIDE && p.NoteSpecialState is SpecialState.Normal);
+    public int BreakSlideNum => Notes.Count(p => p.NoteGenre is NoteGenre.SLIDE && p.NoteSpecialState is SpecialState.Break);
+    public int AllNoteRecNum => Notes.Count(p => p.NoteSpecialState is not SpecialState.ConnectingSlide);
+    public int TapNum => NormalTapNum + ExTapNum + NormalSlideStartNum + ExSlideStartNum + TouchTapNum;
+
+    public int BreakNum => BreakTapNum + BreakExTapNum + BreakHoldNum + BreakExHoldNum + BreakSlideStartNum +
+                           BreakExSlideStartNum + BreakSlideNum;
+
+    public int HoldNum => NormalHoldNum + ExHoldNum + TouchHoldNum;
+    public int SlideNum => NormalSlideNum;
+    public int AllNoteNum => TapNum + BreakNum + HoldNum + SlideNum;
+    public int TapJudgeNum => TapNum + BreakTapNum + BreakExTapNum + BreakSlideStartNum + BreakExSlideStartNum;
+    public int HoldJudgeNum => HoldNum * 2;
+    public int SlideJudgeNum => NormalSlideNum + BreakSlideNum;
+    public int AllJudgeNum => TapJudgeNum + HoldJudgeNum + SlideJudgeNum;
+
+    public int EachPairsNum;
+    #endregion
+
     public override bool CheckValidity()
     {
         var result = this is null;
         // Not yet implemented
         return result;
+    }
+
+    public string GenerateNoteStatistics()
+    {
+        StringBuilder builder = new();
+        builder.Append($"T_REC_TAP\t{NormalTapNum}\n");
+        builder.Append($"T_REC_BRK\t{BreakTapNum}\n");
+        builder.Append($"T_REC_XTP\t{ExTapNum}\n");
+        builder.Append($"T_REC_BXX\t{BreakExTapNum}\n");
+        builder.Append($"T_REC_HLD\t{NormalHoldNum}\n");
+        builder.Append($"T_REC_XHO\t{ExHoldNum}\n");
+        builder.Append($"T_REC_BHO\t{BreakHoldNum}\n");
+        builder.Append($"T_REC_BXH\t{BreakExHoldNum}\n");
+        builder.Append($"T_REC_STR\t{NormalSlideStartNum}\n");
+        builder.Append($"T_REC_BST\t{BreakSlideStartNum}\n");
+        builder.Append($"T_REC_XST\t{ExSlideStartNum}\n");
+        builder.Append($"T_REC_XBS\t{BreakExSlideStartNum}\n");
+        builder.Append($"T_REC_TTP\t{TouchTapNum}\n");
+        builder.Append($"T_REC_THO\t{TouchHoldNum}\n");
+        builder.Append($"T_REC_SLD\t{NormalSlideNum}\n");
+        builder.Append($"T_REC_BSL\t{BreakSlideNum}\n");
+        builder.Append($"T_REC_ALL\t{AllNoteRecNum}\n");
+
+        builder.Append($"T_NUM_TAP\t{TapNum}\n");
+        builder.Append($"T_NUM_BRK\t{HoldNum}\n");
+        builder.Append($"T_NUM_SLD\t{SlideNum}\n");
+        builder.Append($"T_NUM_ALL\t{AllNoteNum}\n");
+
+        builder.Append($"T_JUDGE_TAP\t{TapJudgeNum}\n");
+        builder.Append($"T_JUDGE_HLD\t{HoldJudgeNum}\n");
+        builder.Append($"T_JUDGE_SLD\t{SlideJudgeNum}\n");
+        builder.Append($"T_JUDGE_ALL\t{AllJudgeNum}\n");
+
+        builder.Append($"TTM_EACHPAIRS\t{EachPairsNum}\n"); // This doesn't seem right at the moment
+        return builder.ToString();
     }
 
     public override string Compose()
