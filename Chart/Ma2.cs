@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Text;
 public class Ma2 : Chart, ICompiler
 {
     #region Constructors
+
     /// <summary>
     ///     Default Constructor.
     /// </summary>
@@ -85,56 +87,6 @@ public class Ma2 : Chart, ICompiler
         base.Update();
     }
 
-    #endregion
-
-    #region Fields
-    public int NormalTapNum =>
-        Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.Normal);
-
-    public int BreakTapNum => Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.Break);
-    public int ExTapNum => Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.EX);
-    public int BreakExTapNum =>
-        Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.BreakEX);
-
-    public int NormalHoldNum =>
-        Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.Normal);
-
-    public int ExHoldNum => Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.EX);
-    public int BreakHoldNum => Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.Break);
-
-    public int BreakExHoldNum =>
-        Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.BreakEX);
-    public int NormalSlideStartNum =>
-        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.Normal);
-
-    public int BreakSlideStartNum =>
-        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.Break);
-    public int ExSlideStartNum => Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.EX);
-
-    public int BreakExSlideStartNum =>
-        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.BreakEX);
-    public int TouchTapNum => Notes.Count(p => p.NoteType is NoteType.TTP);
-    public int TouchHoldNum =>
-        Notes.Count(p => p.NoteType is NoteType.THO);
-
-    public int NormalSlideNum =>
-        Notes.Count(p => p.NoteGenre is NoteGenre.SLIDE && p.NoteSpecialState is SpecialState.Normal);
-    public int BreakSlideNum => Notes.Count(p => p.NoteGenre is NoteGenre.SLIDE && p.NoteSpecialState is SpecialState.Break);
-    public int AllNoteRecNum => Notes.Count(p => p.NoteSpecialState is not SpecialState.ConnectingSlide);
-    public int TapNum => NormalTapNum + ExTapNum + NormalSlideStartNum + ExSlideStartNum + TouchTapNum;
-
-    public int BreakNum => BreakTapNum + BreakExTapNum + BreakHoldNum + BreakExHoldNum + BreakSlideStartNum +
-                           BreakExSlideStartNum + BreakSlideNum;
-
-    public int HoldNum => NormalHoldNum + ExHoldNum + TouchHoldNum;
-    public int SlideNum => NormalSlideNum;
-    public int AllNoteNum => TapNum + BreakNum + HoldNum + SlideNum;
-    public int TapJudgeNum => TapNum + BreakTapNum + BreakExTapNum + BreakSlideStartNum + BreakExSlideStartNum;
-    public int HoldJudgeNum => HoldNum * 2;
-    public int SlideJudgeNum => NormalSlideNum + BreakSlideNum;
-    public int AllJudgeNum => TapJudgeNum + HoldJudgeNum + SlideJudgeNum;
-
-    public int EachPairsNum;
     #endregion
 
     public override bool CheckValidity()

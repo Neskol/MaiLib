@@ -52,42 +52,74 @@ public abstract class Chart : IChart
     /// <summary>
     ///     Stores definitions of Measure Changes
     /// </summary>
-    public MeasureChanges MeasureChanges { get; set; }
+    public MeasureChanges MeasureChanges { get; protected set; }
 
-    /// <summary>
-    ///     Stores total note number
-    /// </summary>
-    public int TotalNoteNumber { get; set; }
+    public int NormalTapNum =>
+        Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.Normal);
 
-    /// <summary>
-    ///     Counts number of Tap
-    /// </summary>
-    public int TapNumber { get; set; }
+    public int BreakTapNum => Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.Break);
+    public int ExTapNum => Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.EX);
 
-    /// <summary>
-    ///     Counts number of Break
-    /// </summary>
-    public int BreakNumber { get; set; }
+    public int BreakExTapNum =>
+        Notes.Count(p => p.NoteType is NoteType.TAP && p.NoteSpecialState is SpecialState.BreakEX);
 
-    /// <summary>
-    ///     Counts number of Hold
-    /// </summary>
-    public int HoldNumber { get; set; }
+    public int NormalHoldNum =>
+        Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.Normal);
 
-    /// <summary>
-    ///     Counts number of Slide
-    /// </summary>
-    public int SlideNumber { get; set; }
+    public int ExHoldNum => Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.EX);
+    public int BreakHoldNum => Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.Break);
 
-    /// <summary>
-    ///     Counts number of Touch
-    /// </summary>
-    public int TouchNumber { get; set; }
+    public int BreakExHoldNum =>
+        Notes.Count(p => p.NoteType is NoteType.HLD && p.NoteSpecialState is SpecialState.BreakEX);
 
-    /// <summary>
-    ///     Counts number of Touch Hold
-    /// </summary>
-    public int ThoNumber { get; set; }
+    public int NormalSlideStartNum =>
+        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.Normal);
+
+    public int BreakSlideStartNum =>
+        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.Break);
+
+    public int ExSlideStartNum => Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.EX);
+
+    public int BreakExSlideStartNum =>
+        Notes.Count(p => p.NoteType is NoteType.STR && p.NoteSpecialState is SpecialState.BreakEX);
+
+    public int TouchTapNum => Notes.Count(p => p.NoteType is NoteType.TTP);
+
+    public int TouchHoldNum =>
+        Notes.Count(p => p.NoteType is NoteType.THO);
+
+    public int NormalSlideNum =>
+        Notes.Count(p => p.NoteGenre is NoteGenre.SLIDE && p.NoteSpecialState is SpecialState.Normal);
+
+    public int BreakSlideNum =>
+        Notes.Count(p => p.NoteGenre is NoteGenre.SLIDE && p.NoteSpecialState is SpecialState.Break);
+
+    public int AllNoteRecNum => Notes.Count(p => p.NoteSpecialState is not SpecialState.ConnectingSlide);
+    public int TapNum => NormalTapNum + ExTapNum + NormalSlideStartNum + ExSlideStartNum + TouchTapNum;
+
+    public int BreakNum => BreakTapNum + BreakExTapNum + BreakHoldNum + BreakExHoldNum + BreakSlideStartNum +
+                           BreakExSlideStartNum + BreakSlideNum;
+    public int HoldNum => NormalHoldNum + ExHoldNum + TouchHoldNum;
+    public int SlideNum => NormalSlideNum;
+    public int AllNoteNum => TapNum + BreakNum + HoldNum + SlideNum;
+    public int TapJudgeNum => TapNum + BreakTapNum + BreakExTapNum + BreakSlideStartNum + BreakExSlideStartNum;
+    public int HoldJudgeNum => HoldNum * 2;
+    public int SlideJudgeNum => NormalSlideNum + BreakSlideNum;
+    public int AllJudgeNum => TapJudgeNum + HoldJudgeNum + SlideJudgeNum;
+
+    public int EachPairsNum
+    {
+        get
+        {
+            Dictionary<int, int> eachPairDictionary = new();
+            foreach (Note note in this.Notes)
+            {
+                if (!eachPairDictionary.Keys.Contains(note.TickStamp)) eachPairDictionary.Add(note.TickStamp, 1);
+                else eachPairDictionary[note.TickStamp]++;
+            }
+            return eachPairDictionary.Values.Count(p => p > 1);
+        }
+    }
 
     /// <summary>
     ///     Defines if the chart is DX chart
@@ -185,21 +217,17 @@ public abstract class Chart : IChart
                         case NoteSpecificGenre.REST:
                             break;
                         case NoteSpecificGenre.TAP:
-                            TapNumber++;
                             if (x.NoteSpecialState is SpecialState.EX) IsDxChart = false;
                             if (x.NoteType is NoteType.TTP)
                             {
-                                TouchNumber++;
                                 IsDxChart = false;
                             }
                             else if (x.NoteSpecialState is SpecialState.Break || x.NoteSpecialState is SpecialState.BreakEX)
                             {
-                                BreakNumber++;
                             }
 
                             break;
                         case NoteSpecificGenre.HOLD:
-                            HoldNumber++;
                             x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
                             x.Update();
@@ -217,16 +245,13 @@ public abstract class Chart : IChart
                             //Console.WriteLine(x.Compose(1));
                             if (x.NoteType is NoteType.THO)
                             {
-                                ThoNumber++;
                                 IsDxChart = false;
                             }
 
                             break;
                         case NoteSpecificGenre.SLIDE_START:
-                            TapNumber++;
                             break;
                         case NoteSpecificGenre.SLIDE:
-                            SlideNumber++;
                             x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.WaitTickStamp)) > Tolerance ||
                                                 Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
@@ -288,7 +313,6 @@ public abstract class Chart : IChart
             TotalDelay = 0;
         else
             TotalDelay -= StoredChart.Count * Definition;
-        TotalNoteNumber += TapNumber + HoldNumber + SlideNumber;
     }
 
     public virtual string Compose()
