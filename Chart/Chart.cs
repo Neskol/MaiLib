@@ -103,16 +103,25 @@ public abstract class Chart : IChart
     public int SlideNum => NormalSlideNum;
     public int AllNoteNum => TapNum + BreakNum + HoldNum + SlideNum;
     public int TapJudgeNum => TapNum + BreakTapNum + BreakExTapNum + BreakSlideStartNum + BreakExSlideStartNum;
-    public int HoldJudgeNum => HoldNum * 2;
+    public int HoldJudgeNum => (HoldNum + BreakHoldNum + BreakExHoldNum) * 2;
     public int SlideJudgeNum => NormalSlideNum + BreakSlideNum;
     public int AllJudgeNum => TapJudgeNum + HoldJudgeNum + SlideJudgeNum;
+
+    public int TapScore => TapNum * 500;
+    public int BreakScore => BreakNum * 2600;
+    public int HoldScore => HoldNum * 1000;
+    public int SlideScore => SlideNum * 1500;
+    public int AllScore => TapScore + BreakScore + HoldScore + SlideScore;
+    public int ScoreS => (int)(AllScore * 0.97);
+    public int ScoreSs => (int)(AllScore * 0.99);
+    public int RatedAchievement => (int)((1 + (double)(BreakNum * 100) / AllScore) * 10000);
 
     public int EachPairsNum
     {
         get
         {
             Dictionary<int, int> eachPairDictionary = new();
-            foreach (Note note in this.Notes)
+            foreach (Note note in this.Notes.Where(p=>p.NoteGenre is NoteGenre.TAP or NoteGenre.HOLD))
             {
                 if (!eachPairDictionary.Keys.Contains(note.TickStamp)) eachPairDictionary.Add(note.TickStamp, 1);
                 else eachPairDictionary[note.TickStamp]++;
@@ -192,7 +201,7 @@ public abstract class Chart : IChart
                     bar.Add(x); //Extract the first BPM change in bar to the beginning of the bar
             foreach (var x in Notes)
             {
-                if (FirstNote == null && !(x.NoteType is NoteType.BPM || x.NoteType is NoteType.MEASURE)) FirstNote = x;
+                if (FirstNote == null && !(x.NoteType is NoteType.BPM or NoteType.MEASURE)) FirstNote = x;
                 // Console.WriteLine(x.Compose(0));
                 //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
                 //x.Update();
@@ -222,7 +231,7 @@ public abstract class Chart : IChart
                             {
                                 IsDxChart = false;
                             }
-                            else if (x.NoteSpecialState is SpecialState.Break || x.NoteSpecialState is SpecialState.BreakEX)
+                            else if (x.NoteSpecialState is SpecialState.Break or SpecialState.BreakEX)
                             {
                             }
 
@@ -540,7 +549,7 @@ public abstract class Chart : IChart
             Note lastNote = new Rest();
             foreach (var x in bar)
             {
-                if (x.Tick == i && x.IsNote && !(x.NoteType is NoteType.TTP || x.NoteType is NoteType.THO))
+                if (x.Tick == i && x.IsNote && !(x.NoteType is NoteType.TTP or NoteType.THO))
                 {
                     if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
@@ -555,7 +564,7 @@ public abstract class Chart : IChart
                         lastNote.Next = x;
                     }
                 }
-                else if (x.Tick == i && x.IsNote && (x.NoteType is NoteType.TTP || x.NoteType is NoteType.THO))
+                else if (x.Tick == i && x.IsNote && x.NoteType is NoteType.TTP or NoteType.THO)
                 {
                     if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
@@ -872,7 +881,7 @@ public abstract class Chart : IChart
         foreach (var candidate in Notes)
         {
             maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
-            if (candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE || candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP)
+            if (candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_GROUP)
             {
                 // Slide slideCandidate = candidate as Slide ?? throw new InvalidCastException("Candidate is not a SLIDE. It is: "+candidate.Compose(ChartVersion.Debug));
                 // slideCandidate.NoteSpecialState = candidate.NoteSpecialState;
@@ -977,8 +986,7 @@ public abstract class Chart : IChart
         foreach (var x in Notes)
         {
             var eachCandidateCombined = false;
-            if (!(x.NoteSpecificGenre is NoteSpecificGenre.SLIDE || x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ||
-                  x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
+            if (!(x.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_START or NoteSpecificGenre.SLIDE_GROUP))
             {
                 adjusted.Add(x);
                 processedNotes++;
@@ -994,7 +1002,7 @@ public abstract class Chart : IChart
                 }
             }
             else if (composedCandidates.Count > 0 &&
-                     (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE || x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
+                     x.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_GROUP)
             {
                 foreach (var parent in composedCandidates)
                 {
@@ -1004,9 +1012,7 @@ public abstract class Chart : IChart
                 }
             }
 
-            if (!eachCandidateCombined && (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE ||
-                                           x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ||
-                                           x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP))
+            if (!eachCandidateCombined && x.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_START or NoteSpecificGenre.SLIDE_GROUP)
             {
                 composedCandidates.Add(new SlideEachSet(x));
                 processedNotes++;

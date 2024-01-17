@@ -127,7 +127,15 @@ public class Ma2 : Chart, ICompiler
         builder.Append($"T_JUDGE_SLD\t{SlideJudgeNum}\n");
         builder.Append($"T_JUDGE_ALL\t{AllJudgeNum}\n");
 
-        builder.Append($"TTM_EACHPAIRS\t{EachPairsNum}\n"); // This doesn't seem right at the moment
+        builder.Append($"TTM_EACHPAIRS\t{EachPairsNum}\n");
+        builder.Append($"TTM_SCR_TAP\t{TapScore}\n");
+        builder.Append($"TTM_SCR_BRK\t{BreakScore}\n");
+        builder.Append($"TTM_SCR_HLD\t{HoldScore}\n");
+        builder.Append($"TTM_SCR_SLD\t{SlideScore}\n");
+        builder.Append($"TTM_SCR_ALL\t{AllScore}\n");
+        builder.Append($"TTM_SCR_S\t{ScoreS}\n");
+        builder.Append($"TTM_SCR_SS\t{ScoreSs}\n");
+        builder.Append($"TTM_RAT_ACV\t{RatedAchievement}\n");
         return builder.ToString();
     }
 
@@ -169,6 +177,7 @@ public class Ma2 : Chart, ICompiler
                     if (!x.Compose(ChartVersion).Equals(""))
                         result.Append(x.Compose(ChartVersion) + "\n");
                 result.Append("\n");
+                result.Append(GenerateNoteStatistics());
                 return result.ToString();
             default:
                 return base.Compose();
