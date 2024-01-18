@@ -24,7 +24,7 @@ public class SimaiParserR
     {
         Chart candidate = new Simai();
         List<Note> notes = new();
-        NoteType noteType = NoteType.RST;
+        // NoteType noteType = NoteType.RST;
         while (Scanner.CurrentToken is not TokenType.EOS)
         {
             // if (notes.Count == 0 && Scanner.CurrentToken is not Token)

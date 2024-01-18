@@ -4,7 +4,7 @@ namespace MaiLib;
 
 public class SlideGroupComp : ICodeBlock
 {
-    public TapComp? TapComp { get; private set; }
+    public TapComp TapComp { get; private set; }
     public SlideSeq SlideSeq { get; private set; }
 
     public SlideGroupComp(TapComp tapComp, SlideSeq slideSeq)

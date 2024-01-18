@@ -29,6 +29,7 @@ namespace MaiLib
             }
             catch (Exception ex)
             {
+                Console.WriteLine("An exception was raised during scanning: {0}", ex.Message);
                 CurrentToken = TokenType.EOS;
                 // throw ex;
             }

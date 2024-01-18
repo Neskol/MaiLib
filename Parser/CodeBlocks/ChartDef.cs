@@ -28,8 +28,8 @@ public class ChartDef : ICodeBlock
     {
         if (BPM is null && Measure is null) throw new ComponentMissingException("CHART-DEF", "BPM, MEASURE");
         StringBuilder builder = new();
-        builder.Append(BPM.Compose(chartVersion));
-        builder.Append(Measure.Compose(chartVersion));
+        if (BPM is not null) builder.Append(BPM.Compose(chartVersion));
+        if (Measure is not null) builder.Append(Measure.Compose(chartVersion));
         return builder.ToString();
     }
 }
