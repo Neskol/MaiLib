@@ -47,7 +47,7 @@ public class Simai : Chart
         MeasureChanges = measureChanges;
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Simai;
-        base.Update();
+        this.Update();
     }
 
     public Simai(Chart takenIn)
@@ -57,7 +57,7 @@ public class Simai : Chart
         MeasureChanges = takenIn.MeasureChanges;
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Simai;
-        base.Update();
+        this.Update();
     }
 
     #endregion
