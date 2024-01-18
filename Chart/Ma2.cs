@@ -1,7 +1,5 @@
 ﻿namespace MaiLib;
-
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
+using static ChartEnum;
 using System.Text;
 
 /// <summary>
@@ -33,7 +31,7 @@ public class Ma2 : Chart, ICompiler
         MeasureChanges = new MeasureChanges(measureChanges);
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
-        base.Update();
+        this.Update();
     }
 
     /// <summary>
@@ -51,7 +49,7 @@ public class Ma2 : Chart, ICompiler
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
-        base.Update();
+        this.Update();
     }
 
     /// <summary>
@@ -68,7 +66,7 @@ public class Ma2 : Chart, ICompiler
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
-        base.Update();
+        this.Update();
     }
 
     /// <summary>
@@ -84,7 +82,7 @@ public class Ma2 : Chart, ICompiler
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
-        base.Update();
+        this.Update();
     }
 
     #endregion
