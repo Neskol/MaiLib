@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Text;
 public class Ma2 : Chart, ICompiler
 {
     #region Constructors
+
     /// <summary>
     ///     Default Constructor.
     /// </summary>
@@ -31,7 +33,7 @@ public class Ma2 : Chart, ICompiler
         MeasureChanges = new MeasureChanges(measureChanges);
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
-        Update();
+        base.Update();
     }
 
     /// <summary>
@@ -49,7 +51,7 @@ public class Ma2 : Chart, ICompiler
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
-        Update();
+        base.Update();
     }
 
     /// <summary>
@@ -66,7 +68,7 @@ public class Ma2 : Chart, ICompiler
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
-        Update();
+        base.Update();
     }
 
     /// <summary>
@@ -82,51 +84,107 @@ public class Ma2 : Chart, ICompiler
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
-        Update();
+        base.Update();
     }
+
     #endregion
 
     public override bool CheckValidity()
     {
-        var result = this == null;
+        var result = this is null;
         // Not yet implemented
         return result;
     }
 
+    public string GenerateNoteStatistics()
+    {
+        StringBuilder builder = new();
+        builder.Append($"T_REC_TAP\t{NormalTapNum}\n");
+        builder.Append($"T_REC_BRK\t{BreakTapNum}\n");
+        builder.Append($"T_REC_XTP\t{ExTapNum}\n");
+        if (ChartVersion is ChartVersion.Ma2_104) builder.Append($"T_REC_BXX\t{BreakExTapNum}\n");
+        builder.Append($"T_REC_HLD\t{NormalHoldNum}\n");
+        builder.Append($"T_REC_XHO\t{ExHoldNum}\n");
+        if (ChartVersion is ChartVersion.Ma2_104)
+        {
+            builder.Append($"T_REC_BHO\t{BreakHoldNum}\n");
+            builder.Append($"T_REC_BXH\t{BreakExHoldNum}\n");
+        }
+        builder.Append($"T_REC_STR\t{NormalSlideStartNum}\n");
+        builder.Append($"T_REC_BST\t{BreakSlideStartNum}\n");
+        builder.Append($"T_REC_XST\t{ExSlideStartNum}\n");
+        if (ChartVersion is ChartVersion.Ma2_104) builder.Append($"T_REC_XBS\t{BreakExSlideStartNum}\n");
+        builder.Append($"T_REC_TTP\t{TouchTapNum}\n");
+        builder.Append($"T_REC_THO\t{TouchHoldNum}\n");
+        builder.Append($"T_REC_SLD\t{NormalSlideNum}\n");
+        if (ChartVersion is ChartVersion.Ma2_104) builder.Append($"T_REC_BSL\t{BreakSlideNum}\n");
+        builder.Append($"T_REC_ALL\t{AllNoteRecNum}\n");
+
+        builder.Append($"T_NUM_TAP\t{TapNum}\n");
+        builder.Append($"T_NUM_BRK\t{HoldNum}\n");
+        builder.Append($"T_NUM_SLD\t{SlideNum}\n");
+        builder.Append($"T_NUM_ALL\t{AllNoteNum}\n");
+
+        builder.Append($"T_JUDGE_TAP\t{TapJudgeNum}\n");
+        builder.Append($"T_JUDGE_HLD\t{HoldJudgeNum}\n");
+        builder.Append($"T_JUDGE_SLD\t{SlideJudgeNum}\n");
+        builder.Append($"T_JUDGE_ALL\t{AllJudgeNum}\n");
+
+        builder.Append($"TTM_EACHPAIRS\t{EachPairsNum}\n");
+        builder.Append($"TTM_SCR_TAP\t{TapScore}\n");
+        builder.Append($"TTM_SCR_BRK\t{BreakScore}\n");
+        builder.Append($"TTM_SCR_HLD\t{HoldScore}\n");
+        builder.Append($"TTM_SCR_SLD\t{SlideScore}\n");
+        builder.Append($"TTM_SCR_ALL\t{AllScore}\n");
+        builder.Append($"TTM_SCR_S\t{ScoreS}\n");
+        builder.Append($"TTM_SCR_SS\t{ScoreSs}\n");
+        builder.Append($"TTM_RAT_ACV\t{RatedAchievement}\n");
+        return builder.ToString();
+    }
+
     public override string Compose()
     {
-        Update();
-        StringBuilder result = new StringBuilder();
-        string targetVersion;
         switch (ChartVersion)
         {
             case ChartVersion.Ma2_103:
-                targetVersion = "1.03.00";
-                break;
             case ChartVersion.Ma2_104:
-                targetVersion = "1.04.00";
-                break;
+                base.Update();
+                StringBuilder result = new StringBuilder();
+                string targetVersion;
+                switch (ChartVersion)
+                {
+                    case ChartVersion.Ma2_103:
+                        targetVersion = "1.03.00";
+                        break;
+                    case ChartVersion.Ma2_104:
+                        targetVersion = "1.04.00";
+                        break;
+                    default:
+                        return base.Compose(ChartVersion);
+                }
+
+                string header1 = $"VERSION\t0.00.00\t{targetVersion}\nFES_MODE\t{(IsUtage ? 1 : 0)}\n";
+                string header2 = $"RESOLUTION\t{Definition}\nCLK_DEF\t{Definition}\nCOMPATIBLE_CODE\tMA2\n";
+                result.Append(header1);
+                result.Append(BPMChanges.InitialChange);
+                result.Append(MeasureChanges.InitialChange);
+                result.Append(header2);
+                result.Append("\n");
+
+                result.Append(BPMChanges.Compose());
+                result.Append(MeasureChanges.Compose());
+                result.Append("\n");
+
+                foreach (var bar in StoredChart)
+                foreach (var x in bar)
+                    if (!x.Compose(ChartVersion).Equals(""))
+                        result.Append(x.Compose(ChartVersion) + "\n");
+                result.Append("\n");
+                result.Append(GenerateNoteStatistics());
+                return result.ToString();
             default:
-                return base.Compose(ChartVersion);
+                return base.Compose();
         }
-        string header1 = "VERSION\t0.00.00\t" + targetVersion + "\nFES_MODE\t0\n";
-        string header2 = "RESOLUTION\t" + Definition + "\nCLK_DEF\t" + Definition + "\nCOMPATIBLE_CODE\tMA2\n";
-        result.Append(header1);
-        result.Append(BPMChanges.InitialChange);
-        result.Append(MeasureChanges.InitialChange);
-        result.Append(header2);
-        result.Append("\n");
-
-        result.Append(BPMChanges.Compose());
-        result.Append(MeasureChanges.Compose());
-        result.Append("\n");
-
-        foreach (var bar in StoredChart)
-            foreach (var x in bar)
-                if (!x.Compose(ChartVersion).Equals(""))
-                    result.Append(x.Compose(ChartVersion) + "\n");
-        result.Append("\n");
-        return result.ToString();
     }
 
     /// <summary>
@@ -137,38 +195,40 @@ public class Ma2 : Chart, ICompiler
     /// <returns>Good Brother with override array</returns>
     public override string Compose(BPMChanges bpm, MeasureChanges measure)
     {
-        Update();
-        StringBuilder result = new StringBuilder();
-        string targetVersion;
-        switch (ChartVersion)
-        {
-            case ChartVersion.Ma2_103:
-                targetVersion = "1.03.00";
-                break;
-            case ChartVersion.Ma2_104:
-                targetVersion = "1.04.00";
-                break;
-            default:
-                return base.Compose(ChartVersion);
-        }
-        string header1 = $"VERSION\t0.00.00\t{targetVersion}\nFES_MODE\t{(IsUtage? 1 : 0)}\n";
-        string header2 = $"RESOLUTION\t{Definition}\nCLK_DEF\t{Definition}\nCOMPATIBLE_CODE\tMA2\n";
-        result.Append(header1);
-        result.Append(bpm.InitialChange);
-        result.Append(measure.InitialChange);
-        result.Append(header2);
-        result.Append("\n");
-
-        result.Append(bpm.Compose());
-        result.Append(measure.Compose());
-        result.Append("\n");
-
-        foreach (var bar in StoredChart)
-            foreach (var x in bar)
-                if (!x.Compose(ChartVersion).Equals(""))
-                    result.Append(x.Compose(ChartVersion) + "\n");
-        result.Append("\n");
-        return result.ToString();
+        return new Ma2(Notes, bpm, measure).Compose(ChartVersion);
+        // Update();
+        // StringBuilder result = new StringBuilder();
+        // string targetVersion;
+        // switch (ChartVersion)
+        // {
+        //     case ChartVersion.Ma2_103:
+        //         targetVersion = "1.03.00";
+        //         break;
+        //     case ChartVersion.Ma2_104:
+        //         targetVersion = "1.04.00";
+        //         break;
+        //     default:
+        //         return base.Compose(ChartVersion);
+        // }
+        //
+        // string header1 = $"VERSION\t0.00.00\t{targetVersion}\nFES_MODE\t{(IsUtage ? 1 : 0)}\n";
+        // string header2 = $"RESOLUTION\t{Definition}\nCLK_DEF\t{Definition}\nCOMPATIBLE_CODE\tMA2\n";
+        // result.Append(header1);
+        // result.Append(bpm.InitialChange);
+        // result.Append(measure.InitialChange);
+        // result.Append(header2);
+        // result.Append("\n");
+        //
+        // result.Append(bpm.Compose());
+        // result.Append(measure.Compose());
+        // result.Append("\n");
+        //
+        // foreach (var bar in StoredChart)
+        // foreach (var x in bar)
+        //     if (!x.Compose(ChartVersion).Equals(""))
+        //         result.Append(x.Compose(ChartVersion) + "\n");
+        // result.Append("\n");
+        // return result.ToString();
     }
 
     public override void Update()
