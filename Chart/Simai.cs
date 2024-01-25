@@ -64,6 +64,7 @@ public class Simai : Chart
 
     public override string Compose()
     {
+        Update();
         switch (ChartVersion)
         {
             case ChartVersion.Simai:
