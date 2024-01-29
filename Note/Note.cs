@@ -357,24 +357,21 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
     public bool Equals(Note? other)
     {
-        var result = false;
-        if (other != null &&
-            NoteType.Equals(other.NoteType) &&
-            Key.Equals(other.Key) &&
-            EndKey.Equals(other.EndKey) &&
-            Bar == other.Bar &&
-            Tick == other.Tick &&
-            LastLength == other.LastLength &&
-            BPM == other.BPM)
-            result = true;
+        bool result = other != null &&
+                      NoteType.Equals(other.NoteType) &&
+                      Key.Equals(other.Key) &&
+                      EndKey.Equals(other.EndKey) &&
+                      Bar == other.Bar &&
+                      Tick == other.Tick &&
+                      LastLength == other.LastLength &&
+                      Math.Abs(BPM - other.BPM) < double.Epsilon;
         return result;
     }
 
     /// <summary>
     /// Copies all note properties of copyFrom to copyTo
     /// </summary>
-    /// <param name="copyTo"></param>
-    /// <param name="copyFrom"></param>
+    /// <param name="copyTo">Target note</param>
     public void CopyOver(Note copyTo)
     {
         copyTo.NoteType = this.NoteType;
