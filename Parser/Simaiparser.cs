@@ -715,11 +715,16 @@ public class SimaiParser : IParser
 
         static string KeyCandidate(string token)
         {
-            var result = "";
-            for (var i = 0; i < token.Length && result.Length == 0; i++)
-                if (!IsSlideNotation(token[i]))
-                    result = token[i].ToString();
+            string result = "";
+            for (var i = 0; i < token.Length && result.Length < 3; i++)
+                if (!IsSlideNotation(token[i]) && char.IsNumber(token[i]))
+                    result += token[i].ToString();
+            if (result.Length > 1) result = result[1].ToString();
             return ((int.Parse(result) - 1) % 8).ToString();
+            // string slideNotation = AllowedSlideType.First(token.Contains) ?? throw new InvalidOperationException($"GIVEN TOKEN DOES NOT CONTAIN ANY SLIDE NOTATION: {token}");
+            // string keyCandidate = token.Split(slideNotation)[1] ?? throw new InvalidOperationException($"GIVEN TOKEN CANNOT BE SEPARATED: {token}");
+            // if (keyCandidate.Length == 2) keyCandidate = keyCandidate[1..];
+            // return ((int.Parse(keyCandidate) - 1) % 8).ToString();
         }
 
         var slideStartExtracted = false;
