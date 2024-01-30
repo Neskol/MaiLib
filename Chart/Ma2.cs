@@ -119,7 +119,8 @@ public class Ma2 : Chart, ICompiler
         builder.Append($"T_REC_ALL\t{AllNoteRecNum}\n");
 
         builder.Append($"T_NUM_TAP\t{TapNum}\n");
-        builder.Append($"T_NUM_BRK\t{HoldNum}\n");
+        builder.Append($"T_NUM_BRK\t{BreakNum}\n");
+        builder.Append($"T_NUM_HLD\t{HoldNum}\n");
         builder.Append($"T_NUM_SLD\t{SlideNum}\n");
         builder.Append($"T_NUM_ALL\t{AllNoteNum}\n");
 
