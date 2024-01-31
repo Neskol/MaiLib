@@ -14,15 +14,35 @@ public class Hold : Note
     /// <param name="noteType">HLD,XHO</param>
     /// <param name="key">Key of the hold note</param>
     /// <param name="bar">Bar of the hold note</param>
-    /// <param name="startTime">Tick of the hold note</param>
-    /// <param name="lastTime">Last time of the hold note</param>
-    public Hold(NoteType noteType, int bar, int startTime, string key, int lastTime)
+    /// <param name="startTick">Tick of the hold note</param>
+    /// <param name="lastLength">Last time of the hold note in seconds</param>
+    public Hold(NoteType noteType, int bar, int startTick, string key, int lastLength)
     {
         NoteType = noteType;
         Key = key;
         Bar = bar;
-        Tick = startTime;
-        LastLength = lastTime;
+        Tick = startTick;
+        LastLength = lastLength;
+        SpecialEffect = false;
+        TouchSize = "M1";
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct a Hold Note
+    /// </summary>
+    /// <param name="noteType">HLD,XHO</param>
+    /// <param name="key">Key of the hold note</param>
+    /// <param name="bar">Bar of the hold note</param>
+    /// <param name="startTick">Tick of the hold note</param>
+    /// <param name="lastLength">Last time of the hold note</param>
+    public Hold(NoteType noteType, int bar, int startTick, int lastSeconds, string key)
+    {
+        NoteType = noteType;
+        Key = key;
+        Bar = bar;
+        Tick = startTick;
+        CalculatedLastTime = lastSeconds;
         SpecialEffect = false;
         TouchSize = "M1";
         Update();
