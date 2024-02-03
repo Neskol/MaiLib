@@ -121,9 +121,14 @@ public class SimaiParser : IParser
         {
             if (isSlide)
             {
+                bool containingBreak = token.Contains('b');
+                if (containingBreak) token = token.Replace("b", "");
+                SpecialState breakState = containingBreak ? SpecialState.Break : SpecialState.Normal;
                 List<string> extractedToken = ExtractConnectingSlides(token);
                 if (extractedToken.Count == 1) result = SlideOfToken(token, bar, tick, PreviousSlideStart, bpm);
                 else result = SlideGroupOfToken(extractedToken, bar, tick, PreviousSlideStart, bpm);
+                result.NoteSpecialState = breakState;
+                result.Update();
             }
             else if (isHold)
             {

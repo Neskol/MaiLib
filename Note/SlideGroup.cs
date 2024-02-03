@@ -18,7 +18,7 @@ public class SlideGroup : Slide
         {
             (Slide)inTake
         };
-        NoteSpecialState = SpecialState.Normal;
+        NoteSpecialState = inTake.NoteSpecialState;
         Update();
     }
 
@@ -26,12 +26,12 @@ public class SlideGroup : Slide
     {
         InternalSlides = new List<Slide>();
         InternalSlides.AddRange(slideCandidate);
-        NoteSpecialState = SpecialState.Normal;
+        NoteSpecialState = slideCandidate.First().NoteSpecialState;
         Update();
     }
     #endregion
 
-    public int SlideCount => this == null ? 0 : InternalSlides.Count;
+    public int SlideCount => InternalSlides.Count;
 
     public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.SLIDE_GROUP;
 
@@ -78,6 +78,7 @@ public class SlideGroup : Slide
         //     Console.WriteLine("Invalid slide group located at bar " + Bar + " tick " + Tick);
         //     throw new InvalidOperationException("MA2 IS NOT COMPATIBLE WITH SLIDE GROUP");
         // }
+        if (InternalSlides.Count > 0) InternalSlides.First().NoteSpecialState = NoteSpecialState;
         foreach (var x in InternalSlides)
             // Note localSlideStart = x.SlideStart != null ? x.SlideStart : new Tap("NST", x.Bar, x.Tick, x.Key);
             result += x.Compose(format);
@@ -105,6 +106,9 @@ public class SlideGroup : Slide
 
     public override bool Update()
     {
+        if (InternalSlides.Any(slide => slide.NoteSpecialState is SpecialState.Break))
+            NoteSpecialState = SpecialState.Break;
+        if (InternalSlides.Count > 0) InternalSlides.First().NoteSpecialState = NoteSpecialState;
         var result = false;
         if (SlideCount > 0 && InternalSlides.Last().LastLength == 0)
             throw new InvalidOperationException("THE LAST SLIDE IN THIS GROUP DOES NOT HAVE LAST TIME ASSIGNED");

@@ -841,6 +841,7 @@ public abstract class Chart : IChart
                     if (candidate.InternalSlides.Count > 0) slideCandidates.AddRange(candidate.InternalSlides);
                     break;
                 case NoteEnum.NoteSpecificGenre.SLIDE_GROUP:
+                    x.Update();
                     var groupCandidate = x as SlideGroup ??
                                          throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
                     if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
