@@ -115,7 +115,7 @@ public class SimaiParser : IParser
         var isBPM = token.Contains(")");
         var isMeasure = token.Contains("}");
         var isSlide = ContainsSlideNotation(token);
-        var isHold = !isSlide && token.Contains("[");
+        var isHold = !isSlide && token.Contains('h');
 
         if (!isRest)
         {
@@ -200,6 +200,7 @@ public class SimaiParser : IParser
 
     public Hold HoldOfToken(string token, int bar, int tick, double bpm)
     {
+        if (!token.Contains('[')) token += $"[{MaximumDefinition}:0]";
         var sustainSymbol = token.IndexOf("[");
         var keyCandidate = token.Substring(0, sustainSymbol); //key candidate is like tap grammar
         //Console.WriteLine(keyCandidate);
@@ -267,10 +268,7 @@ public class SimaiParser : IParser
         }
 
         //Console.WriteLine(key);
-        if (holdType.Equals("THO"))
-            candidate = new Hold(NoteType.THO, bar, tick, key, lastTick, specialEffect == 1, "M1");
-        else
-            candidate = new Hold(typeCandidate, bar, tick, key, lastTick);
+        candidate = holdType.Equals("THO") ? new Hold(NoteType.THO, bar, tick, key, lastTick, specialEffect == 1, "M1") : new Hold(typeCandidate, bar, tick, key, lastTick);
         candidate.BPM = bpm;
         candidate.NoteSpecialState = specialState;
         return candidate;
