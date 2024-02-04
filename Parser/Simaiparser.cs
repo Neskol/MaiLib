@@ -149,6 +149,10 @@ public class SimaiParser : IParser
                 result = TapOfToken(token, bar, tick, bpm);
                 if (result.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START) PreviousSlideStart = (Tap)result;
             }
+            else if (token.Contains('!'))
+            {
+                PreviousSlideStart = TapOfToken(token, bar, tick, bpm);
+            }
         }
 
         return result;
@@ -183,6 +187,7 @@ public class SimaiParser : IParser
             var keyCandidate = int.Parse(token.Substring(0, 1)) - 1;
             if (token.Contains('_')||token.Contains('$'))
                 result = new Tap(NoteType.STR, bar, tick, keyCandidate.ToString());
+            else if (token.Contains('!')) result = new Tap(NoteType.NST, bar, tick, keyCandidate.ToString());
             else result = new Tap(NoteType.TAP, bar, tick, keyCandidate.ToString());
             if (isEXBreak) result.NoteSpecialState = SpecialState.BreakEX;
             else if (isEXTap) result.NoteSpecialState = SpecialState.EX;
