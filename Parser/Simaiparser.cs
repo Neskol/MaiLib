@@ -115,15 +115,20 @@ public class SimaiParser : IParser
         var isBPM = token.Contains(")");
         var isMeasure = token.Contains("}");
         var isSlide = ContainsSlideNotation(token);
-        var isHold = !isSlide && token.Contains("[");
+        var isHold = !isSlide && token.Contains('h');
 
         if (!isRest)
         {
             if (isSlide)
             {
+                bool containingBreak = token.Contains('b');
+                if (containingBreak) token = token.Replace("b", "");
+                SpecialState breakState = containingBreak ? SpecialState.Break : SpecialState.Normal;
                 List<string> extractedToken = ExtractConnectingSlides(token);
                 if (extractedToken.Count == 1) result = SlideOfToken(token, bar, tick, PreviousSlideStart, bpm);
                 else result = SlideGroupOfToken(extractedToken, bar, tick, PreviousSlideStart, bpm);
+                result.NoteSpecialState = breakState;
+                result.Update();
             }
             else if (isHold)
             {
@@ -139,10 +144,14 @@ public class SimaiParser : IParser
                 var quaverCandidate = token.Replace("{", "").Replace("}", "");
                 result = new MeasureChange(bar, tick, int.Parse(quaverCandidate));
             }
-            else if (!token.Equals("E") && !token.Equals(""))
+            else if (!token.Contains('!') && !token.Equals("E") && !token.Equals(""))
             {
                 result = TapOfToken(token, bar, tick, bpm);
                 if (result.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START) PreviousSlideStart = (Tap)result;
+            }
+            else if (token.Contains('!'))
+            {
+                PreviousSlideStart = TapOfToken(token, bar, tick, bpm);
             }
         }
 
@@ -176,8 +185,9 @@ public class SimaiParser : IParser
         else
         {
             var keyCandidate = int.Parse(token.Substring(0, 1)) - 1;
-            if (token.Contains("_"))
+            if (token.Contains('_')||token.Contains('$'))
                 result = new Tap(NoteType.STR, bar, tick, keyCandidate.ToString());
+            else if (token.Contains('!')) result = new Tap(NoteType.NST, bar, tick, keyCandidate.ToString());
             else result = new Tap(NoteType.TAP, bar, tick, keyCandidate.ToString());
             if (isEXBreak) result.NoteSpecialState = SpecialState.BreakEX;
             else if (isEXTap) result.NoteSpecialState = SpecialState.EX;
@@ -190,6 +200,7 @@ public class SimaiParser : IParser
 
     public Hold HoldOfToken(string token, int bar, int tick, double bpm)
     {
+        if (!token.Contains('[')) token += $"[{MaximumDefinition}:0]";
         var sustainSymbol = token.IndexOf("[");
         var keyCandidate = token.Substring(0, sustainSymbol); //key candidate is like tap grammar
         //Console.WriteLine(keyCandidate);
@@ -257,10 +268,7 @@ public class SimaiParser : IParser
         }
 
         //Console.WriteLine(key);
-        if (holdType.Equals("THO"))
-            candidate = new Hold(NoteType.THO, bar, tick, key, lastTick, specialEffect == 1, "M1");
-        else
-            candidate = new Hold(typeCandidate, bar, tick, key, lastTick);
+        candidate = holdType.Equals("THO") ? new Hold(NoteType.THO, bar, tick, key, lastTick, specialEffect == 1, "M1") : new Hold(typeCandidate, bar, tick, key, lastTick);
         candidate.BPM = bpm;
         candidate.NoteSpecialState = specialState;
         return candidate;

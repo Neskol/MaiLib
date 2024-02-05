@@ -215,8 +215,19 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// </summary>
     public double BPM { get; set; }
 
+    /// <summary>
+    /// The definition of the note which represented by the maximum tick of a 4/4 bar. By default it is 384.
+    /// </summary>
+    public int Definition { get; protected set; }
+
+    /// <summary>
+    /// Whether this note has a firework effect.
+    /// </summary>
     public bool SpecialEffect { get; protected set; }
 
+    /// <summary>
+    /// Determines the size of the touch. By default it is M1
+    /// </summary>
     public string TouchSize { get; protected set; }
 
     /// <summary>

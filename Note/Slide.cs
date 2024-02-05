@@ -23,17 +23,42 @@ public class Slide : Note
     /// </param>
     /// <param name="key">0-7</param>
     /// <param name="bar">Bar in</param>
-    /// <param name="startTime">Start Time</param>
-    /// <param name="lastTime">Last Time</param>
+    /// <param name="startTick">Start Time</param>
+    /// <param name="lastLength">Last Time</param>
     /// <param name="endKey">0-7</param>
-    public Slide(NoteType noteType, int bar, int startTime, string key, int waitTime, int lastTime, string endKey)
+    public Slide(NoteType noteType, int bar, int startTick, string key, int waitLength, int lastLength, string endKey)
     {
         NoteType = noteType;
         Key = key;
         Bar = bar;
-        Tick = startTime;
-        WaitLength = waitTime;
-        LastLength = lastTime;
+        Tick = startTick;
+        WaitLength = waitLength;
+        LastLength = lastLength;
+        EndKey = endKey;
+        Delayed = WaitLength != 96;
+        Update();
+    }
+
+    /// <summary>
+    ///     Construct a Slide Note (Valid only if Start Key matches a start!)
+    /// </summary>
+    /// <param name="noteType">
+    ///     SI_(Straight),SCL,SCR,SV_(Line not intercepting Crossing Center),SUL,SUR,SF_(Wifi),SLL(Infecting
+    ///     Line),SLR(Infecting),SXL(Self winding),SXR(Self winding),SSL,SSR
+    /// </param>
+    /// <param name="key">0-7</param>
+    /// <param name="bar">Bar in</param>
+    /// <param name="startTick">Start Time</param>
+    /// <param name="lastLength">Last Time</param>
+    /// <param name="endKey">0-7</param>
+    public Slide(NoteType noteType, int bar, int startTick, int waitTime, int lastTime, string key, string endKey)
+    {
+        NoteType = noteType;
+        Key = key;
+        Bar = bar;
+        Tick = startTick;
+        CalculatedWaitTime = waitTime;
+        CalculatedLastTime = lastTime;
         EndKey = endKey;
         Delayed = WaitLength != 96;
         Update();

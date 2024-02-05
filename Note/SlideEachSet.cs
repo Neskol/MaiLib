@@ -27,6 +27,11 @@ public class SlideEachSet : Note
             var candidate = x as Slide ?? throw new InvalidOperationException("This is not a SLIDE");
             InternalSlides.Add(candidate);
         }
+        else if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP)
+        {
+            var candidate = x as SlideGroup ?? throw new InvalidOperationException("This is not a SLIDE GROUP");
+            InternalSlides.Add(candidate);
+        }
 
         Update();
     }
@@ -170,8 +175,12 @@ public class SlideEachSet : Note
                 separateSymbol = "*";
                 if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "$";
                 else if (InternalSlides.Count > 0 && SlideStart == null)
-                    result += new Tap(InternalSlides.First()).Compose(format) + "!";
+                    result += new Tap(InternalSlides.First()){NoteSpecialState = SpecialState.Normal}.Compose(format) + "!";
                 else if (SlideStart != null) result += SlideStart.Compose(format);
+                for (var i = 0; i < InternalSlides.Count; i++)
+                    if (i < InternalSlides.Count - 1)
+                        result += InternalSlides[i].Compose(format) + separateSymbol;
+                    else result += InternalSlides[i].Compose(format);
                 break;
             case ChartVersion.Ma2_103:
             case ChartVersion.Ma2_104:
@@ -184,16 +193,15 @@ public class SlideEachSet : Note
             default:
                 if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "\n";
                 else if (InternalSlides.Count > 0 && SlideStart == null)
-                    result += new Tap(InternalSlides.First()).Compose(format) + "\n";
+                    result += new Tap(InternalSlides.First()){NoteSpecialState = SpecialState.Normal}.Compose(format) + "\n";
                 else if (SlideStart != null) result += SlideStart.Compose(format);
                 separateSymbol = "\n";
+                for (var i = 0; i < InternalSlides.Count; i++)
+                    if (i < InternalSlides.Count - 1)
+                        result += InternalSlides[i].Compose(format) + separateSymbol;
+                    else result += InternalSlides[i].Compose(format);
                 break;
         }
-
-        for (var i = 0; i < InternalSlides.Count; i++)
-            if (i < InternalSlides.Count - 1)
-                result += InternalSlides[i].Compose(format) + separateSymbol;
-            else result += InternalSlides[i].Compose(format);
 
         return result;
     }
