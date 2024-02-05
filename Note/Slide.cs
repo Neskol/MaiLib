@@ -49,9 +49,10 @@ public class Slide : Note
     /// <param name="key">0-7</param>
     /// <param name="bar">Bar in</param>
     /// <param name="startTick">Start Time</param>
-    /// <param name="lastLength">Last Time</param>
+    /// <param name="waitTime">Wait Time in Seconds</param>
+    /// <param name="lastTime">Last Time in Seconds</param>
     /// <param name="endKey">0-7</param>
-    public Slide(NoteType noteType, int bar, int startTick, int waitTime, int lastTime, string key, string endKey)
+    public Slide(NoteType noteType, int bar, int startTick, double waitTime, double lastTime, string key, string endKey)
     {
         NoteType = noteType;
         Key = key;
@@ -61,7 +62,7 @@ public class Slide : Note
         CalculatedLastTime = lastTime;
         EndKey = endKey;
         Delayed = WaitLength != 96;
-        Update();
+        // Update(); // This update could cause issue when change table is not yet assigned or update.
     }
 
     /// <summary>

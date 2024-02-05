@@ -16,6 +16,7 @@ public class SimaiParser : IParser
         ["qq", "q", "pp", "p", "v", "w", "<", ">", "^", "s", "z", "V", "-"];
 
     private Tap PreviousSlideStart;
+    private BPMChanges bpmChanges;
 
     /// <summary>
     ///     Constructor of simaiparser
@@ -23,13 +24,14 @@ public class SimaiParser : IParser
     public SimaiParser()
     {
         PreviousSlideStart = new Tap();
+        bpmChanges = new();
     }
 
     public Chart ChartOfToken(string[] tokens)
         // Note: here chart will only return syntax after &inote_x= and each token is separated by ","
     {
         var notes = new List<Note>();
-        var bpmChanges = new BPMChanges();
+        // var bpmChanges = new BPMChanges();
         var measureChanges = new MeasureChanges(4, 4);
         var bar = 0;
         var tick = 0;
@@ -473,13 +475,17 @@ public class SimaiParser : IParser
             var timeCandidates = sustainCandidate.Split("##");
             var waitLengthCandidate = timeAssigned ? double.Parse(timeCandidates[0]) : 0;
             var lastLengthCandidate = timeAssigned ? double.Parse(timeCandidates[1]) : 0;
-            var tickUnit = Chart.GetBPMTimeUnit(bpm, MaximumDefinition);
-            var waitLength = timeAssigned ? (int)(waitLengthCandidate / tickUnit) : 0;
-            var lastLength = timeAssigned ? (int)(lastLengthCandidate / tickUnit) : 0;
-            result = new Slide(noteType, bar, tick, slideStartCandidate.Key, waitLength, lastLength,
-                fixedKeyCandidate.ToString());
-            result.CalculatedWaitTime = waitLengthCandidate;
-            result.CalculatedLastTime = lastLengthCandidate;
+            // var tickUnit = Chart.GetBPMTimeUnit(bpm, MaximumDefinition);
+            // var waitLength = timeAssigned ? (int)(waitLengthCandidate / tickUnit) : 0;
+            // var lastLength = timeAssigned ? (int)(lastLengthCandidate / tickUnit) : 0;
+            // result = new Slide(noteType, bar, tick, slideStartCandidate.Key, waitLength, lastLength,
+            //     fixedKeyCandidate.ToString());
+            // result.CalculatedWaitTime = waitLengthCandidate;
+            // result.CalculatedLastTime = lastLengthCandidate;
+
+            // TODO: THIS METHOD NEEDS CHANGE TABLE TO BE UPDATED
+            result = new Slide(noteType, bar, tick, waitLengthCandidate, lastLengthCandidate, slideStartCandidate.Key,
+                fixedKeyCandidate.ToString()){BPMChangeNotes = bpmChanges.ChangeNotes};
         }
 
         result.BPM = bpm;

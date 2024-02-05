@@ -61,6 +61,8 @@ public class BPMChange : Note
     }
 #endregion
 
+    public double BPMTimeUnit => 60 / BPM * 4 / Definition;
+
     public override NoteEnum.NoteGenre NoteGenre => NoteEnum.NoteGenre.BPM;
 
     public override bool IsNote => true;

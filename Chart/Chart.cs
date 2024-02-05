@@ -203,8 +203,8 @@ public abstract class Chart : IChart
             {
                 if (FirstNote == null && !(x.NoteType is NoteType.BPM or NoteType.MEASURE)) FirstNote = x;
                 // Console.WriteLine(x.Compose(0));
-                //x.BPMChangeNotes = this.bpmChanges.ChangeNotes;
-                //x.Update();
+                x.BPMChangeNotes = BPMChanges.ChangeNotes;
+                x.Update();
                 //x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
                 //x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
                 // x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
