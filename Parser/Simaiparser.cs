@@ -286,6 +286,8 @@ public class SimaiParser : IParser
         foreach (string x in extractedTokens)
         {
             Slide connectCandidate = SlideOfToken(x, currentBar, currentTick, slideStart, bpm);
+            connectCandidate.BPMChangeNotes = bpmChanges.ChangeNotes;
+            connectCandidate.Update();
             // prevSlideKey = connectCandidate.EndKeyNum;
             // int[] endPointOfConcern = { 0, 1, 6, 7 };
             // if (connectCandidate.NoteType is NoteType.SCL && endPointOfConcern.Any(p => p == prevSlideKey))
@@ -301,7 +303,7 @@ public class SimaiParser : IParser
             }
         }
 
-        return new SlideGroup(slideCandidates);
+        return new SlideGroup(slideCandidates){BPMChangeNotes = bpmChanges.ChangeNotes};
     }
 
     public Slide SlideOfToken(string token, int bar, int tick, Note slideStart, double bpm)

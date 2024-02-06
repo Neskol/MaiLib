@@ -328,9 +328,9 @@ public abstract class Chart : IChart
             TotalDelay -= StoredChart.Count * Definition;
     }
 
-    public void UpdateTest()
+    public virtual void UpdateTest()
     {
-        var maxBar = Notes.Count > 0 ? Notes.Max(p => p.Bar) : 0;
+        var maxBar = Notes.Count > 0 ? Notes.Max(p => p.Bar) + 1 : 1;
         List<Note>[] chartCandidate = new List<Note>[maxBar];
         for (int i = 0; i < chartCandidate.Length; i++) chartCandidate[i] = new();
 

@@ -106,6 +106,7 @@ public class SlideGroup : Slide
 
     public override bool Update()
     {
+        // base.Update();
         if (InternalSlides.Any(slide => slide.NoteSpecialState is SpecialState.Break))
             NoteSpecialState = SpecialState.Break;
         if (InternalSlides.Count > 0) InternalSlides.First().NoteSpecialState = NoteSpecialState;
