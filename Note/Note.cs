@@ -206,7 +206,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     Stores if the BPM of Wait or Last Tick is in different BPM
     /// </summary>
-    public bool TickBPMDisagree { get; set; }
+    public bool TickBPMDisagree { get; protected internal set; }
 
     /// <summary>
     ///     The delayed

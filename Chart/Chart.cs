@@ -188,6 +188,12 @@ public abstract class Chart : IChart
         var maxBar = Notes.Count > 0 ? Notes.Max(p=>p.Bar) : 0;
         var timeStamp = 0.0;
 
+        foreach (Note x in Notes)
+        {
+            x.BPMChangeNotes = BPMChanges.ChangeNotes;
+            x.Update();
+        }
+
         //Iterate over bar
         for (var i = 0; i <= maxBar; i++)
         {
@@ -203,8 +209,6 @@ public abstract class Chart : IChart
             {
                 if (FirstNote == null && !(x.NoteType is NoteType.BPM or NoteType.MEASURE)) FirstNote = x;
                 // Console.WriteLine(x.Compose(0));
-                x.BPMChangeNotes = BPMChanges.ChangeNotes;
-                x.Update();
                 //x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
                 //x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
                 // x.LastTimeStamp = this.GetTimeStamp(x.LastTickStamp);
@@ -239,7 +243,7 @@ public abstract class Chart : IChart
                         case NoteSpecificGenre.HOLD:
                             x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
-                            x.Update();
+                            // x.Update();
                             if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedLastTime == 0)
                             {
@@ -265,7 +269,7 @@ public abstract class Chart : IChart
                                                 Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                                                 HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
-                            x.Update();
+                            // x.Update();
                             if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedWaitTime == 0)
                             {
@@ -322,6 +326,65 @@ public abstract class Chart : IChart
             TotalDelay = 0;
         else
             TotalDelay -= StoredChart.Count * Definition;
+    }
+
+    public void UpdateTest()
+    {
+        var maxBar = Notes.Count > 0 ? Notes.Max(p => p.Bar) : 0;
+        List<Note>[] chartCandidate = new List<Note>[maxBar];
+        for (int i = 0; i < chartCandidate.Length; i++) chartCandidate[i] = new();
+
+        foreach (BPMChange bpmChangeNote in BPMChanges.ChangeNotes)
+        {
+            chartCandidate[bpmChangeNote.Bar].Insert(0,bpmChangeNote);
+            // Well I know this is not the best practice but we assume bar may be empty here
+        }
+        foreach (Note x in Notes)
+        {
+            x.BPMChangeNotes = BPMChanges.ChangeNotes;
+            x.Update();
+            int delay = x.Bar * Definition + x.Tick + x.WaitLength + x.LastLength;
+            switch (x.NoteSpecificGenre)
+            {
+                case NoteSpecificGenre.BPM:
+                    break;
+                case NoteSpecificGenre.MEASURE:
+                    break;
+                case NoteSpecificGenre.REST:
+                    break;
+                case NoteSpecificGenre.TAP:
+
+                    break;
+                case NoteSpecificGenre.HOLD:
+                    x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                                        HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
+
+                    if (delay > TotalDelay) TotalDelay = delay;
+                    break;
+                case NoteSpecificGenre.SLIDE_START:
+                    break;
+                case NoteSpecificGenre.SLIDE:
+                    x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.WaitTickStamp)) > Tolerance ||
+                                        Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                                        Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                                        HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
+                    if (delay > TotalDelay) TotalDelay = delay;
+                    break;
+            }
+            chartCandidate[x.Bar].Add(x);
+        }
+
+        StoredChart = new();
+        for (int i = 0; i<chartCandidate.Length; i++)
+        {
+            var afterBar = new List<Note>
+            {
+                new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(chartCandidate[i], Definition), Definition))
+            };
+            afterBar.AddRange(chartCandidate[i]);
+            StoredChart.Add(FinishBar(afterBar, i,
+                CalculateQuaver(CalculateLeastMeasure(chartCandidate[i], Definition), Definition), Definition));
+        }
     }
 
     public virtual string Compose()
