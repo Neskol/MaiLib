@@ -175,7 +175,7 @@ public class SlideEachSet : Note
                 separateSymbol = "*";
                 if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "$";
                 else if (InternalSlides.Count > 0 && SlideStart == null)
-                    result += new Tap(InternalSlides.First()){NoteSpecialState = SpecialState.Normal}.Compose(format) + "!";
+                    result += new Tap(InternalSlides.First()){NoteSpecialState = SpecialState.Normal}.Compose(format) + "?";
                 else if (SlideStart != null) result += SlideStart.Compose(format);
                 for (var i = 0; i < InternalSlides.Count; i++)
                     if (i < InternalSlides.Count - 1)

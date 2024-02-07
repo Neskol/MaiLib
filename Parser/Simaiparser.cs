@@ -913,6 +913,70 @@ public class SimaiParser : IParser
 
         return result;
     }
+
+    public static double[] GetTimeCandidates(double bpm, string input)
+    {
+        double[] result = new double[2];
+        if (!(input.Contains('[') || input.Contains(']')))
+            throw new InvalidOperationException("GIVEN CANDIDATE DOES NOT CONTAIN DURATION SYMBOL [ AND ]");
+        string durationCandidate = input.Replace("[", "").Replace("]", "");
+        bool isMeasureDuration = input.Contains(':') && !input.Contains('#'); // [Quaver : Beats]
+        bool isSlideTimedDuration = input.Contains("##") && !input.Contains(':'); // [WaitTime ## LastTime]
+        bool isHoldTimedDuration = !isSlideTimedDuration && input.Contains("#") && !input.Contains(':'); // [# LastTime]
+        bool isSlideBpmMeasureDuration = input.Contains("##") && input.Contains('#') && input.Contains(':'); // [WaitTime ## BPM # Quaver : Beats]
+        bool isHoldBpmMeasureDuration = !isSlideBpmMeasureDuration && input.Contains('#') && input.Contains(':'); // [BPM # Quaver : Beats]
+
+        if (isMeasureDuration)
+        {
+            double quaver = double.Parse(durationCandidate.Split(':')[0]);
+            double beat = double.Parse(durationCandidate.Split(':')[1]);
+            double lastTimeCandidate =
+                Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * (MaximumDefinition / quaver) * beat;
+            result[0] = 0;
+            result[1] = lastTimeCandidate;
+            return result;
+        }
+        else if (isSlideTimedDuration)
+        {
+            result[0] = double.Parse(durationCandidate.Split("##")[0]);
+            result[1] = double.Parse(durationCandidate.Split("##")[1]);
+            return result;
+        }
+        else if (isHoldTimedDuration)
+        {
+            result[0] = 0;
+            result[1] = double.Parse(durationCandidate.Replace("#", ""));
+            return result;
+        }
+        else if (isSlideBpmMeasureDuration)
+        {
+            result[0] = double.Parse(durationCandidate.Split("##")[0]);
+            string extractedDurationCandidate = durationCandidate.Split("##")[1];
+            double bpmCandidate = double.Parse(extractedDurationCandidate.Split('#')[0]);
+            string extractedQuaverBeatCandidate = extractedDurationCandidate.Split('#')[1];
+            double quaverCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[0]);
+            double beatCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[1]);
+            double lastTimeCandidate =
+                Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * (MaximumDefinition / quaverCandidate) * beatCandidate;
+            result[1] = lastTimeCandidate;
+            return result;
+        }
+        else if (isHoldBpmMeasureDuration)
+        {
+            double bpmCandidate = double.Parse(durationCandidate.Split('#')[0]);
+            string extractedQuaverBeatCandidate = durationCandidate.Split('#')[1];
+            double quaverCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[0]);
+            double beatCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[1]);
+            double lastTimeCandidate =
+                Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * (MaximumDefinition / quaverCandidate) *
+                beatCandidate;
+            result[0] = 0;
+            result[1] = lastTimeCandidate;
+            return result;
+        }
+        else throw new InvalidOperationException($"NON OF THE DURATION PATTERNS MATCHED: {durationCandidate}");
+    }
+
     #endregion
 }
 
