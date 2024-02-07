@@ -834,15 +834,8 @@ public class SimaiParser : IParser
             int actualSlidePart = result.Count(p => !p.Contains('_'));
             double originalWaitDuration = 0.0;
             double averageDuration = 0.0;
-            if (newDurationCandidate.Contains("##"))
-            {
-                originalWaitDuration =
-                    double.Parse(slideDurationCandidate.Split('[')[1].Split("##")[0]);
-                averageDuration =
-                    double.Parse(slideDurationCandidate.Split("##")[1].Split(']')[0]) / actualSlidePart;
-                newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
-            }
-            else if (newDurationCandidate.Contains(':'))
+            bool isMeasureDuration = newDurationCandidate.Contains(':') && !newDurationCandidate.Contains('#'); // [Quaver : Beats]
+            if (isMeasureDuration)
             {
                 string durationCandidate = newDurationCandidate.Replace("[", "").Replace("]", "");
                 string[] numList = durationCandidate.Split(':');
@@ -850,7 +843,21 @@ public class SimaiParser : IParser
                 int multiple = int.Parse(numList[1]);
                 newDurationCandidate = $"[{quaver}:{multiple}]";
             }
-            else throw new NotImplementedException("BPM # QUAVER : MULTIPLE is not yet supported");
+            else
+            {
+                double[] durationResult = GetTimeCandidates(newDurationCandidate);
+                originalWaitDuration = durationResult[0];
+                averageDuration = durationResult[1] / actualSlidePart;
+                newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
+                // if (newDurationCandidate.Contains("##"))
+                // {
+                //     originalWaitDuration =
+                //         double.Parse(slideDurationCandidate.Split('[')[1].Split("##")[0]);
+                //     averageDuration =
+                //         double.Parse(slideDurationCandidate.Split("##")[1].Split(']')[0]) / actualSlidePart;
+                //     newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
+                // }
+            }
 
             bool writeOriginalWaitTime = newDurationCandidate.Contains("##");
             for (int i = result[0].Contains('_') ? 1 : 0; i < result.Count; i++)
@@ -912,6 +919,12 @@ public class SimaiParser : IParser
             }
 
         return result;
+    }
+
+    public static double[] GetTimeCandidates(string input)
+    {
+        if (input.Contains(':') && !input.Contains('#')) throw new InvalidOperationException($"NO BPM CONTEXT IN THIS SETTING: {input}"); // [Quaver : Beats]
+        return GetTimeCandidates(0, input);
     }
 
     public static double[] GetTimeCandidates(double bpm, string input)
