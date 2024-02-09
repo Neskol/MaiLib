@@ -250,7 +250,7 @@ public abstract class Chart : IChart
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
                                 x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
                                 x.FixedLastLength =
-                                    (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp),Definition));
+                                    (int)double.Round(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp),Definition));
                             }
 
                             if (delay > TotalDelay) TotalDelay = delay;
@@ -282,7 +282,7 @@ public abstract class Chart : IChart
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
                                 x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
                                 x.FixedLastLength =
-                                    (int)(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp),Definition));
+                                    (int)double.Round(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp),Definition));
                             }
 
                             // if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
@@ -303,7 +303,7 @@ public abstract class Chart : IChart
                             break;
                     }
 
-                    x.BPM = currentBPM;
+                    // x.BPM = currentBPM;
                     bar.Add(x);
                     if (x.NoteGenre is not NoteGenre.SLIDE) lastNote = x;
                     realLastNote = x;
