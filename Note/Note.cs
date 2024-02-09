@@ -1,4 +1,6 @@
-﻿namespace MaiLib;
+﻿using System.Diagnostics;
+
+namespace MaiLib;
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
 
@@ -17,21 +19,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         Key = "";
         EndKey = "";
         Definition = 384;
-        Bar = 0;
-        Tick = 0;
-        FixedTick = 0;
-        TickStamp = 0;
-        TickTimeStamp = 0.0;
-        LastLength = 0;
-        LastTickStamp = 0;
-        LastTimeStamp = 0.0;
-        WaitLength = 0;
-        WaitTickStamp = 0;
-        WaitTimeStamp = 0.0;
-        CalculatedLastTime = 0.0;
-        CalculatedWaitTime = 0.0;
         TickBPMDisagree = false;
-        BPM = 0;
         BPMChangeNotes = new List<BPMChange>();
         TouchSize = "M1";
         NoteSpecialState = SpecialState.Normal;
@@ -216,7 +204,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     The BPM
     /// </summary>
-    public double BPM { get; set; }
+    public double BPM { get; protected internal set; }
 
     /// <summary>
     /// The definition of the note which represented by the maximum tick of a 4/4 bar. By default it is 384.
@@ -404,7 +392,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         copyTo.CalculatedLastTime = this.CalculatedLastTime;
         copyTo.CalculatedLastTime = this.CalculatedLastTime;
         copyTo.TickBPMDisagree = this.TickBPMDisagree;
-        copyTo.BPM = this.BPM;
+        // copyTo.BPM = this.BPM;
         copyTo.BPMChangeNotes = this.BPMChangeNotes;
         copyTo.NoteSpecialState = this.NoteSpecialState;
         copyTo.TouchSize = this.TouchSize;
@@ -926,10 +914,14 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         }
         if (CalculatedLastTime != 0 && LastLength == 0)
         {
-            LastTimeStamp = GetTimeStamp(WaitTickStamp) + CalculatedLastTime;
+            int tickCandidate = NoteGenre is NoteGenre.HOLD ? TickStamp : WaitTickStamp;
+            LastTimeStamp = GetTimeStamp(tickCandidate) + CalculatedLastTime;
             LastTickStamp = GetTickStampByTime(LastTimeStamp);
-            LastLength = LastTickStamp - WaitTickStamp;
+            LastLength = LastTickStamp - tickCandidate;
         }
+
+        double bpmUnit = GetBPMTimeUnit(BPM);
+        FixedLastLength = (int)(CalculatedLastTime / bpmUnit);
 
         // string noteInformation = "This note is "+this.NoteType+", in Tick "+ this.TickStamp+", ";
         //this.TickTimeStamp = this.GetTimeStamp(this.TickStamp);

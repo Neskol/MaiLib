@@ -15,7 +15,7 @@ public class Hold : Note
     /// <param name="key">Key of the hold note</param>
     /// <param name="bar">Bar of the hold note</param>
     /// <param name="startTick">Tick of the hold note</param>
-    /// <param name="lastLength">Last time of the hold note in seconds</param>
+    /// <param name="lastLength">Last time of the hold note in ticks</param>
     public Hold(NoteType noteType, int bar, int startTick, string key, int lastLength)
     {
         NoteType = noteType;
@@ -25,7 +25,7 @@ public class Hold : Note
         LastLength = lastLength;
         SpecialEffect = false;
         TouchSize = "M1";
-        Update();
+        // Update();
     }
 
     /// <summary>
@@ -35,17 +35,39 @@ public class Hold : Note
     /// <param name="key">Key of the hold note</param>
     /// <param name="bar">Bar of the hold note</param>
     /// <param name="startTick">Tick of the hold note</param>
-    /// <param name="lastLength">Last time of the hold note</param>
-    public Hold(NoteType noteType, int bar, int startTick, int lastSeconds, string key)
+    /// <param name="lastTime">Last time of the hold note in seconds</param>
+    public Hold(NoteType noteType, int bar, int startTick, string key, double lastTime)
     {
         NoteType = noteType;
         Key = key;
         Bar = bar;
         Tick = startTick;
-        CalculatedLastTime = lastSeconds;
+        CalculatedLastTime = lastTime;
         SpecialEffect = false;
         TouchSize = "M1";
-        Update();
+        // Update();
+    }
+
+    /// <summary>
+    ///     Construct a Touch Hold Note
+    /// </summary>
+    /// <param name="noteType">THO</param>
+    /// <param name="key">Key of the hold note</param>
+    /// <param name="bar">Bar of the hold note</param>
+    /// <param name="startTick">Tick of the hold note</param>
+    /// <param name="lastTime">Last time of the hold note in seconds</param>
+    /// <param name="specialEffect">Store if the touch note ends with special effect</param>
+    /// <param name="touchSize">Determines how large the touch note is</param>
+    public Hold(NoteType noteType, int bar, int startTick, string key, double lastTime, bool specialEffect, string touchSize)
+    {
+        NoteType = noteType;
+        Key = key;
+        Bar = bar;
+        Tick = startTick;
+        CalculatedLastTime = lastTime;
+        SpecialEffect = specialEffect;
+        TouchSize = touchSize;
+        // Update();
     }
 
     /// <summary>
@@ -67,7 +89,7 @@ public class Hold : Note
         LastLength = lastTime;
         SpecialEffect = specialEffect;
         TouchSize = touchSize;
-        Update();
+        // Update();
     }
 
     /// <summary>

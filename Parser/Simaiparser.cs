@@ -157,6 +157,12 @@ public class SimaiParser : IParser
             }
         }
 
+        // if (result.BPMChangeNotes.Count == 0 && result.BPM != 0)
+        // {
+        //     result.BPMChangeNotes.Add(new BPMChange(result.Bar, result.Tick, result.BPM));
+        //     result.Update();
+        // }
+
         return result;
     }
 
@@ -257,12 +263,14 @@ public class SimaiParser : IParser
             holdType = "HLD";
         }
 
-        var lastTimeCandidates = sustainCandidate.Split(":");
-        var quaver = int.Parse(lastTimeCandidates[0]);
-        var lastTick = MaximumDefinition / quaver;
-        var times = int.Parse(lastTimeCandidates[1]);
-        lastTick *= times;
-        Hold candidate;
+        // var lastTimeCandidates = sustainCandidate.Split(":");
+        // var quaver = int.Parse(lastTimeCandidates[0]);
+        // var lastTick = MaximumDefinition / quaver;
+        // var times = int.Parse(lastTimeCandidates[1]);
+        // lastTick *= times;
+
+        double lastTime = GetTimeCandidates(bpm, $"[{sustainCandidate}]")[1];
+
         bool noteTypeIsValid = Enum.TryParse(holdType, out NoteType typeCandidate);
         if (!noteTypeIsValid)
         {
@@ -270,7 +278,7 @@ public class SimaiParser : IParser
         }
 
         //Console.WriteLine(key);
-        candidate = holdType.Equals("THO") ? new Hold(NoteType.THO, bar, tick, key, lastTick, specialEffect == 1, "M1") : new Hold(typeCandidate, bar, tick, key, lastTick);
+        Hold candidate = holdType.Equals("THO") ? new Hold(NoteType.THO, bar, tick,  key, lastTime, specialEffect == 1, "M1") : new Hold(typeCandidate, bar, tick, key, lastTime);
         candidate.BPM = bpm;
         candidate.NoteSpecialState = specialState;
         return candidate;

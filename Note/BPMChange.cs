@@ -15,9 +15,6 @@ public class BPMChange : Note
     {
         NoteType = NoteEnum.NoteType.BPM;
         Key = "";
-        Bar = 0;
-        Tick = 0;
-        BPM = 0;
         Update();
     }
     /// <summary>
@@ -61,7 +58,7 @@ public class BPMChange : Note
     }
 #endregion
 
-    public double BPMTimeUnit => 60 / BPM * 4 / Definition;
+public double BPMTimeUnit => 60 / BPM * 4 / Definition;
 
     public override NoteEnum.NoteGenre NoteGenre => NoteEnum.NoteGenre.BPM;
 
