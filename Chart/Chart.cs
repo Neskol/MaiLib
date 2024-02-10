@@ -21,7 +21,7 @@ public abstract class Chart : IChart
         MeasureChanges = new MeasureChanges();
         StoredChart = new List<List<Note>>();
         Information = new Dictionary<string, string>();
-        IsDxChart = false;
+        // IsDxChart = false;
         Definition = 384;
         UnitScore = new[] { 500, 1000, 1500, 2000, 2500 };
         ChartType = ChartType.Standard;
@@ -112,9 +112,9 @@ public abstract class Chart : IChart
     public int HoldScore => HoldNum * 1000;
     public int SlideScore => SlideNum * 1500;
     public int AllScore => TapScore + BreakScore + HoldScore + SlideScore;
-    public int ScoreS => (int)(AllScore * 0.97);
-    public int ScoreSs => (int)(AllScore * 0.99);
-    public int RatedAchievement => (int)((1 + (double)(BreakNum * 100) / AllScore) * 10000);
+    public int ScoreS => (int)double.Round(AllScore * 0.97);
+    public int ScoreSs => (int)double.Round(AllScore * 0.99);
+    public int RatedAchievement => (int)double.Round((1 + (double)(BreakNum * 100) / AllScore) * 10000);
 
     public int EachPairsNum
     {
@@ -133,12 +133,15 @@ public abstract class Chart : IChart
     /// <summary>
     ///     Defines if the chart is DX chart
     /// </summary>
-    public bool IsDxChart { get; set; }
+    public bool IsDxChart => Notes.Any(note =>
+        note.NoteSpecialState is SpecialState.EX or SpecialState.BreakEX or SpecialState.BreakEX
+            or SpecialState.ConnectingSlide || note.NoteType is NoteType.TTP or NoteType.THO);
 
     /// <summary>
     ///     The first note of the chart
     /// </summary>
-    public Note? FirstNote { get; set; }
+    public Note? FirstNote => Notes.Where(note => note.NoteGenre is not NoteGenre.BPM or NoteGenre.MEASURE)
+        .MinBy(note => note.TickStamp);
 
     /// <summary>
     ///     The definition of this chart
@@ -164,7 +167,7 @@ public abstract class Chart : IChart
     /// <summary>
     ///     Stored chart in structure of bar of notes
     /// </summary>
-    public List<List<Note>> StoredChart { get; set; }
+    public List<List<Note>> StoredChart { get; protected set; }
 
     /// <summary>
     ///     Stored the information of this chart, if any
@@ -207,7 +210,7 @@ public abstract class Chart : IChart
                     bar.Add(x); //Extract the first BPM change in bar to the beginning of the bar
             foreach (var x in Notes)
             {
-                if (FirstNote == null && !(x.NoteType is NoteType.BPM or NoteType.MEASURE)) FirstNote = x;
+                // if (FirstNote == null && !(x.NoteType is NoteType.BPM or NoteType.MEASURE)) FirstNote = x;
                 // Console.WriteLine(x.Compose(0));
                 //x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
                 //x.WaitTimeStamp = this.GetTimeStamp(x.WaitTickStamp);
@@ -230,14 +233,14 @@ public abstract class Chart : IChart
                         case NoteSpecificGenre.REST:
                             break;
                         case NoteSpecificGenre.TAP:
-                            if (x.NoteSpecialState is SpecialState.EX) IsDxChart = false;
-                            if (x.NoteType is NoteType.TTP)
-                            {
-                                IsDxChart = false;
-                            }
-                            else if (x.NoteSpecialState is SpecialState.Break or SpecialState.BreakEX)
-                            {
-                            }
+                            // if (x.NoteSpecialState is SpecialState.EX) IsDxChart = false;
+                            // if (x.NoteType is NoteType.TTP)
+                            // {
+                            //     IsDxChart = false;
+                            // }
+                            // else if (x.NoteSpecialState is SpecialState.Break or SpecialState.BreakEX)
+                            // {
+                            // }
 
                             break;
                         case NoteSpecificGenre.HOLD:
@@ -256,10 +259,10 @@ public abstract class Chart : IChart
                             if (delay > TotalDelay) TotalDelay = delay;
                             //Console.WriteLine("New delay: " + delay);
                             //Console.WriteLine(x.Compose(1));
-                            if (x.NoteType is NoteType.THO)
-                            {
-                                IsDxChart = false;
-                            }
+                            // if (x.NoteType is NoteType.THO)
+                            // {
+                            //     IsDxChart = false;
+                            // }
 
                             break;
                         case NoteSpecificGenre.SLIDE_START:

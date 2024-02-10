@@ -70,7 +70,12 @@ public class Simai : Chart
             case ChartVersion.Simai:
             case ChartVersion.SimaiFes:
                 StringBuilder result = new StringBuilder();
-                var delayBar = TotalDelay / 384 + 2;
+                Note? mostDelayedNote = Notes.MaxBy(note => note.LastTickStamp);
+                if (mostDelayedNote is not null)
+                {
+                    TotalDelay = mostDelayedNote.LastTickStamp - StoredChart.Count * Definition;
+                }
+                var delayBar = TotalDelay / Definition + 2;
                 //Console.WriteLine(chart.Compose());
                 //foreach (BPMChange x in chart.BPMChanges.ChangeNotes)
                 //{
@@ -135,7 +140,7 @@ public class Simai : Chart
                     }
                 }
 
-                for (var i = 0; i < delayBar + 1; i++) result.Append("{1},\n");
+                // for (var i = 0; i < delayBar + 1; i++) result.Append("{1},\n");
                 result.Append("E\n");
                 return result.ToString();
             default:
