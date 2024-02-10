@@ -140,7 +140,7 @@ public class Simai : Chart
                     }
                 }
 
-                // for (var i = 0; i < delayBar + 1; i++) result.Append("{1},\n");
+                for (var i = 0; i < delayBar + 1; i++) result.Append("{1},\n");
                 result.Append("E\n");
                 return result.ToString();
             default:
