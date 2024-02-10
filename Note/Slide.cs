@@ -157,7 +157,7 @@ public class Slide : Note
                     //result += GenerateAppropriateLength(this.LastLength, this.BPM);
                     if (NoteSpecialState != SpecialState.ConnectingSlide)
                         result += GenerateAppropriateLength(LastLength, BPM);
-                    else result += GenerateAppropriateLength(FixedLastLength);
+                    else result += GenerateAppropriateLength(FixedLastLength); //TODO: FIX THIS LAST LENGTH
                 }
                 else
                 {
