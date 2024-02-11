@@ -12,7 +12,8 @@ public class XMaiL : Chart, ICompiler
     /// </summary>
     private readonly XmlDocument StoredXMailL;
 
-#region Constructors
+    #region Constructors
+
     /// <summary>
     ///     Default constructor
     /// </summary>
@@ -50,7 +51,7 @@ public class XMaiL : Chart, ICompiler
     /// <param name="tokens">Tokens given</param>
     public XMaiL(string[] tokens)
     {
-        var takenIn = new Ma2Parser().ChartOfToken(tokens);
+        Chart? takenIn = new Ma2Parser().ChartOfToken(tokens);
         Notes = takenIn.Notes;
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
@@ -74,10 +75,12 @@ public class XMaiL : Chart, ICompiler
         StoredXMailL = new XmlDocument();
         Update();
     }
-#endregion
+
+    #endregion
+
     public override bool CheckValidity()
     {
-        var result = this == null;
+        bool result = this == null;
         // Not yet implemented
         return result;
     }
@@ -94,12 +97,12 @@ public class XMaiL : Chart, ICompiler
 
     public override void Update()
     {
-        var xmlDecl = StoredXMailL.CreateXmlDeclaration("1.0", "UTF-8", null);
+        XmlDeclaration? xmlDecl = StoredXMailL.CreateXmlDeclaration("1.0", "UTF-8", null);
         StoredXMailL.AppendChild(xmlDecl);
-        var root = StoredXMailL.CreateElement("XMaiL");
-        var rootVersion = StoredXMailL.CreateAttribute("1.0");
+        XmlElement? root = StoredXMailL.CreateElement("XMaiL");
+        XmlAttribute? rootVersion = StoredXMailL.CreateAttribute("1.0");
         root.Attributes.Append(rootVersion);
         StoredXMailL.AppendChild(root);
-        var information = StoredXMailL.CreateElement("TrackInformation");
+        XmlElement? information = StoredXMailL.CreateElement("TrackInformation");
     }
 }

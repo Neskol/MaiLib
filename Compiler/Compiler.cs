@@ -17,7 +17,8 @@ public abstract class Compiler : ICompiler
     public Dictionary<string, string> RotateDictionary = new()
         { { "17", "UpSideDown" }, { "305", "LeftToRight" }, { "417", "Clockwise90" } };
 
-#region Constructors
+    #region Constructors
+
     /// <summary>
     ///     Construct compiler of a single song.
     /// </summary>
@@ -51,6 +52,7 @@ public abstract class Compiler : ICompiler
         else
             GlobalSep = "/";
     }
+
     #endregion
 
     /// <summary>
@@ -80,8 +82,8 @@ public abstract class Compiler : ICompiler
 
     public bool CheckValidity()
     {
-        var result = true;
-        foreach (var x in Charts) result = result && x.CheckValidity();
+        bool result = true;
+        foreach (Chart? x in Charts) result = result && x.CheckValidity();
         return result;
     }
 
@@ -112,9 +114,9 @@ public abstract class Compiler : ICompiler
     /// <returns>First BPM change table of this.charts</returns>
     public BPMChanges SymbolicBPMTable()
     {
-        var bpmTable = new BPMChanges();
-        var foundTable = false;
-        for (var i = 0; i < Charts.Count && !foundTable; i++)
+        BPMChanges? bpmTable = new BPMChanges();
+        bool foundTable = false;
+        for (int i = 0; i < Charts.Count && !foundTable; i++)
             if (Charts[i] != null)
             {
                 bpmTable = Charts[i].BPMChanges;
@@ -137,8 +139,8 @@ public abstract class Compiler : ICompiler
         if (isUtage)
         {
             Note? firstNote;
-            var foundFirstNote = false;
-            for (var i = Charts.Count; i >= 0 && !foundFirstNote; i++)
+            bool foundFirstNote = false;
+            for (int i = Charts.Count; i >= 0 && !foundFirstNote; i++)
                 if (Charts[i] != null)
                 {
                     firstNote = Charts[i].FirstNote;
@@ -159,7 +161,7 @@ public abstract class Compiler : ICompiler
     public string GenerateOneLineSummary()
     {
         // TODO: Shift to format
-        var result = "";
+        string? result = "";
         if (Charts.Equals(null)) throw new NullReferenceException("This compiler has empty chat list!");
         result += "(" + Information["Music ID"] + ") " + Information["Name"] + ", " + Information["Genre"] + ", ";
         if (!Information["Easy"].Equals("")) result += Information["Easy"] + "/";

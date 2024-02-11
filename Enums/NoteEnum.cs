@@ -3,12 +3,12 @@ using System.ComponentModel;
 namespace MaiLib;
 
 /// <summary>
-/// Holds enums of the Note
+///     Holds enums of the Note
 /// </summary>
 public class NoteEnum
 {
     /// <summary>
-    /// Flags the special state of each note
+    ///     Flags the special state of each note
     /// </summary>
     public enum SpecialState
     {
@@ -29,7 +29,7 @@ public class NoteEnum
     }
 
     /// <summary>
-    /// Defines the general category of notes
+    ///     Defines the general category of notes
     /// </summary>
     public enum NoteGenre
     {
@@ -42,7 +42,7 @@ public class NoteEnum
     }
 
     /// <summary>
-    /// Defines the specific genre of notes
+    ///     Defines the specific genre of notes
     /// </summary>
     public enum NoteSpecificGenre
     {
@@ -58,7 +58,7 @@ public class NoteEnum
     }
 
     /// <summary>
-    /// Defines the possible Note Type
+    ///     Defines the possible Note Type
     /// </summary>
     public enum NoteType
     {
@@ -139,7 +139,7 @@ public class NoteEnum
 
 
     /// <summary>
-    /// Defines the possible flip methods of notes
+    ///     Defines the possible flip methods of notes
     /// </summary>
     public enum FlipMethod
     {

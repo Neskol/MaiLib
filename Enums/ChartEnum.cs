@@ -4,7 +4,8 @@ namespace MaiLib;
 
 public class ChartEnum
 {
-    public enum ChartType{
+    public enum ChartType
+    {
         Standard,
         StandardUtage,
         DX,
@@ -12,7 +13,8 @@ public class ChartEnum
         DXUtage
     }
 
-    public enum ChartVersion{
+    public enum ChartVersion
+    {
         Debug,
         Simai,
         SimaiFes,

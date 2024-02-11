@@ -21,7 +21,7 @@ public class SimaiCompiler : Compiler
     public SimaiCompiler(bool strictDecimal, string location, string targetLocation)
     {
         StrictDecimalLevel = strictDecimal;
-        for (var i = 0; i < 7; i++) Charts.Add(new Simai());
+        for (int i = 0; i < 7; i++) Charts.Add(new Simai());
         MusicXML = new XmlInformation(location);
         Information = MusicXML.Information;
         //Construct Charts
@@ -63,22 +63,22 @@ public class SimaiCompiler : Compiler
     public SimaiCompiler(bool strictDecimal, string location, string targetLocation, bool forUtage)
     {
         StrictDecimalLevel = strictDecimal;
-        var ma2files = Directory.GetFiles(location, "*.ma2");
+        string[]? ma2files = Directory.GetFiles(location, "*.ma2");
         Charts = new List<Chart>();
         MusicXML = new XmlInformation(location);
         Information = MusicXML.Information;
-        var rotate = false;
-        var rotateParameter = "";
-        foreach (var pair in RotateDictionary)
+        bool rotate = false;
+        string? rotateParameter = "";
+        foreach (KeyValuePair<string, string> pair in RotateDictionary)
             if (MusicXML.TrackID.Equals(pair.Key))
             {
                 rotateParameter = pair.Value;
                 rotate = true;
             }
 
-        foreach (var ma2file in ma2files)
+        foreach (string? ma2file in ma2files)
         {
-            var chartCandidate = new Ma2(ma2file);
+            Ma2? chartCandidate = new Ma2(ma2file);
             if (rotate)
             {
                 bool rotateParameterIsValid = Enum.TryParse(rotateParameter, out FlipMethod rotateParameterEnum);
@@ -91,10 +91,11 @@ public class SimaiCompiler : Compiler
                     throw new Exception("The given rotation method is invalid. Given: " + rotateParameter);
                 }
             }
+
             Charts.Add(chartCandidate);
         }
 
-        var ma2List = new List<string>();
+        List<string>? ma2List = new List<string>();
         ma2List.AddRange(ma2files);
 
         Result = Compose(true, ma2List);
@@ -107,7 +108,7 @@ public class SimaiCompiler : Compiler
     public SimaiCompiler()
     {
         StrictDecimalLevel = false;
-        for (var i = 0; i < 7; i++) Charts.Add(new Simai());
+        for (int i = 0; i < 7; i++) Charts.Add(new Simai());
         Charts = new List<Chart>();
         Information = new Dictionary<string, string>();
         MusicXML = new XmlInformation();
@@ -116,7 +117,7 @@ public class SimaiCompiler : Compiler
 
     public void WriteOut(string targetLocation, bool overwrite)
     {
-        var sw = new StreamWriter(targetLocation + GlobalSep + "maidata.txt", !overwrite);
+        StreamWriter? sw = new StreamWriter(targetLocation + GlobalSep + "maidata.txt", !overwrite);
         {
             sw.WriteLine(Result);
         }
@@ -125,13 +126,14 @@ public class SimaiCompiler : Compiler
 
     public override string Compose()
     {
-        var result = "";
+        string? result = "";
         // Console.WriteLine("StrictDecimal: "+StrictDecimalLevel);
         // Console.ReadKey();
         //Add Information
         {
-            var beginning = "";
-            beginning += $"&title={Information.GetValueOrDefault("Name")}{Information.GetValueOrDefault("SDDX Suffix")}\n";
+            string? beginning = "";
+            beginning +=
+                $"&title={Information.GetValueOrDefault("Name")}{Information.GetValueOrDefault("SDDX Suffix")}\n";
             beginning += $"&wholebpm={Information.GetValueOrDefault("BPM")}\n";
             beginning += $"&artist={Information.GetValueOrDefault("Composer")}\n";
             beginning += $"&des={Information.GetValueOrDefault("Master Chart Maker")}\n";
@@ -152,83 +154,89 @@ public class SimaiCompiler : Compiler
             beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
             beginning += "\n";
 
-            if (Information.TryGetValue("Easy", out var easy) &&
-                Information.TryGetValue("Easy Chart Maker", out var easyMaker))
+            if (Information.TryGetValue("Easy", out string? easy) &&
+                Information.TryGetValue("Easy Chart Maker", out string? easyMaker))
             {
                 string difficultyCandidate = easy;
-                if (StrictDecimalLevel && Information.TryGetValue("Easy Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Easy Decimal", out string? decimalLevel))
                 {
                     difficultyCandidate = decimalLevel;
                 }
+
                 beginning += "&lv_1=" + difficultyCandidate + "\n";
                 beginning += "&des_1=" + easyMaker + "\n";
                 beginning += "\n";
             }
 
-            if (Information.TryGetValue("Basic", out var basic) &&
-                Information.TryGetValue("Basic Chart Maker", out var basicMaker))
+            if (Information.TryGetValue("Basic", out string? basic) &&
+                Information.TryGetValue("Basic Chart Maker", out string? basicMaker))
             {
                 string difficultyCandidate = basic;
-                if (StrictDecimalLevel && Information.TryGetValue("Basic Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Basic Decimal", out string? decimalLevel))
                 {
                     difficultyCandidate = decimalLevel;
                 }
+
                 beginning += "&lv_2=" + difficultyCandidate + "\n";
                 beginning += "&des_2=" + basicMaker + "\n";
                 beginning += "\n";
             }
 
 
-            if (Information.TryGetValue("Advanced", out var advance) &&
-                Information.TryGetValue("Advanced Chart Maker", out var advanceMaker))
+            if (Information.TryGetValue("Advanced", out string? advance) &&
+                Information.TryGetValue("Advanced Chart Maker", out string? advanceMaker))
             {
                 string difficultyCandidate = advance;
-                if (StrictDecimalLevel && Information.TryGetValue("Advanced Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Advanced Decimal", out string? decimalLevel))
                 {
                     difficultyCandidate = decimalLevel;
                 }
+
                 beginning += "&lv_3=" + difficultyCandidate + "\n";
                 beginning += "&des_3=" + advanceMaker + "\n";
                 beginning += "\n";
             }
 
 
-            if (Information.TryGetValue("Expert", out var expert) &&
-                Information.TryGetValue("Expert Chart Maker", out var expertMaker))
+            if (Information.TryGetValue("Expert", out string? expert) &&
+                Information.TryGetValue("Expert Chart Maker", out string? expertMaker))
             {
                 string difficultyCandidate = expert;
-                if (StrictDecimalLevel && Information.TryGetValue("Expert Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Expert Decimal", out string? decimalLevel))
                 {
                     difficultyCandidate = decimalLevel;
                 }
+
                 beginning += "&lv_4=" + difficultyCandidate + "\n";
                 beginning += "&des_4=" + expertMaker + "\n";
                 beginning += "\n";
             }
 
 
-            if (Information.TryGetValue("Master", out var master) &&
-                Information.TryGetValue("Master Chart Maker", out var masterMaker))
+            if (Information.TryGetValue("Master", out string? master) &&
+                Information.TryGetValue("Master Chart Maker", out string? masterMaker))
             {
                 string difficultyCandidate = master;
-                if (StrictDecimalLevel && Information.TryGetValue("Master Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Master Decimal", out string? decimalLevel))
                 {
                     difficultyCandidate = decimalLevel;
                 }
+
                 beginning += "&lv_5=" + difficultyCandidate + "\n";
                 beginning += "&des_5=" + masterMaker + "\n";
                 beginning += "\n";
             }
 
 
-            if (Information.TryGetValue("Remaster", out var remaster) &&
-                Information.TryGetValue("Remaster Chart Maker", out var remasterMaker))
+            if (Information.TryGetValue("Remaster", out string? remaster) &&
+                Information.TryGetValue("Remaster Chart Maker", out string? remasterMaker))
             {
                 string difficultyCandidate = remaster;
-                if (StrictDecimalLevel && Information.TryGetValue("Remaster Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Remaster Decimal", out string? decimalLevel))
                 {
                     difficultyCandidate = decimalLevel;
                 }
+
                 beginning += "&lv_6=" + difficultyCandidate + "\n";
                 beginning += "&des_6=" + remasterMaker;
                 beginning += "\n";
@@ -241,12 +249,12 @@ public class SimaiCompiler : Compiler
 
         //Compose Charts
         {
-            for (var i = 0; i < Charts.Count; i++)
+            for (int i = 0; i < Charts.Count; i++)
             {
                 // Console.WriteLine("Processing chart: " + i);
                 if (Charts[i] != null && !Information[Difficulty[i]].Equals(""))
                 {
-                    var isDxChart = Information.GetValueOrDefault("SDDX Suffix");
+                    string? isDxChart = Information.GetValueOrDefault("SDDX Suffix");
                     if (!Charts[i].IsDxChart) isDxChart = "";
                     result += "&inote_" + (i + 1) + "=\n";
                     result += Compose(Charts[i]);
@@ -277,10 +285,10 @@ public class SimaiCompiler : Compiler
     /// <returns>Corresponding utage chart</returns>
     public override string Compose(bool isUtage, List<string> ma2files)
     {
-        var result = "";
+        string? result = "";
         //Add Information
 
-        var beginning = "";
+        string? beginning = "";
         beginning += "&title=" + Information.GetValueOrDefault("Name") + "[宴]" + "\n";
         beginning += "&wholebpm=" + Information.GetValueOrDefault("BPM") + "\n";
         beginning += "&artist=" + Information.GetValueOrDefault("Composer") + "\n";
@@ -295,22 +303,25 @@ public class SimaiCompiler : Compiler
         beginning += "&version=" + MusicXML.TrackVersion + "\n";
         beginning += "&ChartConverter=Neskol\n";
         beginning += "&ChartConvertTool=MaichartConverter\n";
-        string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
+        string assemblyVersion =
+            FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
         if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
-        beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n"; beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
+        beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n";
+        beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
         beginning += "\n";
 
-        var defaultChartIndex = 7;
+        int defaultChartIndex = 7;
         if (ma2files.Count > 1)
         {
             defaultChartIndex = 2;
-            foreach (var ma2file in ma2files)
+            foreach (string? ma2file in ma2files)
             {
                 string difficultyCandidate = Information["Utage"].Equals("") ? "宴" : $"{Information["Utage"]}?";
-                if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out var decimalLevel))
+                if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out string? decimalLevel))
                 {
                     difficultyCandidate = $"{decimalLevel}?";
                 }
+
                 beginning += $"&lv_{defaultChartIndex}={difficultyCandidate}\n\n";
                 defaultChartIndex++;
             }
@@ -320,10 +331,11 @@ public class SimaiCompiler : Compiler
         else
         {
             string difficultyCandidate = Information["Utage"].Equals("") ? "宴" : $"{Information["Utage"]}?";
-            if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out var decimalLevel))
+            if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out string? decimalLevel))
             {
                 difficultyCandidate = $"{decimalLevel}?";
             }
+
             beginning += $"&lv_{defaultChartIndex}={difficultyCandidate}\n\n";
         }
 
@@ -335,10 +347,10 @@ public class SimaiCompiler : Compiler
 
         if (defaultChartIndex < 7)
         {
-            for (var i = 0; i < Charts.Count; i++)
+            for (int i = 0; i < Charts.Count; i++)
             {
                 // Console.WriteLine("Processing chart: " + i);
-                var isDxChart = "Utage";
+                string? isDxChart = "Utage";
                 result += "&inote_" + (i + 2) + "=\n";
                 result += Compose(Charts[i]);
                 CompiledChart.Add(Information.GetValueOrDefault("Name") + isDxChart + " [宴]");

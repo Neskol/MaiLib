@@ -1,6 +1,7 @@
 using System.Text;
 using static MaiLib.ChartEnum;
 using static MaiLib.ICodeBlock;
+
 namespace MaiLib;
 
 public class ChartDef : ICodeBlock

@@ -1,4 +1,5 @@
 namespace MaiLib;
+
 using static MaiLib.TokenEnum;
 using static MaiLib.NoteEnum;
 
@@ -29,6 +30,7 @@ public class SimaiParserR
         {
             // if (notes.Count == 0 && Scanner.CurrentToken is not Token)
         }
+
         return candidate;
     }
 }

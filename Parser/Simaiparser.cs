@@ -30,21 +30,21 @@ public class SimaiParser : IParser
     public Chart ChartOfToken(string[] tokens)
         // Note: here chart will only return syntax after &inote_x= and each token is separated by ","
     {
-        var notes = new List<Note>();
+        List<Note>? notes = new List<Note>();
         // var bpmChanges = new BPMChanges();
-        var measureChanges = new MeasureChanges(4, 4);
-        var bar = 0;
-        var tick = 0;
-        var currentBPM = 0.0;
-        var tickStep = 0;
-        for (var i = 0; i < tokens.Length; i++)
+        MeasureChanges? measureChanges = new MeasureChanges(4, 4);
+        int bar = 0;
+        int tick = 0;
+        double currentBPM = 0.0;
+        int tickStep = 0;
+        for (int i = 0; i < tokens.Length; i++)
         {
-            var eachPairCandidates = EachGroupOfToken(tokens[i]);
+            List<string>? eachPairCandidates = EachGroupOfToken(tokens[i]);
             string currentToken = ""; // Solely used to log current error
             int previousConnectingSlideTick = 0;
             try
             {
-                foreach (var eachNote in eachPairCandidates)
+                foreach (string? eachNote in eachPairCandidates)
                 {
                     currentToken = eachNote;
                     // if (bar == 6)
@@ -52,8 +52,8 @@ public class SimaiParser : IParser
                     //     Console.WriteLine("This is bar 6");
                     // }
                     Note noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
-                    var containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
-                    var containsMeasure = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE;
+                    bool containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
+                    bool containsMeasure = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE;
 
                     if (containsBPM)
                     {
@@ -67,7 +67,7 @@ public class SimaiParser : IParser
                     }
                     else if (containsMeasure)
                     {
-                        var quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
+                        string? quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
                         tickStep = MaximumDefinition / int.Parse(quaverCandidate);
                         // MeasureChange changeNote = new MeasureChange(bar, tick, tickStep);
                         //notes.Add(changeNote);
@@ -113,11 +113,11 @@ public class SimaiParser : IParser
     public Note NoteOfToken(string token, int bar, int tick, double bpm)
     {
         Note result = new Rest(bar, tick);
-        var isRest = token.Equals("");
-        var isBPM = token.Contains(")");
-        var isMeasure = token.Contains("}");
-        var isSlide = ContainsSlideNotation(token);
-        var isHold = !isSlide && token.Contains('h');
+        bool isRest = token.Equals("");
+        bool isBPM = token.Contains(")");
+        bool isMeasure = token.Contains("}");
+        bool isSlide = ContainsSlideNotation(token);
+        bool isHold = !isSlide && token.Contains('h');
 
         if (!isRest)
         {
@@ -138,12 +138,12 @@ public class SimaiParser : IParser
             }
             else if (isBPM)
             {
-                var bpmCandidate = token.Replace("(", "").Replace(")", "");
+                string? bpmCandidate = token.Replace("(", "").Replace(")", "");
                 result = new BPMChange(bar, tick, double.Parse(bpmCandidate));
             }
             else if (isMeasure)
             {
-                var quaverCandidate = token.Replace("{", "").Replace("}", "");
+                string? quaverCandidate = token.Replace("{", "").Replace("}", "");
                 result = new MeasureChange(bar, tick, int.Parse(quaverCandidate));
             }
             else if (!token.Contains('!') && !token.Equals("E") && !token.Equals(""))
@@ -168,19 +168,19 @@ public class SimaiParser : IParser
 
     public Tap TapOfToken(string token, int bar, int tick, double bpm)
     {
-        var isEXBreak = token.Contains("b") && token.Contains("x");
-        var isBreak = token.Contains("b") && !token.Contains("x");
-        var isEXTap = token.Contains("x") && !token.Contains("b");
-        var isTouch = token.Contains("A") ||
-                      token.Contains("B") ||
-                      token.Contains("C") ||
-                      token.Contains("D") ||
-                      token.Contains("E") ||
-                      token.Contains("F");
-        var result = new Tap();
+        bool isEXBreak = token.Contains("b") && token.Contains("x");
+        bool isBreak = token.Contains("b") && !token.Contains("x");
+        bool isEXTap = token.Contains("x") && !token.Contains("b");
+        bool isTouch = token.Contains("A") ||
+                       token.Contains("B") ||
+                       token.Contains("C") ||
+                       token.Contains("D") ||
+                       token.Contains("E") ||
+                       token.Contains("F");
+        Tap? result = new Tap();
         if (isTouch)
         {
-            var hasSpecialEffect = token.Contains("f");
+            bool hasSpecialEffect = token.Contains("f");
             // Simai spec allows C to substitute C1 but C1 is still highly preferable
             int keyCandidate = 0;
             if (!token.Contains('C'))
@@ -192,8 +192,8 @@ public class SimaiParser : IParser
         }
         else
         {
-            var keyCandidate = int.Parse(token.Substring(0, 1)) - 1;
-            if (token.Contains('_')||token.Contains('$'))
+            int keyCandidate = int.Parse(token.Substring(0, 1)) - 1;
+            if (token.Contains('_') || token.Contains('$'))
                 result = new Tap(NoteType.STR, bar, tick, keyCandidate.ToString());
             else if (token.Contains('!')) result = new Tap(NoteType.NST, bar, tick, keyCandidate.ToString());
             else result = new Tap(NoteType.TAP, bar, tick, keyCandidate.ToString());
@@ -209,7 +209,8 @@ public class SimaiParser : IParser
     public Hold HoldOfToken(string token, int bar, int tick, double bpm)
     {
         if (!token.Contains('[')) token += $"[{MaximumDefinition}:0]";
-        if (!(token.Contains('[') && token.Contains(']'))) throw new InvalidOperationException("GIVEN TOKEN DOES NOT CONTAIN SUSTAIN CANDIDATE");
+        if (!(token.Contains('[') && token.Contains(']')))
+            throw new InvalidOperationException("GIVEN TOKEN DOES NOT CONTAIN SUSTAIN CANDIDATE");
         string keyCandidate = token.Split('[')[0]; //key candidate is like tap grammar
         //Console.WriteLine(keyCandidate);
         string sustainCandidate = $"[{token.Split('[')[1]}"; //sustain candidate is like 1:2
@@ -274,7 +275,9 @@ public class SimaiParser : IParser
         // }
 
         //Console.WriteLine(key);
-        Hold candidate = noteType is NoteType.THO ? new Hold(noteType, bar, tick,  key, lastTime, specialEffect, "M1") : new Hold(noteType, bar, tick, key, lastTime);
+        Hold candidate = noteType is NoteType.THO
+            ? new Hold(noteType, bar, tick, key, lastTime, specialEffect, "M1")
+            : new Hold(noteType, bar, tick, key, lastTime);
         candidate.BPM = bpm;
         candidate.NoteSpecialState = specialState;
         return candidate;
@@ -307,12 +310,13 @@ public class SimaiParser : IParser
             }
         }
 
-        return new SlideGroup(slideCandidates){BPMChangeNotes = bpmChanges.ChangeNotes};
+        return new SlideGroup(slideCandidates) { BPMChangeNotes = bpmChanges.ChangeNotes };
     }
 
     public Slide SlideOfToken(string token, int bar, int tick, Note slideStart, double bpm)
     {
-        if (!(token.Contains('[') && token.Contains(']'))) throw new InvalidOperationException("GIVEN TOKEN DOES NOT CONTAIN SUSTAIN CANDIDATE: {token}");
+        if (!(token.Contains('[') && token.Contains(']')))
+            throw new InvalidOperationException("GIVEN TOKEN DOES NOT CONTAIN SUSTAIN CANDIDATE: {token}");
         Note slideStartCandidate = new Tap(slideStart);
         Note result;
         string endKeyCandidate = "";
@@ -321,14 +325,14 @@ public class SimaiParser : IParser
         bool isConnectingSlide = token.Contains("CN");
         int connectedSlideStart = isConnectingSlide ? int.Parse(token.Split("CN")[1]) : -1;
         if (isConnectingSlide) slideStartCandidate.Key = connectedSlideStart.ToString();
-        var isEXBreak = token.Contains('b') && token.Contains('x');
-        var isBreak = token.Contains('b') && !token.Contains('x');
-        var isEX = !token.Contains('b') && token.Contains('x');
+        bool isEXBreak = token.Contains('b') && token.Contains('x');
+        bool isBreak = token.Contains('b') && !token.Contains('x');
+        bool isEX = !token.Contains('b') && token.Contains('x');
         SpecialState noteSpecialState = SpecialState.Normal;
         if (isEXBreak) noteSpecialState = SpecialState.BreakEX;
         else if (isBreak) noteSpecialState = SpecialState.Break;
         else if (isEX) noteSpecialState = SpecialState.EX;
-        var timeAssigned = token.Contains('[');
+        bool timeAssigned = token.Contains('[');
         //Parse first section
         if (token.Contains("qq"))
         {
@@ -399,9 +403,9 @@ public class SimaiParser : IParser
         else if (token.Contains('V'))
         {
             endKeyCandidate = token.Substring(2, 1);
-            var sllCandidate = int.Parse(slideStartCandidate.Key) - 2;
-            var slrCandidate = int.Parse(slideStartCandidate.Key) + 2;
-            var inflectionCandidate = int.Parse(token.Substring(1, 1)) - 1;
+            int sllCandidate = int.Parse(slideStartCandidate.Key) - 2;
+            int slrCandidate = int.Parse(slideStartCandidate.Key) + 2;
+            int inflectionCandidate = int.Parse(token.Substring(1, 1)) - 1;
 
             // Revalue SLL and SLR candidate
             if (sllCandidate < 0)
@@ -411,8 +415,8 @@ public class SimaiParser : IParser
                 slrCandidate += 8;
             else if (slrCandidate > 7) slrCandidate -= 8;
 
-            var isSLL = sllCandidate == inflectionCandidate;
-            var isSLR = slrCandidate == inflectionCandidate;
+            bool isSLL = sllCandidate == inflectionCandidate;
+            bool isSLR = slrCandidate == inflectionCandidate;
             if (isSLL)
                 noteType = NoteType.SLL;
             else if (isSLR) noteType = NoteType.SLR;
@@ -439,7 +443,7 @@ public class SimaiParser : IParser
         double waitLengthCandidate = durationResult[0];
         double lastLengthCandidate = durationResult[1];
         result = new Slide(noteType, bar, tick, waitLengthCandidate, lastLengthCandidate, slideStartCandidate.Key,
-            fixedKeyCandidate.ToString()){BPMChangeNotes = bpmChanges.ChangeNotes};
+            fixedKeyCandidate.ToString()) { BPMChangeNotes = bpmChanges.ChangeNotes };
         // var isSecond = sustainCandidate.Contains("##");
         // if (!isSecond)
         // {
@@ -479,14 +483,15 @@ public class SimaiParser : IParser
     }
 
     #region UnimplementedDummyMethods
+
     public Note NoteOfToken(string token)
     {
         Note result = new Rest();
-        var isRest = token.Equals("");
-        var isBPM = token.Contains(")");
-        var isMeasure = token.Contains("}");
-        var isSlide = ContainsSlideNotation(token);
-        var isHold = !isSlide && token.Contains("[");
+        bool isRest = token.Equals("");
+        bool isBPM = token.Contains(")");
+        bool isMeasure = token.Contains("}");
+        bool isSlide = ContainsSlideNotation(token);
+        bool isHold = !isSlide && token.Contains("[");
         if (isSlide)
         {
             result = SlideOfToken(token);
@@ -557,6 +562,7 @@ public class SimaiParser : IParser
     #endregion
 
     #region HeroticStaticHelperMethods
+
     /// <summary>
     ///     Deal with old, out-fashioned and illogical Simai Each Groups.
     /// </summary>
@@ -564,24 +570,24 @@ public class SimaiParser : IParser
     /// <returns>List of strings that is composed with single note.</returns>
     public static List<string> EachGroupOfToken(string token)
     {
-        var result = new List<string>();
-        var isSlide = ContainsSlideNotation(token);
+        List<string>? result = new List<string>();
+        bool isSlide = ContainsSlideNotation(token);
         if (token.Contains("/"))
         {
-            var candidate = token.Split("/");
-            foreach (var tokenCandidate in candidate) result.AddRange(EachGroupOfToken(tokenCandidate));
+            string[]? candidate = token.Split("/");
+            foreach (string? tokenCandidate in candidate) result.AddRange(EachGroupOfToken(tokenCandidate));
         }
         else if (token.Contains(")") || token.Contains("}"))
         {
-            var resultCandidate = ExtractParentheses(token);
+            List<string>? resultCandidate = ExtractParentheses(token);
             List<string> fixedCandidate = new();
-            foreach (var candidate in resultCandidate) fixedCandidate.AddRange(ExtractParentheses(candidate));
-            foreach (var candidate in fixedCandidate) result.AddRange(ExtractEachSlides(candidate));
+            foreach (string? candidate in resultCandidate) fixedCandidate.AddRange(ExtractParentheses(candidate));
+            foreach (string? candidate in fixedCandidate) result.AddRange(ExtractEachSlides(candidate));
         } //lol this is the most stupid code I have ever wrote
-        else if (int.TryParse(token, out var eachPair))
+        else if (int.TryParse(token, out int eachPair))
         {
-            var eachPairs = token.ToCharArray();
-            foreach (var x in eachPairs) result.Add(x.ToString());
+            char[]? eachPairs = token.ToCharArray();
+            foreach (char x in eachPairs) result.Add(x.ToString());
         }
         else if (isSlide)
         {
@@ -607,17 +613,17 @@ public class SimaiParser : IParser
     /// <returns>A list of strings extracts each note</returns>
     public static List<string> ExtractParentheses(string token)
     {
-        var result = new List<string>();
-        var containsBPM = token.Contains(")");
-        var containsMeasure = token.Contains("}");
+        List<string>? result = new List<string>();
+        bool containsBPM = token.Contains(")");
+        bool containsMeasure = token.Contains("}");
 
         if (containsBPM)
         {
-            var tokenCandidate = token.Split(")");
+            string[]? tokenCandidate = token.Split(")");
             List<string> tokenResult = new();
-            for (var i = 0; i < tokenCandidate.Length; i++)
+            for (int i = 0; i < tokenCandidate.Length; i++)
             {
-                var x = tokenCandidate[i];
+                string? x = tokenCandidate[i];
                 if (x.Contains("(")) x += ")";
                 if (!x.Equals("")) tokenResult.Add(x);
             }
@@ -626,11 +632,11 @@ public class SimaiParser : IParser
         }
         else if (containsMeasure)
         {
-            var tokenCandidate = token.Split("}");
+            string[]? tokenCandidate = token.Split("}");
             List<string> tokenResult = new();
-            for (var i = 0; i < tokenCandidate.Length; i++)
+            for (int i = 0; i < tokenCandidate.Length; i++)
             {
-                var x = tokenCandidate[i];
+                string? x = tokenCandidate[i];
                 if (x.Contains("{")) x += "}";
                 if (!x.Equals("")) tokenResult.Add(x);
             }
@@ -652,16 +658,16 @@ public class SimaiParser : IParser
     /// <returns>A list of slides extracts each note</returns>
     public static List<string> ExtractEachSlides(string token)
     {
-        var isSlide = ContainsSlideNotation(token);
-        var result = new List<string>();
+        bool isSlide = ContainsSlideNotation(token);
+        List<string>? result = new List<string>();
         if (!isSlide)
         {
             result.Add(token);
         }
         else
         {
-            var candidates = token.Split("*");
-            foreach (var symbol in candidates) result.AddRange(ExtractSlideStart(symbol));
+            string[]? candidates = token.Split("*");
+            foreach (string? symbol in candidates) result.AddRange(ExtractSlideStart(symbol));
             // result.AddRange(candidates);
         }
 
@@ -697,12 +703,12 @@ public class SimaiParser : IParser
     public static List<string> ExtractConnectingSlides(string token)
     {
         List<string> result = new();
-        var candidates = token.ToCharArray();
+        char[]? candidates = token.ToCharArray();
 
         static string KeyCandidate(string token)
         {
             string result = "";
-            for (var i = 0; i < token.Length && result.Length < 3; i++)
+            for (int i = 0; i < token.Length && result.Length < 3; i++)
                 if (!IsSlideNotation(token[i]) && char.IsNumber(token[i]))
                     result += token[i].ToString();
             if (result.Length > 1) result = result[1].ToString();
@@ -713,14 +719,14 @@ public class SimaiParser : IParser
             // return ((int.Parse(keyCandidate) - 1) % 8).ToString();
         }
 
-        var slideStartExtracted = false;
-        var normalSlideExtracted = false;
-        var slideStartCandidate = "";
-        var slideCandidate = "";
-        var previousSlideNoteBuffer = "";
-        var lastKeyCandidate = "";
+        bool slideStartExtracted = false;
+        bool normalSlideExtracted = false;
+        string? slideStartCandidate = "";
+        string? slideCandidate = "";
+        string? previousSlideNoteBuffer = "";
+        string? lastKeyCandidate = "";
 
-        foreach (var symbol in candidates)
+        foreach (char symbol in candidates)
         {
             // slideStartExtracted = IsSlideNotation(symbol) && result.Count > 0;
             // normalSlideExtracted = IsSlideNotation(symbol) && result.Count > 2;
@@ -804,7 +810,8 @@ public class SimaiParser : IParser
             int actualSlidePart = result.Count(p => !p.Contains('_'));
             double originalWaitDuration = 0.0;
             double averageDuration = 0.0;
-            bool isMeasureDuration = newDurationCandidate.Contains(':') && !newDurationCandidate.Contains('#'); // [Quaver : Beats]
+            bool isMeasureDuration =
+                newDurationCandidate.Contains(':') && !newDurationCandidate.Contains('#'); // [Quaver : Beats]
             if (isMeasureDuration)
             {
                 string durationCandidate = newDurationCandidate.Replace("[", "").Replace("]", "");
@@ -893,7 +900,8 @@ public class SimaiParser : IParser
 
     public static double[] GetTimeCandidates(string input)
     {
-        if (input.Contains(':') && !input.Contains('#')) throw new InvalidOperationException($"NO BPM CONTEXT IN THIS SETTING: {input}"); // [Quaver : Beats]
+        if (input.Contains(':') && !input.Contains('#'))
+            throw new InvalidOperationException($"NO BPM CONTEXT IN THIS SETTING: {input}"); // [Quaver : Beats]
         return GetTimeCandidates(0, input);
     }
 
@@ -906,8 +914,10 @@ public class SimaiParser : IParser
         bool isMeasureDuration = input.Contains(':') && !input.Contains('#'); // [Quaver : Beats]
         bool isSlideTimedDuration = input.Contains("##") && !input.Contains(':'); // [WaitTime ## LastTime]
         bool isHoldTimedDuration = !isSlideTimedDuration && input.Contains("#") && !input.Contains(':'); // [# LastTime]
-        bool isSlideBpmMeasureDuration = input.Contains("##") && input.Contains('#') && input.Contains(':'); // [WaitTime ## BPM # Quaver : Beats]
-        bool isHoldBpmMeasureDuration = !isSlideBpmMeasureDuration && input.Contains('#') && input.Contains(':'); // [BPM # Quaver : Beats]
+        bool isSlideBpmMeasureDuration =
+            input.Contains("##") && input.Contains('#') && input.Contains(':'); // [WaitTime ## BPM # Quaver : Beats]
+        bool isHoldBpmMeasureDuration =
+            !isSlideBpmMeasureDuration && input.Contains('#') && input.Contains(':'); // [BPM # Quaver : Beats]
 
         if (isMeasureDuration)
         {
@@ -940,7 +950,8 @@ public class SimaiParser : IParser
             double quaverCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[0]);
             double beatCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[1]);
             double lastTimeCandidate =
-                Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * (MaximumDefinition / quaverCandidate) * beatCandidate;
+                Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * (MaximumDefinition / quaverCandidate) *
+                beatCandidate;
             result[1] = lastTimeCandidate;
             return result;
         }

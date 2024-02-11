@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
 
@@ -8,6 +9,7 @@ using static MaiLib.ChartEnum;
 public class Hold : Note
 {
     #region Constructors
+
     /// <summary>
     ///     Construct a Hold Note
     /// </summary>
@@ -58,7 +60,8 @@ public class Hold : Note
     /// <param name="lastTime">Last time of the hold note in seconds</param>
     /// <param name="specialEffect">Store if the touch note ends with special effect</param>
     /// <param name="touchSize">Determines how large the touch note is</param>
-    public Hold(NoteType noteType, int bar, int startTick, string key, double lastTime, bool specialEffect, string touchSize)
+    public Hold(NoteType noteType, int bar, int startTick, string key, double lastTime, bool specialEffect,
+        string touchSize)
     {
         NoteType = noteType;
         Key = key;
@@ -80,7 +83,8 @@ public class Hold : Note
     /// <param name="lastTime">Last time of the hold note</param>
     /// <param name="specialEffect">Store if the touch note ends with special effect</param>
     /// <param name="touchSize">Determines how large the touch note is</param>
-    public Hold(NoteType noteType, int bar, int startTime, string key, int lastTime, bool specialEffect, string touchSize)
+    public Hold(NoteType noteType, int bar, int startTime, string key, int lastTime, bool specialEffect,
+        string touchSize)
     {
         NoteType = noteType;
         Key = key;
@@ -111,6 +115,7 @@ public class Hold : Note
             SpecialEffect = false;
         }
     }
+
     #endregion
 
     public override NoteGenre NoteGenre => NoteGenre.HOLD;
@@ -127,7 +132,7 @@ public class Hold : Note
 
     public override string Compose(ChartVersion format)
     {
-        var result = "";
+        string? result = "";
         switch (NoteType)
         {
             case NoteType.HLD:
@@ -151,7 +156,10 @@ public class Hold : Note
                         if (format is ChartVersion.Debug) result += "_" + Tick;
                         break;
                     case ChartVersion.Ma2_103:
-                        string typeCandidate = NoteSpecialState is SpecialState.EX || NoteSpecialState is SpecialState.BreakEX ? "XHO" : NoteType.ToString();
+                        string typeCandidate =
+                            NoteSpecialState is SpecialState.EX || NoteSpecialState is SpecialState.BreakEX
+                                ? "XHO"
+                                : NoteType.ToString();
                         result = typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
                         break;
                     case ChartVersion.Ma2_104:
@@ -173,9 +181,11 @@ public class Hold : Note
                                 result += "NM";
                                 break;
                         }
+
                         result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
                         break;
                 }
+
                 break;
             case NoteType.THO:
                 switch (format)
@@ -198,7 +208,8 @@ public class Hold : Note
                         if (format is ChartVersion.Debug) result += "_" + Tick;
                         break;
                     case ChartVersion.Ma2_103:
-                        result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" + KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
+                        result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" +
+                                 KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
                         break;
                     case ChartVersion.Ma2_104:
                         switch (NoteSpecialState)
@@ -219,11 +230,15 @@ public class Hold : Note
                                 result += "NM";
                                 break;
                         }
-                        result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" + KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
+
+                        result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" +
+                                  KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
                         break;
                 }
+
                 break;
         }
+
         return result;
     }
 

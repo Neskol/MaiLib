@@ -23,8 +23,8 @@ public class Simai : Chart
     /// <param name="location"></param>
     public Simai(string location)
     {
-        var tokens = new SimaiTokenizer().Tokens(location);
-        var chart = new SimaiParser().ChartOfToken(tokens);
+        string[]? tokens = new SimaiTokenizer().Tokens(location);
+        Chart? chart = new SimaiParser().ChartOfToken(tokens);
         Notes = new List<Note>(chart.Notes);
         BPMChanges = new BPMChanges(chart.BPMChanges);
         MeasureChanges = new MeasureChanges(chart.MeasureChanges);
@@ -75,27 +75,28 @@ public class Simai : Chart
                 {
                     TotalDelay = mostDelayedNote.LastTickStamp - StoredChart.Count * Definition;
                 }
-                var delayBar = TotalDelay / Definition + 2;
+
+                int delayBar = TotalDelay / Definition + 2;
                 //Console.WriteLine(chart.Compose());
                 //foreach (BPMChange x in chart.BPMChanges.ChangeNotes)
                 //{
                 //    Console.WriteLine("BPM Change verified in " + x.Bar + " " + x.Tick + " of BPM" + x.BPM);
                 //}
-                var firstBpm = new List<Note>();
-                foreach (var bpm in Notes)
+                List<Note>? firstBpm = new List<Note>();
+                foreach (Note? bpm in Notes)
                     if (bpm.NoteSpecificGenre is NoteSpecificGenre.BPM)
                         firstBpm.Add(bpm);
                 // if (firstBpm.Count > 1)
                 // {
                 //     chart.Chart[0][0] = firstBpm[1];
                 // }
-                foreach (var bar in StoredChart)
+                foreach (List<Note>? bar in StoredChart)
                 {
                     Note lastNote = new MeasureChange();
-                    var currentQuaver = 0;
-                    var commaCompiled = 0;
+                    int currentQuaver = 0;
+                    int commaCompiled = 0;
                     //result += bar[1].Bar;
-                    foreach (var x in bar)
+                    foreach (Note? x in bar)
                     {
                         //if (x.Bar == 6)
                         //{
@@ -132,7 +133,7 @@ public class Simai : Chart
                     if (commaCompiled != currentQuaver)
                     {
                         Console.WriteLine("Notes in bar: " + bar[0].Bar);
-                        foreach (var x in bar) Console.WriteLine(x.Compose(ChartVersion.Debug));
+                        foreach (Note? x in bar) Console.WriteLine(x.Compose(ChartVersion.Debug));
                         Console.WriteLine(result);
                         Console.WriteLine("Expected comma number: " + currentQuaver);
                         Console.WriteLine("Actual comma number: " + commaCompiled);
@@ -140,7 +141,7 @@ public class Simai : Chart
                     }
                 }
 
-                for (var i = 0; i < delayBar + 1; i++) result.Append("{1},\n");
+                for (int i = 0; i < delayBar + 1; i++) result.Append("{1},\n");
                 result.Append("E\n");
                 return result.ToString();
             default:
@@ -150,7 +151,7 @@ public class Simai : Chart
 
     public override bool CheckValidity()
     {
-        var result = this == null;
+        bool result = this == null;
         // Not yet implemented
         return result;
     }
@@ -163,13 +164,13 @@ public class Simai : Chart
     /// <returns>New Composed Chart</returns>
     public override string Compose(BPMChanges bpm, MeasureChanges measure)
     {
-        var sourceBPM = BPMChanges;
-        var sourceMeasures = MeasureChanges;
+        BPMChanges? sourceBPM = BPMChanges;
+        MeasureChanges? sourceMeasures = MeasureChanges;
         BPMChanges = bpm;
         MeasureChanges = measure;
         Update();
 
-        var result = Compose();
+        string? result = Compose();
         BPMChanges = sourceBPM;
         MeasureChanges = sourceMeasures;
         Update();

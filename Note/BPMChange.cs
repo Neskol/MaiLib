@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static NoteEnum;
 using static ChartEnum;
 
@@ -8,6 +9,7 @@ using static ChartEnum;
 public class BPMChange : Note
 {
     #region Constructors
+
     /// <summary>
     ///     Construct Empty
     /// </summary>
@@ -17,6 +19,7 @@ public class BPMChange : Note
         Key = "";
         Update();
     }
+
     /// <summary>
     ///     Construct BPMChange with given bar, tick, BPM
     /// </summary>
@@ -56,7 +59,8 @@ public class BPMChange : Note
         Tick = takeIn.Tick;
         Update();
     }
-#endregion
+
+    #endregion
 
     public override double BPM { get; protected internal set; }
 
@@ -90,14 +94,14 @@ public class BPMChange : Note
 
     public override bool Equals(object? obj)
     {
-        var result = false;
+        bool result = false;
         if (this == obj && this == null)
         {
             result = true;
         }
         else if (this != null && obj != null)
         {
-            var candidate = (BPMChange)obj;
+            BPMChange? candidate = (BPMChange)obj;
             if (GetHashCode() == candidate.GetHashCode())
                 result = true;
             else if (Bar == candidate.Bar)

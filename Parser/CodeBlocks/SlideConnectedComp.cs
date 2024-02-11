@@ -1,5 +1,6 @@
 using System.Text;
 using static MaiLib.ChartEnum;
+
 namespace MaiLib;
 
 public class SlideConnectedComp : ICodeBlock
@@ -15,7 +16,8 @@ public class SlideConnectedComp : ICodeBlock
         IsBreak = isBreak;
     }
 
-    public SlideConnectedComp(SlideConnectedMeasuredSeq slideConnectedMeasuredSeq, SlideDuration slideDuration, bool isBreak)
+    public SlideConnectedComp(SlideConnectedMeasuredSeq slideConnectedMeasuredSeq, SlideDuration slideDuration,
+        bool isBreak)
     {
         SlideConnectedMeasuredSeq = slideConnectedMeasuredSeq;
         SlideDuration = slideDuration;
@@ -43,6 +45,7 @@ public class SlideConnectedComp : ICodeBlock
         else
             throw new ICodeBlock.ComponentMissingException("SLIDE-CONNECTED",
                 "SLIDE-CONNECTED-SEQ OR SLIDE-CONNECTED-MEASURED-SEQ");
+
         return builder.ToString();
     }
 }

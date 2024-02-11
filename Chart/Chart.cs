@@ -1,4 +1,5 @@
 namespace MaiLib;
+
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
 
@@ -23,19 +24,20 @@ public abstract class Chart : IChart
         Information = new Dictionary<string, string>();
         // IsDxChart = false;
         Definition = 384;
-        UnitScore = new[] { 500, 1000, 1500, 2000, 2500 };
+        UnitScore = [500, 1000, 1500, 2000, 2500];
         ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
     }
 
     #region Fields
+
     /// <summary>
-    /// Defines the chart type by enums
+    ///     Defines the chart type by enums
     /// </summary>
     public ChartType ChartType { get; protected set; }
 
     /// <summary>
-    /// Defines the chart version by enums
+    ///     Defines the chart version by enums
     /// </summary>
     public ChartVersion ChartVersion { get; set; }
 
@@ -99,6 +101,7 @@ public abstract class Chart : IChart
 
     public int BreakNum => BreakTapNum + BreakExTapNum + BreakHoldNum + BreakExHoldNum + BreakSlideStartNum +
                            BreakExSlideStartNum + BreakSlideNum;
+
     public int HoldNum => NormalHoldNum + ExHoldNum + TouchHoldNum;
     public int SlideNum => NormalSlideNum;
     public int AllNoteNum => TapNum + BreakNum + HoldNum + SlideNum;
@@ -121,11 +124,12 @@ public abstract class Chart : IChart
         get
         {
             Dictionary<int, int> eachPairDictionary = new();
-            foreach (Note note in this.Notes.Where(p=>p.NoteGenre is NoteGenre.TAP or NoteGenre.HOLD))
+            foreach (Note note in this.Notes.Where(p => p.NoteGenre is NoteGenre.TAP or NoteGenre.HOLD))
             {
                 if (!eachPairDictionary.Keys.Contains(note.TickStamp)) eachPairDictionary.Add(note.TickStamp, 1);
                 else eachPairDictionary[note.TickStamp]++;
             }
+
             return eachPairDictionary.Values.Count(p => p > 1);
         }
     }
@@ -175,9 +179,10 @@ public abstract class Chart : IChart
     public Dictionary<string, string> Information { get; set; }
 
     /// <summary>
-    /// Defines whether this chart is Utage chart
+    ///     Defines whether this chart is Utage chart
     /// </summary>
     public bool IsUtage { get; protected set; }
+
     #endregion
 
     public abstract bool CheckValidity();
@@ -188,8 +193,8 @@ public abstract class Chart : IChart
     public virtual void Update()
     {
         StoredChart = new List<List<Note>>();
-        var maxBar = Notes.Count > 0 ? Notes.Max(p=>p.Bar) : 0;
-        var timeStamp = 0.0;
+        int maxBar = Notes.Count > 0 ? Notes.Max(p => p.Bar) : 0;
+        double timeStamp = 0.0;
 
         foreach (Note x in Notes)
         {
@@ -198,17 +203,17 @@ public abstract class Chart : IChart
         }
 
         //Iterate over bar
-        for (var i = 0; i <= maxBar; i++)
+        for (int i = 0; i <= maxBar; i++)
         {
-            var bar = new List<Note>();
-            var noteChange = new BPMChange();
-            var currentBPM = BPMChanges.ChangeNotes[0].BPM;
+            List<Note>? bar = new List<Note>();
+            BPMChange? noteChange = new BPMChange();
+            double currentBPM = BPMChanges.ChangeNotes[0].BPM;
             Note lastNote = new Rest();
             Note realLastNote = new Rest();
-            foreach (var x in BPMChanges.ChangeNotes)
+            foreach (BPMChange? x in BPMChanges.ChangeNotes)
                 if (x.Bar == i)
                     bar.Add(x); //Extract the first BPM change in bar to the beginning of the bar
-            foreach (var x in Notes)
+            foreach (Note? x in Notes)
             {
                 // if (FirstNote == null && !(x.NoteType is NoteType.BPM or NoteType.MEASURE)) FirstNote = x;
                 // Console.WriteLine(x.Compose(0));
@@ -222,7 +227,7 @@ public abstract class Chart : IChart
                     //x.Update();
                     // Console.WriteLine("This note contains "+x.BPMChangeNotes.Count+" BPM notes");
                     //Console.WriteLine(GetNoteDetail(this.bpmChanges, x));
-                    var delay = x.Bar * Definition + x.Tick + x.WaitLength + x.LastLength;
+                    int delay = x.Bar * Definition + x.Tick + x.WaitLength + x.LastLength;
                     switch (x.NoteSpecificGenre)
                     {
                         case NoteSpecificGenre.BPM:
@@ -253,7 +258,8 @@ public abstract class Chart : IChart
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
                                 x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
                                 x.FixedLastLength =
-                                    (int)double.Round(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp),Definition));
+                                    (int)double.Round(x.CalculatedLastTime /
+                                                      GetBPMTimeUnit(GetBPMByTick(x.TickStamp), Definition));
                             }
 
                             if (delay > TotalDelay) TotalDelay = delay;
@@ -285,7 +291,8 @@ public abstract class Chart : IChart
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
                                 x.CalculatedLastTime = x.LastTimeStamp - x.TickTimeStamp;
                                 x.FixedLastLength =
-                                    (int)double.Round(x.CalculatedLastTime / GetBPMTimeUnit(GetBPMByTick(x.TickStamp),Definition));
+                                    (int)double.Round(x.CalculatedLastTime /
+                                                      GetBPMTimeUnit(GetBPMByTick(x.TickStamp), Definition));
                             }
 
                             // if (lastNote.NoteSpecificType.Equals("SLIDE_START") && (lastNote.Bar == x.Bar && lastNote.Tick == x.Tick && lastNote.Key.Equals(x.Key)))
@@ -314,13 +321,13 @@ public abstract class Chart : IChart
                 }
             }
 
-            var afterBar = new List<Note>();
-            afterBar.Add(new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar, Definition),Definition)));
+            List<Note>? afterBar = new List<Note>();
+            afterBar.Add(new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar, Definition), Definition)));
             //Console.WriteLine();
             //Console.WriteLine("In bar "+i+", LeastMeasure is "+ CalculateLeastMeasure(bar)+", so quaver will be "+ CalculateQuaver(CalculateLeastMeasure(bar)));
             afterBar.AddRange(bar);
             StoredChart.Add(FinishBar(afterBar, i,
-                CalculateQuaver(CalculateLeastMeasure(bar, Definition), Definition),Definition));
+                CalculateQuaver(CalculateLeastMeasure(bar, Definition), Definition), Definition));
         }
 
         //Console.WriteLine("TOTAL DELAY: "+this.TotalDelay);
@@ -333,15 +340,16 @@ public abstract class Chart : IChart
 
     public virtual void UpdateTest()
     {
-        var maxBar = Notes.Count > 0 ? Notes.Max(p => p.Bar) + 1 : 1;
+        int maxBar = Notes.Count > 0 ? Notes.Max(p => p.Bar) + 1 : 1;
         List<Note>[] chartCandidate = new List<Note>[maxBar];
         for (int i = 0; i < chartCandidate.Length; i++) chartCandidate[i] = new();
 
         foreach (BPMChange bpmChangeNote in BPMChanges.ChangeNotes)
         {
-            chartCandidate[bpmChangeNote.Bar].Insert(0,bpmChangeNote);
+            chartCandidate[bpmChangeNote.Bar].Insert(0, bpmChangeNote);
             // Well I know this is not the best practice but we assume bar may be empty here
         }
+
         foreach (Note x in Notes)
         {
             x.BPMChangeNotes = BPMChanges.ChangeNotes;
@@ -374,15 +382,17 @@ public abstract class Chart : IChart
                     if (delay > TotalDelay) TotalDelay = delay;
                     break;
             }
+
             chartCandidate[x.Bar].Add(x);
         }
 
         StoredChart = new();
-        for (int i = 0; i<chartCandidate.Length; i++)
+        for (int i = 0; i < chartCandidate.Length; i++)
         {
-            var afterBar = new List<Note>
+            List<Note>? afterBar = new List<Note>
             {
-                new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(chartCandidate[i], Definition), Definition))
+                new MeasureChange(i, 0,
+                    CalculateQuaver(CalculateLeastMeasure(chartCandidate[i], Definition), Definition))
             };
             afterBar.AddRange(chartCandidate[i]);
             StoredChart.Add(FinishBar(afterBar, i,
@@ -400,9 +410,9 @@ public abstract class Chart : IChart
         switch (chartVersion)
         {
             case ChartVersion.Simai:
-                return new Simai(this){ ChartVersion = ChartVersion.Simai }.Compose();
+                return new Simai(this) { ChartVersion = ChartVersion.Simai }.Compose();
             case ChartVersion.SimaiFes:
-                return new Simai(this){ ChartVersion = ChartVersion.SimaiFes }.Compose();
+                return new Simai(this) { ChartVersion = ChartVersion.SimaiFes }.Compose();
             case ChartVersion.Ma2_103:
                 return new Ma2(this) { ChartVersion = ChartVersion.Ma2_103 }.Compose();
             case ChartVersion.Ma2_104:
@@ -416,12 +426,12 @@ public abstract class Chart : IChart
 
     public double GetTimeStamp(int bar, int tick)
     {
-        var result = 0.0;
-        var overallTick = bar * Definition + tick;
+        double result = 0.0;
+        int overallTick = bar * Definition + tick;
         if (overallTick != 0)
         {
-            var maximumBPMIndex = 0;
-            for (var i = 0; i < BPMChanges.ChangeNotes.Count; i++)
+            int maximumBPMIndex = 0;
+            for (int i = 0; i < BPMChanges.ChangeNotes.Count; i++)
                 if (BPMChanges.ChangeNotes[i].TickStamp <= overallTick)
                     maximumBPMIndex = i;
             if (maximumBPMIndex == 0)
@@ -430,14 +440,14 @@ public abstract class Chart : IChart
             }
             else
             {
-                for (var i = 1; i <= maximumBPMIndex; i++)
+                for (int i = 1; i <= maximumBPMIndex; i++)
                 {
-                    var previousTickTimeUnit = 60 / BPMChanges.ChangeNotes[i - 1].BPM * 4 / Definition;
+                    double previousTickTimeUnit = 60 / BPMChanges.ChangeNotes[i - 1].BPM * 4 / Definition;
                     result += (BPMChanges.ChangeNotes[i].TickStamp - BPMChanges.ChangeNotes[i - 1].TickStamp) *
                               previousTickTimeUnit;
                 }
 
-                var tickTimeUnit = 60 / BPMChanges.ChangeNotes[maximumBPMIndex].BPM * 4 / Definition;
+                double tickTimeUnit = 60 / BPMChanges.ChangeNotes[maximumBPMIndex].BPM * 4 / Definition;
                 result += (overallTick - BPMChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
             }
         }
@@ -447,8 +457,8 @@ public abstract class Chart : IChart
 
     public void ShiftByOffset(int overallTick)
     {
-        var updatedNotes = new List<Note>();
-        foreach (var x in Notes)
+        List<Note>? updatedNotes = new List<Note>();
+        foreach (Note? x in Notes)
             if (x.NoteType is not NoteType.BPM || x.NoteGenre is not NoteGenre.MEASURE ||
                 (x.NoteType is NoteType.BPM && x.Bar != 0 && x.Tick != 0) ||
                 (x.NoteGenre is NoteGenre.MEASURE && x.Bar != 0 && x.Tick != 0))
@@ -504,13 +514,13 @@ public abstract class Chart : IChart
 
     public void ShiftByOffset(int bar, int tick)
     {
-        var overallTick = bar * Definition + tick;
+        int overallTick = bar * Definition + tick;
         ShiftByOffset(overallTick);
     }
 
     public void RotateNotes(FlipMethod method)
     {
-        foreach (var x in Notes) x.Flip(method);
+        foreach (Note? x in Notes) x.Flip(method);
         Update();
     }
 
@@ -530,9 +540,9 @@ public abstract class Chart : IChart
     /// <returns>List none 0 measure</returns>
     public static int CalculateLeastMeasure(List<Note> bar, int definition)
     {
-        var startTimeList = new List<int>();
+        List<int>? startTimeList = new List<int>();
         startTimeList.Add(0);
-        foreach (var x in bar)
+        foreach (Note? x in bar)
         {
             if (!startTimeList.Contains(x.Tick)) startTimeList.Add(x.Tick);
             if (x.NoteType is NoteType.BPM)
@@ -542,9 +552,9 @@ public abstract class Chart : IChart
         }
 
         if (startTimeList[startTimeList.Count - 1] != definition) startTimeList.Add(definition);
-        var intervalCandidates = new List<int>();
-        var minimalInterval = GCD(startTimeList[0], startTimeList[1]);
-        for (var i = 1; i < startTimeList.Count; i++) minimalInterval = GCD(minimalInterval, startTimeList[i]);
+        List<int>? intervalCandidates = new List<int>();
+        int minimalInterval = GCD(startTimeList[0], startTimeList[1]);
+        for (int i = 1; i < startTimeList.Count; i++) minimalInterval = GCD(minimalInterval, startTimeList[i]);
         return minimalInterval;
     }
 
@@ -555,8 +565,8 @@ public abstract class Chart : IChart
     /// <returns>Number</returns>
     public static int RealNoteNumber(List<Note> Bar)
     {
-        var result = 0;
-        foreach (var x in Bar)
+        int result = 0;
+        foreach (Note? x in Bar)
             if (x.IsNote)
                 result++;
         return result;
@@ -569,8 +579,8 @@ public abstract class Chart : IChart
     /// <returns>True if contains, false otherwise</returns>
     public static bool ContainNotes(List<Note> Bar)
     {
-        var result = false;
-        foreach (var x in Bar) result = result || x.IsNote;
+        bool result = false;
+        foreach (Note? x in Bar) result = result || x.IsNote;
         return result;
     }
 
@@ -581,8 +591,8 @@ public abstract class Chart : IChart
     /// <returns>[Definition:Length]=[Quaver:Beat]</returns>
     public static int CalculateQuaver(int length, int definition)
     {
-        var result = 0;
-        var divisor = GCD(definition, length);
+        int result = 0;
+        int divisor = GCD(definition, length);
         int quaver = definition / divisor, beat = length / divisor;
         result = quaver;
         return result;
@@ -599,21 +609,21 @@ public abstract class Chart : IChart
     /// <returns>Finished bar</returns>
     public static List<Note> FinishBar(List<Note> bar, int barNumber, int minimalQuaver, int definition)
     {
-        var result = new List<Note>();
-        var writeRest = true;
+        List<Note>? result = new List<Note>();
+        bool writeRest = true;
         result.Add(bar[0]);
-        for (var i = 0; i < definition; i += definition / minimalQuaver)
+        for (int i = 0; i < definition; i += definition / minimalQuaver)
         {
             //Separate Touch and others to prevent ordering issue
             Note bpm = new Rest();
-            var eachSet = new List<Note>();
-            var touchEachSet = new List<Note>();
+            List<Note>? eachSet = new List<Note>();
+            List<Note>? touchEachSet = new List<Note>();
 
             //Set condition to write rest if appropriate
             writeRest = true;
             //Add Appropriate note into each set
             Note lastNote = new Rest();
-            foreach (var x in bar)
+            foreach (Note? x in bar)
             {
                 if (x.Tick == i && x.IsNote && !(x.NoteType is NoteType.TTP or NoteType.THO))
                 {
@@ -647,14 +657,15 @@ public abstract class Chart : IChart
                     }
                 }
 
-                if (x.NoteSpecificGenre is not NoteSpecificGenre.BPM && x.NoteSpecificGenre is not NoteSpecificGenre.SLIDE_START)
+                if (x.NoteSpecificGenre is not NoteSpecificGenre.BPM &&
+                    x.NoteSpecificGenre is not NoteSpecificGenre.SLIDE_START)
                     lastNote = x.NewInstance();
             }
 
             //Searching for BPM change. If find one, get into front.
             if (bpm.BPM != 0)
             {
-                var adjusted = new List<Note>();
+                List<Note>? adjusted = new List<Note>();
                 adjusted.Add(bpm);
                 adjusted.AddRange(touchEachSet);
                 adjusted.AddRange(eachSet);
@@ -662,7 +673,7 @@ public abstract class Chart : IChart
             }
             else
             {
-                var adjusted = new List<Note>();
+                List<Note>? adjusted = new List<Note>();
                 adjusted.AddRange(touchEachSet);
                 adjusted.AddRange(eachSet);
                 eachSet = adjusted;
@@ -676,21 +687,21 @@ public abstract class Chart : IChart
 
         if (RealNoteNumber(result) != RealNoteNumber(bar))
         {
-            var error = "";
+            string? error = "";
             error += "Bar notes not match in bar: " + barNumber + "\n";
             error += "Expected: " + RealNoteNumber(bar) + "\n";
-            foreach (var x in bar) error += x.Compose(ChartVersion.Debug) + "\n";
+            foreach (Note? x in bar) error += x.Compose(ChartVersion.Debug) + "\n";
             error += "\nActual: " + RealNoteNumber(result) + "\n";
-            foreach (var y in result) error += y.Compose(ChartVersion.Debug) + "\n";
+            foreach (Note? y in result) error += y.Compose(ChartVersion.Debug) + "\n";
             Console.WriteLine(error);
             throw new InvalidOperationException("NOTE NUMBER IS NOT MATCHING");
         }
 
-        var hasFirstBPMChange = false;
-        var changedResult = new List<Note>();
+        bool hasFirstBPMChange = false;
+        List<Note>? changedResult = new List<Note>();
         Note potentialFirstChange = new Rest();
         {
-            for (var i = 0; !hasFirstBPMChange && i < result.Count(); i++)
+            for (int i = 0; !hasFirstBPMChange && i < result.Count(); i++)
                 if (result[i].NoteGenre is NoteGenre.BPM && result[i].Tick == 0)
                 {
                     changedResult.Add(result[i]);
@@ -731,9 +742,9 @@ public abstract class Chart : IChart
         if (number == 2) return true;
         if (number % 2 == 0) return false;
 
-        var boundary = (int)Math.Floor(Math.Sqrt(number));
+        int boundary = (int)Math.Floor(Math.Sqrt(number));
 
-        for (var i = 3; i <= boundary; i += 2)
+        for (int i = 3; i <= boundary; i += 2)
             if (number % i == 0)
                 return false;
 
@@ -746,7 +757,7 @@ public abstract class Chart : IChart
     /// <param name="information">Dictionary containing information needed</param>
     public void TakeInformation(Dictionary<string, string> information)
     {
-        foreach (var x in information) Information.Add(x.Key, x.Value);
+        foreach (KeyValuePair<string, string> x in information) Information.Add(x.Key, x.Value);
     }
 
     /// <summary>
@@ -756,12 +767,12 @@ public abstract class Chart : IChart
     /// <returns>Appropriate time stamp in seconds</returns>
     public double GetTimeStamp(int overallTick)
     {
-        var result = 0.0;
+        double result = 0.0;
         if (overallTick != 0)
         {
-            var foundMax = false;
-            var maximumBPMIndex = 0;
-            for (var i = 0; i < BPMChanges.ChangeNotes.Count && !foundMax; i++)
+            bool foundMax = false;
+            int maximumBPMIndex = 0;
+            for (int i = 0; i < BPMChanges.ChangeNotes.Count && !foundMax; i++)
                 if (BPMChanges.ChangeNotes[i].TickStamp <= overallTick)
                     maximumBPMIndex = i;
                 else
@@ -772,14 +783,14 @@ public abstract class Chart : IChart
             }
             else
             {
-                for (var i = 1; i <= maximumBPMIndex; i++)
+                for (int i = 1; i <= maximumBPMIndex; i++)
                 {
-                    var previousTickTimeUnit = GetBPMTimeUnit(BPMChanges.ChangeNotes[i - 1].BPM, Definition);
+                    double previousTickTimeUnit = GetBPMTimeUnit(BPMChanges.ChangeNotes[i - 1].BPM, Definition);
                     result += (BPMChanges.ChangeNotes[i].TickStamp - BPMChanges.ChangeNotes[i - 1].TickStamp) *
                               previousTickTimeUnit;
                 }
 
-                var tickTimeUnit = GetBPMTimeUnit(BPMChanges.ChangeNotes[maximumBPMIndex].BPM, Definition);
+                double tickTimeUnit = GetBPMTimeUnit(BPMChanges.ChangeNotes[maximumBPMIndex].BPM, Definition);
                 result += (overallTick - BPMChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
             }
         }
@@ -794,11 +805,11 @@ public abstract class Chart : IChart
     /// <returns>Appropriate time stamp in seconds</returns>
     public static double GetTimeStamp(BPMChanges bpmChanges, int overallTick, int definition)
     {
-        var result = 0.0;
+        double result = 0.0;
         if (overallTick != 0)
         {
-            var maximumBPMIndex = 0;
-            for (var i = 0; i < bpmChanges.ChangeNotes.Count; i++)
+            int maximumBPMIndex = 0;
+            for (int i = 0; i < bpmChanges.ChangeNotes.Count; i++)
                 if (bpmChanges.ChangeNotes[i].TickStamp <= overallTick)
                     maximumBPMIndex = i;
             if (maximumBPMIndex == 0)
@@ -807,14 +818,14 @@ public abstract class Chart : IChart
             }
             else
             {
-                for (var i = 1; i <= maximumBPMIndex; i++)
+                for (int i = 1; i <= maximumBPMIndex; i++)
                 {
-                    var previousTickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[i - 1].BPM, definition);
+                    double previousTickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[i - 1].BPM, definition);
                     result += (bpmChanges.ChangeNotes[i].TickStamp - bpmChanges.ChangeNotes[i - 1].TickStamp) *
                               previousTickTimeUnit;
                 }
 
-                var tickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[maximumBPMIndex].BPM, definition);
+                double tickTimeUnit = GetBPMTimeUnit(bpmChanges.ChangeNotes[maximumBPMIndex].BPM, definition);
                 result += (overallTick - bpmChanges.ChangeNotes[maximumBPMIndex].TickStamp) * tickTimeUnit;
             }
         }
@@ -837,11 +848,12 @@ public abstract class Chart : IChart
     /// <returns>String of result, consists tick time stamp, wait time stamp and last time stamp</returns>
     public static string GetNoteDetail(BPMChanges bpmChanges, Note inTake, int definition)
     {
-        var result = "";
+        string? result = "";
         result += inTake.Compose(ChartVersion.Debug) + "\n";
         result += "This is a " + inTake.NoteSpecificGenre + " note,\n";
         result += "This note has overall tick of " + inTake.TickStamp +
-                  ", and therefor, the tick time stamp shall be " + GetTimeStamp(bpmChanges, inTake.TickStamp, definition) + "\n";
+                  ", and therefor, the tick time stamp shall be " +
+                  GetTimeStamp(bpmChanges, inTake.TickStamp, definition) + "\n";
         if (inTake.NoteGenre is NoteGenre.SLIDE)
         {
             result += "This note has wait length of " + inTake.WaitLength + ", and therefor, its wait tick stamp is " +
@@ -862,11 +874,11 @@ public abstract class Chart : IChart
     /// <returns>BPM at that tick</returns>
     public double GetBPMByTick(int overallTick)
     {
-        var result = BPMChanges.ChangeNotes[0].BPM;
+        double result = BPMChanges.ChangeNotes[0].BPM;
         if (overallTick > 0)
         {
-            var maximumBPMIndex = 0;
-            for (var i = 0; i < BPMChanges.ChangeNotes.Count; i++)
+            int maximumBPMIndex = 0;
+            for (int i = 0; i < BPMChanges.ChangeNotes.Count; i++)
                 if (BPMChanges.ChangeNotes[i].TickStamp <= overallTick)
                     maximumBPMIndex = i;
             result = BPMChanges.ChangeNotes[maximumBPMIndex].BPM;
@@ -883,9 +895,9 @@ public abstract class Chart : IChart
     /// <returns></returns>
     public bool HasBPMChangeInBetween(int startTick, int endTick)
     {
-        var result = false;
+        bool result = false;
 
-        for (var i = 0; i < BPMChanges.ChangeNotes.Count && !result; i++)
+        for (int i = 0; i < BPMChanges.ChangeNotes.Count && !result; i++)
             if (BPMChanges.ChangeNotes[i].TickStamp > startTick && BPMChanges.ChangeNotes[i].TickStamp < endTick)
                 result = true;
 
@@ -896,20 +908,20 @@ public abstract class Chart : IChart
     {
         List<Note> adjusted = new();
         List<Slide> slideCandidates = new();
-        foreach (var x in Notes)
+        foreach (Note? x in Notes)
         {
             switch (x.NoteSpecificGenre)
             {
                 case NoteEnum.NoteSpecificGenre.SLIDE_EACH:
-                    var candidate = x as SlideEachSet ??
-                                    throw new InvalidOperationException("THIS IS NOT A SLIDE EACH");
+                    SlideEachSet? candidate = x as SlideEachSet ??
+                                              throw new InvalidOperationException("THIS IS NOT A SLIDE EACH");
                     if (candidate.SlideStart != null) adjusted.Add(candidate.SlideStart);
                     if (candidate.InternalSlides.Count > 0) slideCandidates.AddRange(candidate.InternalSlides);
                     break;
                 case NoteEnum.NoteSpecificGenre.SLIDE_GROUP:
                     x.Update();
-                    var groupCandidate = x as SlideGroup ??
-                                         throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
+                    SlideGroup? groupCandidate = x as SlideGroup ??
+                                                 throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
                     if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
                     break;
                 default:
@@ -918,13 +930,13 @@ public abstract class Chart : IChart
             }
         }
 
-        foreach (var x in slideCandidates)
+        foreach (Slide? x in slideCandidates)
         {
             switch (x.NoteSpecificGenre)
             {
                 case NoteSpecificGenre.SLIDE_GROUP:
-                    var groupCandidate = x as SlideGroup ??
-                                         throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
+                    SlideGroup? groupCandidate = x as SlideGroup ??
+                                                 throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
                     if (groupCandidate.InternalSlides.Count > 0) adjusted.AddRange(groupCandidate.InternalSlides);
                     break;
                 default:
@@ -944,8 +956,8 @@ public abstract class Chart : IChart
         List<Slide> processedSlideOfChart = new();
         Dictionary<Slide, bool> processedSlideDic = new();
 
-        var maximumBar = 0;
-        foreach (var candidate in Notes)
+        int maximumBar = 0;
+        foreach (Note? candidate in Notes)
         {
             maximumBar = candidate.Bar > maximumBar ? candidate.Bar : maximumBar;
             if (candidate.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_GROUP)
@@ -960,11 +972,11 @@ public abstract class Chart : IChart
 
         // If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
 
-        var processedSlidesCount = 0;
+        int processedSlidesCount = 0;
 
         foreach (KeyValuePair<Slide, bool> parentPair in processedSlideDic)
         {
-            var parentSlide = parentPair.Key;
+            Slide? parentSlide = parentPair.Key;
             maximumBar = parentSlide.Bar > maximumBar ? parentSlide.Bar : maximumBar;
             if (!parentPair.Value && parentSlide.NoteSpecialState != SpecialState.ConnectingSlide)
             {
@@ -972,7 +984,7 @@ public abstract class Chart : IChart
                 currentGroup.AddConnectingSlide(parentSlide);
                 foreach (KeyValuePair<Slide, bool> candidatePair in processedSlideDic)
                 {
-                    var candidate = candidatePair.Key;
+                    Slide? candidate = candidatePair.Key;
                     if (candidate != parentSlide && candidate.NoteSpecialState == SpecialState.ConnectingSlide &&
                         candidate.TickStamp == currentGroup.LastSlide.LastTickStamp &&
                         candidate.Key.Equals(currentGroup.LastSlide.EndKey) && !candidatePair.Value)
@@ -996,6 +1008,7 @@ public abstract class Chart : IChart
                     processedSlideOfChart.Add(parentSlide);
                     processedSlideDic[parentSlide] = true;
                 }
+
                 processedSlidesCount++;
             }
         }
@@ -1036,12 +1049,18 @@ public abstract class Chart : IChart
                 errorMsg += x.Compose(ChartVersion.Ma2_104) + "\n";
                 if (x is SlideGroup)
                 {
-                    errorMsg += "This slide is also a Slide Group with last slide as " + (x as SlideGroup ?? throw new NullReferenceException("This note cannot be casted to SlideGroup: "+x.Compose(ChartVersion.Debug))).LastSlide.Compose(ChartVersion.Debug) + "\n";
+                    errorMsg += "This slide is also a Slide Group with last slide as " +
+                                (x as SlideGroup ?? throw new NullReferenceException(
+                                    "This note cannot be casted to SlideGroup: " + x.Compose(ChartVersion.Debug)))
+                                .LastSlide.Compose(ChartVersion.Debug) + "\n";
                 }
             }
+
             throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +
-                                                ", Actual:" + processedSlidesCount + ", Skipped: " + processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
+                                                ", Actual:" + processedSlidesCount + ", Skipped: " +
+                                                processedSlideDic.Count(p => !p.Value) + "\n" + errorMsg);
         }
+
         Notes = new List<Note>(adjusted);
     }
 
@@ -1049,20 +1068,21 @@ public abstract class Chart : IChart
     {
         List<SlideEachSet> composedCandidates = new();
         List<Note> adjusted = new();
-        var processedNotes = 0;
-        foreach (var x in Notes)
+        int processedNotes = 0;
+        foreach (Note? x in Notes)
         {
-            var eachCandidateCombined = false;
-            if (!(x.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_START or NoteSpecificGenre.SLIDE_GROUP))
+            bool eachCandidateCombined = false;
+            if (!(x.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_START
+                    or NoteSpecificGenre.SLIDE_GROUP))
             {
                 adjusted.Add(x);
                 processedNotes++;
             }
             else if (composedCandidates.Count > 0 && x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START)
             {
-                foreach (var parent in composedCandidates)
+                foreach (SlideEachSet? parent in composedCandidates)
                 {
-                    var slideStartCandidate =
+                    Tap? slideStartCandidate =
                         x as Tap ?? throw new InvalidOperationException("THIS IS NOT A SLIDE START");
                     eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
                     if (eachCandidateCombined) processedNotes++;
@@ -1071,15 +1091,17 @@ public abstract class Chart : IChart
             else if (composedCandidates.Count > 0 &&
                      x.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_GROUP)
             {
-                foreach (var parent in composedCandidates)
+                foreach (SlideEachSet? parent in composedCandidates)
                 {
-                    var slideStartCandidate = x as Slide ?? throw new InvalidOperationException("THIS IS NOT A SLIDE");
+                    Slide? slideStartCandidate =
+                        x as Slide ?? throw new InvalidOperationException("THIS IS NOT A SLIDE");
                     eachCandidateCombined = eachCandidateCombined || parent.TryAddCandidateNote(slideStartCandidate);
                     if (eachCandidateCombined) processedNotes++;
                 }
             }
 
-            if (!eachCandidateCombined && x.NoteSpecificGenre is NoteSpecificGenre.SLIDE or NoteSpecificGenre.SLIDE_START or NoteSpecificGenre.SLIDE_GROUP)
+            if (!eachCandidateCombined && x.NoteSpecificGenre is NoteSpecificGenre.SLIDE
+                    or NoteSpecificGenre.SLIDE_START or NoteSpecificGenre.SLIDE_GROUP)
             {
                 composedCandidates.Add(new SlideEachSet(x));
                 processedNotes++;

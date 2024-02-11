@@ -8,7 +8,9 @@ namespace MaiLib;
 public class XmlInformation : TrackInformation, IXmlUtility
 {
     private const int UtageGenreId = 107;
+
     #region Constructors
+
     /// <summary>
     ///     Using take in Xml to store trackInformation:
     /// </summary>
@@ -31,27 +33,28 @@ public class XmlInformation : TrackInformation, IXmlUtility
             }
         }
     }
+
     #endregion
 
     public override void Update()
     {
         int genreId = 0;
-        var nameCandidate = TakeInValue.GetElementsByTagName("name");
-        var bpmCandidate = TakeInValue.GetElementsByTagName("bpm");
-        var chartCandidate = TakeInValue.GetElementsByTagName("Notes");
-        var composerCandidate = TakeInValue.GetElementsByTagName("artistName");
-        var genreCandidate = TakeInValue.GetElementsByTagName("genreName");
-        var addVersionCandidate = TakeInValue.GetElementsByTagName("AddVersion");
-        var sortNameCandidate = TakeInValue.GetElementsByTagName("sortName");
-        var versionNumberCandidate = TakeInValue.GetElementsByTagName("releaseTagName");
+        XmlNodeList? nameCandidate = TakeInValue.GetElementsByTagName("name");
+        XmlNodeList? bpmCandidate = TakeInValue.GetElementsByTagName("bpm");
+        XmlNodeList? chartCandidate = TakeInValue.GetElementsByTagName("Notes");
+        XmlNodeList? composerCandidate = TakeInValue.GetElementsByTagName("artistName");
+        XmlNodeList? genreCandidate = TakeInValue.GetElementsByTagName("genreName");
+        XmlNodeList? addVersionCandidate = TakeInValue.GetElementsByTagName("AddVersion");
+        XmlNodeList? sortNameCandidate = TakeInValue.GetElementsByTagName("sortName");
+        XmlNodeList? versionNumberCandidate = TakeInValue.GetElementsByTagName("releaseTagName");
         //Add in name and music ID.
         ////Add BPM
         //this.information.Add("BPM",bpmCandidate[0].InnerText);
         foreach (XmlNode candidate in nameCandidate)
             if (TrackID.Equals(""))
             {
-                var idCandidate = candidate["id"] ?? throw new NullReferenceException();
-                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
+                XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
+                XmlElement? strCandidate = candidate["str"] ?? throw new NullReferenceException();
                 TrackID = idCandidate.InnerText;
                 TrackName = strCandidate.InnerText;
             }
@@ -70,7 +73,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
         {
             if (TrackComposer.Equals(""))
             {
-                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
+                XmlElement? strCandidate = candidate["str"] ?? throw new NullReferenceException();
                 TrackComposer = strCandidate.InnerText;
             }
         }
@@ -79,8 +82,8 @@ public class XmlInformation : TrackInformation, IXmlUtility
         {
             if (TrackGenre.Equals(""))
             {
-                var idCandidate = candidate["id"] ?? throw new NullReferenceException();
-                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
+                XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
+                XmlElement? strCandidate = candidate["str"] ?? throw new NullReferenceException();
                 genreId = int.Parse(idCandidate.InnerText);
                 TrackGenre = strCandidate.InnerText;
             }
@@ -90,7 +93,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
         {
             if (TrackVersionNumber.Equals(""))
             {
-                var strCandidate = candidate["str"] ?? throw new NullReferenceException();
+                XmlElement? strCandidate = candidate["str"] ?? throw new NullReferenceException();
                 TrackVersionNumber = strCandidate.InnerText;
             }
         }
@@ -99,7 +102,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
         {
             if (TrackVersion.Equals(""))
             {
-                var idCandidate = candidate["id"] ?? throw new NullReferenceException();
+                XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
                 TrackVersion = version[int.Parse(idCandidate.InnerText)];
             }
         }
@@ -107,18 +110,19 @@ public class XmlInformation : TrackInformation, IXmlUtility
         foreach (XmlNode candidate in chartCandidate)
             try
             {
-                var pathCandidate = candidate["file"] ?? throw new NullReferenceException();
+                XmlElement? pathCandidate = candidate["file"] ?? throw new NullReferenceException();
                 pathCandidate = pathCandidate["path"] ?? throw new NullReferenceException();
-                var enableCandidate = candidate["isEnable"] ?? throw new NullReferenceException();
+                XmlElement? enableCandidate = candidate["isEnable"] ?? throw new NullReferenceException();
                 if (pathCandidate.InnerText.Contains("00.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
-                    var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
-                    var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                    XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                    XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
 
-                    var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
-                    var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerCandidate =
+                        candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
-                    var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                    XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
 
                     if (genreId == UtageGenreId)
@@ -144,13 +148,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 }
                 else if (pathCandidate.InnerText.Contains("01.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
-                    var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
-                    var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                    XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                    XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
                     Information["Advanced Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
-                    var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
-                    var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerCandidate =
+                        candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
-                    var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                    XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Advanced"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
@@ -160,13 +165,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 }
                 else if (pathCandidate.InnerText.Contains("02.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
-                    var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
-                    var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                    XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                    XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
                     Information["Expert Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
-                    var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
-                    var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerCandidate =
+                        candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
-                    var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                    XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Expert"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
@@ -176,13 +182,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 }
                 else if (pathCandidate.InnerText.Contains("03.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
-                    var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
-                    var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                    XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                    XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
                     Information["Master Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
-                    var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
-                    var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerCandidate =
+                        candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
-                    var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                    XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Master"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
@@ -192,13 +199,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 }
                 else if (pathCandidate.InnerText.Contains("04.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
-                    var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
-                    var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                    XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                    XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
                     Information["Remaster Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
-                    var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
-                    var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerCandidate =
+                        candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
-                    var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                    XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Remaster"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
@@ -208,13 +216,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 }
                 else if (pathCandidate.InnerText.Contains("05.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
-                    var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
-                    var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                    XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                    XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
                     Information["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
-                    var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
-                    var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerCandidate =
+                        candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
-                    var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                    XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
@@ -224,13 +233,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 }
                 else if (pathCandidate.InnerText.Contains("11.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
-                    var levelCandidate = candidate["level"] ?? throw new NullReferenceException();
-                    var levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
+                    XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
+                    XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
                     Information["Easy Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
-                    var musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
-                    var notesDesignerCandidate = candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerCandidate =
+                        candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
-                    var fileCandidate = candidate["file"] ?? throw new NullReferenceException();
+                    XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Easy"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
@@ -254,154 +264,154 @@ public class XmlInformation : TrackInformation, IXmlUtility
     {
         TakeInValue = new XmlDocument();
         //Create declaration
-        var dec = TakeInValue.CreateXmlDeclaration("1.0", "utf-8", "yes");
+        XmlDeclaration? dec = TakeInValue.CreateXmlDeclaration("1.0", "utf-8", "yes");
         TakeInValue.AppendChild(dec);
         //Create Root and append attributes
-        var root = TakeInValue.CreateElement("MusicData");
+        XmlElement? root = TakeInValue.CreateElement("MusicData");
         TakeInValue.AppendChild(root);
-        var xsi = TakeInValue.CreateAttribute("xmlns:xsi");
+        XmlAttribute? xsi = TakeInValue.CreateAttribute("xmlns:xsi");
         xsi.Value = "http://www.w3.org/2001/XMLSchema-instance";
-        var xsd = TakeInValue.CreateAttribute("xmlns:xsd");
+        XmlAttribute? xsd = TakeInValue.CreateAttribute("xmlns:xsd");
 
         //Create tags. *data name: inner text = music0xxxxx
-        var dataName = TakeInValue.CreateElement("dataName");
+        XmlElement? dataName = TakeInValue.CreateElement("dataName");
         dataName.InnerText = "music" + CompensateZero(Information["Music ID"]);
         root.AppendChild(dataName);
-        var netOpenName = TakeInValue.CreateElement("netOpenName");
-        var netOpenNameId = TakeInValue.CreateElement("id");
+        XmlElement? netOpenName = TakeInValue.CreateElement("netOpenName");
+        XmlElement? netOpenNameId = TakeInValue.CreateElement("id");
         netOpenNameId.InnerText = "0";
-        var netOpenNameStr = TakeInValue.CreateElement("str");
+        XmlElement? netOpenNameStr = TakeInValue.CreateElement("str");
         netOpenNameStr.InnerText = "Net190711";
         netOpenName.AppendChild(netOpenNameId);
         netOpenName.AppendChild(netOpenNameStr);
         root.AppendChild(netOpenName);
-        var releaseTagName = TakeInValue.CreateElement("releaseTagName");
-        var releaseTagNameId = TakeInValue.CreateElement("id");
+        XmlElement? releaseTagName = TakeInValue.CreateElement("releaseTagName");
+        XmlElement? releaseTagNameId = TakeInValue.CreateElement("id");
         releaseTagNameId.InnerText = "1";
-        var releaseTagNameStr = TakeInValue.CreateElement("str");
+        XmlElement? releaseTagNameStr = TakeInValue.CreateElement("str");
         releaseTagNameStr.InnerText = "Ver1.00.00";
         releaseTagName.AppendChild(releaseTagNameId);
         releaseTagName.AppendChild(releaseTagNameStr);
         root.AppendChild(releaseTagName);
-        var disable = TakeInValue.CreateElement("disable");
+        XmlElement? disable = TakeInValue.CreateElement("disable");
         disable.InnerText = "false";
         root.AppendChild(disable);
-        var name = TakeInValue.CreateElement("name");
-        var nameId = TakeInValue.CreateElement("id");
+        XmlElement? name = TakeInValue.CreateElement("name");
+        XmlElement? nameId = TakeInValue.CreateElement("id");
         nameId.InnerText = TrackID;
-        var nameStr = TakeInValue.CreateElement("str");
+        XmlElement? nameStr = TakeInValue.CreateElement("str");
         nameStr.InnerText = TrackName;
         name.AppendChild(nameId);
         name.AppendChild(nameStr);
         root.AppendChild(name);
-        var rightsInfoName = TakeInValue.CreateElement("rightsInfoName");
-        var rightsInfoNameId = TakeInValue.CreateElement("id");
+        XmlElement? rightsInfoName = TakeInValue.CreateElement("rightsInfoName");
+        XmlElement? rightsInfoNameId = TakeInValue.CreateElement("id");
         rightsInfoNameId.InnerText = "0";
-        var rightsInfoNameStr = TakeInValue.CreateElement("str");
+        XmlElement? rightsInfoNameStr = TakeInValue.CreateElement("str");
         rightsInfoNameStr.InnerText = "";
         rightsInfoName.AppendChild(rightsInfoNameId);
         rightsInfoName.AppendChild(rightsInfoNameStr);
         root.AppendChild(rightsInfoName);
-        var sortName = TakeInValue.CreateElement("sortName");
+        XmlElement? sortName = TakeInValue.CreateElement("sortName");
         sortName.InnerText = TrackSortName;
         root.AppendChild(sortName);
-        var artistName = TakeInValue.CreateElement("artistName");
-        var artistNameId = TakeInValue.CreateElement("id");
+        XmlElement? artistName = TakeInValue.CreateElement("artistName");
+        XmlElement? artistNameId = TakeInValue.CreateElement("id");
         artistNameId.InnerText = "0";
-        var artistNameStr = TakeInValue.CreateElement("str");
+        XmlElement? artistNameStr = TakeInValue.CreateElement("str");
         artistNameStr.InnerText = Information["Composer"];
         artistName.AppendChild(artistNameId);
         artistName.AppendChild(artistNameStr);
         root.AppendChild(artistName);
-        var genreName = TakeInValue.CreateElement("genreName");
-        var genreNameId = TakeInValue.CreateElement("id");
+        XmlElement? genreName = TakeInValue.CreateElement("genreName");
+        XmlElement? genreNameId = TakeInValue.CreateElement("id");
         genreNameId.InnerText = "10" + Array.IndexOf(genre, Information["Genre"]);
-        var genreNameStr = TakeInValue.CreateElement("str");
+        XmlElement? genreNameStr = TakeInValue.CreateElement("str");
         genreNameStr.InnerText = TrackGenre;
         genreName.AppendChild(genreNameId);
         genreName.AppendChild(genreNameStr);
         root.AppendChild(genreName);
-        var bpm = TakeInValue.CreateElement("bpm");
+        XmlElement? bpm = TakeInValue.CreateElement("bpm");
         bpm.InnerText = TrackBPM;
         root.AppendChild(bpm);
-        var version = TakeInValue.CreateElement("version");
+        XmlElement? version = TakeInValue.CreateElement("version");
         version.InnerText = "19000";
         root.AppendChild(version);
-        var addVersion = TakeInValue.CreateElement("addVersion");
-        var addVersionId = TakeInValue.CreateElement("id");
+        XmlElement? addVersion = TakeInValue.CreateElement("addVersion");
+        XmlElement? addVersionId = TakeInValue.CreateElement("id");
         addVersionId.InnerText = TrackVersionNumber;
-        var addVersionStr = TakeInValue.CreateElement("str");
+        XmlElement? addVersionStr = TakeInValue.CreateElement("str");
         addVersionStr.InnerText = shortVersion[int.Parse(TrackVersionNumber.Substring(1))];
         addVersion.AppendChild(addVersionId);
         addVersion.AppendChild(addVersionStr);
         root.AppendChild(addVersion);
-        var movieName = TakeInValue.CreateElement("movieName");
-        var movieNameId = TakeInValue.CreateElement("id");
+        XmlElement? movieName = TakeInValue.CreateElement("movieName");
+        XmlElement? movieNameId = TakeInValue.CreateElement("id");
         movieNameId.InnerText = TrackID;
-        var movieNameStr = TakeInValue.CreateElement("str");
+        XmlElement? movieNameStr = TakeInValue.CreateElement("str");
         movieNameStr.InnerText = TrackName;
         movieName.AppendChild(movieNameId);
         movieName.AppendChild(movieNameStr);
         root.AppendChild(movieName);
-        var cueName = TakeInValue.CreateElement("cueName");
-        var cueNameId = TakeInValue.CreateElement("id");
+        XmlElement? cueName = TakeInValue.CreateElement("cueName");
+        XmlElement? cueNameId = TakeInValue.CreateElement("id");
         cueNameId.InnerText = TrackID;
-        var cueNameStr = TakeInValue.CreateElement("str");
+        XmlElement? cueNameStr = TakeInValue.CreateElement("str");
         cueNameStr.InnerText = TrackName;
         cueName.AppendChild(cueNameId);
         cueName.AppendChild(cueNameStr);
         root.AppendChild(cueName);
-        var dressCode = TakeInValue.CreateElement("dressCode");
+        XmlElement? dressCode = TakeInValue.CreateElement("dressCode");
         dressCode.InnerText = "false";
         root.AppendChild(dressCode);
-        var eventName = TakeInValue.CreateElement("eventName");
-        var eventNameId = TakeInValue.CreateElement("id");
+        XmlElement? eventName = TakeInValue.CreateElement("eventName");
+        XmlElement? eventNameId = TakeInValue.CreateElement("id");
         eventNameId.InnerText = "1";
-        var eventNameStr = TakeInValue.CreateElement("str");
+        XmlElement? eventNameStr = TakeInValue.CreateElement("str");
         eventNameStr.InnerText = "無期限常時解放";
         eventName.AppendChild(eventNameId);
         eventName.AppendChild(eventNameStr);
         root.AppendChild(eventName);
-        var subEventName = TakeInValue.CreateElement("subEventName");
-        var subEventNameId = TakeInValue.CreateElement("id");
+        XmlElement? subEventName = TakeInValue.CreateElement("subEventName");
+        XmlElement? subEventNameId = TakeInValue.CreateElement("id");
         subEventNameId.InnerText = "1";
-        var subEventNameStr = TakeInValue.CreateElement("str");
+        XmlElement? subEventNameStr = TakeInValue.CreateElement("str");
         subEventNameStr.InnerText = "無期限常時解放";
         subEventName.AppendChild(subEventNameId);
         subEventName.AppendChild(subEventNameStr);
         root.AppendChild(subEventName);
-        var lockType = TakeInValue.CreateElement("lockType");
+        XmlElement? lockType = TakeInValue.CreateElement("lockType");
         lockType.InnerText = "0";
         root.AppendChild(lockType);
-        var subLockType = TakeInValue.CreateElement("subLockType");
+        XmlElement? subLockType = TakeInValue.CreateElement("subLockType");
         subLockType.InnerText = "1";
         root.AppendChild(subLockType);
-        var dotNetListView = TakeInValue.CreateElement("dotNetListView");
+        XmlElement? dotNetListView = TakeInValue.CreateElement("dotNetListView");
         dotNetListView.InnerText = "true";
         root.AppendChild(dotNetListView);
-        var notesData = TakeInValue.CreateElement("notesData");
-        for (var i = 0; i < 7; i++)
+        XmlElement? notesData = TakeInValue.CreateElement("notesData");
+        for (int i = 0; i < 7; i++)
         {
-            var noteCandidate = TakeInValue.CreateElement("Notes");
-            var fileCandidate = TakeInValue.CreateElement("file");
-            var pathCandidate = TakeInValue.CreateElement("path");
+            XmlElement? noteCandidate = TakeInValue.CreateElement("Notes");
+            XmlElement? fileCandidate = TakeInValue.CreateElement("file");
+            XmlElement? pathCandidate = TakeInValue.CreateElement("path");
             pathCandidate.InnerText = CompensateZero(TrackID) + "_0" + i + ".ma2";
             fileCandidate.AppendChild(pathCandidate);
-            var levelCandidate = TakeInValue.CreateElement("level");
-            var levelDecimalCandidate = TakeInValue.CreateElement("levelDecimal");
-            var notesDesignerCandidate = TakeInValue.CreateElement("notesDesigner");
-            var notesDesignerIdCandidate = TakeInValue.CreateElement("id");
-            var notesDesignerStrCandidate = TakeInValue.CreateElement("str");
-            var notesTypeCandidate = TakeInValue.CreateElement("notesType");
+            XmlElement? levelCandidate = TakeInValue.CreateElement("level");
+            XmlElement? levelDecimalCandidate = TakeInValue.CreateElement("levelDecimal");
+            XmlElement? notesDesignerCandidate = TakeInValue.CreateElement("notesDesigner");
+            XmlElement? notesDesignerIdCandidate = TakeInValue.CreateElement("id");
+            XmlElement? notesDesignerStrCandidate = TakeInValue.CreateElement("str");
+            XmlElement? notesTypeCandidate = TakeInValue.CreateElement("notesType");
             notesTypeCandidate.InnerText = "0";
-            var musicLevelIDCandidate = TakeInValue.CreateElement("musicLevelID");
-            var isEnabledCandidate = TakeInValue.CreateElement("isEnabled");
+            XmlElement? musicLevelIDCandidate = TakeInValue.CreateElement("musicLevelID");
+            XmlElement? isEnabledCandidate = TakeInValue.CreateElement("isEnabled");
 
             switch (i)
             {
                 case 0:
                     notesDesignerStrCandidate.InnerText = Information["Easy Chart Maker"];
-                    var designerIndex =
+                    int designerIndex =
                         Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
                     if (designerIndex > 1)
                         notesDesignerIdCandidate.InnerText = artistNameDic.Keys.ToArray()[
@@ -483,10 +493,10 @@ public class XmlInformation : TrackInformation, IXmlUtility
             root.AppendChild(noteCandidate);
         }
 
-        var jacketFile = TakeInValue.CreateElement("jacketFile");
-        var thumbnailName = TakeInValue.CreateElement("thumbnailName");
-        var rightFile = TakeInValue.CreateElement("rightFile");
-        var priority = TakeInValue.CreateElement("priority");
+        XmlElement? jacketFile = TakeInValue.CreateElement("jacketFile");
+        XmlElement? thumbnailName = TakeInValue.CreateElement("thumbnailName");
+        XmlElement? rightFile = TakeInValue.CreateElement("rightFile");
+        XmlElement? priority = TakeInValue.CreateElement("priority");
         priority.InnerText = "0";
         root.AppendChild(jacketFile);
         root.AppendChild(thumbnailName);
@@ -496,7 +506,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
 
     public XmlElement CreateNotesInformation(Dictionary<string, string> information, int chartIndex)
     {
-        var result = TakeInValue.CreateElement("Notes");
+        XmlElement? result = TakeInValue.CreateElement("Notes");
 
         return result;
     }

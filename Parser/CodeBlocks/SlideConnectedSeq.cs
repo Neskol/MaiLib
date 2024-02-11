@@ -1,5 +1,6 @@
 using System.Text;
 using static MaiLib.ChartEnum;
+
 namespace MaiLib;
 
 public class SlideConnectedSeq : ICodeBlock
@@ -9,7 +10,8 @@ public class SlideConnectedSeq : ICodeBlock
     public SlideDuration SlideDuration { get; private set; }
     public SlideConnectedSeq? InnerSlideConnectedSeq { get; private set; }
 
-    public SlideConnectedSeq(SlideType slideType, Key key, SlideDuration slideDuration, SlideConnectedSeq slideConnectedSeq)
+    public SlideConnectedSeq(SlideType slideType, Key key, SlideDuration slideDuration,
+        SlideConnectedSeq slideConnectedSeq)
     {
         SlideType = slideType;
         Key = key;

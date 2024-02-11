@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static NoteEnum;
 using static ChartEnum;
 
@@ -8,6 +9,7 @@ using static ChartEnum;
 public class Rest : Note
 {
     #region Constructors
+
     /// <summary>
     ///     Construct empty
     /// </summary>
@@ -44,6 +46,7 @@ public class Rest : Note
         BPMChangeNotes = n.BPMChangeNotes;
         Update();
     }
+
     #endregion
 
     public override NoteGenre NoteGenre => NoteGenre.REST;

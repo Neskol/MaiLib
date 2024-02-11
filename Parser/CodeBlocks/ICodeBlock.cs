@@ -1,4 +1,5 @@
 using static MaiLib.ChartEnum;
+
 namespace MaiLib;
 
 public interface ICodeBlock
@@ -7,12 +8,19 @@ public interface ICodeBlock
 
     public class ComponentMissingException : Exception
     {
-        public ComponentMissingException(string codeBlock, string missedComponents) : base(String.Format("CODE BLOCK {0} MISSED FOLLOWING COMPONENTS: {1}",codeBlock,missedComponents)){}
+        public ComponentMissingException(string codeBlock, string missedComponents) : base(
+            String.Format("CODE BLOCK {0} MISSED FOLLOWING COMPONENTS: {1}", codeBlock, missedComponents))
+        {
+        }
     }
 
     public class ExcessiveComponentsException : Exception
     {
-        public ExcessiveComponentsException(string codeBlock, string unexpectedComponents) : base(String.Format("CODE BLOCK {0} WAS PROVIDED WITH FOLLOWING COMPONENTS MORE THAN EXPECTED: {1}",codeBlock,unexpectedComponents)){}
+        public ExcessiveComponentsException(string codeBlock, string unexpectedComponents) : base(
+            String.Format("CODE BLOCK {0} WAS PROVIDED WITH FOLLOWING COMPONENTS MORE THAN EXPECTED: {1}", codeBlock,
+                unexpectedComponents))
+        {
+        }
     }
 
     public class UnexpectedStringSuppliedException : Exception

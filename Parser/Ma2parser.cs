@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static MaiLib.NoteEnum;
 
 /// <summary>
@@ -61,45 +62,45 @@ public class Ma2Parser : IParser
 
     public Chart ChartOfToken(string[] token)
     {
-        var bpmChanges = new BPMChanges();
-        var measureChanges = new MeasureChanges();
-        var notes = new List<Note>();
+        BPMChanges? bpmChanges = new BPMChanges();
+        MeasureChanges? measureChanges = new MeasureChanges();
+        List<Note>? notes = new List<Note>();
         if (token != null)
-            foreach (var x in token)
+            foreach (string? x in token)
             {
-                var typeCandidate = x.Split('\t')[(int)StdParam.Type];
-                var isBPM_DEF = typeCandidate.Equals("BPM_DEF");
-                var isMET_DEF = typeCandidate.Equals("MET_DEF");
-                var isBPM = typeCandidate.Equals("BPM");
-                var isMET = typeCandidate.Equals("MET");
-                var isNOTE = typeCandidate.Equals("TAP")
-                             || typeCandidate.Equals("STR")
-                             || typeCandidate.Equals("TTP")
-                             || typeCandidate.Equals("XTP")
-                             || typeCandidate.Equals("XST")
-                             || typeCandidate.Equals("BRK")
-                             || typeCandidate.Equals("BST")
-                             || typeCandidate.Equals("HLD")
-                             || typeCandidate.Equals("XHO")
-                             || typeCandidate.Equals("THO")
-                             || typeCandidate.Equals("SI_")
-                             || typeCandidate.Equals("SV_")
-                             || typeCandidate.Equals("SF_")
-                             || typeCandidate.Equals("SCL")
-                             || typeCandidate.Equals("SCR")
-                             || typeCandidate.Equals("SUL")
-                             || typeCandidate.Equals("SUR")
-                             || typeCandidate.Equals("SLL")
-                             || typeCandidate.Equals("SLR")
-                             || typeCandidate.Equals("SXL")
-                             || typeCandidate.Equals("SXR")
-                             || typeCandidate.Equals("SSL")
-                             || typeCandidate.Equals("SSR")
-                             || (typeCandidate.Contains("NM") && typeCandidate.Length == 5)
-                             || (typeCandidate.Contains("CN") && typeCandidate.Length == 5)
-                             || (typeCandidate.Contains("EX") && typeCandidate.Length == 5)
-                             || (typeCandidate.Contains("BR") && typeCandidate.Length == 5)
-                             || (typeCandidate.Contains("BX") && typeCandidate.Length == 5);
+                string? typeCandidate = x.Split('\t')[(int)StdParam.Type];
+                bool isBPM_DEF = typeCandidate.Equals("BPM_DEF");
+                bool isMET_DEF = typeCandidate.Equals("MET_DEF");
+                bool isBPM = typeCandidate.Equals("BPM");
+                bool isMET = typeCandidate.Equals("MET");
+                bool isNOTE = typeCandidate.Equals("TAP")
+                              || typeCandidate.Equals("STR")
+                              || typeCandidate.Equals("TTP")
+                              || typeCandidate.Equals("XTP")
+                              || typeCandidate.Equals("XST")
+                              || typeCandidate.Equals("BRK")
+                              || typeCandidate.Equals("BST")
+                              || typeCandidate.Equals("HLD")
+                              || typeCandidate.Equals("XHO")
+                              || typeCandidate.Equals("THO")
+                              || typeCandidate.Equals("SI_")
+                              || typeCandidate.Equals("SV_")
+                              || typeCandidate.Equals("SF_")
+                              || typeCandidate.Equals("SCL")
+                              || typeCandidate.Equals("SCR")
+                              || typeCandidate.Equals("SUL")
+                              || typeCandidate.Equals("SUR")
+                              || typeCandidate.Equals("SLL")
+                              || typeCandidate.Equals("SLR")
+                              || typeCandidate.Equals("SXL")
+                              || typeCandidate.Equals("SXR")
+                              || typeCandidate.Equals("SSL")
+                              || typeCandidate.Equals("SSR")
+                              || (typeCandidate.Contains("NM") && typeCandidate.Length == 5)
+                              || (typeCandidate.Contains("CN") && typeCandidate.Length == 5)
+                              || (typeCandidate.Contains("EX") && typeCandidate.Length == 5)
+                              || (typeCandidate.Contains("BR") && typeCandidate.Length == 5)
+                              || (typeCandidate.Contains("BX") && typeCandidate.Length == 5);
 
                 if (isBPM_DEF)
                 {
@@ -111,8 +112,8 @@ public class Ma2Parser : IParser
                 }
                 else if (isBPM)
                 {
-                    var bpmCandidate = x.Split('\t');
-                    var candidate = new BPMChange(int.Parse(bpmCandidate[1]),
+                    string[]? bpmCandidate = x.Split('\t');
+                    BPMChange? candidate = new BPMChange(int.Parse(bpmCandidate[1]),
                         int.Parse(bpmCandidate[2]),
                         double.Parse(bpmCandidate[3]));
                     // foreach (BPMChange change in bpmChanges.ChangeNotes)
@@ -128,7 +129,7 @@ public class Ma2Parser : IParser
                 }
                 else if (isMET)
                 {
-                    var measureCandidate = x.Split('\t');
+                    string[]? measureCandidate = x.Split('\t');
                     measureChanges.Add(int.Parse(measureCandidate[(int)StdParam.Bar]),
                         int.Parse(measureCandidate[(int)StdParam.Tick]),
                         int.Parse(measureCandidate[(int)StdParam.Key]),
@@ -136,7 +137,7 @@ public class Ma2Parser : IParser
                 }
                 else if (isNOTE)
                 {
-                    var candidate = NoteOfToken(x);
+                    Note? candidate = NoteOfToken(x);
                     // foreach (BPMChange change in bpmChanges.ChangeNotes)
                     // {
                     //     if (change.TickStamp <= candidate.LastTickStamp)
@@ -149,7 +150,7 @@ public class Ma2Parser : IParser
                 }
             }
 
-        foreach (var note in notes)
+        foreach (Note? note in notes)
         {
             note.BPMChangeNotes = bpmChanges.ChangeNotes;
             if (bpmChanges.ChangeNotes.Count > 0 && note.BPMChangeNotes.Count == 0)
@@ -173,9 +174,9 @@ public class Ma2Parser : IParser
 
     public Note NoteOfToken(string token)
     {
-        var candidate = token.Split('\t');
-        var bar = int.Parse(candidate[(int)StdParam.Bar]);
-        var tick = int.Parse(candidate[(int)StdParam.Tick]);
+        string[]? candidate = token.Split('\t');
+        int bar = int.Parse(candidate[(int)StdParam.Bar]);
+        int tick = int.Parse(candidate[(int)StdParam.Tick]);
         return NoteOfToken(token, bar, tick, 0.0);
     }
 
@@ -190,29 +191,30 @@ public class Ma2Parser : IParser
             noteTypeCandidate = noteTypeCandidate.Substring(2);
             token = token.Substring(2);
         }
-        var isTap = noteTypeCandidate.Contains("TAP")
-                    || noteTypeCandidate.Contains("STR")
-                    || noteTypeCandidate.Contains("TTP")
-                    || noteTypeCandidate.Equals("XTP")
-                    || noteTypeCandidate.Equals("XST")
-                    || noteTypeCandidate.Equals("BRK")
-                    || noteTypeCandidate.Equals("BST");
-        var isHold = noteTypeCandidate.Contains("HLD")
-                     || noteTypeCandidate.Equals("XHO")
-                     || noteTypeCandidate.Contains("THO");
-        var isSlide = noteTypeCandidate.Contains("SI_")
-                      || noteTypeCandidate.Contains("SV_")
-                      || noteTypeCandidate.Contains("SF_")
-                      || noteTypeCandidate.Contains("SCL")
-                      || noteTypeCandidate.Contains("SCR")
-                      || noteTypeCandidate.Contains("SUL")
-                      || noteTypeCandidate.Contains("SUR")
-                      || noteTypeCandidate.Contains("SLL")
-                      || noteTypeCandidate.Contains("SLR")
-                      || noteTypeCandidate.Contains("SXL")
-                      || noteTypeCandidate.Contains("SXR")
-                      || noteTypeCandidate.Contains("SSL")
-                      || noteTypeCandidate.Contains("SSR");
+
+        bool isTap = noteTypeCandidate.Contains("TAP")
+                     || noteTypeCandidate.Contains("STR")
+                     || noteTypeCandidate.Contains("TTP")
+                     || noteTypeCandidate.Equals("XTP")
+                     || noteTypeCandidate.Equals("XST")
+                     || noteTypeCandidate.Equals("BRK")
+                     || noteTypeCandidate.Equals("BST");
+        bool isHold = noteTypeCandidate.Contains("HLD")
+                      || noteTypeCandidate.Equals("XHO")
+                      || noteTypeCandidate.Contains("THO");
+        bool isSlide = noteTypeCandidate.Contains("SI_")
+                       || noteTypeCandidate.Contains("SV_")
+                       || noteTypeCandidate.Contains("SF_")
+                       || noteTypeCandidate.Contains("SCL")
+                       || noteTypeCandidate.Contains("SCR")
+                       || noteTypeCandidate.Contains("SUL")
+                       || noteTypeCandidate.Contains("SUR")
+                       || noteTypeCandidate.Contains("SLL")
+                       || noteTypeCandidate.Contains("SLR")
+                       || noteTypeCandidate.Contains("SXL")
+                       || noteTypeCandidate.Contains("SXR")
+                       || noteTypeCandidate.Contains("SSL")
+                       || noteTypeCandidate.Contains("SSR");
         if (isTap)
             result = TapOfToken(token);
         else if (isHold)
@@ -262,7 +264,7 @@ public class Ma2Parser : IParser
     public Hold HoldOfToken(string token, int bar, int tick, double bpm)
     {
         Note result = new Rest();
-        var candidate = token.Split('\t');
+        string[]? candidate = token.Split('\t');
         SpecialState specialState = SpecialState.Normal;
         switch (candidate[(int)DxTapParam.Type])
         {
@@ -273,10 +275,11 @@ public class Ma2Parser : IParser
         }
 
         bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
-        if (!noteTypeIsValid) throw new Exception("The given note type is invalid. Type provided: " + candidate[(int)DxTapParam.Type]);
+        if (!noteTypeIsValid)
+            throw new Exception("The given note type is invalid. Type provided: " + candidate[(int)DxTapParam.Type]);
         if (candidate[(int)DxTapParam.Type].Contains("THO")) //Basically all THO falls in this line
         {
-            var noteSize = candidate.Count() > 7 ? candidate[(int)DxHoldParam.NoteSize] : "M1";
+            string? noteSize = candidate.Count() > 7 ? candidate[(int)DxHoldParam.NoteSize] : "M1";
             bool specialEffect = int.Parse(candidate[(int)DxHoldParam.SpecialEffect]) == 1;
             result = new Hold(typeCandidate,
                 bar,
@@ -302,24 +305,25 @@ public class Ma2Parser : IParser
 
     public Hold HoldOfToken(string token)
     {
-        var candidate = token.Split('\t');
-        var bar = int.Parse(candidate[(int)StdParam.Bar]);
-        var tick = int.Parse(candidate[(int)StdParam.Tick]);
+        string[]? candidate = token.Split('\t');
+        int bar = int.Parse(candidate[(int)StdParam.Bar]);
+        int tick = int.Parse(candidate[(int)StdParam.Tick]);
         return HoldOfToken(token, bar, tick, 0.0);
     }
 
     public Slide SlideOfToken(string token, int bar, int tick, Note slideStart, double bpm)
     {
-        var candidate = token.Split('\t');
+        string[]? candidate = token.Split('\t');
         bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
-        if (!noteTypeIsValid) throw new Exception("Given Note Type is not valid. Given: "+ candidate[(int)DxTapParam.Type]);
+        if (!noteTypeIsValid)
+            throw new Exception("Given Note Type is not valid. Given: " + candidate[(int)DxTapParam.Type]);
         if (!slideStart.Key.Equals(candidate[(int)StdParam.Key]) || slideStart.Bar != bar || slideStart.Tick != tick)
             //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
             //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
             //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
             //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
             PreviousSlideStart = new Tap(NoteType.NST, bar, tick, candidate[(int)StdParam.Key]);
-        var result = new Slide(typeCandidate,
+        Slide? result = new Slide(typeCandidate,
             bar,
             tick,
             slideStart.Key,
@@ -332,9 +336,9 @@ public class Ma2Parser : IParser
 
     public Slide SlideOfToken(string token)
     {
-        var candidate = token.Split('\t');
-        var bar = int.Parse(candidate[(int)StdParam.Bar]);
-        var tick = int.Parse(candidate[(int)StdParam.Tick]);
+        string[]? candidate = token.Split('\t');
+        int bar = int.Parse(candidate[(int)StdParam.Bar]);
+        int tick = int.Parse(candidate[(int)StdParam.Tick]);
         if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.Key]) || PreviousSlideStart.Bar != bar ||
             PreviousSlideStart.Tick != tick)
             //Console.WriteLine("Expected key: " + candidate[(int)StdParam.Key]);
@@ -349,7 +353,7 @@ public class Ma2Parser : IParser
     public Tap TapOfToken(string token, int bar, int tick, double bpm)
     {
         Note result = new Rest();
-        var candidate = token.Split('\t');
+        string[]? candidate = token.Split('\t');
         // Resolves 1.03 to 1.04 issue
         SpecialState specialState = SpecialState.Normal;
         switch (candidate[(int)DxTapParam.Type])
@@ -371,11 +375,13 @@ public class Ma2Parser : IParser
                 specialState = SpecialState.Break;
                 break;
         }
+
         bool noteTypeIsValid = Enum.TryParse(candidate[(int)DxTapParam.Type], out NoteType typeCandidate);
-        if (!noteTypeIsValid) throw new Exception("Given Note Type is not valid. Given: "+ candidate[(int)DxTapParam.Type]);
+        if (!noteTypeIsValid)
+            throw new Exception("Given Note Type is not valid. Given: " + candidate[(int)DxTapParam.Type]);
         if (candidate[(int)StdParam.Type].Contains("TTP"))
         {
-            var noteSize = candidate.Length > 7 ? candidate[7] : "M1";
+            string? noteSize = candidate.Length > 7 ? candidate[7] : "M1";
             bool specialEffect = int.Parse(candidate[(int)DxTapParam.SpecialEffect]) == 1;
             result = new Tap(typeCandidate,
                 bar,
@@ -391,15 +397,16 @@ public class Ma2Parser : IParser
                 int.Parse(candidate[(int)StdParam.Tick]),
                 candidate[(int)StdParam.Key]);
         }
+
         result.NoteSpecialState = specialState;
         return (Tap)result;
     }
 
     public Tap TapOfToken(string token)
     {
-        var candidate = token.Split('\t');
-        var bar = int.Parse(candidate[(int)StdParam.Bar]);
-        var tick = int.Parse(candidate[(int)StdParam.Tick]);
+        string[]? candidate = token.Split('\t');
+        int bar = int.Parse(candidate[(int)StdParam.Bar]);
+        int tick = int.Parse(candidate[(int)StdParam.Tick]);
         return TapOfToken(token, bar, tick, 0.0);
     }
 }
