@@ -209,50 +209,47 @@ public class SimaiParser : IParser
     public Hold HoldOfToken(string token, int bar, int tick, double bpm)
     {
         if (!token.Contains('[')) token += $"[{MaximumDefinition}:0]";
-        var sustainSymbol = token.IndexOf("[");
-        var keyCandidate = token.Substring(0, sustainSymbol); //key candidate is like tap grammar
+        if (!(token.Contains('[') && token.Contains(']'))) throw new InvalidOperationException("GIVEN TOKEN DOES NOT CONTAIN SUSTAIN CANDIDATE");
+        string keyCandidate = token.Split('[')[0]; //key candidate is like tap grammar
         //Console.WriteLine(keyCandidate);
-        var sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
+        string sustainCandidate = $"[{token.Split('[')[1]}"; //sustain candidate is like 1:2
         //Console.WriteLine(sustainCandidate);
-        var key = "";
-        var holdType = "";
-        var specialEffect = 0;
+        string key;
+        bool specialEffect = false;
         // bool sustainIsSecond = sustainCandidate.Contains("##");
         // if (sustainIsSecond)
         // {
         //     string[] secondCandidates = sustainCandidate.Split("##");
 
         // }
+        NoteType noteType = NoteType.HLD;
         SpecialState specialState = SpecialState.Normal;
-        if (keyCandidate.Contains("C"))
+        if (keyCandidate.Contains('C'))
         {
-            holdType = "THO";
+            noteType = NoteType.THO;
             key = "0C";
-            if (keyCandidate.Contains("f")) specialEffect = 1;
+            specialEffect = keyCandidate.Contains('f');
         }
-        else if (keyCandidate.Contains("x") && keyCandidate.Contains("b"))
+        else if (keyCandidate.Contains('x') && keyCandidate.Contains('b'))
         {
             key = keyCandidate.Replace("h", "");
             key = key.Replace("x", "");
             key = key.Replace("b", "");
             key = (int.Parse(key) - 1).ToString();
-            holdType = "HLD";
             specialState = SpecialState.BreakEX;
         }
-        else if (keyCandidate.Contains("b"))
+        else if (keyCandidate.Contains('b'))
         {
             key = keyCandidate.Replace("h", "");
             key = key.Replace("b", "");
             key = (int.Parse(key) - 1).ToString();
-            holdType = "HLD";
             specialState = SpecialState.Break;
         }
-        else if (keyCandidate.Contains("x"))
+        else if (keyCandidate.Contains('x'))
         {
             key = keyCandidate.Replace("h", "");
             key = key.Replace("x", "");
             key = (int.Parse(key) - 1).ToString();
-            holdType = "HLD";
             specialState = SpecialState.EX;
         }
         else
@@ -260,7 +257,6 @@ public class SimaiParser : IParser
             key = keyCandidate.Replace("h", "");
             //Console.WriteLine(key);
             key = (int.Parse(key) - 1).ToString();
-            holdType = "HLD";
         }
 
         // var lastTimeCandidates = sustainCandidate.Split(":");
@@ -271,14 +267,14 @@ public class SimaiParser : IParser
 
         double lastTime = GetTimeCandidates(bpm, $"[{sustainCandidate}]")[1];
 
-        bool noteTypeIsValid = Enum.TryParse(holdType, out NoteType typeCandidate);
-        if (!noteTypeIsValid)
-        {
-            throw new Exception("Note type is invalid: Token given = " + holdType);
-        }
+        // bool noteTypeIsValid = Enum.TryParse(holdType, out NoteType typeCandidate);
+        // if (!noteTypeIsValid)
+        // {
+        //     throw new Exception("Note type is invalid: Token given = " + holdType);
+        // }
 
         //Console.WriteLine(key);
-        Hold candidate = holdType.Equals("THO") ? new Hold(NoteType.THO, bar, tick,  key, lastTime, specialEffect == 1, "M1") : new Hold(typeCandidate, bar, tick, key, lastTime);
+        Hold candidate = noteType is NoteType.THO ? new Hold(noteType, bar, tick,  key, lastTime, specialEffect, "M1") : new Hold(noteType, bar, tick, key, lastTime);
         candidate.BPM = bpm;
         candidate.NoteSpecialState = specialState;
         return candidate;
@@ -316,117 +312,91 @@ public class SimaiParser : IParser
 
     public Slide SlideOfToken(string token, int bar, int tick, Note slideStart, double bpm)
     {
+        if (!(token.Contains('[') && token.Contains(']'))) throw new InvalidOperationException("GIVEN TOKEN DOES NOT CONTAIN SUSTAIN CANDIDATE: {token}");
         Note slideStartCandidate = new Tap(slideStart);
         Note result;
-        var endKeyCandidate = "";
-        var sustainSymbol = 0;
-        var sustainCandidate = "";
+        string endKeyCandidate = "";
+        string sustainCandidate = $"[{token.Split('[')[1].Split(']')[0]}]";
         NoteType noteType = NoteType.RST;
         bool isConnectingSlide = token.Contains("CN");
         int connectedSlideStart = isConnectingSlide ? int.Parse(token.Split("CN")[1]) : -1;
         if (isConnectingSlide) slideStartCandidate.Key = connectedSlideStart.ToString();
-        var isEXBreak = token.Contains("b") && token.Contains("x");
-        var isBreak = token.Contains("b") && !token.Contains("x");
-        var isEX = !token.Contains("b") && token.Contains("x");
+        var isEXBreak = token.Contains('b') && token.Contains('x');
+        var isBreak = token.Contains('b') && !token.Contains('x');
+        var isEX = !token.Contains('b') && token.Contains('x');
         SpecialState noteSpecialState = SpecialState.Normal;
         if (isEXBreak) noteSpecialState = SpecialState.BreakEX;
         else if (isBreak) noteSpecialState = SpecialState.Break;
         else if (isEX) noteSpecialState = SpecialState.EX;
-        var timeAssigned = token.Contains("[");
+        var timeAssigned = token.Contains('[');
         //Parse first section
         if (token.Contains("qq"))
         {
             endKeyCandidate = token.Substring(2, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SXR;
         }
-        else if (token.Contains("q"))
+        else if (token.Contains('q'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SUR;
         }
         else if (token.Contains("pp"))
         {
             endKeyCandidate = token.Substring(2, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SXL;
         }
-        else if (token.Contains("p"))
+        else if (token.Contains('p'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SUL;
         }
-        else if (token.Contains("v"))
+        else if (token.Contains('v'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SV_;
         }
-        else if (token.Contains("w"))
+        else if (token.Contains('w'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SF_;
         }
-        else if (token.Contains("<"))
+        else if (token.Contains('<'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            int[] endPointOfConcern = { 0, 1, 6, 7 };
-            if (endPointOfConcern.Any(p => p == slideStartCandidate.KeyNum))
-                noteType = NoteType.SCL;
-            else noteType = NoteType.SCR;
+            int[] endPointOfConcern = [0, 1, 6, 7];
+            noteType = endPointOfConcern.Any(p => p == slideStartCandidate.KeyNum) ? NoteType.SCL : NoteType.SCR;
             // noteType = NoteType.SCL;
         }
-        else if (token.Contains(">"))
+        else if (token.Contains('>'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
-            int[] endPointOfConcern = { 0, 1, 6, 7 };
-            if (endPointOfConcern.Any(p => p == slideStartCandidate.KeyNum))
-                noteType = NoteType.SCR;
-            else noteType = NoteType.SCL;
+            int[] endPointOfConcern = [0, 1, 6, 7];
+            noteType = endPointOfConcern.Any(p => p == slideStartCandidate.KeyNum) ? NoteType.SCR : NoteType.SCL;
             // noteType = NoteType.SCR;
         }
-        else if (token.Contains("^"))
+        else if (token.Contains('^'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             int endKeyNum = int.Parse(endKeyCandidate) - 1;
             if (endKeyNum < 0) endKeyNum += 8;
             int sclDistance = KeyDistance(slideStartCandidate.KeyNum, endKeyNum, NoteType.SCL);
             int scrDistance = KeyDistance(slideStartCandidate.KeyNum, endKeyNum, NoteType.SCR);
             if (sclDistance >= 4 && scrDistance >= 4)
-                throw new Exception(
+                throw new InvalidOperationException(
                     $"^ requires a distance 0<d<4. SCL distance: {sclDistance}, SCR distance: {scrDistance}. Connected Start Key: {connectedSlideStart} StartKey: {slideStartCandidate.KeyNum}, EndKey: {endKeyCandidate}, Token: {token}");
             else noteType = sclDistance < scrDistance ? NoteType.SCL : NoteType.SCR;
         }
-        else if (token.Contains("s"))
+        else if (token.Contains('s'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SSL;
         }
-        else if (token.Contains("z"))
+        else if (token.Contains('z'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SSR;
         }
-        else if (token.Contains("V"))
+        else if (token.Contains('V'))
         {
             endKeyCandidate = token.Substring(2, 1);
             var sllCandidate = int.Parse(slideStartCandidate.Key) - 2;
@@ -443,8 +413,6 @@ public class SimaiParser : IParser
 
             var isSLL = sllCandidate == inflectionCandidate;
             var isSLR = slrCandidate == inflectionCandidate;
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             if (isSLL)
                 noteType = NoteType.SLL;
             else if (isSLR) noteType = NoteType.SLR;
@@ -454,49 +422,43 @@ public class SimaiParser : IParser
                 Console.WriteLine("Expected inflection point: SLL for " + sllCandidate + " and SLR for " +
                                   slrCandidate);
                 Console.WriteLine("Actual: " + inflectionCandidate);
-                throw new InvalidDataException("THE INFLECTION POINT GIVEN IS NOT MATCHING!");
+                throw new InvalidOperationException("THE INFLECTION POINT GIVEN IS NOT MATCHING!");
             }
         }
 
-        else if (token.Contains("-"))
+        else if (token.Contains('-'))
         {
             endKeyCandidate = token.Substring(1, 1);
-            sustainSymbol = token.IndexOf("[");
-            sustainCandidate = token.Substring(sustainSymbol + 1).Split("]")[0]; //sustain candidate is like 1:2
             noteType = NoteType.SI_;
         }
 
         //Console.WriteLine("Key Candidate: "+keyCandidate);
-        var fixedKeyCandidate = int.Parse(endKeyCandidate) - 1;
+        int fixedKeyCandidate = int.Parse(endKeyCandidate) - 1;
         if (fixedKeyCandidate < 0) endKeyCandidate += 8;
-        var isSecond = sustainCandidate.Contains("##");
-        if (!isSecond)
-        {
-            var lastTimeCandidates = sustainCandidate.Split(":");
-            var quaver = timeAssigned ? int.Parse(lastTimeCandidates[0]) : 0;
-            var lastTick = timeAssigned ? MaximumDefinition / quaver : 0;
-            var times = timeAssigned ? int.Parse(lastTimeCandidates[1]) : 0;
-            lastTick *= times;
-            result = new Slide(noteType, bar, tick, slideStartCandidate.Key, 96, lastTick,
-                fixedKeyCandidate.ToString());
-        }
-        else
-        {
-            var timeCandidates = sustainCandidate.Split("##");
-            var waitLengthCandidate = timeAssigned ? double.Parse(timeCandidates[0]) : 0;
-            var lastLengthCandidate = timeAssigned ? double.Parse(timeCandidates[1]) : 0;
-            // var tickUnit = Chart.GetBPMTimeUnit(bpm, MaximumDefinition);
-            // var waitLength = timeAssigned ? (int)(waitLengthCandidate / tickUnit) : 0;
-            // var lastLength = timeAssigned ? (int)(lastLengthCandidate / tickUnit) : 0;
-            // result = new Slide(noteType, bar, tick, slideStartCandidate.Key, waitLength, lastLength,
-            //     fixedKeyCandidate.ToString());
-            // result.CalculatedWaitTime = waitLengthCandidate;
-            // result.CalculatedLastTime = lastLengthCandidate;
-
-            // TODO: THIS METHOD NEEDS CHANGE TABLE TO BE UPDATED
-            result = new Slide(noteType, bar, tick, waitLengthCandidate, lastLengthCandidate, slideStartCandidate.Key,
-                fixedKeyCandidate.ToString()){BPMChangeNotes = bpmChanges.ChangeNotes};
-        }
+        double[] durationResult = GetTimeCandidates(bpm, sustainCandidate, true);
+        double waitLengthCandidate = durationResult[0];
+        double lastLengthCandidate = durationResult[1];
+        result = new Slide(noteType, bar, tick, waitLengthCandidate, lastLengthCandidate, slideStartCandidate.Key,
+            fixedKeyCandidate.ToString()){BPMChangeNotes = bpmChanges.ChangeNotes};
+        // var isSecond = sustainCandidate.Contains("##");
+        // if (!isSecond)
+        // {
+        //     var lastTimeCandidates = sustainCandidate.Split(":");
+        //     var quaver = timeAssigned ? int.Parse(lastTimeCandidates[0]) : 0;
+        //     var lastTick = timeAssigned ? MaximumDefinition / quaver : 0;
+        //     var times = timeAssigned ? int.Parse(lastTimeCandidates[1]) : 0;
+        //     lastTick *= times;
+        //     result = new Slide(noteType, bar, tick, slideStartCandidate.Key, 96, lastTick,
+        //         fixedKeyCandidate.ToString());
+        // }
+        // else
+        // {
+        //     var timeCandidates = sustainCandidate.Split("##");
+        //     var waitLengthCandidate = timeAssigned ? double.Parse(timeCandidates[0]) : 0;
+        //     var lastLengthCandidate = timeAssigned ? double.Parse(timeCandidates[1]) : 0;
+        //     result = new Slide(noteType, bar, tick, waitLengthCandidate, lastLengthCandidate, slideStartCandidate.Key,
+        //         fixedKeyCandidate.ToString()){BPMChangeNotes = bpmChanges.ChangeNotes};
+        // }
 
         result.BPM = bpm;
         if (isConnectingSlide)
@@ -996,6 +958,29 @@ public class SimaiParser : IParser
             return result;
         }
         else throw new InvalidOperationException($"NON OF THE DURATION PATTERNS MATCHED: {durationCandidate}");
+    }
+
+    public static double[] GetTimeCandidates(double bpm, string input, bool isSlide)
+    {
+        double[] result = new double[2];
+        if (!(input.Contains('[') || input.Contains(']')))
+            throw new InvalidOperationException("GIVEN CANDIDATE DOES NOT CONTAIN DURATION SYMBOL [ AND ]");
+        string durationCandidate = input.Replace("[", "").Replace("]", "");
+        bool isMeasureDuration = input.Contains(':') && !input.Contains('#'); // [Quaver : Beats]
+
+        if (isMeasureDuration && isSlide)
+        {
+            double quaver = double.Parse(durationCandidate.Split(':')[0]);
+            double beat = double.Parse(durationCandidate.Split(':')[1]);
+            double waitTimeCandidate =
+                Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * 96;
+            double lastTimeCandidate =
+                Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * (MaximumDefinition / quaver) * beat;
+            result[0] = waitTimeCandidate;
+            result[1] = lastTimeCandidate;
+            return result;
+        }
+        else return GetTimeCandidates(bpm, input);
     }
 
     #endregion
