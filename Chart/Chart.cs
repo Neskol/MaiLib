@@ -244,8 +244,8 @@ public abstract class Chart : IChart
 
                             break;
                         case NoteSpecificGenre.HOLD:
-                            x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
-                                                HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
+                            // x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                            //                     HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
                             // x.Update();
                             if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedLastTime == 0)
@@ -268,10 +268,10 @@ public abstract class Chart : IChart
                         case NoteSpecificGenre.SLIDE_START:
                             break;
                         case NoteSpecificGenre.SLIDE:
-                            x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.WaitTickStamp)) > Tolerance ||
-                                                Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
-                                                Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
-                                                HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
+                            // x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.WaitTickStamp)) > Tolerance ||
+                            //                     Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                            //                     Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                            //                     HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
                             // x.Update();
                             if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedWaitTime == 0)
@@ -359,18 +359,18 @@ public abstract class Chart : IChart
 
                     break;
                 case NoteSpecificGenre.HOLD:
-                    x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
-                                        HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
+                    // x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                    //                     HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
 
                     if (delay > TotalDelay) TotalDelay = delay;
                     break;
                 case NoteSpecificGenre.SLIDE_START:
                     break;
                 case NoteSpecificGenre.SLIDE:
-                    x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.WaitTickStamp)) > Tolerance ||
-                                        Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
-                                        Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
-                                        HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
+                    // x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.WaitTickStamp)) > Tolerance ||
+                    //                     Math.Abs(GetBPMByTick(x.WaitTickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                    //                     Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
+                    //                     HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
                     if (delay > TotalDelay) TotalDelay = delay;
                     break;
             }

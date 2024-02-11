@@ -58,13 +58,15 @@ public class BPMChange : Note
     }
 #endregion
 
-public double BPMTimeUnit => 60 / BPM * 4 / Definition;
+    public override double BPM { get; protected internal set; }
 
-    public override NoteEnum.NoteGenre NoteGenre => NoteEnum.NoteGenre.BPM;
+    public double BPMTimeUnit => 60 / BPM * 4 / Definition;
+
+    public override NoteGenre NoteGenre => NoteEnum.NoteGenre.BPM;
 
     public override bool IsNote => true;
 
-    public override NoteEnum.NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.BPM;
+    public override NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.BPM;
 
 
     public override bool CheckValidity()

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
 namespace MaiLib;
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
+using static NoteEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     Basic note
@@ -19,7 +19,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         Key = "";
         EndKey = "";
         Definition = 384;
-        TickBPMDisagree = false;
+        // TickBPMDisagree = false;
         BPMChangeNotes = new List<BPMChange>();
         TouchSize = "M1";
         NoteSpecialState = SpecialState.Normal;
@@ -56,7 +56,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         EndKey = endKey;
         Bar = bar;
         Tick = tick;
-        FixedTick = fixedTick;
+        // FixedTick = fixedTick;
         TickStamp = tickStamp;
         TickTimeStamp = tickTimeStamp;
         LastLength = lastLength;
@@ -67,8 +67,8 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         WaitTimeStamp = waitTimeStamp;
         CalculatedLastTime = calculatedLastTime;
         CalculatedWaitTime = calculatedWaitTime;
-        TickBPMDisagree = tickBPMDisagree;
-        BPM = bpm;
+        // TickBPMDisagree = tickBPMDisagree;
+        // BPM = bpm;
         BPMChangeNotes = bpmChangeNotes;
         TouchSize = touchSize;
         NoteSpecialState = noteSpecialState;
@@ -96,8 +96,8 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         WaitTimeStamp = inTake.WaitTimeStamp;
         CalculatedLastTime = inTake.CalculatedLastTime;
         CalculatedLastTime = inTake.CalculatedLastTime;
-        TickBPMDisagree = inTake.TickBPMDisagree;
-        BPM = inTake.BPM;
+        // TickBPMDisagree = inTake.TickBPMDisagree;
+        // BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
         NoteSpecialState = inTake.NoteSpecialState;
         TouchSize = "M1";
@@ -131,10 +131,10 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// </summary>
     public int Tick { get; set; }
 
-    /// <summary>
-    ///     Start time fixed to BPM
-    /// </summary>
-    public int FixedTick { get; set; }
+    // /// <summary>
+    // ///     Start time fixed to BPM
+    // /// </summary>
+    // public int FixedTick { get; set; }
 
     /// <summary>
     ///     The absolute Tick Calculated by this.bar*384+this.Tick
@@ -160,6 +160,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     The stamp of Wait time ends in Ticks
     /// </summary>
     public int WaitTickStamp { get; set; }
+    // public int WaitTickStamp => LastTickStamp + WaitLength;
 
     /// <summary>
     ///     The Calculated Wait time in seconds
@@ -180,6 +181,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     The stamp when the Last time ends in Ticks
     /// </summary>
     public int LastTickStamp { get; set; }
+    // public int LastTickStamp => LastLength == 0 ? TickStamp : TickStamp + LastLength;
 
     /// <summary>
     ///     The stamp when the Last time ends in seconds
@@ -194,17 +196,30 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     Stores if the BPM of Wait or Last Tick is in different BPM
     /// </summary>
-    public bool TickBPMDisagree { get; protected internal set; }
+    public bool TickBPMDisagree =>
+        BPMChangeNotes.Any(note => note.TickStamp > TickStamp && note.TickStamp < WaitTickStamp);
 
     /// <summary>
-    ///     The delayed
+    ///     Stores if the note is delayed
     /// </summary>
     public bool Delayed { get; set; }
 
     /// <summary>
     ///     The BPM
     /// </summary>
-    public double BPM { get; protected internal set; }
+    public virtual double BPM
+    {
+        get
+        {
+            BPMChange? nearestBpm =
+                BPMChangeNotes.Where(bpm => bpm.TickStamp <= TickStamp).MaxBy(note => note.TickStamp);
+            return nearestBpm?.BPM ?? 0.0;
+        }
+        protected internal set
+        {
+            if (BPMChangeNotes.Count == 0) BPMChangeNotes.Add(new BPMChange(Bar, Tick, value));
+        }
+    }
 
     /// <summary>
     /// The definition of the note which represented by the maximum tick of a 4/4 bar. By default it is 384.
@@ -384,14 +399,14 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         copyTo.TickStamp = this.TickStamp;
         copyTo.TickTimeStamp = this.TickTimeStamp;
         copyTo.LastLength = this.LastLength;
-        copyTo.LastTickStamp = this.LastTickStamp;
+        // copyTo.LastTickStamp = this.LastTickStamp;
         copyTo.LastTimeStamp = this.LastTimeStamp;
         copyTo.WaitLength = this.WaitLength;
-        copyTo.WaitTickStamp = this.WaitTickStamp;
+        // copyTo.WaitTickStamp = this.WaitTickStamp;
         copyTo.WaitTimeStamp = this.WaitTimeStamp;
         copyTo.CalculatedLastTime = this.CalculatedLastTime;
         copyTo.CalculatedLastTime = this.CalculatedLastTime;
-        copyTo.TickBPMDisagree = this.TickBPMDisagree;
+        // copyTo.TickBPMDisagree = this.TickBPMDisagree;
         // copyTo.BPM = this.BPM;
         copyTo.BPMChangeNotes = this.BPMChangeNotes;
         copyTo.NoteSpecialState = this.NoteSpecialState;
