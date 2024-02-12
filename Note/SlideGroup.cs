@@ -1,10 +1,12 @@
 ﻿namespace MaiLib;
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
+
+using static NoteEnum;
+using static ChartEnum;
 
 public class SlideGroup : Slide
 {
     #region Constructors
+
     public SlideGroup()
     {
         InternalSlides = new List<Slide>();
@@ -29,6 +31,7 @@ public class SlideGroup : Slide
         NoteSpecialState = slideCandidate.First().NoteSpecialState;
         Update();
     }
+
     #endregion
 
     public int SlideCount => InternalSlides.Count;
@@ -48,7 +51,7 @@ public class SlideGroup : Slide
 
     public override void Flip(FlipMethod method)
     {
-        foreach (var x in InternalSlides)
+        foreach (Slide? x in InternalSlides)
             x.Flip(method);
         Update();
     }
@@ -66,7 +69,7 @@ public class SlideGroup : Slide
     /// <returns>the composed simai slide group</returns>
     public override string Compose(ChartVersion format)
     {
-        var result = "";
+        string? result = "";
         // if (format == 0)
         // {
         //     foreach (var x in InternalSlides)
@@ -78,8 +81,8 @@ public class SlideGroup : Slide
         //     Console.WriteLine("Invalid slide group located at bar " + Bar + " tick " + Tick);
         //     throw new InvalidOperationException("MA2 IS NOT COMPATIBLE WITH SLIDE GROUP");
         // }
-        if (InternalSlides.Count > 0) InternalSlides.First().NoteSpecialState = NoteSpecialState;
-        foreach (var x in InternalSlides)
+        // if (InternalSlides.Count > 0) InternalSlides.First().NoteSpecialState = NoteSpecialState;
+        foreach (Slide? x in InternalSlides)
             // Note localSlideStart = x.SlideStart != null ? x.SlideStart : new Tap("NST", x.Bar, x.Tick, x.Key);
             result += x.Compose(format);
 
@@ -88,11 +91,11 @@ public class SlideGroup : Slide
 
     public override bool Equals(object? obj)
     {
-        var result = (this == null && obj == null) || (this != null && obj != null);
+        bool result = (this == null && obj == null) || (this != null && obj != null);
         if (result && obj != null)
-            for (var i = 0; i < InternalSlides.Count; i++)
+            for (int i = 0; i < InternalSlides.Count; i++)
             {
-                var localGroup = (SlideGroup)obj;
+                SlideGroup? localGroup = (SlideGroup)obj;
                 result = result && InternalSlides[i].Equals(localGroup.InternalSlides[i]);
             }
 
@@ -106,29 +109,30 @@ public class SlideGroup : Slide
 
     public override bool Update()
     {
+        // base.Update();
         if (InternalSlides.Any(slide => slide.NoteSpecialState is SpecialState.Break))
             NoteSpecialState = SpecialState.Break;
         if (InternalSlides.Count > 0) InternalSlides.First().NoteSpecialState = NoteSpecialState;
-        var result = false;
+        bool result = false;
         if (SlideCount > 0 && InternalSlides.Last().LastLength == 0)
             throw new InvalidOperationException("THE LAST SLIDE IN THIS GROUP DOES NOT HAVE LAST TIME ASSIGNED");
         if (SlideCount > 0 && Key != null)
         {
-            foreach (var x in InternalSlides)
+            foreach (Slide? x in InternalSlides)
                 if (x.LastLength == 0)
                     x.LastLength = InternalSlides.Last().LastLength;
 
-            while (Tick >= 384)
+            while (Tick >= Definition)
             {
-                Tick -= 384;
+                Tick -= Definition;
                 Bar++;
             }
 
             // string noteInformation = "This note is "+this.NoteType+", in tick "+ this.tickStamp+", ";
             //this.tickTimeStamp = this.GetTimeStamp(this.tickStamp);
-            var totalWaitLength = 0;
-            var totalLastLength = 0;
-            foreach (var x in InternalSlides)
+            int totalWaitLength = 0;
+            int totalLastLength = 0;
+            foreach (Slide? x in InternalSlides)
             {
                 totalWaitLength += x.WaitLength;
                 totalLastLength += x.LastLength;

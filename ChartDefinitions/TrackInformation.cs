@@ -69,6 +69,7 @@ public abstract class TrackInformation : IXmlUtility
     private XmlDocument takeInValue;
 
     #region Constructors
+
     /// <summary>
     ///     Empty constructor
     /// </summary>
@@ -79,6 +80,7 @@ public abstract class TrackInformation : IXmlUtility
         FormatInformation();
         Update();
     }
+
     #endregion
 
     /// <summary>
@@ -150,22 +152,24 @@ public abstract class TrackInformation : IXmlUtility
     {
         get
         {
-            if (Information.TryGetValue("Utage", out var utageLevel) && level != null && !utageLevel.Equals(""))
+            if (Information.TryGetValue("Utage", out string? utageLevel) && level != null && !utageLevel.Equals(""))
                 return utageLevel;
-            if (Information.TryGetValue("Remaster", out var remasLevel) && remasLevel != null && !remasLevel.Equals(""))
+            if (Information.TryGetValue("Remaster", out string? remasLevel) && remasLevel != null &&
+                !remasLevel.Equals(""))
                 return remasLevel;
-            if (Information.TryGetValue("Master", out var masterLevel) && masterLevel != null &&
+            if (Information.TryGetValue("Master", out string? masterLevel) && masterLevel != null &&
                 !masterLevel.Equals(""))
                 return masterLevel;
-            if (Information.TryGetValue("Expert", out var expertLevel) && expertLevel != null &&
+            if (Information.TryGetValue("Expert", out string? expertLevel) && expertLevel != null &&
                 !expertLevel.Equals(""))
                 return expertLevel;
-            if (Information.TryGetValue("Advanced", out var advanceLevel) && advanceLevel != null &&
+            if (Information.TryGetValue("Advanced", out string? advanceLevel) && advanceLevel != null &&
                 !advanceLevel.Equals(""))
                 return advanceLevel;
-            if (Information.TryGetValue("Basic", out var basicLevel) && basicLevel != null && !basicLevel.Equals(""))
+            if (Information.TryGetValue("Basic", out string? basicLevel) && basicLevel != null &&
+                !basicLevel.Equals(""))
                 return basicLevel;
-            if (Information.TryGetValue("Easy", out var easyLevel) && easyLevel != null && !easyLevel.Equals(""))
+            if (Information.TryGetValue("Easy", out string? easyLevel) && easyLevel != null && !easyLevel.Equals(""))
                 return easyLevel;
             return "ORIGINAL";
         }
@@ -242,8 +246,8 @@ public abstract class TrackInformation : IXmlUtility
     {
         get
         {
-            var musicID = Information.GetValueOrDefault("Music ID") ??
-                          throw new NullReferenceException("Music ID is not Defined");
+            string? musicID = Information.GetValueOrDefault("Music ID") ??
+                              throw new NullReferenceException("Music ID is not Defined");
             if (musicID.Length > 4)
                 return "_DX";
             return "";
@@ -258,8 +262,8 @@ public abstract class TrackInformation : IXmlUtility
     {
         get
         {
-            var musicID = Information.GetValueOrDefault("Music ID") ??
-                          throw new NullReferenceException("Music ID is not Defined");
+            string? musicID = Information.GetValueOrDefault("Music ID") ??
+                              throw new NullReferenceException("Music ID is not Defined");
             if (musicID.Length > 4)
                 return "DX";
             return "SD";
@@ -280,8 +284,8 @@ public abstract class TrackInformation : IXmlUtility
     {
         get
         {
-            var musicID = Information.GetValueOrDefault("Music ID") ??
-                          throw new NullReferenceException("Music ID is not Defined");
+            string? musicID = Information.GetValueOrDefault("Music ID") ??
+                              throw new NullReferenceException("Music ID is not Defined");
             return musicID.Length > 4;
         }
     }
@@ -294,8 +298,8 @@ public abstract class TrackInformation : IXmlUtility
     {
         get
         {
-            var version = Information.GetValueOrDefault("Version") ??
-                          throw new NullReferenceException("Version is not Defined");
+            string? version = Information.GetValueOrDefault("Version") ??
+                              throw new NullReferenceException("Version is not Defined");
             return version;
         }
         set => information["Version"] = value;
@@ -309,8 +313,8 @@ public abstract class TrackInformation : IXmlUtility
     {
         get
         {
-            var versionNumber = Information.GetValueOrDefault("Version Number") ??
-                                throw new NullReferenceException("Version is not Defined");
+            string? versionNumber = Information.GetValueOrDefault("Version Number") ??
+                                    throw new NullReferenceException("Version is not Defined");
             return versionNumber;
         }
         set => information["Version Number"] = value;
@@ -343,7 +347,7 @@ public abstract class TrackInformation : IXmlUtility
     /// <returns></returns>
     public XmlNodeList GetMatchNodes(string name)
     {
-        var result = takeInValue.GetElementsByTagName(name);
+        XmlNodeList? result = takeInValue.GetElementsByTagName(name);
         return result;
     }
 
@@ -488,7 +492,7 @@ public abstract class TrackInformation : IXmlUtility
     {
         try
         {
-            var result = intake;
+            string? result = intake;
             while (result.Length < 6 && intake != null) result = "0" + result;
             return result;
         }
@@ -507,7 +511,7 @@ public abstract class TrackInformation : IXmlUtility
     {
         try
         {
-            var result = intake;
+            string? result = intake;
             while (result.Length < 4 && intake != null) result = "0" + result;
             return result;
         }

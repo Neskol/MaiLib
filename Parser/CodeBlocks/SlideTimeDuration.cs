@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using static MaiLib.ChartEnum;
+
 namespace MaiLib;
 
 public class SlideTimeDuration : ICodeBlock
@@ -40,7 +41,8 @@ public class SlideTimeDuration : ICodeBlock
                         throw new ICodeBlock.ComponentMissingException("SLIDE-TIME-DURATION", "MULTIPLE");
                     else return $"[{SecondsOfWait}##{BPM}#{Quaver}:{Multiple}]";
                 }
-                else throw new ICodeBlock.ComponentMissingException("SLIDE-TIME-DURATION", "SECONDS-OF-DURATION OR BPM");
+                else
+                    throw new ICodeBlock.ComponentMissingException("SLIDE-TIME-DURATION", "SECONDS-OF-DURATION OR BPM");
         }
     }
 }

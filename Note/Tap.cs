@@ -1,7 +1,7 @@
 ﻿namespace MaiLib;
+
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
-
 
 /// <summary>
 ///     Tap note
@@ -19,6 +19,7 @@ public class Tap : Note
     }
 
     #region Constructor
+
     /// <summary>
     ///     Construct a Tap note
     /// </summary>
@@ -78,6 +79,7 @@ public class Tap : Note
             NoteType = NoteType.TAP;
         }
     }
+
     #endregion
 
     public override NoteGenre NoteGenre => NoteGenre.TAP;
@@ -97,7 +99,6 @@ public class Tap : Note
             NoteSpecificGenre result;
             switch (NoteType)
             {
-
                 case NoteType.STR:
                 case NoteType.NST:
                 case NoteType.NSS:
@@ -109,6 +110,7 @@ public class Tap : Note
                     result = NoteSpecificGenre.TAP;
                     break;
             }
+
             return result;
         }
     }
@@ -121,7 +123,7 @@ public class Tap : Note
 
     public override string Compose(ChartVersion format)
     {
-        var result = "";
+        string? result = "";
         switch (format)
         {
             case ChartVersion.Simai:
@@ -142,6 +144,7 @@ public class Tap : Note
                         result += (KeyNum + 1).ToString();
                         break;
                 }
+
                 if (NoteSpecialState == SpecialState.Break)
                     result += "b";
                 else if (NoteSpecialState == SpecialState.EX)
@@ -162,13 +165,16 @@ public class Tap : Note
                         typeCandidate = NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ? "BST" : "BRK";
                         break;
                 }
-                result = NoteType is NoteType.TTP ? typeCandidate + "\t" +
-                 Bar + "\t" +
-                 Tick + "\t" +
-                 KeyNum + "\t" +
-                 KeyGroup + "\t" +
-                 (SpecialEffect? 1:0) + "\t" +
-                 TouchSize : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
+
+                result = NoteType is NoteType.TTP
+                    ? typeCandidate + "\t" +
+                      Bar + "\t" +
+                      Tick + "\t" +
+                      KeyNum + "\t" +
+                      KeyGroup + "\t" +
+                      (SpecialEffect ? 1 : 0) + "\t" +
+                      TouchSize
+                    : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
                 break;
             case ChartVersion.Ma2_104:
                 typeCandidate = NoteType.ToString();
@@ -187,15 +193,19 @@ public class Tap : Note
                         typeCandidate = "NM" + typeCandidate;
                         break;
                 }
-                result = NoteType is NoteType.TTP ? typeCandidate + "\t" +
-                 Bar + "\t" +
-                 Tick + "\t" +
-                 KeyNum + "\t" +
-                 KeyGroup + "\t" +
-                 (SpecialEffect ? 1 : 0) + "\t" +
-                 TouchSize : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
+
+                result = NoteType is NoteType.TTP
+                    ? typeCandidate + "\t" +
+                      Bar + "\t" +
+                      Tick + "\t" +
+                      KeyNum + "\t" +
+                      KeyGroup + "\t" +
+                      (SpecialEffect ? 1 : 0) + "\t" +
+                      TouchSize
+                    : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
                 break;
         }
+
         return result;
     }
 

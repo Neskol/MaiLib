@@ -1,4 +1,5 @@
 namespace MaiLib;
+
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
 
@@ -7,6 +8,7 @@ public class SlideEachSet : Note
     public List<Slide> InternalSlides;
 
     #region Constructors
+
     public SlideEachSet()
     {
         InternalSlides = new List<Slide>();
@@ -19,17 +21,18 @@ public class SlideEachSet : Note
         InternalSlides = new List<Slide>();
         if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_EACH)
         {
-            var candidate = x as SlideEachSet ?? throw new InvalidOperationException("This is not a SLIDE EACH");
+            SlideEachSet? candidate =
+                x as SlideEachSet ?? throw new InvalidOperationException("This is not a SLIDE EACH");
             InternalSlides.AddRange(candidate.InternalSlides);
         }
         else if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE)
         {
-            var candidate = x as Slide ?? throw new InvalidOperationException("This is not a SLIDE");
+            Slide? candidate = x as Slide ?? throw new InvalidOperationException("This is not a SLIDE");
             InternalSlides.Add(candidate);
         }
         else if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_GROUP)
         {
-            var candidate = x as SlideGroup ?? throw new InvalidOperationException("This is not a SLIDE GROUP");
+            SlideGroup? candidate = x as SlideGroup ?? throw new InvalidOperationException("This is not a SLIDE GROUP");
             InternalSlides.Add(candidate);
         }
 
@@ -48,11 +51,12 @@ public class SlideEachSet : Note
             Tick = startTime;
             WaitLength = InternalSlides.Last().WaitLength;
             LastLength = InternalSlides.Last().LastLength;
-            Delayed = WaitLength != 96;
+            // Delayed = WaitLength != 96;
         }
 
         Update();
     }
+
     #endregion
 
     public Note? SlideStart { get; set; }
@@ -76,8 +80,10 @@ public class SlideEachSet : Note
 
     public void AddCandidateNote(Tap x)
     {
-        if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START && (InternalSlides.Count == 0 || (InternalSlides.Count > 0 &&
-                InternalSlides.First().Key.Equals(x.Key) && x.IsOfSameTime(InternalSlides.First()))))
+        if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START && (InternalSlides.Count == 0 ||
+                                                                     (InternalSlides.Count > 0 &&
+                                                                      InternalSlides.First().Key.Equals(x.Key) &&
+                                                                      x.IsOfSameTime(InternalSlides.First()))))
             SlideStart = x;
         else throw new InvalidOperationException("THE INTAKE NOTE IS NOT VALID SLIDE START");
     }
@@ -94,12 +100,12 @@ public class SlideEachSet : Note
 
     public void AddCandidateNote(List<Slide> x)
     {
-        foreach (var candidate in x) AddCandidateNote(candidate);
+        foreach (Slide? candidate in x) AddCandidateNote(candidate);
     }
 
     public bool TryAddCandidateNote(Tap x)
     {
-        var result = false;
+        bool result = false;
         if (FirstIdentifier != null && x.Key.Equals(FirstIdentifier.Key) && FirstIdentifier.IsOfSameTime(x))
         {
             result = true;
@@ -111,7 +117,7 @@ public class SlideEachSet : Note
 
     public bool TryAddCandidateNote(Slide x)
     {
-        var result = false;
+        bool result = false;
         if (FirstIdentifier != null && x.Key.Equals(FirstIdentifier.Key) && FirstIdentifier.IsOfSameTime(x))
         {
             result = true;
@@ -123,8 +129,8 @@ public class SlideEachSet : Note
 
     public bool TryAddCandidateNote(List<Slide> x)
     {
-        var result = false;
-        foreach (var candidate in x)
+        bool result = false;
+        foreach (Slide? candidate in x)
             if (FirstIdentifier != null && candidate.Key.Equals(FirstIdentifier.Key) &&
                 FirstIdentifier.IsOfSameTime(candidate))
             {
@@ -137,15 +143,15 @@ public class SlideEachSet : Note
 
     public override bool CheckValidity()
     {
-        var result = SlideStart == null || SlideStart.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START;
+        bool result = SlideStart == null || SlideStart.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START;
 
         if (SlideStart == null && InternalSlides == null) result = false;
         else if (SlideStart != null && InternalSlides.Count > 0 &&
                  !InternalSlides.First().IsOfSameTime(SlideStart)) result = false;
         else if (InternalSlides.Count > 0)
-            foreach (var x in InternalSlides)
+            foreach (Slide? x in InternalSlides)
             {
-                var referencingNote = SlideStart == null ? InternalSlides.First() : SlideStart;
+                Note? referencingNote = SlideStart == null ? InternalSlides.First() : SlideStart;
                 result = result && x.IsOfSameTime(referencingNote);
             }
 
@@ -155,7 +161,7 @@ public class SlideEachSet : Note
     public override void Flip(FlipMethod method)
     {
         if (SlideStart != null) SlideStart.Flip(method);
-        for (var i = 0; i < InternalSlides.Count; i++) InternalSlides[i].Flip(method);
+        for (int i = 0; i < InternalSlides.Count; i++) InternalSlides[i].Flip(method);
         Update();
     }
 
@@ -166,8 +172,8 @@ public class SlideEachSet : Note
 
     public override string Compose(ChartVersion format)
     {
-        var result = "";
-        var separateSymbol = "";
+        string? result = "";
+        string? separateSymbol = "";
         switch (format)
         {
             case ChartVersion.Simai:
@@ -175,9 +181,11 @@ public class SlideEachSet : Note
                 separateSymbol = "*";
                 if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "$";
                 else if (InternalSlides.Count > 0 && SlideStart == null)
-                    result += new Tap(InternalSlides.First()){NoteSpecialState = SpecialState.Normal}.Compose(format) + "!";
+                    result +=
+                        new Tap(InternalSlides.First()) { NoteSpecialState = SpecialState.Normal }.Compose(format) +
+                        "?";
                 else if (SlideStart != null) result += SlideStart.Compose(format);
-                for (var i = 0; i < InternalSlides.Count; i++)
+                for (int i = 0; i < InternalSlides.Count; i++)
                     if (i < InternalSlides.Count - 1)
                         result += InternalSlides[i].Compose(format) + separateSymbol;
                     else result += InternalSlides[i].Compose(format);
@@ -189,14 +197,17 @@ public class SlideEachSet : Note
                 {
                     x.Compose(format);
                 }
+
                 break;
             default:
                 if (InternalSlides.Count == 0 && SlideStart != null) result += SlideStart.Compose(format) + "\n";
                 else if (InternalSlides.Count > 0 && SlideStart == null)
-                    result += new Tap(InternalSlides.First()){NoteSpecialState = SpecialState.Normal}.Compose(format) + "\n";
+                    result +=
+                        new Tap(InternalSlides.First()) { NoteSpecialState = SpecialState.Normal }.Compose(format) +
+                        "\n";
                 else if (SlideStart != null) result += SlideStart.Compose(format);
                 separateSymbol = "\n";
-                for (var i = 0; i < InternalSlides.Count; i++)
+                for (int i = 0; i < InternalSlides.Count; i++)
                     if (i < InternalSlides.Count - 1)
                         result += InternalSlides[i].Compose(format) + separateSymbol;
                     else result += InternalSlides[i].Compose(format);

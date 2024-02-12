@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using static MaiLib.ChartEnum;
+
 namespace MaiLib;
 
 public class TimeDuration : ICodeBlock

@@ -1,5 +1,6 @@
 using static MaiLib.NoteEnum;
 using static MaiLib.TokenEnum;
+
 namespace MaiLib
 {
     public class SimaiScanner
@@ -11,7 +12,12 @@ namespace MaiLib
 
         public char? CurrentChar { get; private set; }
 
-        public char NextChar { get => IncomingChart is null || LineNum >= IncomingChart.Length || CharNum >= IncomingChart[LineNum].Length ? ' ' : IncomingChart[LineNum][CharNum]; }
+        public char NextChar
+        {
+            get => IncomingChart is null || LineNum >= IncomingChart.Length || CharNum >= IncomingChart[LineNum].Length
+                ? ' '
+                : IncomingChart[LineNum][CharNum];
+        }
 
         public SimaiScanner()
         {
@@ -44,7 +50,8 @@ namespace MaiLib
 
         public void ScanAndAdvance()
         {
-            if (IncomingChart is null) throw new NullReferenceException("The scanner is not provided with valid chart to scan.");
+            if (IncomingChart is null)
+                throw new NullReferenceException("The scanner is not provided with valid chart to scan.");
             if (LineNum < IncomingChart.Length)
             {
                 if (IncomingChart[LineNum].Length == 0) CurrentToken = TokenType.BLANK;
@@ -187,6 +194,7 @@ namespace MaiLib
 
                     CurrentChar = IncomingChart[LineNum][CharNum];
                 }
+
                 if (CharNum < IncomingChart[LineNum].Length - 1)
                 {
                     CharNum++;
@@ -204,7 +212,7 @@ namespace MaiLib
     public class UnexpectedCharacterException : Exception
     {
         public UnexpectedCharacterException(int lineNum, int charNum, char token) :
-        base($"At Line {lineNum}: Unexpected char {token} at Line {lineNum} Char {charNum}.")
+            base($"At Line {lineNum}: Unexpected char {token} at Line {lineNum} Char {charNum}.")
         {
         }
     }

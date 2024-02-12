@@ -14,13 +14,13 @@ public class Ma2Tokenizer : ITokenizer
 
     public string[] Tokens(string location)
     {
-        var result = File.ReadAllLines(location);
+        string[]? result = File.ReadAllLines(location);
         return result;
     }
 
     public string[] TokensFromText(string text)
     {
-        var result = text.Split("\n");
+        string[]? result = text.Split("\n");
         return result;
     }
 }

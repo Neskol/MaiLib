@@ -1,5 +1,6 @@
 using System.Text;
 using static MaiLib.ChartEnum;
+
 namespace MaiLib;
 
 public class TouchNote : ICodeBlock

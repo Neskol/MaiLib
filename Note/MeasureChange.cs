@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static NoteEnum;
 using static ChartEnum;
 
@@ -8,6 +9,7 @@ using static ChartEnum;
 public class MeasureChange : Note
 {
     #region Constructors
+
     /// <summary>
     ///     Construct Empty
     /// </summary>
@@ -46,6 +48,7 @@ public class MeasureChange : Note
         Quaver = takeIn.Quaver;
         Update();
     }
+
     #endregion
 
     /// <summary>

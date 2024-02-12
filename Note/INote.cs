@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static MaiLib.ChartEnum;
 
 /// <summary>

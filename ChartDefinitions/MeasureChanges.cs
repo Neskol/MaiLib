@@ -6,6 +6,7 @@
 public class MeasureChanges
 {
     #region Constructors
+
     /// <summary>
     ///     Construct an empty Measure Change
     /// </summary>
@@ -61,6 +62,7 @@ public class MeasureChanges
         Beats = beats;
         ChangeNotes = new List<MeasureChange>();
     }
+
     #endregion
 
     public List<int> Bar { get; }
@@ -68,6 +70,7 @@ public class MeasureChanges
     public List<int> Quavers { get; }
     public List<int> Beats { get; }
     public List<MeasureChange> ChangeNotes { get; }
+
     public int InitialQuavers
     {
         get
@@ -114,7 +117,7 @@ public class MeasureChanges
 
     public bool CheckValidity()
     {
-        var result = Bar.IndexOf(0) == 0;
+        bool result = Bar.IndexOf(0) == 0;
         result = result && Tick.IndexOf(0) == 0;
         result = result && !Quavers[0].Equals(null);
         result = result && !Beats[0].Equals(null);
@@ -123,11 +126,11 @@ public class MeasureChanges
 
     public string Compose()
     {
-        var result = "";
+        string? result = "";
         if (Bar.Count == 0)
             result += "MET" + "\t" + 0 + "\t" + 0 + "\t" + 4 + "\t" + 4 + "\n";
         else
-            for (var i = 0; i < Bar.Count; i++)
+            for (int i = 0; i < Bar.Count; i++)
                 result += "MET" + "\t" + Bar[i] + "\t" + Tick[i] + "\t" + Quavers[i] + "\t" + Beats[i] + "\n";
         return result;
     }

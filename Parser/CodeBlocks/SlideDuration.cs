@@ -9,12 +9,12 @@ public class SlideDuration : ICodeBlock
     {
         MeasureDuration = measureDuration;
     }
-    
+
     public SlideDuration(SlideTimeDuration slideTimeDuration)
     {
         SlideTimeDuration = slideTimeDuration;
     }
-    
+
     public string Compose(ChartEnum.ChartVersion chartVersion)
     {
         if (MeasureDuration is not null)
@@ -25,6 +25,7 @@ public class SlideDuration : ICodeBlock
         {
             return "[" + SlideTimeDuration.Compose(chartVersion) + "]";
         }
-        else throw new ICodeBlock.ComponentMissingException("SLIDE-DURATION", "MEASURE-DURATION OR SLIDE-TIME-DURATION");
+        else
+            throw new ICodeBlock.ComponentMissingException("SLIDE-DURATION", "MEASURE-DURATION OR SLIDE-TIME-DURATION");
     }
 }

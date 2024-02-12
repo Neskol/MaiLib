@@ -23,7 +23,7 @@ internal interface IChart
     string Compose();
 
     /// <summary>
-    /// Temporarily export this chart into given format
+    ///     Temporarily export this chart into given format
     /// </summary>
     /// <param name="chartVersion">Assigned chart format</param>
     /// <returns>String representation of this chart in assigned format</returns>
@@ -62,16 +62,15 @@ internal interface IChart
     void ExtractSlideEachGroup();
 
     /// <summary>
-    /// Composes slides into slide groups to deal with connected slides
+    ///     Composes slides into slide groups to deal with connected slides
     /// </summary>
     /// <exception cref="NullReferenceException">Returns exceptions when a note cannot be casted into slide group</exception>
     /// <exception cref="InvalidOperationException">Returns exceptions when missing slides after composing</exception>
     void ComposeSlideGroup();
 
     /// <summary>
-    /// Composes slides into groups when they have same start time
+    ///     Composes slides into groups when they have same start time
     /// </summary>
     /// <exception cref="InvalidOperationException">Returns exceptions when note cannot be casted into required types</exception>
     void ComposeSlideEachGroup();
-
 }

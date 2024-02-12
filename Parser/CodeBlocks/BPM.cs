@@ -1,4 +1,5 @@
 ﻿using static MaiLib.ChartEnum;
+
 namespace MaiLib;
 
 public class BPM : ICodeBlock
@@ -20,9 +21,9 @@ public class BPM : ICodeBlock
         switch (chartVersion)
         {
             case ChartVersion.Simai:
-                case ChartVersion.SimaiFes:
-                default:
-                return $"({Math.Round(Speed,4)})";
+            case ChartVersion.SimaiFes:
+            default:
+                return $"({Math.Round(Speed, 4)})";
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Text;
 using static MaiLib.ChartEnum;
 
 namespace MaiLib;
+
 public class BeginSeq : ICodeBlock
 {
     public BPM BPM { get; private set; }

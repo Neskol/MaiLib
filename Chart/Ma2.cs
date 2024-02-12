@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static ChartEnum;
 using System.Text;
 
@@ -40,8 +41,8 @@ public class Ma2 : Chart, ICompiler
     /// <param name="location">MA2 location</param>
     public Ma2(string location)
     {
-        var tokens = new Ma2Tokenizer().Tokens(location);
-        var takenIn = new Ma2Parser().ChartOfToken(tokens);
+        string[]? tokens = new Ma2Tokenizer().Tokens(location);
+        Chart? takenIn = new Ma2Parser().ChartOfToken(tokens);
         Notes = new List<Note>(takenIn.Notes);
         BPMChanges = new BPMChanges(takenIn.BPMChanges);
         MeasureChanges = new MeasureChanges(takenIn.MeasureChanges);
@@ -58,7 +59,7 @@ public class Ma2 : Chart, ICompiler
     /// <param name="tokens">Tokens given</param>
     public Ma2(string[] tokens)
     {
-        var takenIn = new Ma2Parser().ChartOfToken(tokens);
+        Chart? takenIn = new Ma2Parser().ChartOfToken(tokens);
         Notes = takenIn.Notes;
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
@@ -89,7 +90,7 @@ public class Ma2 : Chart, ICompiler
 
     public override bool CheckValidity()
     {
-        var result = this is null;
+        bool result = this is null;
         // Not yet implemented
         return result;
     }
@@ -108,6 +109,7 @@ public class Ma2 : Chart, ICompiler
             builder.Append($"T_REC_BHO\t{BreakHoldNum}\n");
             builder.Append($"T_REC_BXH\t{BreakExHoldNum}\n");
         }
+
         builder.Append($"T_REC_STR\t{NormalSlideStartNum}\n");
         builder.Append($"T_REC_BST\t{BreakSlideStartNum}\n");
         builder.Append($"T_REC_XST\t{ExSlideStartNum}\n");
@@ -175,8 +177,8 @@ public class Ma2 : Chart, ICompiler
                 result.Append(MeasureChanges.Compose());
                 result.Append("\n");
 
-                foreach (var bar in StoredChart)
-                foreach (var x in bar)
+                foreach (List<Note>? bar in StoredChart)
+                foreach (Note? x in bar)
                     if (!x.Compose(ChartVersion).Equals(""))
                         result.Append(x.Compose(ChartVersion) + "\n");
                 result.Append("\n");

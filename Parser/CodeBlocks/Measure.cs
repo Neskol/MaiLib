@@ -1,4 +1,5 @@
 ﻿using static MaiLib.ChartEnum;
+
 namespace MaiLib;
 
 public class Measure : ICodeBlock

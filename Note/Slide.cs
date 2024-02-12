@@ -1,4 +1,5 @@
 ﻿namespace MaiLib;
+
 using static MaiLib.NoteEnum;
 using static MaiLib.ChartEnum;
 
@@ -12,7 +13,9 @@ public class Slide : Note
     /// <summary>
     ///     Empty Constructor
     /// </summary>
-    public Slide() { }
+    public Slide()
+    {
+    }
 
     /// <summary>
     ///     Construct a Slide Note (Valid only if Start Key matches a start!)
@@ -35,7 +38,7 @@ public class Slide : Note
         WaitLength = waitLength;
         LastLength = lastLength;
         EndKey = endKey;
-        Delayed = WaitLength != 96;
+        // Delayed = WaitLength != 96;
         Update();
     }
 
@@ -49,9 +52,10 @@ public class Slide : Note
     /// <param name="key">0-7</param>
     /// <param name="bar">Bar in</param>
     /// <param name="startTick">Start Time</param>
-    /// <param name="lastLength">Last Time</param>
+    /// <param name="waitTime">Wait Time in Seconds</param>
+    /// <param name="lastTime">Last Time in Seconds</param>
     /// <param name="endKey">0-7</param>
-    public Slide(NoteType noteType, int bar, int startTick, int waitTime, int lastTime, string key, string endKey)
+    public Slide(NoteType noteType, int bar, int startTick, double waitTime, double lastTime, string key, string endKey)
     {
         NoteType = noteType;
         Key = key;
@@ -60,8 +64,8 @@ public class Slide : Note
         CalculatedWaitTime = waitTime;
         CalculatedLastTime = lastTime;
         EndKey = endKey;
-        Delayed = WaitLength != 96;
-        Update();
+        // Delayed = WaitLength != 96;
+        // Update(); // This update could cause issue when change table is not yet assigned or update.
     }
 
     /// <summary>
@@ -72,7 +76,10 @@ public class Slide : Note
     {
         inTake.CopyOver(this);
     }
+
     #endregion
+
+    public override bool Delayed => WaitLength != 96;
 
     public override NoteGenre NoteGenre => NoteGenre.SLIDE;
 
@@ -88,7 +95,7 @@ public class Slide : Note
 
     public override string Compose(ChartVersion format)
     {
-        var result = "";
+        string? result = "";
         switch (format)
         {
             case ChartVersion.Simai:
@@ -97,6 +104,7 @@ public class Slide : Note
                 switch (NoteType)
                 {
                     #region DetailedSlideTypes
+
                     case NoteType.SI_:
                         result += "-";
                         break;
@@ -142,7 +150,8 @@ public class Slide : Note
                     case NoteType.SXR:
                         result += "qq";
                         break;
-                        #endregion
+
+                    #endregion
                 }
 
                 result += (EndKeyNum + 1).ToString();
@@ -156,21 +165,24 @@ public class Slide : Note
                     //result += GenerateAppropriateLength(this.LastLength, this.BPM);
                     if (NoteSpecialState != SpecialState.ConnectingSlide)
                         result += GenerateAppropriateLength(LastLength, BPM);
-                    else result += GenerateAppropriateLength(FixedLastLength);
+                    else result += GenerateAppropriateLength(FixedLastLength); //TODO: FIX THIS LAST LENGTH
                 }
                 else
                 {
                     result += GenerateAppropriateLength(LastLength);
                 }
+
                 if (format is ChartVersion.Debug)
                 {
                     result += "_" + this.Tick;
                     result += "_" + this.Key;
                 }
+
                 break;
             case ChartVersion.Ma2_103:
-                result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength + "\t" +
-                     EndKey;
+                result = NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength +
+                         "\t" +
+                         EndKey;
                 break;
             case ChartVersion.Ma2_104:
                 switch (NoteSpecialState)
@@ -191,10 +203,13 @@ public class Slide : Note
                         result += "NM";
                         break;
                 }
-                result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength + "\t" +
-                 EndKey;
+
+                result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + WaitLength + "\t" + LastLength +
+                          "\t" +
+                          EndKey;
                 break;
         }
+
         return result;
     }
 
@@ -205,7 +220,7 @@ public class Slide : Note
     /// <returns>Infection point of this note</returns>
     public static int GenerateInflection(Note x)
     {
-        var result = x.KeyNum + 1;
+        int result = x.KeyNum + 1;
         if (x.NoteType is NoteType.SLR)
             result += 2;
         else if (x.NoteType is NoteType.SLL) result -= 2;

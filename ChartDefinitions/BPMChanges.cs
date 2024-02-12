@@ -3,6 +3,7 @@
 public class BPMChanges
 {
     #region Constructors
+
     /// <summary>
     ///     Construct with changes listed
     /// </summary>
@@ -12,7 +13,7 @@ public class BPMChanges
     public BPMChanges(List<int> bar, List<int> tick, List<double> bpm)
     {
         ChangeNotes = new List<BPMChange>();
-        for (var i = 0; i < bar.Count; i++)
+        for (int i = 0; i < bar.Count; i++)
         {
             BPMChange candidate = new(bar[i], tick[i], bpm[i]);
             ChangeNotes.Add(candidate);
@@ -37,8 +38,9 @@ public class BPMChanges
     public BPMChanges(BPMChanges takenIn)
     {
         ChangeNotes = new List<BPMChange>();
-        foreach (var candidate in takenIn.ChangeNotes) ChangeNotes.Add(candidate);
+        foreach (BPMChange? candidate in takenIn.ChangeNotes) ChangeNotes.Add(candidate);
     }
+
     #endregion
 
     public List<BPMChange> ChangeNotes { get; private set; }
@@ -52,8 +54,8 @@ public class BPMChanges
         {
             if (ChangeNotes.Count > 4)
             {
-                var result = "BPM_DEF" + "\t";
-                for (var x = 0; x < 4; x++)
+                string? result = "BPM_DEF" + "\t";
+                for (int x = 0; x < 4; x++)
                 {
                     result = result + string.Format("{0:F3}", ChangeNotes[x].BPM);
                     result += "\t";
@@ -63,9 +65,9 @@ public class BPMChanges
             }
             else
             {
-                var times = 0;
-                var result = "BPM_DEF" + "\t";
-                foreach (var x in ChangeNotes)
+                int times = 0;
+                string? result = "BPM_DEF" + "\t";
+                foreach (BPMChange? x in ChangeNotes)
                 {
                     result += string.Format("{0:F3}", x.BPM);
                     result += "\t";
@@ -102,7 +104,7 @@ public class BPMChanges
     {
         List<BPMChange> adjusted = new();
         Note lastNote = new Rest();
-        foreach (var x in ChangeNotes)
+        foreach (BPMChange? x in ChangeNotes)
             if (!(x.Bar == lastNote.Bar && x.Tick == lastNote.Tick && x.BPM == lastNote.BPM))
             {
                 adjusted.Add(x);
@@ -111,7 +113,7 @@ public class BPMChanges
 
         // Console.WriteLine(adjusted.Count);
         ChangeNotes = new List<BPMChange>();
-        foreach (var x in adjusted) ChangeNotes.Add(x);
+        foreach (BPMChange? x in adjusted) ChangeNotes.Add(x);
         if (ChangeNotes.Count != adjusted.Count) throw new Exception("Adjusted BPM Note number not matching");
     }
 
@@ -121,7 +123,7 @@ public class BPMChanges
     /// <returns>True if valid, false elsewise</returns>
     public bool CheckValidity()
     {
-        var result = true;
+        bool result = true;
         return result;
     }
 
@@ -131,8 +133,8 @@ public class BPMChanges
     /// <returns></returns>
     public string Compose()
     {
-        var result = "";
-        for (var i = 0; i < ChangeNotes.Count; i++)
+        string? result = "";
+        for (int i = 0; i < ChangeNotes.Count; i++)
             result += "BPM" + "\t" + ChangeNotes[i].Bar + "\t" + ChangeNotes[i].Tick + "\t" + ChangeNotes[i].BPM + "\n";
         //result += "BPM" + "\t" + bar[i] + "\t" + tick[i] + "\t" + String.Format("{0:F3}", bpm[i])+"\n";
         return result;
