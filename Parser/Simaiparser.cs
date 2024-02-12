@@ -146,12 +146,12 @@ public class SimaiParser : IParser
                 string? quaverCandidate = token.Replace("{", "").Replace("}", "");
                 result = new MeasureChange(bar, tick, int.Parse(quaverCandidate));
             }
-            else if (!token.Contains('!') && !token.Equals("E") && !token.Equals(""))
+            else if (!(token.Contains('!') || token.Contains('?')) && !token.Equals("E") && !token.Equals(""))
             {
                 result = TapOfToken(token, bar, tick, bpm);
                 if (result.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START) PreviousSlideStart = (Tap)result;
             }
-            else if (token.Contains('!'))
+            else if (token.Contains('!') || token.Contains('?'))
             {
                 PreviousSlideStart = TapOfToken(token, bar, tick, bpm);
             }
