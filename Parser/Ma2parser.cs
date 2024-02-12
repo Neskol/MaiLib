@@ -117,14 +117,6 @@ public class Ma2Parser : IParser
                     BPMChange? candidate = new BPMChange(int.Parse(bpmCandidate[1]),
                         int.Parse(bpmCandidate[2]),
                         double.Parse(bpmCandidate[3]));
-                    // foreach (BPMChange change in bpmChanges.ChangeNotes)
-                    // {
-                    //     if (change.TickStamp <= candidate.LastTickStamp)
-                    //     {
-                    //         candidate.BPMChangeNotes.Add(change);
-                    //         Console.WriteLine("A BPM change note was added with overall tick of "+change.TickStamp + " with bpm of "+change.BPM);
-                    //     }
-                    // }
                     bpmChanges.Add(candidate);
                     bpmChanges.Update();
                 }
@@ -139,14 +131,6 @@ public class Ma2Parser : IParser
                 else if (isNOTE)
                 {
                     Note? candidate = NoteOfToken(x);
-                    // foreach (BPMChange change in bpmChanges.ChangeNotes)
-                    // {
-                    //     if (change.TickStamp <= candidate.LastTickStamp)
-                    //     {
-                    //         candidate.BPMChangeNotes.Add(change);
-                    //         Console.WriteLine("A BPM change note was added with overall tick of " + change.TickStamp + " with bpm of " + change.BPM);
-                    //     }
-                    // }
                     notes.Add(candidate);
                 }
             }
@@ -230,15 +214,6 @@ public class Ma2Parser : IParser
 
         if (!fesNoteState.Equals(""))
         {
-            // bool noteTypeIsValid = Enum.TryParse(noteTypeCandidate, out NoteType noteTypeEnum);
-            // if (noteTypeIsValid)
-            // {
-            //     result.NoteType = noteTypeEnum;
-            // }
-            // else
-            // {
-            //     throw new Exception("Given note type is invalid. Note Type provided: "+noteTypeCandidate);
-            // }
             switch (fesNoteState)
             {
                 case "BR":
@@ -319,10 +294,6 @@ public class Ma2Parser : IParser
         if (!noteTypeIsValid)
             throw new Exception("Given Note Type is not valid. Given: " + candidate[(int)DxTapParam.Type]);
         if (!slideStart.Key.Equals(candidate[(int)StdParam.Key]) || slideStart.Bar != bar || slideStart.Tick != tick)
-            //Console.WriteLine("Expected key: " + candidate[(int)StdParam.KeyOrParam]);
-            //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
-            //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
-            //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
             PreviousSlideStart = new Tap(NoteType.NST, bar, tick, candidate[(int)StdParam.Key]);
         Slide? result = new Slide(typeCandidate,
             bar,
@@ -342,10 +313,6 @@ public class Ma2Parser : IParser
         int tick = int.Parse(candidate[(int)StdParam.Tick]);
         if (!PreviousSlideStart.Key.Equals(candidate[(int)StdParam.Key]) || PreviousSlideStart.Bar != bar ||
             PreviousSlideStart.Tick != tick)
-            //Console.WriteLine("Expected key: " + candidate[(int)StdParam.Key]);
-            //Console.WriteLine("Actual key: " + PreviousSlideStart.Key);
-            //Console.WriteLine("Previous Slide Start: " + PreviousSlideStart.Compose((int)StdParam.Bar));
-            //throw new Exception("THE SLIDE START DOES NOT MATCH WITH THE DEFINITION OF THIS NOTE!");
             PreviousSlideStart = new Tap(NoteType.NST, bar, tick, candidate[(int)StdParam.Key]);
         return SlideOfToken(token, bar, tick, PreviousSlideStart, 0.0);
     }

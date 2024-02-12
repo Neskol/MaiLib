@@ -70,20 +70,7 @@ public class SlideGroup : Slide
     public override string Compose(ChartVersion format)
     {
         string? result = "";
-        // if (format == 0)
-        // {
-        //     foreach (var x in InternalSlides)
-        //         // Note localSlideStart = x.SlideStart != null ? x.SlideStart : new Tap("NST", x.Bar, x.Tick, x.Key);
-        //         result += x.Compose(format);
-        // }
-        // else
-        // {
-        //     Console.WriteLine("Invalid slide group located at bar " + Bar + " tick " + Tick);
-        //     throw new InvalidOperationException("MA2 IS NOT COMPATIBLE WITH SLIDE GROUP");
-        // }
-        // if (InternalSlides.Count > 0) InternalSlides.First().NoteSpecialState = NoteSpecialState;
         foreach (Slide? x in InternalSlides)
-            // Note localSlideStart = x.SlideStart != null ? x.SlideStart : new Tap("NST", x.Bar, x.Tick, x.Key);
             result += x.Compose(format);
 
         return result;

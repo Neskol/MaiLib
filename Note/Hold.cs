@@ -125,10 +125,7 @@ public class Hold : Note
     public override NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.HOLD;
 
     //TODO: REWRITE THIS
-    public override bool CheckValidity()
-    {
-        return true;
-    }
+    public override bool CheckValidity() => true;
 
     public override string Compose(ChartVersion format)
     {
@@ -242,9 +239,5 @@ public class Hold : Note
         return result;
     }
 
-    public override Note NewInstance()
-    {
-        Note result = new Hold(this);
-        return result;
-    }
+    public override Note NewInstance() => new Hold(this);
 }
