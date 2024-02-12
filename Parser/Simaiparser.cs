@@ -469,6 +469,7 @@ public class SimaiParser : IParser
         {
             result.NoteSpecialState = SpecialState.ConnectingSlide;
             result.Key = connectedSlideStart.ToString();
+            if (connectedSlideStart == -1) throw new InvalidOperationException("This connecting start does not have start key");
             result.WaitLength = 0;
         }
         else result.NoteSpecialState = noteSpecialState;
