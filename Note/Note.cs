@@ -1109,6 +1109,17 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         return 60 / bpm * 4 / 384;
     }
 
+    /// <summary>
+    ///     Get BPM Time Tick unit of BPM
+    /// </summary>
+    /// <param name="bpm">BPM to calculate</param>
+    /// <param name="definition">Specified resolution - usually 384</param>
+    /// <returns>BPM Tick Unit of BPM</returns>
+    public static double GetBPMTimeUnit(double bpm, int definition)
+    {
+        return 60 / bpm * 4 / definition;
+    }
+
     public override bool Equals(object? obj)
     {
         bool result = (this == null && obj == null) || (this != null && obj != null);

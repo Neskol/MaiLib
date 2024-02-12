@@ -51,6 +51,7 @@ public enum DxHoldParam
 public class Ma2Parser : IParser
 {
     private Tap PreviousSlideStart;
+    private static int _maximumDefinition = 384;
 
     /// <summary>
     ///     Empty constructor
@@ -221,7 +222,7 @@ public class Ma2Parser : IParser
             result = HoldOfToken(token);
         else if (isSlide) result = SlideOfToken(token);
         // result.SlideStart = PreviousSlideStart;
-        if (result.Tick == 384)
+        if (result.Tick == _maximumDefinition)
         {
             result.Tick = 0;
             result.Bar++;

@@ -122,9 +122,9 @@ public class SlideGroup : Slide
                 if (x.LastLength == 0)
                     x.LastLength = InternalSlides.Last().LastLength;
 
-            while (Tick >= 384)
+            while (Tick >= Definition)
             {
-                Tick -= 384;
+                Tick -= Definition;
                 Bar++;
             }
 
