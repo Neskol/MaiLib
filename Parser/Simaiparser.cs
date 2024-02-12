@@ -51,11 +51,10 @@ public class SimaiParser : IParser
                     // {
                     //     Console.WriteLine("This is bar 6");
                     // }
-                    Note noteCandidate = NoteOfToken(eachNote, bar, tick, currentBPM);
-                    bool containsBPM = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM;
-                    bool containsMeasure = noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE;
+                    bool containsGraceNote = eachNote.Contains('%');
+                    Note noteCandidate = containsGraceNote ? NoteOfToken(eachNote.Replace("%",""), bar, tick, currentBPM) : NoteOfToken(eachNote, bar, tick, currentBPM);
 
-                    if (containsBPM)
+                    if (noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
                         // string bpmCandidate = eachNote.Replace("(", "").Replace(")", "");
                         // noteCandidate = new BPMChange(bar, tick, Double.Parse(bpmCandidate));
@@ -65,7 +64,7 @@ public class SimaiParser : IParser
                         currentBPM = noteCandidate.BPM;
                         bpmChanges.Add((BPMChange)noteCandidate);
                     }
-                    else if (containsMeasure)
+                    else if (noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE)
                     {
                         string? quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
                         tickStep = MaximumDefinition / int.Parse(quaverCandidate);
@@ -88,6 +87,17 @@ public class SimaiParser : IParser
                         }
 
                         notes.Add(noteCandidate);
+                    }
+
+                    // Tick rework
+                    if (containsGraceNote)
+                    {
+                        tick ++;
+                        while (tick >= MaximumDefinition)
+                        {
+                            tick -= MaximumDefinition;
+                            bar++;
+                        }
                     }
                 }
             }
@@ -577,6 +587,11 @@ public class SimaiParser : IParser
         {
             string[]? candidate = token.Split("/");
             foreach (string? tokenCandidate in candidate) result.AddRange(EachGroupOfToken(tokenCandidate));
+        }
+        else if (token.Contains("'"))
+        {
+            string candidate = token.Replace("'", "%/");
+            result.AddRange(EachGroupOfToken(candidate));
         }
         else if (token.Contains(")") || token.Contains("}"))
         {
