@@ -38,7 +38,7 @@ public class Slide : Note
         WaitLength = waitLength;
         LastLength = lastLength;
         EndKey = endKey;
-        Delayed = WaitLength != 96;
+        // Delayed = WaitLength != 96;
         Update();
     }
 
@@ -64,7 +64,7 @@ public class Slide : Note
         CalculatedWaitTime = waitTime;
         CalculatedLastTime = lastTime;
         EndKey = endKey;
-        Delayed = WaitLength != 96;
+        // Delayed = WaitLength != 96;
         // Update(); // This update could cause issue when change table is not yet assigned or update.
     }
 
@@ -78,6 +78,8 @@ public class Slide : Note
     }
 
     #endregion
+
+    public override bool Delayed => WaitLength != 96;
 
     public override NoteGenre NoteGenre => NoteGenre.SLIDE;
 

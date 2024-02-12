@@ -51,7 +51,7 @@ public class SlideEachSet : Note
             Tick = startTime;
             WaitLength = InternalSlides.Last().WaitLength;
             LastLength = InternalSlides.Last().LastLength;
-            Delayed = WaitLength != 96;
+            // Delayed = WaitLength != 96;
         }
 
         Update();

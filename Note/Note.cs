@@ -210,7 +210,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     Stores if the note is delayed
     /// </summary>
-    public bool Delayed { get; set; }
+    public virtual bool Delayed => false;
 
     /// <summary>
     ///     The BPM
