@@ -708,7 +708,8 @@ public class SimaiParser : IParser
         static string KeyCandidate(string token)
         {
             string result = "";
-            for (int i = 0; i < token.Length && result.Length < 3; i++)
+            int inflectionV = token.Contains('V') ? 2 : 1; // V slide involves VXX
+            for (int i = 0; i < token.Length && result.Length < inflectionV; i++)
                 if (!IsSlideNotation(token[i]) && char.IsNumber(token[i]))
                     result += token[i].ToString();
             if (result.Length > 1) result = result[1].ToString();
