@@ -48,7 +48,9 @@ public class SimaiParser : IParser
                 {
                     currentToken = eachNote;
                     bool containsGraceNote = eachNote.Contains('%');
-                    Note noteCandidate = containsGraceNote ? NoteOfToken(eachNote.Replace("%",""), bar, tick, currentBPM) : NoteOfToken(eachNote, bar, tick, currentBPM);
+                    Note noteCandidate = containsGraceNote
+                        ? NoteOfToken(eachNote.Replace("%", ""), bar, tick, currentBPM)
+                        : NoteOfToken(eachNote, bar, tick, currentBPM);
 
                     if (noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
@@ -83,7 +85,7 @@ public class SimaiParser : IParser
                     // Tick rework
                     if (containsGraceNote)
                     {
-                        tick ++;
+                        tick++;
                         while (tick >= MaximumDefinition)
                         {
                             tick -= MaximumDefinition;
@@ -157,6 +159,7 @@ public class SimaiParser : IParser
                 PreviousSlideStart = TapOfToken(token, bar, tick, bpm);
             }
         }
+
         return result;
     }
 
@@ -245,6 +248,7 @@ public class SimaiParser : IParser
             key = keyCandidate.Replace("h", "");
             key = (int.Parse(key) - 1).ToString();
         }
+
         double lastTime = GetTimeCandidates(bpm, $"[{sustainCandidate}]")[1];
         Hold candidate = noteType is NoteType.THO
             ? new Hold(noteType, bar, tick, key, lastTime, specialEffect, "M1")
@@ -414,10 +418,12 @@ public class SimaiParser : IParser
         {
             result.NoteSpecialState = SpecialState.ConnectingSlide;
             result.Key = connectedSlideStart.ToString();
-            if (connectedSlideStart == -1) throw new InvalidOperationException("This connecting start does not have start key");
+            if (connectedSlideStart == -1)
+                throw new InvalidOperationException("This connecting start does not have start key");
             result.WaitLength = 0;
         }
         else result.NoteSpecialState = noteSpecialState;
+
         return (Slide)result;
     }
 
@@ -770,6 +776,7 @@ public class SimaiParser : IParser
                 else result[i] = ReplaceDuration(result[i], newDurationCandidate);
             }
         }
+
         return result;
     }
 
@@ -913,6 +920,7 @@ public class SimaiParser : IParser
         }
         else return GetTimeCandidates(bpm, input);
     }
+
     #endregion
 }
 
