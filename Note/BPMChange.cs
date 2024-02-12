@@ -73,10 +73,7 @@ public class BPMChange : Note
     public override NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.BPM;
 
 
-    public override bool CheckValidity()
-    {
-        return BPM != 0;
-    }
+    public override bool CheckValidity() => BPM != 0;
 
     public override string Compose(ChartVersion format)
     {
@@ -118,10 +115,5 @@ public class BPMChange : Note
         return result;
     }
 
-    public override int GetHashCode()
-    {
-        // string hash = this.Bar + "0" + this.Tick + "0" + this.BPM;
-        // return int.Parse(hash);
-        return base.GetHashCode();
-    }
+    public override int GetHashCode() => base.GetHashCode();
 }

@@ -321,47 +321,6 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
         Note? another = obj as Note ?? throw new NullReferenceException("Note is not defined");
 
-        #region PreviousCompareTo
-
-        //else if (this.NoteSpecificType().Equals("SLIDE")&&(this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD")) && this.Tick == another.Tick && this.bar == another.Bar)
-        //{
-        //    result = -1;
-        //}
-        //else if (this.NoteSpecificType().Equals("SLIDE_START") && (another.NoteSpecificType().Equals("TAP") || another.NoteSpecificType().Equals("HOLD")) && this.Tick == another.Tick && this.bar == another.Bar)
-        //{
-        //    Console.WriteLine("STAR AND TAP");
-        //    result = 1;
-        //    Console.WriteLine(this.NoteSpecificType() + ".compareTo(" + another.NoteSpecificType() + ") is" + result);
-        //    //Console.ReadKey();
-        //}
-        //if (this.Bar==another.Bar&&this.Tick==another.Tick)
-        //{
-        //    if (this.NoteGenre().Equals("BPM"))
-        //    {
-        //        result = -1;
-        //    }
-        //    else if (this.NoteGenre().Equals("MEASURE"))
-        //    {
-        //        result = 1;
-        //    }
-        //    else if ((this.NoteSpecificType().Equals("TAP")|| this.NoteSpecificType().Equals("HOLD"))&&another.NoteSpecificType().Equals("SLIDE_START"))
-        //    {
-        //        result= -1;
-        //    }
-        //}
-        //else
-        //{
-        //    if (this.bar != another.Bar)
-        //    {
-        //        result = this.bar.CompareTo(another.Bar);
-        //        //Console.WriteLine("this.compareTo(another) is" + result);
-        //        //Console.ReadKey();
-        //    }
-        //    else result = this.Tick.CompareTo(another.Tick);
-        //}
-
-        #endregion
-
         if (Bar != another.Bar)
         {
             result = Bar.CompareTo(another.Bar);
@@ -950,13 +909,8 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
         double bpmUnit = GetBPMTimeUnit(BPM);
         FixedLastLength = (int)double.Round(CalculatedLastTime / bpmUnit);
-
-        // string noteInformation = "This note is "+this.NoteType+", in Tick "+ this.TickStamp+", ";
-        //this.TickTimeStamp = this.GetTimeStamp(this.TickStamp);
         WaitTickStamp = TickStamp + WaitLength;
-        //this.WaitTimeStamp = this.GetTimeStamp(this.WaitTickStamp);
         LastTickStamp = WaitTickStamp + LastLength;
-        //this.LastTimeStamp = this.GetTimeStamp(this.LastTickStamp);
         if (!(NoteGenre is NoteGenre.SLIDE || NoteGenre is NoteGenre.HOLD))
             result = true;
         else if (CalculatedLastTime > 0 && CalculatedWaitTime > 0) result = true;
