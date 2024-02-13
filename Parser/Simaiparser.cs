@@ -513,9 +513,9 @@ public class SimaiParser : IParser
             string[]? candidate = token.Split("/");
             foreach (string? tokenCandidate in candidate) result.AddRange(EachGroupOfToken(tokenCandidate));
         }
-        else if (token.Contains("'"))
+        else if (token.Contains('`'))
         {
-            string candidate = token.Replace("'", "%/");
+            string candidate = token.Replace("`", "%/");
             result.AddRange(EachGroupOfToken(candidate));
         }
         else if (token.Contains(")") || token.Contains("}"))
