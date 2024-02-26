@@ -905,7 +905,8 @@ public class SimaiParser : IParser
             throw new InvalidOperationException("GIVEN CANDIDATE DOES NOT CONTAIN DURATION SYMBOL [ AND ]");
         string durationCandidate = input.Replace("[", "").Replace("]", "");
         bool isMeasureDuration = input.Contains(':') && !input.Contains('#'); // [Quaver : Beats]
-
+        bool isSlideBpmMeasureDuration =
+            input.Contains("##") && input.Contains('#') && input.Contains(':'); // [WaitTime ## BPM # Quaver : Beats]
         if (isMeasureDuration && isSlide)
         {
             double quaver = double.Parse(durationCandidate.Split(':')[0]);
