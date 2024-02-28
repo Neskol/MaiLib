@@ -421,6 +421,7 @@ public class SimaiParser : IParser
             if (connectedSlideStart == -1)
                 throw new InvalidOperationException("This connecting start does not have start key");
             result.WaitLength = 0;
+            result.CalculatedWaitTime = 0;
         }
         else result.NoteSpecialState = noteSpecialState;
 
@@ -518,7 +519,7 @@ public class SimaiParser : IParser
             string candidate = token.Replace("`", "%/");
             result.AddRange(EachGroupOfToken(candidate));
         }
-        else if (token.Contains(")") || token.Contains("}"))
+        else if (token.Contains(')') || token.Contains('}'))
         {
             List<string>? resultCandidate = ExtractParentheses(token);
             List<string> fixedCandidate = new();
@@ -840,9 +841,10 @@ public class SimaiParser : IParser
         string durationCandidate = input.Replace("[", "").Replace("]", "");
         bool isMeasureDuration = input.Contains(':') && !input.Contains('#'); // [Quaver : Beats]
         bool isSlideTimedDuration = input.Contains("##") && !input.Contains(':'); // [WaitTime ## LastTime]
-        bool isHoldTimedDuration = !isSlideTimedDuration && input.Contains("#") && !input.Contains(':'); // [# LastTime]
+        bool isHoldTimedDuration = !isSlideTimedDuration && input.Contains('#') && !input.Contains(':'); // [# LastTime]
         bool isSlideBpmMeasureDuration =
             input.Contains("##") && input.Contains('#') && input.Contains(':'); // [WaitTime ## BPM # Quaver : Beats]
+
         bool isHoldBpmMeasureDuration =
             !isSlideBpmMeasureDuration && input.Contains('#') && input.Contains(':'); // [BPM # Quaver : Beats]
 
@@ -850,9 +852,11 @@ public class SimaiParser : IParser
         {
             double quaver = double.Parse(durationCandidate.Split(':')[0]);
             double beat = double.Parse(durationCandidate.Split(':')[1]);
+            // double waitTimeCandidate = Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * 96;
             double lastTimeCandidate =
                 Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * (MaximumDefinition / quaver) * beat;
             result[0] = 0;
+            // result[0] = waitTimeCandidate;
             result[1] = lastTimeCandidate;
             return result;
         }
@@ -864,8 +868,9 @@ public class SimaiParser : IParser
         }
         else if (isHoldTimedDuration)
         {
-            result[0] = 0;
-            result[1] = double.Parse(durationCandidate.Replace("#", ""));
+            bool isSlideReassignedFormat = durationCandidate.Split('#')[0].Length != 0;
+            result[0] = isSlideReassignedFormat ? Chart.GetBPMTimeUnit(double.Parse(durationCandidate.Split('#')[0]), MaximumDefinition) * 96 : 0;
+            result[1] = isSlideReassignedFormat ? double.Parse(durationCandidate.Split('#')[1]) : double.Parse(durationCandidate.Replace("#", ""));
             return result;
         }
         else if (isSlideBpmMeasureDuration)
@@ -888,9 +893,12 @@ public class SimaiParser : IParser
             string extractedQuaverBeatCandidate = durationCandidate.Split('#')[1];
             double quaverCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[0]);
             double beatCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[1]);
+            // double waitTimeCandidate =
+            //     Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * 96;
             double lastTimeCandidate =
                 Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * (MaximumDefinition / quaverCandidate) *
                 beatCandidate;
+            // result[0] = waitTimeCandidate;
             result[0] = 0;
             result[1] = lastTimeCandidate;
             return result;
@@ -900,26 +908,32 @@ public class SimaiParser : IParser
 
     public static double[] GetTimeCandidates(double bpm, string input, bool isSlide)
     {
-        double[] result = new double[2];
-        if (!(input.Contains('[') || input.Contains(']')))
-            throw new InvalidOperationException("GIVEN CANDIDATE DOES NOT CONTAIN DURATION SYMBOL [ AND ]");
+        double[] result = GetTimeCandidates(bpm, input);
+        // if (!(input.Contains('[') || input.Contains(']')))
+        //     throw new InvalidOperationException("GIVEN CANDIDATE DOES NOT CONTAIN DURATION SYMBOL [ AND ]");
         string durationCandidate = input.Replace("[", "").Replace("]", "");
         bool isMeasureDuration = input.Contains(':') && !input.Contains('#'); // [Quaver : Beats]
+        bool isSlideTimedDuration = input.Contains("##") && !input.Contains(':'); // [WaitTime ## LastTime]
+        bool isHoldTimedDuration = !isSlideTimedDuration && input.Contains('#') && !input.Contains(':'); // [# LastTime]
         bool isSlideBpmMeasureDuration =
             input.Contains("##") && input.Contains('#') && input.Contains(':'); // [WaitTime ## BPM # Quaver : Beats]
-        if (isMeasureDuration && isSlide)
+        bool isHoldBpmMeasureDuration =
+            !isSlideBpmMeasureDuration && input.Contains('#') && input.Contains(':'); // [BPM # Quaver : Beats]
+        if ((isMeasureDuration || isHoldTimedDuration) && isSlide)
         {
-            double quaver = double.Parse(durationCandidate.Split(':')[0]);
-            double beat = double.Parse(durationCandidate.Split(':')[1]);
             double waitTimeCandidate =
                 Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * 96;
-            double lastTimeCandidate =
-                Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * (MaximumDefinition / quaver) * beat;
             result[0] = waitTimeCandidate;
-            result[1] = lastTimeCandidate;
-            return result;
+
         }
-        else return GetTimeCandidates(bpm, input);
+        else if (isHoldBpmMeasureDuration && isSlide)
+        {
+            double bpmCandidate = double.Parse(durationCandidate.Split('#')[0]);
+            double waitTimeCandidate =
+                Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * 96;
+            result[0] = waitTimeCandidate;
+        }
+        return result;
     }
 
     #endregion
