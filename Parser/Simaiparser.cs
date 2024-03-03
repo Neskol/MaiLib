@@ -500,12 +500,7 @@ public class SimaiParser : IParser
 
     #region HeroticStaticHelperMethods
 
-    /// <summary>
-    ///     Deal with old, out-fashioned and illogical Simai Each Groups.
-    /// </summary>
-    /// <param name="token">Tokens that potentially contains each Groups</param>
-    /// <returns>List of strings that is composed with single note.</returns>
-    public static List<string> EachGroupOfToken(string token)
+    public static List<string> OldEachGroupOfToken(string token)
     {
         List<string>? result = new List<string>();
         bool isSlide = ContainsSlideNotation(token);
@@ -545,6 +540,60 @@ public class SimaiParser : IParser
             result.Add(token);
         }
 
+        return result;
+    }
+
+    /// <summary>
+    ///     Deal with old, out-fashioned and illogical Simai Each Groups. Reworked with state machine.
+    /// </summary>
+    /// <param name="token">Tokens that potentially contains each Groups</param>
+    /// <returns>List of strings that is composed with single note.</returns>
+    public static List<string> EachGroupOfToken(string token)
+    {
+        string buffer = "";
+        List<string> extractedParts = new();
+        foreach (char c in token) switch (c)
+        {
+            case '/':
+                extractedParts.Add(buffer);
+                buffer = "";
+                break;
+            case '(':
+            case '{':
+                extractedParts.Add(buffer);
+                buffer = c.ToString();
+                break;
+            case ')':
+            case '}':
+                buffer += c;
+                extractedParts.Add(buffer);
+                buffer = "";
+                break;
+            case '`':
+                buffer += '%'; // Might not be necessary since this method is reworked
+                extractedParts.Add(buffer);
+                buffer = "";
+                break;
+            default:
+                buffer += c;
+                break;
+        }
+
+        if (buffer.Length > 0) extractedParts.Add(buffer);
+
+        List<string> result = new();
+        foreach (string part in extractedParts)
+        {
+            if (ContainsSlideNotation(part))
+            {
+                result.AddRange(ExtractEachSlides(part));
+            }
+            else if (int.TryParse(part, out int _))
+            {
+                result.AddRange(part.Select(eachTap => eachTap.ToString()));
+            }
+            else result.Add(part);
+        }
         return result;
     }
 
