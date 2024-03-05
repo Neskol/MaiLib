@@ -421,6 +421,7 @@ public class SimaiParser : IParser
             if (connectedSlideStart == -1)
                 throw new InvalidOperationException("This connecting start does not have start key");
             result.WaitLength = 0;
+            result.CalculatedWaitTime = 0;
         }
         else result.NoteSpecialState = noteSpecialState;
 
@@ -500,48 +501,56 @@ public class SimaiParser : IParser
     #region HeroticStaticHelperMethods
 
     /// <summary>
-    ///     Deal with old, out-fashioned and illogical Simai Each Groups.
+    ///     Deal with old, out-fashioned and illogical Simai Each Groups. Reworked with state machine.
     /// </summary>
     /// <param name="token">Tokens that potentially contains each Groups</param>
     /// <returns>List of strings that is composed with single note.</returns>
     public static List<string> EachGroupOfToken(string token)
     {
-        List<string>? result = new List<string>();
-        bool isSlide = ContainsSlideNotation(token);
-        if (token.Contains("/"))
+        string buffer = "";
+        List<string> extractedParts = new();
+        foreach (char c in token)
+            switch (c)
+            {
+                case '/':
+                    extractedParts.Add(buffer);
+                    buffer = "";
+                    break;
+                case '(':
+                case '{':
+                    if (buffer.Length > 0) extractedParts.Add(buffer);
+                    buffer = c.ToString();
+                    break;
+                case ')':
+                case '}':
+                    buffer += c;
+                    extractedParts.Add(buffer);
+                    buffer = "";
+                    break;
+                case '`':
+                    buffer += '%'; // Might not be necessary since this method is reworked
+                    extractedParts.Add(buffer);
+                    buffer = "";
+                    break;
+                default:
+                    buffer += c;
+                    break;
+            }
+
+        if (buffer.Length > 0) extractedParts.Add(buffer);
+
+        List<string> result = new();
+        foreach (string part in extractedParts)
         {
-            string[]? candidate = token.Split("/");
-            foreach (string? tokenCandidate in candidate) result.AddRange(EachGroupOfToken(tokenCandidate));
-        }
-        else if (token.Contains('`'))
-        {
-            string candidate = token.Replace("`", "%/");
-            result.AddRange(EachGroupOfToken(candidate));
-        }
-        else if (token.Contains(")") || token.Contains("}"))
-        {
-            List<string>? resultCandidate = ExtractParentheses(token);
-            List<string> fixedCandidate = new();
-            foreach (string? candidate in resultCandidate) fixedCandidate.AddRange(ExtractParentheses(candidate));
-            foreach (string? candidate in fixedCandidate) result.AddRange(ExtractEachSlides(candidate));
-        } //lol this is the most stupid code I have ever wrote
-        else if (int.TryParse(token, out int eachPair))
-        {
-            char[]? eachPairs = token.ToCharArray();
-            foreach (char x in eachPairs) result.Add(x.ToString());
-        }
-        else if (isSlide)
-        {
-            //List<string> candidate = EachGroupOfToken(token);
-            //foreach (string item in candidate)
-            //{
-            //    result.AddRange(ExtractEachSlides(item));
-            //}
-            result.AddRange(ExtractEachSlides(token));
-        }
-        else
-        {
-            result.Add(token);
+            if (ContainsSlideNotation(part))
+            {
+                result.AddRange(ExtractEachSlides(part));
+            }
+            else if (int.TryParse(part, out int _))
+            {
+                result.AddRange(part.Select(eachTap => eachTap.ToString()));
+            }
+            else result.Add(part);
         }
 
         return result;
@@ -758,13 +767,19 @@ public class SimaiParser : IParser
             }
             else
             {
-                double[] durationResult = GetTimeCandidates(newDurationCandidate);
+                double[] durationResult = GetTimeCandidates(0.0, newDurationCandidate, true);
                 originalWaitDuration = durationResult[0];
                 averageDuration = durationResult[1] / actualSlidePart;
                 newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
             }
 
-            bool writeOriginalWaitTime = newDurationCandidate.Contains("##");
+            // double[] durationResult = GetTimeCandidates(0.0, newDurationCandidate, true);
+            // originalWaitDuration = durationResult[0];
+            // averageDuration = durationResult[1] / actualSlidePart;
+            // newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
+
+            bool writeOriginalWaitTime = !isMeasureDuration;
+            // bool writeOriginalWaitTime = true; // This trigger is only used once
             for (int i = result[0].Contains('_') ? 1 : 0; i < result.Count; i++)
             {
                 if (writeOriginalWaitTime)
@@ -840,9 +855,10 @@ public class SimaiParser : IParser
         string durationCandidate = input.Replace("[", "").Replace("]", "");
         bool isMeasureDuration = input.Contains(':') && !input.Contains('#'); // [Quaver : Beats]
         bool isSlideTimedDuration = input.Contains("##") && !input.Contains(':'); // [WaitTime ## LastTime]
-        bool isHoldTimedDuration = !isSlideTimedDuration && input.Contains("#") && !input.Contains(':'); // [# LastTime]
+        bool isHoldTimedDuration = !isSlideTimedDuration && input.Contains('#') && !input.Contains(':'); // [# LastTime]
         bool isSlideBpmMeasureDuration =
             input.Contains("##") && input.Contains('#') && input.Contains(':'); // [WaitTime ## BPM # Quaver : Beats]
+
         bool isHoldBpmMeasureDuration =
             !isSlideBpmMeasureDuration && input.Contains('#') && input.Contains(':'); // [BPM # Quaver : Beats]
 
@@ -850,9 +866,11 @@ public class SimaiParser : IParser
         {
             double quaver = double.Parse(durationCandidate.Split(':')[0]);
             double beat = double.Parse(durationCandidate.Split(':')[1]);
+            // double waitTimeCandidate = Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * 96;
             double lastTimeCandidate =
                 Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * (MaximumDefinition / quaver) * beat;
             result[0] = 0;
+            // result[0] = waitTimeCandidate;
             result[1] = lastTimeCandidate;
             return result;
         }
@@ -864,8 +882,13 @@ public class SimaiParser : IParser
         }
         else if (isHoldTimedDuration)
         {
-            result[0] = 0;
-            result[1] = double.Parse(durationCandidate.Replace("#", ""));
+            bool isSlideReassignedFormat = durationCandidate.Split('#')[0].Length != 0;
+            result[0] = isSlideReassignedFormat
+                ? Chart.GetBPMTimeUnit(double.Parse(durationCandidate.Split('#')[0]), MaximumDefinition) * 96
+                : 0;
+            result[1] = isSlideReassignedFormat
+                ? double.Parse(durationCandidate.Split('#')[1])
+                : double.Parse(durationCandidate.Replace("#", ""));
             return result;
         }
         else if (isSlideBpmMeasureDuration)
@@ -888,9 +911,12 @@ public class SimaiParser : IParser
             string extractedQuaverBeatCandidate = durationCandidate.Split('#')[1];
             double quaverCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[0]);
             double beatCandidate = double.Parse(extractedQuaverBeatCandidate.Split(':')[1]);
+            // double waitTimeCandidate =
+            //     Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * 96;
             double lastTimeCandidate =
                 Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * (MaximumDefinition / quaverCandidate) *
                 beatCandidate;
+            // result[0] = waitTimeCandidate;
             result[0] = 0;
             result[1] = lastTimeCandidate;
             return result;
@@ -900,25 +926,32 @@ public class SimaiParser : IParser
 
     public static double[] GetTimeCandidates(double bpm, string input, bool isSlide)
     {
-        double[] result = new double[2];
-        if (!(input.Contains('[') || input.Contains(']')))
-            throw new InvalidOperationException("GIVEN CANDIDATE DOES NOT CONTAIN DURATION SYMBOL [ AND ]");
+        double[] result = GetTimeCandidates(bpm, input);
+        // if (!(input.Contains('[') || input.Contains(']')))
+        //     throw new InvalidOperationException("GIVEN CANDIDATE DOES NOT CONTAIN DURATION SYMBOL [ AND ]");
         string durationCandidate = input.Replace("[", "").Replace("]", "");
         bool isMeasureDuration = input.Contains(':') && !input.Contains('#'); // [Quaver : Beats]
-
-        if (isMeasureDuration && isSlide)
+        bool isSlideTimedDuration = input.Contains("##") && !input.Contains(':'); // [WaitTime ## LastTime]
+        bool isHoldTimedDuration = !isSlideTimedDuration && input.Contains('#') && !input.Contains(':'); // [# LastTime]
+        bool isSlideBpmMeasureDuration =
+            input.Contains("##") && input.Contains('#') && input.Contains(':'); // [WaitTime ## BPM # Quaver : Beats]
+        bool isHoldBpmMeasureDuration =
+            !isSlideBpmMeasureDuration && input.Contains('#') && input.Contains(':'); // [BPM # Quaver : Beats]
+        if ((isMeasureDuration || isHoldTimedDuration) && isSlide)
         {
-            double quaver = double.Parse(durationCandidate.Split(':')[0]);
-            double beat = double.Parse(durationCandidate.Split(':')[1]);
             double waitTimeCandidate =
                 Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * 96;
-            double lastTimeCandidate =
-                Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * (MaximumDefinition / quaver) * beat;
             result[0] = waitTimeCandidate;
-            result[1] = lastTimeCandidate;
-            return result;
         }
-        else return GetTimeCandidates(bpm, input);
+        else if (isHoldBpmMeasureDuration && isSlide)
+        {
+            double bpmCandidate = double.Parse(durationCandidate.Split('#')[0]);
+            double waitTimeCandidate =
+                Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * 96;
+            result[0] = waitTimeCandidate;
+        }
+
+        return result;
     }
 
     #endregion
