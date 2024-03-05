@@ -560,7 +560,7 @@ public class SimaiParser : IParser
                 break;
             case '(':
             case '{':
-                extractedParts.Add(buffer);
+                if (buffer.Length > 0) extractedParts.Add(buffer);
                 buffer = c.ToString();
                 break;
             case ')':
