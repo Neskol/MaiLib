@@ -796,30 +796,31 @@ public class SimaiParser : IParser
             int actualSlidePart = result.Count(p => !p.Contains('_'));
             double originalWaitDuration = 0.0;
             double averageDuration = 0.0;
-            // bool isMeasureDuration =
-            //     newDurationCandidate.Contains(':') && !newDurationCandidate.Contains('#'); // [Quaver : Beats]
-            // if (isMeasureDuration)
-            // {
-            //     string durationCandidate = newDurationCandidate.Replace("[", "").Replace("]", "");
-            //     string[] numList = durationCandidate.Split(':');
-            //     int quaver = int.Parse(numList[0]) * actualSlidePart;
-            //     int multiple = int.Parse(numList[1]);
-            //     newDurationCandidate = $"[{quaver}:{multiple}]";
-            // }
-            // else
-            // {
-            //     double[] durationResult = GetTimeCandidates(newDurationCandidate);
-            //     originalWaitDuration = durationResult[0];
-            //     averageDuration = durationResult[1] / actualSlidePart;
-            //     newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
-            // }
+            bool isMeasureDuration =
+                newDurationCandidate.Contains(':') && !newDurationCandidate.Contains('#'); // [Quaver : Beats]
+            if (isMeasureDuration)
+            {
+                string durationCandidate = newDurationCandidate.Replace("[", "").Replace("]", "");
+                string[] numList = durationCandidate.Split(':');
+                int quaver = int.Parse(numList[0]) * actualSlidePart;
+                int multiple = int.Parse(numList[1]);
+                newDurationCandidate = $"[{quaver}:{multiple}]";
+            }
+            else
+            {
+                double[] durationResult = GetTimeCandidates(0.0, newDurationCandidate, true);
+                originalWaitDuration = durationResult[0];
+                averageDuration = durationResult[1] / actualSlidePart;
+                newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
+            }
 
-            double[] durationResult = GetTimeCandidates(0.0, newDurationCandidate, true);
-            originalWaitDuration = durationResult[0];
-            averageDuration = durationResult[1] / actualSlidePart;
-            newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
+            // double[] durationResult = GetTimeCandidates(0.0, newDurationCandidate, true);
+            // originalWaitDuration = durationResult[0];
+            // averageDuration = durationResult[1] / actualSlidePart;
+            // newDurationCandidate = $"[0##{Math.Round(averageDuration, 4)}]";
 
-            bool writeOriginalWaitTime = true; // This trigger is only used once
+            bool writeOriginalWaitTime = !isMeasureDuration;
+            // bool writeOriginalWaitTime = true; // This trigger is only used once
             for (int i = result[0].Contains('_') ? 1 : 0; i < result.Count; i++)
             {
                 if (writeOriginalWaitTime)
