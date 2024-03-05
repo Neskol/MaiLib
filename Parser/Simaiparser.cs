@@ -500,49 +500,6 @@ public class SimaiParser : IParser
 
     #region HeroticStaticHelperMethods
 
-    public static List<string> OldEachGroupOfToken(string token)
-    {
-        List<string>? result = new List<string>();
-        bool isSlide = ContainsSlideNotation(token);
-        if (token.Contains("/"))
-        {
-            string[]? candidate = token.Split("/");
-            foreach (string? tokenCandidate in candidate) result.AddRange(EachGroupOfToken(tokenCandidate));
-        }
-        else if (token.Contains('`'))
-        {
-            string candidate = token.Replace("`", "%/");
-            result.AddRange(EachGroupOfToken(candidate));
-        }
-        else if (token.Contains(')') || token.Contains('}'))
-        {
-            List<string>? resultCandidate = ExtractParentheses(token);
-            List<string> fixedCandidate = new();
-            foreach (string? candidate in resultCandidate) fixedCandidate.AddRange(ExtractParentheses(candidate));
-            foreach (string? candidate in fixedCandidate) result.AddRange(ExtractEachSlides(candidate));
-        } //lol this is the most stupid code I have ever wrote
-        else if (int.TryParse(token, out int eachPair))
-        {
-            char[]? eachPairs = token.ToCharArray();
-            foreach (char x in eachPairs) result.Add(x.ToString());
-        }
-        else if (isSlide)
-        {
-            //List<string> candidate = EachGroupOfToken(token);
-            //foreach (string item in candidate)
-            //{
-            //    result.AddRange(ExtractEachSlides(item));
-            //}
-            result.AddRange(ExtractEachSlides(token));
-        }
-        else
-        {
-            result.Add(token);
-        }
-
-        return result;
-    }
-
     /// <summary>
     ///     Deal with old, out-fashioned and illogical Simai Each Groups. Reworked with state machine.
     /// </summary>
@@ -552,32 +509,33 @@ public class SimaiParser : IParser
     {
         string buffer = "";
         List<string> extractedParts = new();
-        foreach (char c in token) switch (c)
-        {
-            case '/':
-                extractedParts.Add(buffer);
-                buffer = "";
-                break;
-            case '(':
-            case '{':
-                if (buffer.Length > 0) extractedParts.Add(buffer);
-                buffer = c.ToString();
-                break;
-            case ')':
-            case '}':
-                buffer += c;
-                extractedParts.Add(buffer);
-                buffer = "";
-                break;
-            case '`':
-                buffer += '%'; // Might not be necessary since this method is reworked
-                extractedParts.Add(buffer);
-                buffer = "";
-                break;
-            default:
-                buffer += c;
-                break;
-        }
+        foreach (char c in token)
+            switch (c)
+            {
+                case '/':
+                    extractedParts.Add(buffer);
+                    buffer = "";
+                    break;
+                case '(':
+                case '{':
+                    if (buffer.Length > 0) extractedParts.Add(buffer);
+                    buffer = c.ToString();
+                    break;
+                case ')':
+                case '}':
+                    buffer += c;
+                    extractedParts.Add(buffer);
+                    buffer = "";
+                    break;
+                case '`':
+                    buffer += '%'; // Might not be necessary since this method is reworked
+                    extractedParts.Add(buffer);
+                    buffer = "";
+                    break;
+                default:
+                    buffer += c;
+                    break;
+            }
 
         if (buffer.Length > 0) extractedParts.Add(buffer);
 
@@ -594,6 +552,7 @@ public class SimaiParser : IParser
             }
             else result.Add(part);
         }
+
         return result;
     }
 
@@ -924,8 +883,12 @@ public class SimaiParser : IParser
         else if (isHoldTimedDuration)
         {
             bool isSlideReassignedFormat = durationCandidate.Split('#')[0].Length != 0;
-            result[0] = isSlideReassignedFormat ? Chart.GetBPMTimeUnit(double.Parse(durationCandidate.Split('#')[0]), MaximumDefinition) * 96 : 0;
-            result[1] = isSlideReassignedFormat ? double.Parse(durationCandidate.Split('#')[1]) : double.Parse(durationCandidate.Replace("#", ""));
+            result[0] = isSlideReassignedFormat
+                ? Chart.GetBPMTimeUnit(double.Parse(durationCandidate.Split('#')[0]), MaximumDefinition) * 96
+                : 0;
+            result[1] = isSlideReassignedFormat
+                ? double.Parse(durationCandidate.Split('#')[1])
+                : double.Parse(durationCandidate.Replace("#", ""));
             return result;
         }
         else if (isSlideBpmMeasureDuration)
@@ -979,7 +942,6 @@ public class SimaiParser : IParser
             double waitTimeCandidate =
                 Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * 96;
             result[0] = waitTimeCandidate;
-
         }
         else if (isHoldBpmMeasureDuration && isSlide)
         {
@@ -988,6 +950,7 @@ public class SimaiParser : IParser
                 Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * 96;
             result[0] = waitTimeCandidate;
         }
+
         return result;
     }
 
