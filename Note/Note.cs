@@ -205,7 +205,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     ///     Stores if the BPM of Wait or Last Tick is in different BPM
     /// </summary>
     public bool TickBPMDisagree =>
-        BPMChangeNotes.Any(note => note.TickStamp > TickStamp && note.TickStamp < WaitTickStamp);
+        BPMChangeNotes.Any(note => note.TickStamp > TickStamp && note.TickStamp < LastTickStamp);
 
     /// <summary>
     ///     Stores if the note is delayed
