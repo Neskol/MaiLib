@@ -11,14 +11,14 @@ public class SlideEachSet : Note
 
     public SlideEachSet()
     {
-        InternalSlides = new List<Slide>();
+        InternalSlides = [];
         Update();
     }
 
     public SlideEachSet(Note x) : base(x)
     {
         SlideStart = x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START ? x : null;
-        InternalSlides = new List<Slide>();
+        InternalSlides = [];
         if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE_EACH)
         {
             SlideEachSet? candidate =

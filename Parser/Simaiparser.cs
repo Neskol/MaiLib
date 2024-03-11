@@ -30,7 +30,7 @@ public class SimaiParser : IParser
     public Chart ChartOfToken(string[] tokens)
         // Note: here chart will only return syntax after &inote_x= and each token is separated by ","
     {
-        List<Note>? notes = new List<Note>();
+        List<Note>? notes = [];
         // var bpmChanges = new BPMChanges();
         MeasureChanges? measureChanges = new MeasureChanges(4, 4);
         int bar = 0;
@@ -264,7 +264,7 @@ public class SimaiParser : IParser
         int currentTick = tick;
         Note slideStart = startNote;
         // int prevSlideKey = -1;
-        List<Slide> slideCandidates = new();
+        List<Slide> slideCandidates = [];
         foreach (string x in extractedTokens)
         {
             Slide connectCandidate = SlideOfToken(x, currentBar, currentTick, slideStart, bpm);
@@ -508,7 +508,7 @@ public class SimaiParser : IParser
     public static List<string> EachGroupOfToken(string token)
     {
         string buffer = "";
-        List<string> extractedParts = new();
+        List<string> extractedParts = [];
         foreach (char c in token)
             switch (c)
             {
@@ -539,7 +539,7 @@ public class SimaiParser : IParser
 
         if (buffer.Length > 0) extractedParts.Add(buffer);
 
-        List<string> result = new();
+        List<string> result = [];
         foreach (string part in extractedParts)
         {
             if (ContainsSlideNotation(part))
@@ -563,14 +563,14 @@ public class SimaiParser : IParser
     /// <returns>A list of strings extracts each note</returns>
     public static List<string> ExtractParentheses(string token)
     {
-        List<string>? result = new List<string>();
+        List<string>? result = [];
         bool containsBPM = token.Contains(")");
         bool containsMeasure = token.Contains("}");
 
         if (containsBPM)
         {
             string[]? tokenCandidate = token.Split(")");
-            List<string> tokenResult = new();
+            List<string> tokenResult = [];
             for (int i = 0; i < tokenCandidate.Length; i++)
             {
                 string? x = tokenCandidate[i];
@@ -583,7 +583,7 @@ public class SimaiParser : IParser
         else if (containsMeasure)
         {
             string[]? tokenCandidate = token.Split("}");
-            List<string> tokenResult = new();
+            List<string> tokenResult = [];
             for (int i = 0; i < tokenCandidate.Length; i++)
             {
                 string? x = tokenCandidate[i];
@@ -609,7 +609,7 @@ public class SimaiParser : IParser
     public static List<string> ExtractEachSlides(string token)
     {
         bool isSlide = ContainsSlideNotation(token);
-        List<string>? result = new List<string>();
+        List<string>? result = [];
         if (!isSlide)
         {
             result.Add(token);
@@ -626,7 +626,7 @@ public class SimaiParser : IParser
 
     public static List<string> ExtractSlideStart(string token)
     {
-        List<string> result = new();
+        List<string> result = [];
         bool slideNotationFound = IsSlideNotation(token[0]);
         string buffer = "";
         foreach (char x in token)
@@ -652,7 +652,7 @@ public class SimaiParser : IParser
     /// <returns>Result of parsed tokens</returns>
     public static List<string> ExtractConnectingSlides(string token)
     {
-        List<string> result = new();
+        List<string> result = [];
         char[]? candidates = token.ToCharArray();
 
         static string KeyCandidate(string token)

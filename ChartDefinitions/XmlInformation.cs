@@ -85,6 +85,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
                 XmlElement? strCandidate = candidate["str"] ?? throw new NullReferenceException();
                 genreId = int.Parse(idCandidate.InnerText);
+                TrackGenreID = genreId;
                 TrackGenre = strCandidate.InnerText;
             }
         }
@@ -130,7 +131,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                         Information["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
 
                         Information["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                            ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                            ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                             : "";
                         Information["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
                         Information["Utage Chart Path"] = fileCandidate.InnerText;
@@ -140,7 +141,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                         Information["Basic Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
 
                         Information["Basic"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                            ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                            ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                             : "";
                         Information["Basic Chart Maker"] = notesDesignerCandidate.InnerText;
                         Information["Basic Chart Path"] = fileCandidate.InnerText;
@@ -158,7 +159,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Advanced"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                        ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                        ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
                     Information["Advanced Chart Maker"] = notesDesignerCandidate.InnerText;
                     Information["Advanced Chart Path"] = fileCandidate.InnerText;
@@ -175,7 +176,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Expert"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                        ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                        ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
                     Information["Expert Chart Maker"] = notesDesignerCandidate.InnerText;
                     Information["Expert Chart Path"] = fileCandidate.InnerText;
@@ -192,7 +193,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Master"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                        ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                        ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
                     Information["Master Chart Maker"] = notesDesignerCandidate.InnerText;
                     Information["Master Chart Path"] = fileCandidate.InnerText;
@@ -209,7 +210,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Remaster"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                        ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                        ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
                     Information["Remaster Chart Maker"] = notesDesignerCandidate.InnerText;
                     Information["Remaster Chart Path"] = fileCandidate.InnerText;
@@ -226,7 +227,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                        ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                        ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
                     Information["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
                     Information["Utage Chart Path"] = fileCandidate.InnerText;
@@ -243,7 +244,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
                     Information["Easy"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
-                        ? level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
+                        ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
                     Information["Easy Chart Maker"] = notesDesignerCandidate.InnerText;
                     Information["Easy Chart Path"] = fileCandidate.InnerText;

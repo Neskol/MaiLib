@@ -6,7 +6,7 @@ public class SlideType : ICodeBlock
 {
     public string NoteType { get; private set; }
     public Key? InflectionKey { get; private set; }
-    private readonly string[] _allowedStrings = { "-", ">", "<", "^", "v", "p", "q", "s", "z", "pp", "qq", "w" };
+    private readonly string[] _allowedStrings = ["-", ">", "<", "^", "v", "p", "q", "s", "z", "pp", "qq", "w"];
 
     public string ExpectedStrings => $"{String.Join(", ", _allowedStrings)}, V<Key>";
 

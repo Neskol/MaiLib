@@ -21,7 +21,7 @@ public class SimaiTokenizer : ITokenizer
     public SimaiTokenizer()
     {
         simaiTrackInformation = new XmlInformation();
-        chartCandidates = new Dictionary<string, string[]>();
+        chartCandidates = [];
     }
 
     /// <summary>

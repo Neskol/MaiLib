@@ -12,7 +12,7 @@ public class BPMChanges
     /// <param name="bpm">Specified BPM changes</param>
     public BPMChanges(List<int> bar, List<int> tick, List<double> bpm)
     {
-        ChangeNotes = new List<BPMChange>();
+        ChangeNotes = [];
         for (int i = 0; i < bar.Count; i++)
         {
             BPMChange candidate = new(bar[i], tick[i], bpm[i]);
@@ -27,7 +27,7 @@ public class BPMChanges
     /// </summary>
     public BPMChanges()
     {
-        ChangeNotes = new List<BPMChange>();
+        ChangeNotes = [];
         Update();
     }
 
@@ -37,8 +37,7 @@ public class BPMChanges
     /// <param name="takenIn"></param>
     public BPMChanges(BPMChanges takenIn)
     {
-        ChangeNotes = new List<BPMChange>();
-        foreach (BPMChange? candidate in takenIn.ChangeNotes) ChangeNotes.Add(candidate);
+        ChangeNotes = [.. takenIn.ChangeNotes];
     }
 
     #endregion
@@ -102,7 +101,7 @@ public class BPMChanges
     /// </summary>
     public void Update()
     {
-        List<BPMChange> adjusted = new();
+        List<BPMChange> adjusted = [];
         Note lastNote = new Rest();
         foreach (BPMChange? x in ChangeNotes)
             if (!(x.Bar == lastNote.Bar && x.Tick == lastNote.Tick && x.BPM == lastNote.BPM))
@@ -112,8 +111,7 @@ public class BPMChanges
             }
 
         // Console.WriteLine(adjusted.Count);
-        ChangeNotes = new List<BPMChange>();
-        foreach (BPMChange? x in adjusted) ChangeNotes.Add(x);
+        ChangeNotes = [.. adjusted];
         if (ChangeNotes.Count != adjusted.Count) throw new Exception("Adjusted BPM Note number not matching");
     }
 

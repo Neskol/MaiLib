@@ -9,7 +9,7 @@ public abstract class Compiler : ICompiler
     /// </summary>
     /// <value>Difficulty</value>
     public static readonly string[] Difficulty =
-        { "Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage" };
+        ["Easy", "Basic", "Advanced", "Expert", "Master", "Remaster", "Utage"];
 
     /// <summary>
     ///     Stores the rotate dictionary
@@ -26,8 +26,8 @@ public abstract class Compiler : ICompiler
     /// <param name="targetLocation">Output folder</param>
     public Compiler(string location, string targetLocation)
     {
-        CompiledChart = new List<string>();
-        Charts = new List<Chart>();
+        CompiledChart = [];
+        Charts = [];
         MusicXML = new XmlInformation(location);
         MusicXML.Update();
         Information = MusicXML.Information;
@@ -43,9 +43,9 @@ public abstract class Compiler : ICompiler
     /// </summary>
     public Compiler()
     {
-        CompiledChart = new List<string>();
-        Charts = new List<Chart>();
-        Information = new Dictionary<string, string>();
+        CompiledChart = [];
+        Charts = [];
+        Information = [];
         MusicXML = new XmlInformation();
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             GlobalSep = "\\";

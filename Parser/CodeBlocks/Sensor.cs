@@ -5,7 +5,7 @@ namespace MaiLib;
 public class Sensor : ICodeBlock
 {
     public string SensorArea { get; private set; }
-    private readonly string[] _allowedStrings = { "A", "B", "C", "D", "E", "F" };
+    private readonly string[] _allowedStrings = ["A", "B", "C", "D", "E", "F"];
 
     public string ExpectedStrings => String.Join(", ", _allowedStrings);
 

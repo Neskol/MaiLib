@@ -19,11 +19,11 @@ public class XMaiL : Chart, ICompiler
     /// </summary>
     public XMaiL()
     {
-        Notes = new List<Note>();
+        Notes = [];
         BPMChanges = new BPMChanges();
         MeasureChanges = new MeasureChanges();
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
+        StoredChart = [];
+        Information = [];
         StoredXMailL = new XmlDocument();
         Update();
     }
@@ -39,8 +39,8 @@ public class XMaiL : Chart, ICompiler
         Notes = notes;
         BPMChanges = bpmChanges;
         MeasureChanges = measureChanges;
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
+        StoredChart = [];
+        Information = [];
         StoredXMailL = new XmlDocument();
         Update();
     }
@@ -55,8 +55,8 @@ public class XMaiL : Chart, ICompiler
         Notes = takenIn.Notes;
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
+        StoredChart = [];
+        Information = [];
         StoredXMailL = new XmlDocument();
         Update();
     }
@@ -70,8 +70,8 @@ public class XMaiL : Chart, ICompiler
         Notes = takenIn.Notes;
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
+        StoredChart = [];
+        Information = [];
         StoredXMailL = new XmlDocument();
         Update();
     }

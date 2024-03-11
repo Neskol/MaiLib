@@ -5,7 +5,7 @@ namespace MaiLib;
 public class StartPostfix : ICodeBlock
 {
     public string? Postfix { get; private set; }
-    private readonly string[] _allowedStrings = { "$", "!", "@" };
+    private readonly string[] _allowedStrings = ["$", "!", "@"];
 
     public string ExpectedStrings => String.Join(", ", _allowedStrings);
 

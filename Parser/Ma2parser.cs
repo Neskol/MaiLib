@@ -65,7 +65,7 @@ public class Ma2Parser : IParser
     {
         BPMChanges? bpmChanges = new BPMChanges();
         MeasureChanges? measureChanges = new MeasureChanges();
-        List<Note>? notes = new List<Note>();
+        List<Note>? notes = [];
         if (token != null)
             foreach (string? x in token)
             {

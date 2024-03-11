@@ -17,11 +17,11 @@ public abstract class Chart : IChart
     /// </summary>
     public Chart()
     {
-        Notes = new List<Note>();
+        Notes = [];
         BPMChanges = new BPMChanges();
         MeasureChanges = new MeasureChanges();
-        StoredChart = new List<List<Note>>();
-        Information = new Dictionary<string, string>();
+        StoredChart = [];
+        Information = [];
         // IsDxChart = false;
         Definition = 384;
         UnitScore = [500, 1000, 1500, 2000, 2500];
@@ -123,7 +123,7 @@ public abstract class Chart : IChart
     {
         get
         {
-            Dictionary<int, int> eachPairDictionary = new();
+            Dictionary<int, int> eachPairDictionary = [];
             foreach (Note note in this.Notes.Where(p => p.NoteGenre is NoteGenre.TAP or NoteGenre.HOLD))
             {
                 if (!eachPairDictionary.Keys.Contains(note.TickStamp)) eachPairDictionary.Add(note.TickStamp, 1);
@@ -192,7 +192,7 @@ public abstract class Chart : IChart
     /// </summary>
     public virtual void Update()
     {
-        StoredChart = new List<List<Note>>();
+        StoredChart = [];
         int maxBar = Notes.Count > 0 ? Notes.Max(p => p.Bar) : 0;
         double timeStamp = 0.0;
 
@@ -205,7 +205,7 @@ public abstract class Chart : IChart
         //Iterate over bar
         for (int i = 0; i <= maxBar; i++)
         {
-            List<Note>? bar = new List<Note>();
+            List<Note>? bar = [];
             BPMChange? noteChange = new BPMChange();
             double currentBPM = BPMChanges.ChangeNotes[0].BPM;
             Note lastNote = new Rest();
@@ -321,11 +321,13 @@ public abstract class Chart : IChart
                 }
             }
 
-            List<Note>? afterBar = new List<Note>();
-            afterBar.Add(new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar, Definition), Definition)));
-            //Console.WriteLine();
-            //Console.WriteLine("In bar "+i+", LeastMeasure is "+ CalculateLeastMeasure(bar)+", so quaver will be "+ CalculateQuaver(CalculateLeastMeasure(bar)));
-            afterBar.AddRange(bar);
+            List<Note>? afterBar =
+            [
+                new MeasureChange(i, 0, CalculateQuaver(CalculateLeastMeasure(bar, Definition), Definition)),
+                //Console.WriteLine();
+                //Console.WriteLine("In bar "+i+", LeastMeasure is "+ CalculateLeastMeasure(bar)+", so quaver will be "+ CalculateQuaver(CalculateLeastMeasure(bar)));
+                .. bar,
+            ];
             StoredChart.Add(FinishBar(afterBar, i,
                 CalculateQuaver(CalculateLeastMeasure(bar, Definition), Definition), Definition));
         }
@@ -342,7 +344,7 @@ public abstract class Chart : IChart
     {
         int maxBar = Notes.Count > 0 ? Notes.Max(p => p.Bar) + 1 : 1;
         List<Note>[] chartCandidate = new List<Note>[maxBar];
-        for (int i = 0; i < chartCandidate.Length; i++) chartCandidate[i] = new();
+        for (int i = 0; i < chartCandidate.Length; i++) chartCandidate[i] = [];
 
         foreach (BPMChange bpmChangeNote in BPMChanges.ChangeNotes)
         {
@@ -386,15 +388,15 @@ public abstract class Chart : IChart
             chartCandidate[x.Bar].Add(x);
         }
 
-        StoredChart = new();
+        StoredChart = [];
         for (int i = 0; i < chartCandidate.Length; i++)
         {
-            List<Note>? afterBar = new List<Note>
-            {
+            List<Note>? afterBar =
+            [
                 new MeasureChange(i, 0,
-                    CalculateQuaver(CalculateLeastMeasure(chartCandidate[i], Definition), Definition))
-            };
-            afterBar.AddRange(chartCandidate[i]);
+                    CalculateQuaver(CalculateLeastMeasure(chartCandidate[i], Definition), Definition)),
+                .. chartCandidate[i],
+            ];
             StoredChart.Add(FinishBar(afterBar, i,
                 CalculateQuaver(CalculateLeastMeasure(chartCandidate[i], Definition), Definition), Definition));
         }
@@ -457,7 +459,7 @@ public abstract class Chart : IChart
 
     public void ShiftByOffset(int overallTick)
     {
-        List<Note>? updatedNotes = new List<Note>();
+        List<Note>? updatedNotes = [];
         foreach (Note? x in Notes)
             if (x.NoteType is not NoteType.BPM || x.NoteGenre is not NoteGenre.MEASURE ||
                 (x.NoteType is NoteType.BPM && x.Bar != 0 && x.Tick != 0) ||
@@ -540,8 +542,7 @@ public abstract class Chart : IChart
     /// <returns>List none 0 measure</returns>
     public static int CalculateLeastMeasure(List<Note> bar, int definition)
     {
-        List<int>? startTimeList = new List<int>();
-        startTimeList.Add(0);
+        List<int>? startTimeList = [0];
         foreach (Note? x in bar)
         {
             if (!startTimeList.Contains(x.Tick)) startTimeList.Add(x.Tick);
@@ -552,7 +553,7 @@ public abstract class Chart : IChart
         }
 
         if (startTimeList[startTimeList.Count - 1] != definition) startTimeList.Add(definition);
-        List<int>? intervalCandidates = new List<int>();
+        List<int>? intervalCandidates = [];
         int minimalInterval = GCD(startTimeList[0], startTimeList[1]);
         for (int i = 1; i < startTimeList.Count; i++) minimalInterval = GCD(minimalInterval, startTimeList[i]);
         return minimalInterval;
@@ -609,15 +610,15 @@ public abstract class Chart : IChart
     /// <returns>Finished bar</returns>
     public static List<Note> FinishBar(List<Note> bar, int barNumber, int minimalQuaver, int definition)
     {
-        List<Note>? result = new List<Note>();
+        List<Note>? result = [];
         bool writeRest = true;
         result.Add(bar[0]);
         for (int i = 0; i < definition; i += definition / minimalQuaver)
         {
             //Separate Touch and others to prevent ordering issue
             Note bpm = new Rest();
-            List<Note>? eachSet = new List<Note>();
-            List<Note>? touchEachSet = new List<Note>();
+            List<Note>? eachSet = [];
+            List<Note>? touchEachSet = [];
 
             //Set condition to write rest if appropriate
             writeRest = true;
@@ -665,17 +666,12 @@ public abstract class Chart : IChart
             //Searching for BPM change. If find one, get into front.
             if (bpm.BPM != 0)
             {
-                List<Note>? adjusted = new List<Note>();
-                adjusted.Add(bpm);
-                adjusted.AddRange(touchEachSet);
-                adjusted.AddRange(eachSet);
+                List<Note>? adjusted = [bpm, .. touchEachSet, .. eachSet];
                 eachSet = adjusted;
             }
             else
             {
-                List<Note>? adjusted = new List<Note>();
-                adjusted.AddRange(touchEachSet);
-                adjusted.AddRange(eachSet);
+                List<Note>? adjusted = [.. touchEachSet, .. eachSet];
                 eachSet = adjusted;
             }
 
@@ -698,7 +694,7 @@ public abstract class Chart : IChart
         }
 
         bool hasFirstBPMChange = false;
-        List<Note>? changedResult = new List<Note>();
+        List<Note>? changedResult = [];
         Note potentialFirstChange = new Rest();
         {
             for (int i = 0; !hasFirstBPMChange && i < result.Count(); i++)
@@ -906,8 +902,8 @@ public abstract class Chart : IChart
 
     public void ExtractSlideEachGroup()
     {
-        List<Note> adjusted = new();
-        List<Slide> slideCandidates = new();
+        List<Note> adjusted = [];
+        List<Slide> slideCandidates = [];
         foreach (Note? x in Notes)
         {
             switch (x.NoteSpecificGenre)
@@ -950,11 +946,11 @@ public abstract class Chart : IChart
 
     public void ComposeSlideGroup()
     {
-        List<Note> adjusted = new();
-        List<Slide> connectedSlides = new();
-        List<Slide> slideNotesOfChart = new();
-        List<Slide> processedSlideOfChart = new();
-        Dictionary<Slide, bool> processedSlideDic = new();
+        List<Note> adjusted = [];
+        List<Slide> connectedSlides = [];
+        List<Slide> slideNotesOfChart = [];
+        List<Slide> processedSlideOfChart = [];
+        Dictionary<Slide, bool> processedSlideDic = [];
 
         int maximumBar = 0;
         foreach (Note? candidate in Notes)
@@ -1066,8 +1062,8 @@ public abstract class Chart : IChart
 
     public void ComposeSlideEachGroup()
     {
-        List<SlideEachSet> composedCandidates = new();
-        List<Note> adjusted = new();
+        List<SlideEachSet> composedCandidates = [];
+        List<Note> adjusted = [];
         int processedNotes = 0;
         foreach (Note? x in Notes)
         {

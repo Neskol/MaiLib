@@ -12,11 +12,11 @@ public class MeasureChanges
     /// </summary>
     public MeasureChanges()
     {
-        Bar = new List<int>();
-        Tick = new List<int>();
-        Quavers = new List<int>();
-        Beats = new List<int>();
-        ChangeNotes = new List<MeasureChange>();
+        Bar = [];
+        Tick = [];
+        Quavers = [];
+        Beats = [];
+        ChangeNotes = [];
     }
 
     /// <summary>
@@ -38,11 +38,11 @@ public class MeasureChanges
     /// <param name="initialBeat">Initial Beat</param>
     public MeasureChanges(int initialQuaver, int initialBeat)
     {
-        Bar = new List<int>();
-        Tick = new List<int>();
-        Quavers = new List<int>();
-        Beats = new List<int>();
-        ChangeNotes = new List<MeasureChange>();
+        Bar = [];
+        Tick = [];
+        Quavers = [];
+        Beats = [];
+        ChangeNotes = [];
         Quavers.Add(initialQuaver);
         Beats.Add(initialBeat);
     }
@@ -60,7 +60,7 @@ public class MeasureChanges
         Tick = tick;
         Quavers = quavers;
         Beats = beats;
-        ChangeNotes = new List<MeasureChange>();
+        ChangeNotes = [];
     }
 
     #endregion

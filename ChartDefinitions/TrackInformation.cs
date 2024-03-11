@@ -3,7 +3,7 @@ using System.Xml;
 namespace MaiLib;
 
 /// <summary>
-///     Use xml to store track information
+///     Use xml to store track Information
 /// </summary>
 public abstract class TrackInformation : IXmlUtility
 {
@@ -11,62 +11,56 @@ public abstract class TrackInformation : IXmlUtility
     ///     Stores proper difficulties
     /// </summary>
     /// <value>1-15 Maimai level</value>
-    public static readonly string[] level =
-    {
+    public static readonly string[] Level =
+    [
         "1", "2", "3", "4", "5", "6", "7", "7+", "8", "8+", "9", "9+", "10", "10+", "11", "11+", "12", "12+", "13",
         "13+", "14", "14+", "15", "15+"
-    }; // TODO: Convert to enum
+    ]; // TODO: Convert to enum
 
-    public static readonly string[] difficulty =
-        { "Basic", "Advance", "Expert", "Master", "Remaster", "Utage", "Easy" }; // TODO: Convert to enum
+    public static readonly string[] Difficulty =
+        ["Basic", "Advance", "Expert", "Master", "Remaster", "Utage", "Easy"]; // TODO: Convert to enum
 
-    public static readonly string[] addVersion = { "Ver1.00.00" };
+    // public static readonly string[] addVersion = { "Ver1.00.00" };
 
     /// <summary>
-    ///     Stores the genre name used in information
+    ///     Stores the genre name used in Information
     /// </summary>
     /// <value>103 = Touhou, 105 = maimai</value>
-    public static readonly string[] genre = { "東方Project", "maimai" }; // TODO: Convert to enum
+    public static readonly string[] genre = ["東方Project", "maimai"]; // TODO: Convert to enum
 
     /// <summary>
     ///     Stores prover maimai versions
     /// </summary>
     /// <value>Version name of each generation of Maimai</value>
     public static readonly string[] version =
-    {
+    [
         "maimai", "maimai PLUS", "maimai GreeN", "maimai GreeN PLUS", "maimai ORANGE", "maimai ORANGE PLUS",
         "maimai PiNK", "maimai PiNK PLUS", "maimai MURASAKi", "maimai MURASAKi PLUS", "maimai MiLK", "maimai MiLK PLUS",
         "maimai FiNALE", "maimai DX", "maimai DX PLUS", "maimai DX Splash", "maimai DX Splash PLUS",
         "maimai DX UNiVERSE", "maimai DX UNiVERSE PLUS", "maimai DX FESTiVAL", "maimai DX FESTiVAL PLUS",
         "maimai DX BUDDiES"
-    }; // TODO: Convert to enum
+    ]; // TODO: Convert to enum
 
     public static readonly string[] shortVersion =
-    {
+    [
         "maimai", "PLUS", "GreeN", "GreeN PLUS", "ORANGE", "ORANGE PLUS", "PiNK", "PiNK PLUS", "MURASAKi",
         "MURASAKi PLUS", "MiLK", "MiLK PLUS", "FiNALE", "DX", "DX PLUS", "DX Splash", "DX Splash PLUS", "DX UNiVERSE",
         "DX UNiVERSE PLUS", "DX FESTiVAL", "DX FESTiVAL PLUS", "DX BUDDiES"
-    }; // TODO: Convert to enum
+    ]; // TODO: Convert to enum
 
     // public static string[] versionArray;
-    public static Dictionary<string, string> netOpenNameDic = new();
-    public static Dictionary<string, string> releaseTagNameDic = new();
-    public static Dictionary<string, string> rightsInfoDic = new();
-    public static Dictionary<string, string> artistNameDic = new();
-    public static Dictionary<string, string> addVersionDic = new();
-    public static Dictionary<string, string> eventNameDic = new();
-    public static Dictionary<string, string> subEventNameDic = new();
-    public static Dictionary<string, string> notesDesignerDic = new();
+    public static Dictionary<string, string> netOpenNameDic = [];
+    public static Dictionary<string, string> releaseTagNameDic = [];
+    public static Dictionary<string, string> rightsInfoDic = [];
+    public static Dictionary<string, string> artistNameDic = [];
+    public static Dictionary<string, string> addVersionDic = [];
+    public static Dictionary<string, string> eventNameDic = [];
+    public static Dictionary<string, string> subEventNameDic = [];
+    public static Dictionary<string, string> notesDesignerDic = [];
 
-    /// <summary>
-    ///     Set of track information stored
-    /// </summary>
-    private Dictionary<string, string> information;
+    // private Dictionary<string, string> Information;
 
-    /// <summary>
-    ///     Internal stored information set
-    /// </summary>
-    private XmlDocument takeInValue;
+    // private XmlDocument TakeInValue;
 
     #region Constructors
 
@@ -75,8 +69,8 @@ public abstract class TrackInformation : IXmlUtility
     /// </summary>
     public TrackInformation()
     {
-        takeInValue = new XmlDocument();
-        information = new Dictionary<string, string>();
+        TakeInValue = new XmlDocument();
+        Information = [];
         FormatInformation();
         Update();
     }
@@ -90,7 +84,7 @@ public abstract class TrackInformation : IXmlUtility
     public string TrackName
     {
         get => Information.GetValueOrDefault("Name") ?? throw new NullReferenceException("Name is not defined");
-        set => information["Name"] = value;
+        set => Information["Name"] = value;
     }
 
     /// <summary>
@@ -101,7 +95,7 @@ public abstract class TrackInformation : IXmlUtility
     {
         get => Information.GetValueOrDefault("Sort Name") ??
                throw new NullReferenceException("Sort Name is not defined");
-        set => information["Sort Name"] = value;
+        set => Information["Sort Name"] = value;
     }
 
     /// <summary>
@@ -111,7 +105,7 @@ public abstract class TrackInformation : IXmlUtility
     public string TrackID
     {
         get => Information.GetValueOrDefault("Music ID") ?? throw new NullReferenceException("Music ID is not defined");
-        set => information["Music ID"] = value;
+        set => Information["Music ID"] = value;
     }
 
     /// <summary>
@@ -121,7 +115,17 @@ public abstract class TrackInformation : IXmlUtility
     public string TrackGenre
     {
         get => Information.GetValueOrDefault("Genre") ?? throw new NullReferenceException("Genre is not defined");
-        set => information["Genre"] = value;
+        set => Information["Genre"] = value;
+    }
+
+    /// <summary>
+    ///     Return the track genre ID, start from 101 to 107 by default
+    /// </summary>
+    /// <value>this.TrackGenreID</value>
+    public int TrackGenreID
+    {
+        get => int.Parse(Information.GetValueOrDefault("Genre ID") ?? throw new NullReferenceException("Genre is not defined"));
+        set => Information["Genre ID"] = value.ToString();
     }
 
     /// <summary>
@@ -131,7 +135,7 @@ public abstract class TrackInformation : IXmlUtility
     public string TrackBPM
     {
         get => Information.GetValueOrDefault("BPM") ?? throw new NullReferenceException("Genre is not defined");
-        set => information["BPM"] = value;
+        set => Information["BPM"] = value;
     }
 
     /// <summary>
@@ -141,7 +145,7 @@ public abstract class TrackInformation : IXmlUtility
     public string TrackComposer
     {
         get => Information.GetValueOrDefault("Composer") ?? throw new NullReferenceException("Genre is not defined");
-        set => information["Composer"] = value;
+        set => Information["Composer"] = value;
     }
 
     /// <summary>
@@ -152,7 +156,7 @@ public abstract class TrackInformation : IXmlUtility
     {
         get
         {
-            if (Information.TryGetValue("Utage", out string? utageLevel) && level != null && !utageLevel.Equals(""))
+            if (Information.TryGetValue("Utage", out string? utageLevel) && Level != null && !utageLevel.Equals(""))
                 return utageLevel;
             if (Information.TryGetValue("Remaster", out string? remasLevel) && remasLevel != null &&
                 !remasLevel.Equals(""))
@@ -173,7 +177,7 @@ public abstract class TrackInformation : IXmlUtility
                 return easyLevel;
             return "ORIGINAL";
         }
-        set => information["Master"] = value;
+        set => Information["Master"] = value;
     }
 
     /// <summary>
@@ -181,10 +185,7 @@ public abstract class TrackInformation : IXmlUtility
     /// </summary>
     public string[] TrackLevels
     {
-        get
-        {
-            string[] result =
-            {
+        get => [
                 Information["Easy"],
                 Information["Basic"],
                 Information["Advanced"],
@@ -192,9 +193,7 @@ public abstract class TrackInformation : IXmlUtility
                 Information["Master"],
                 Information["Remaster"],
                 Information["Utage"]
-            };
-            return result;
-        }
+            ];
         set
         {
             Information["Easy"] = value[0];
@@ -215,7 +214,7 @@ public abstract class TrackInformation : IXmlUtility
         get
         {
             string[] result =
-            {
+            [
                 Information["Easy Decimal"],
                 Information["Basic Decimal"],
                 Information["Advanced Decimal"],
@@ -223,7 +222,7 @@ public abstract class TrackInformation : IXmlUtility
                 Information["Master Decimal"],
                 Information["Remaster Decimal"],
                 Information["Utage Decimal"]
-            };
+            ];
             return result;
         }
         set
@@ -302,7 +301,7 @@ public abstract class TrackInformation : IXmlUtility
                               throw new NullReferenceException("Version is not Defined");
             return version;
         }
-        set => information["Version"] = value;
+        set => Information["Version"] = value;
     }
 
     /// <summary>
@@ -317,28 +316,20 @@ public abstract class TrackInformation : IXmlUtility
                                     throw new NullReferenceException("Version is not Defined");
             return versionNumber;
         }
-        set => information["Version Number"] = value;
+        set => Information["Version Number"] = value;
     }
 
     /// <summary>
     ///     Give access to TakeInValue if necessary
     /// </summary>
     /// <value>this.TakeInValue as XMLDocument</value>
-    public XmlDocument TakeInValue
-    {
-        get => takeInValue;
-        set => takeInValue = value;
-    }
+    public XmlDocument TakeInValue { get; set; }
 
     /// <summary>
     ///     Give access to this.Information
     /// </summary>
     /// <value>this.Information as Dictionary</value>
-    public Dictionary<string, string> Information
-    {
-        get => information;
-        set => information = value;
-    }
+    public Dictionary<string, string> Information { get; set; }
 
     /// <summary>
     ///     Return the XML node that has same name with
@@ -347,42 +338,42 @@ public abstract class TrackInformation : IXmlUtility
     /// <returns></returns>
     public XmlNodeList GetMatchNodes(string name)
     {
-        XmlNodeList? result = takeInValue.GetElementsByTagName(name);
+        XmlNodeList? result = TakeInValue.GetElementsByTagName(name);
         return result;
     }
 
     /// <summary>
-    ///     Save the information to given path
+    ///     Save the Information to given path
     /// </summary>
-    /// <param name="location">Path to save the information</param>
+    /// <param name="location">Path to save the Information</param>
     public void Save(string location)
     {
-        takeInValue.Save(location);
+        TakeInValue.Save(location);
     }
 
     /// <summary>
-    ///     Update information
+    ///     Update Information
     /// </summary>
     public abstract void Update();
 
     // /// <summary>
-    // /// Construct track information from given location
+    // /// Construct track Information from given location
     // /// </summary>
     // /// <param name="location">Place to load</param>
     // public TrackInformation(string location)
     // {
     //     {
-    //         this.takeInValue = new XmlDocument();
+    //         this.TakeInValue = new XmlDocument();
     //         if (File.Exists(location + "Music.xml"))
     //         {
-    //             this.takeInValue.Load(location + "Music.xml");
-    //             this.information=new Dictionary<string, string>();
+    //             this.TakeInValue.Load(location + "Music.xml");
+    //             this.Information=new Dictionary<string, string>();
     //             this.FormatInformation();
     //             this.Update();
     //         }
     //         else
     //         {
-    //             this.information=new Dictionary<string, string>();
+    //             this.Information=new Dictionary<string, string>();
     //             this.FormatInformation();
     //         }
 
@@ -390,16 +381,17 @@ public abstract class TrackInformation : IXmlUtility
     // }
 
     /// <summary>
-    ///     Add in necessary nodes in information.
+    ///     Add in necessary nodes in Information.
     /// </summary>
     public void FormatInformation()
     {
-        information = new Dictionary<string, string>
+        Information = new Dictionary<string, string>
         {
             { "Name", "" },
             { "Sort Name", "" },
             { "Music ID", "" },
             { "Genre", "" },
+            { "Genre ID",""},
             { "Version", "" },
             { "Version Number", "" },
             { "BPM", "" },
@@ -437,11 +429,11 @@ public abstract class TrackInformation : IXmlUtility
     }
 
     /// <summary>
-    ///     Add in necessary nodes in information for dummy chart.
+    ///     Add in necessary nodes in Information for dummy chart.
     /// </summary>
     public void FormatDummyInformation()
     {
-        information = new Dictionary<string, string>
+        Information = new Dictionary<string, string>
         {
             { "Name", "Dummy" },
             { "Sort Name", "DUMMY" },

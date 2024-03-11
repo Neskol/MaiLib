@@ -82,7 +82,7 @@ public class Simai : Chart
                 //{
                 //    Console.WriteLine("BPM Change verified in " + x.Bar + " " + x.Tick + " of BPM" + x.BPM);
                 //}
-                List<Note>? firstBpm = new List<Note>();
+                List<Note>? firstBpm = [];
                 foreach (Note? bpm in Notes)
                     if (bpm.NoteSpecificGenre is NoteSpecificGenre.BPM)
                         firstBpm.Add(bpm);

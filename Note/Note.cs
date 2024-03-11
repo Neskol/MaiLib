@@ -22,7 +22,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         EndKey = "";
         Definition = 384;
         // TickBPMDisagree = false;
-        BPMChangeNotes = new List<BPMChange>();
+        BPMChangeNotes = [];
         TouchSize = "M1";
         NoteSpecialState = SpecialState.Normal;
     }
@@ -989,8 +989,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <param name="changeTable">Change table contains BPM notes</param>
     public void ReplaceBPMChanges(BPMChanges changeTable)
     {
-        BPMChangeNotes = new List<BPMChange>();
-        BPMChangeNotes.AddRange(changeTable.ChangeNotes);
+        BPMChangeNotes = [.. changeTable.ChangeNotes];
     }
 
     /// <summary>
@@ -999,8 +998,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <param name="changeTable">Change table contains BPM notes</param>
     public void ReplaceBPMChanges(List<BPMChange> changeTable)
     {
-        BPMChangeNotes = new List<BPMChange>();
-        BPMChangeNotes.AddRange(changeTable);
+        BPMChangeNotes = [.. changeTable];
     }
 
     /// <summary>

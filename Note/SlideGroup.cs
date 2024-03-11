@@ -9,25 +9,24 @@ public class SlideGroup : Slide
 
     public SlideGroup()
     {
-        InternalSlides = new List<Slide>();
+        InternalSlides = [];
         NoteSpecialState = SpecialState.Normal;
         Update();
     }
 
     public SlideGroup(Note inTake) : base(inTake)
     {
-        InternalSlides = new List<Slide>
-        {
+        InternalSlides =
+        [
             (Slide)inTake
-        };
+        ];
         NoteSpecialState = inTake.NoteSpecialState;
         Update();
     }
 
     public SlideGroup(List<Slide> slideCandidate)
     {
-        InternalSlides = new List<Slide>();
-        InternalSlides.AddRange(slideCandidate);
+        InternalSlides = [.. slideCandidate];
         NoteSpecialState = slideCandidate.First().NoteSpecialState;
         Update();
     }

@@ -64,7 +64,7 @@ public class SimaiCompiler : Compiler
     {
         StrictDecimalLevel = strictDecimal;
         string[]? ma2files = Directory.GetFiles(location, "*.ma2");
-        Charts = new List<Chart>();
+        Charts = [];
         MusicXML = new XmlInformation(location);
         Information = MusicXML.Information;
         bool rotate = false;
@@ -95,8 +95,7 @@ public class SimaiCompiler : Compiler
             Charts.Add(chartCandidate);
         }
 
-        List<string>? ma2List = new List<string>();
-        ma2List.AddRange(ma2files);
+        List<string>? ma2List = [.. ma2files];
 
         Result = Compose(true, ma2List);
         //Console.WriteLine(result);
@@ -109,8 +108,8 @@ public class SimaiCompiler : Compiler
     {
         StrictDecimalLevel = false;
         for (int i = 0; i < 7; i++) Charts.Add(new Simai());
-        Charts = new List<Chart>();
-        Information = new Dictionary<string, string>();
+        Charts = [];
+        Information = [];
         MusicXML = new XmlInformation();
         Result = "";
     }
@@ -139,6 +138,7 @@ public class SimaiCompiler : Compiler
             beginning += $"&des={Information.GetValueOrDefault("Master Chart Maker")}\n";
             beginning += $"&shortid={Information.GetValueOrDefault("Music ID")}\n";
             beginning += $"&genre={Information.GetValueOrDefault("Genre")}\n";
+            beginning += $"&genreid={Information.GetValueOrDefault("Genre ID")}\n";
             beginning += "&cabinet=";
             if (MusicXML.IsDXChart)
                 beginning += "DX\n";
