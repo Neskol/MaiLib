@@ -135,6 +135,7 @@ public class SimaiCompiler : Compiler
                 $"&title={Information.GetValueOrDefault("Name")}{Information.GetValueOrDefault("SDDX Suffix")}\n";
             beginning += $"&wholebpm={Information.GetValueOrDefault("BPM")}\n";
             beginning += $"&artist={Information.GetValueOrDefault("Composer")}\n";
+            beginning += $"&artistid={Information.GetValueOrDefault("Composer ID")}\n";
             beginning += $"&des={Information.GetValueOrDefault("Master Chart Maker")}\n";
             beginning += $"&shortid={Information.GetValueOrDefault("Music ID")}\n";
             beginning += $"&genre={Information.GetValueOrDefault("Genre")}\n";

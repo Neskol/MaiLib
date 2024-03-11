@@ -23,12 +23,6 @@ public abstract class TrackInformation : IXmlUtility
     // public static readonly string[] addVersion = { "Ver1.00.00" };
 
     /// <summary>
-    ///     Stores the genre name used in Information
-    /// </summary>
-    /// <value>103 = Touhou, 105 = maimai</value>
-    public static readonly string[] genre = ["東方Project", "maimai"]; // TODO: Convert to enum
-
-    /// <summary>
     ///     Stores prover maimai versions
     /// </summary>
     /// <value>Version name of each generation of Maimai</value>
@@ -49,14 +43,6 @@ public abstract class TrackInformation : IXmlUtility
     ]; // TODO: Convert to enum
 
     // public static string[] versionArray;
-    public static Dictionary<string, string> netOpenNameDic = [];
-    public static Dictionary<string, string> releaseTagNameDic = [];
-    public static Dictionary<string, string> rightsInfoDic = [];
-    public static Dictionary<string, string> artistNameDic = [];
-    public static Dictionary<string, string> addVersionDic = [];
-    public static Dictionary<string, string> eventNameDic = [];
-    public static Dictionary<string, string> subEventNameDic = [];
-    public static Dictionary<string, string> notesDesignerDic = [];
 
     // private Dictionary<string, string> Information;
 
@@ -146,6 +132,16 @@ public abstract class TrackInformation : IXmlUtility
     {
         get => Information.GetValueOrDefault("Composer") ?? throw new NullReferenceException("Genre is not defined");
         set => Information["Composer"] = value;
+    }
+
+    /// <summary>
+    ///     Return the track composer
+    /// </summary>
+    /// <value>this.TrackComposer</value>
+    public int TrackComposerID
+    {
+        get => int.Parse(Information.GetValueOrDefault("Composer ID") ?? throw new NullReferenceException("Genre is not defined"));
+        set => Information["Composer ID"] = value.ToString();
     }
 
     /// <summary>
@@ -396,6 +392,7 @@ public abstract class TrackInformation : IXmlUtility
             { "Version Number", "" },
             { "BPM", "" },
             { "Composer", "" },
+            { "Composer ID", "" },
             { "Easy", "" },
             { "Easy Decimal", "" },
             { "Easy Chart Maker", "" },
