@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Runtime.InteropServices;
+using System.Xml;
 
 namespace MaiLib;
 
@@ -24,7 +25,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
         {
             if (File.Exists(location + "Music.xml"))
             {
-                TakeInValue.Load(location + "Music.xml");
+                InternalXml.Load(location + "Music.xml");
                 Update();
             }
             else
@@ -39,14 +40,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
     public override void Update()
     {
         int genreId = 0;
-        XmlNodeList? nameCandidate = TakeInValue.GetElementsByTagName("name");
-        XmlNodeList? bpmCandidate = TakeInValue.GetElementsByTagName("bpm");
-        XmlNodeList? chartCandidate = TakeInValue.GetElementsByTagName("Notes");
-        XmlNodeList? composerCandidate = TakeInValue.GetElementsByTagName("artistName");
-        XmlNodeList? genreCandidate = TakeInValue.GetElementsByTagName("genreName");
-        XmlNodeList? addVersionCandidate = TakeInValue.GetElementsByTagName("AddVersion");
-        XmlNodeList? sortNameCandidate = TakeInValue.GetElementsByTagName("sortName");
-        XmlNodeList? versionNumberCandidate = TakeInValue.GetElementsByTagName("releaseTagName");
+        XmlNodeList? nameCandidate = InternalXml.GetElementsByTagName("name");
+        XmlNodeList? bpmCandidate = InternalXml.GetElementsByTagName("bpm");
+        XmlNodeList? chartCandidate = InternalXml.GetElementsByTagName("Notes");
+        XmlNodeList? composerCandidate = InternalXml.GetElementsByTagName("artistName");
+        XmlNodeList? genreCandidate = InternalXml.GetElementsByTagName("genreName");
+        XmlNodeList? addVersionCandidate = InternalXml.GetElementsByTagName("AddVersion");
+        XmlNodeList? sortNameCandidate = InternalXml.GetElementsByTagName("sortName");
+        XmlNodeList? versionNumberCandidate = InternalXml.GetElementsByTagName("releaseTagName");
         //Add in name and music ID.
         ////Add BPM
         //this.information.Add("BPM",bpmCandidate[0].InnerText);
@@ -106,7 +107,8 @@ public class XmlInformation : TrackInformation, IXmlUtility
             if (TrackVersion.Equals(""))
             {
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
-                TrackVersion = version[int.Parse(idCandidate.InnerText)];
+                TrackVersionID = int.Parse(idCandidate.InnerText);
+                TrackVersion = Version[int.Parse(idCandidate.InnerText)];
             }
         }
 
@@ -124,132 +126,151 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerIdCandidate =
+                        notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
 
                     if (genreId == UtageGenreId)
                     {
-                        Information["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                        InformationDict["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
 
-                        Information["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                        InformationDict["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                             ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                             : "";
-                        Information["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
-                        Information["Utage Chart Path"] = fileCandidate.InnerText;
+                        InformationDict["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
+                        InformationDict["Utage Maker ID"] = notesDesignerIdCandidate.InnerText;
+                        InformationDict["Utage Chart Path"] = fileCandidate.InnerText;
                     }
                     else
                     {
-                        Information["Basic Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                        InformationDict["Basic Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
 
-                        Information["Basic"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                        InformationDict["Basic"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                             ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                             : "";
-                        Information["Basic Chart Maker"] = notesDesignerCandidate.InnerText;
-                        Information["Basic Chart Path"] = fileCandidate.InnerText;
+                        InformationDict["Basic Chart Maker"] = notesDesignerCandidate.InnerText;
+                        InformationDict["Basic Maker ID"] = notesDesignerIdCandidate.InnerText;
+                        InformationDict["Basic Chart Path"] = fileCandidate.InnerText;
                     }
                 }
                 else if (pathCandidate.InnerText.Contains("01.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    Information["Advanced Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Advanced Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerIdCandidate =
+                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                    Information["Advanced"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                    InformationDict["Advanced"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
-                    Information["Advanced Chart Maker"] = notesDesignerCandidate.InnerText;
-                    Information["Advanced Chart Path"] = fileCandidate.InnerText;
+                    InformationDict["Advanced Chart Maker"] = notesDesignerCandidate.InnerText;
+                    InformationDict["Advanced Maker ID"] = notesDesignerIdCandidate.InnerText;
+                    InformationDict["Advanced Chart Path"] = fileCandidate.InnerText;
                 }
                 else if (pathCandidate.InnerText.Contains("02.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    Information["Expert Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Expert Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerIdCandidate =
+                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                    Information["Expert"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                    InformationDict["Expert"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
-                    Information["Expert Chart Maker"] = notesDesignerCandidate.InnerText;
-                    Information["Expert Chart Path"] = fileCandidate.InnerText;
+                    InformationDict["Expert Chart Maker"] = notesDesignerCandidate.InnerText;
+                    InformationDict["Expert Maker ID"] = notesDesignerIdCandidate.InnerText;
+                    InformationDict["Expert Chart Path"] = fileCandidate.InnerText;
                 }
                 else if (pathCandidate.InnerText.Contains("03.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    Information["Master Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Master Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerIdCandidate =
+                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                    Information["Master"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                    InformationDict["Master"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
-                    Information["Master Chart Maker"] = notesDesignerCandidate.InnerText;
-                    Information["Master Chart Path"] = fileCandidate.InnerText;
+                    InformationDict["Master Chart Maker"] = notesDesignerCandidate.InnerText;
+                    InformationDict["Master Maker ID"] = notesDesignerIdCandidate.InnerText;
+                    InformationDict["Master Chart Path"] = fileCandidate.InnerText;
                 }
                 else if (pathCandidate.InnerText.Contains("04.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    Information["Remaster Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Remaster Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerIdCandidate =
+                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                    Information["Remaster"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                    InformationDict["Remaster"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
-                    Information["Remaster Chart Maker"] = notesDesignerCandidate.InnerText;
-                    Information["Remaster Chart Path"] = fileCandidate.InnerText;
+                    InformationDict["Remaster Chart Maker"] = notesDesignerCandidate.InnerText;
+                    InformationDict["Remaster Maker ID"] = notesDesignerIdCandidate.InnerText;
+                    InformationDict["Remaster Chart Path"] = fileCandidate.InnerText;
                 }
                 else if (pathCandidate.InnerText.Contains("05.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    Information["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                    Information["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                    InformationDict["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
-                    Information["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
-                    Information["Utage Chart Path"] = fileCandidate.InnerText;
+                    InformationDict["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
+                    InformationDict["Utage Chart Path"] = fileCandidate.InnerText;
                 }
                 else if (pathCandidate.InnerText.Contains("11.ma2") && enableCandidate.InnerText.Equals("true"))
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    Information["Easy Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Easy Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
+                    XmlElement? notesDesignerIdCandidate =
+                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
-                    Information["Easy"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
+                    InformationDict["Easy"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                         ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
                         : "";
-                    Information["Easy Chart Maker"] = notesDesignerCandidate.InnerText;
-                    Information["Easy Chart Path"] = fileCandidate.InnerText;
+                    InformationDict["Easy Chart Maker"] = notesDesignerCandidate.InnerText;
+                    InformationDict["Easy Maker ID"] = notesDesignerIdCandidate.InnerText;
+                    InformationDict["Easy Chart Path"] = fileCandidate.InnerText;
                 }
             }
             catch (Exception ex)
@@ -257,7 +278,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 Console.WriteLine("There is no such chart: " + ex.Message);
             }
 
-        Information["SDDX Suffix"] = StandardDeluxeSuffix;
+        InformationDict["SDDX Suffix"] = StandardDeluxeSuffix;
     }
 
     /// <summary>
@@ -265,241 +286,272 @@ public class XmlInformation : TrackInformation, IXmlUtility
     /// </summary>
     public void GenerateInternalXml()
     {
-        TakeInValue = new XmlDocument();
+        InternalXml = new XmlDocument();
         //Create declaration
-        XmlDeclaration? dec = TakeInValue.CreateXmlDeclaration("1.0", "utf-8", "yes");
-        TakeInValue.AppendChild(dec);
+        XmlDeclaration? dec = InternalXml.CreateXmlDeclaration("1.0", "utf-8", "yes");
+        InternalXml.AppendChild(dec);
         //Create Root and append attributes
-        XmlElement? root = TakeInValue.CreateElement("MusicData");
-        TakeInValue.AppendChild(root);
-        XmlAttribute? xsi = TakeInValue.CreateAttribute("xmlns:xsi");
+        XmlElement? root = InternalXml.CreateElement("MusicData");
+        InternalXml.AppendChild(root);
+        XmlAttribute? xsi = InternalXml.CreateAttribute("xmlns:xsi");
         xsi.Value = "http://www.w3.org/2001/XMLSchema-instance";
-        XmlAttribute? xsd = TakeInValue.CreateAttribute("xmlns:xsd");
+        XmlAttribute? xsd = InternalXml.CreateAttribute("xmlns:xsd");
 
         //Create tags. *data name: inner text = music0xxxxx
-        XmlElement? dataName = TakeInValue.CreateElement("dataName");
-        dataName.InnerText = "music" + CompensateZero(Information["Music ID"]);
+        XmlElement? dataName = InternalXml.CreateElement("dataName");
+        dataName.InnerText = "music" + CompensateZero(InformationDict["Music ID"]);
         root.AppendChild(dataName);
-        XmlElement? netOpenName = TakeInValue.CreateElement("netOpenName");
-        XmlElement? netOpenNameId = TakeInValue.CreateElement("id");
+        XmlElement? netOpenName = InternalXml.CreateElement("netOpenName");
+        XmlElement? netOpenNameId = InternalXml.CreateElement("id");
         netOpenNameId.InnerText = "0";
-        XmlElement? netOpenNameStr = TakeInValue.CreateElement("str");
+        XmlElement? netOpenNameStr = InternalXml.CreateElement("str");
         netOpenNameStr.InnerText = "Net190711";
         netOpenName.AppendChild(netOpenNameId);
         netOpenName.AppendChild(netOpenNameStr);
         root.AppendChild(netOpenName);
-        XmlElement? releaseTagName = TakeInValue.CreateElement("releaseTagName");
-        XmlElement? releaseTagNameId = TakeInValue.CreateElement("id");
+        XmlElement? releaseTagName = InternalXml.CreateElement("releaseTagName");
+        XmlElement? releaseTagNameId = InternalXml.CreateElement("id");
         releaseTagNameId.InnerText = "1";
-        XmlElement? releaseTagNameStr = TakeInValue.CreateElement("str");
+        XmlElement? releaseTagNameStr = InternalXml.CreateElement("str");
         releaseTagNameStr.InnerText = "Ver1.00.00";
         releaseTagName.AppendChild(releaseTagNameId);
         releaseTagName.AppendChild(releaseTagNameStr);
         root.AppendChild(releaseTagName);
-        XmlElement? disable = TakeInValue.CreateElement("disable");
+        XmlElement? disable = InternalXml.CreateElement("disable");
         disable.InnerText = "false";
         root.AppendChild(disable);
-        XmlElement? name = TakeInValue.CreateElement("name");
-        XmlElement? nameId = TakeInValue.CreateElement("id");
+        XmlElement? name = InternalXml.CreateElement("name");
+        XmlElement? nameId = InternalXml.CreateElement("id");
         nameId.InnerText = TrackID;
-        XmlElement? nameStr = TakeInValue.CreateElement("str");
+        XmlElement? nameStr = InternalXml.CreateElement("str");
         nameStr.InnerText = TrackName;
         name.AppendChild(nameId);
         name.AppendChild(nameStr);
         root.AppendChild(name);
-        XmlElement? rightsInfoName = TakeInValue.CreateElement("rightsInfoName");
-        XmlElement? rightsInfoNameId = TakeInValue.CreateElement("id");
+        XmlElement? rightsInfoName = InternalXml.CreateElement("rightsInfoName");
+        XmlElement? rightsInfoNameId = InternalXml.CreateElement("id");
         rightsInfoNameId.InnerText = "0";
-        XmlElement? rightsInfoNameStr = TakeInValue.CreateElement("str");
+        XmlElement? rightsInfoNameStr = InternalXml.CreateElement("str");
         rightsInfoNameStr.InnerText = "";
         rightsInfoName.AppendChild(rightsInfoNameId);
         rightsInfoName.AppendChild(rightsInfoNameStr);
         root.AppendChild(rightsInfoName);
-        XmlElement? sortName = TakeInValue.CreateElement("sortName");
+        XmlElement? sortName = InternalXml.CreateElement("sortName");
         sortName.InnerText = TrackSortName;
         root.AppendChild(sortName);
-        XmlElement? artistName = TakeInValue.CreateElement("artistName");
-        XmlElement? artistNameId = TakeInValue.CreateElement("id");
+        XmlElement? artistName = InternalXml.CreateElement("artistName");
+        XmlElement? artistNameId = InternalXml.CreateElement("id");
         artistNameId.InnerText = "0";
-        XmlElement? artistNameStr = TakeInValue.CreateElement("str");
-        artistNameStr.InnerText = Information["Composer"];
+        XmlElement? artistNameStr = InternalXml.CreateElement("str");
+        artistNameStr.InnerText = InformationDict["Composer"];
         artistName.AppendChild(artistNameId);
         artistName.AppendChild(artistNameStr);
         root.AppendChild(artistName);
-        XmlElement? genreName = TakeInValue.CreateElement("genreName");
-        XmlElement? genreNameId = TakeInValue.CreateElement("id");
+        XmlElement? genreName = InternalXml.CreateElement("genreName");
+        XmlElement? genreNameId = InternalXml.CreateElement("id");
         genreNameId.InnerText = TrackGenreID.ToString();
-        XmlElement? genreNameStr = TakeInValue.CreateElement("str");
+        XmlElement? genreNameStr = InternalXml.CreateElement("str");
         genreNameStr.InnerText = TrackGenre;
         genreName.AppendChild(genreNameId);
         genreName.AppendChild(genreNameStr);
         root.AppendChild(genreName);
-        XmlElement? bpm = TakeInValue.CreateElement("bpm");
+        XmlElement? bpm = InternalXml.CreateElement("bpm");
         bpm.InnerText = TrackBPM;
         root.AppendChild(bpm);
-        XmlElement? version = TakeInValue.CreateElement("version");
+        XmlElement? version = InternalXml.CreateElement("version");
         version.InnerText = "19000";
         root.AppendChild(version);
-        XmlElement? addVersion = TakeInValue.CreateElement("addVersion");
-        XmlElement? addVersionId = TakeInValue.CreateElement("id");
-        addVersionId.InnerText = TrackVersionNumber;
-        XmlElement? addVersionStr = TakeInValue.CreateElement("str");
-        addVersionStr.InnerText = shortVersion[int.Parse(TrackVersionNumber.Substring(1))];
+        XmlElement? addVersion = InternalXml.CreateElement("addVersion");
+        XmlElement? addVersionId = InternalXml.CreateElement("id");
+        addVersionId.InnerText = TrackVersionID.ToString();
+        XmlElement? addVersionStr = InternalXml.CreateElement("str");
+        addVersionStr.InnerText = ShortVersion[TrackVersionID];
         addVersion.AppendChild(addVersionId);
         addVersion.AppendChild(addVersionStr);
         root.AppendChild(addVersion);
-        XmlElement? movieName = TakeInValue.CreateElement("movieName");
-        XmlElement? movieNameId = TakeInValue.CreateElement("id");
+        XmlElement? movieName = InternalXml.CreateElement("movieName");
+        XmlElement? movieNameId = InternalXml.CreateElement("id");
         movieNameId.InnerText = TrackID;
-        XmlElement? movieNameStr = TakeInValue.CreateElement("str");
+        XmlElement? movieNameStr = InternalXml.CreateElement("str");
         movieNameStr.InnerText = TrackName;
         movieName.AppendChild(movieNameId);
         movieName.AppendChild(movieNameStr);
         root.AppendChild(movieName);
-        XmlElement? cueName = TakeInValue.CreateElement("cueName");
-        XmlElement? cueNameId = TakeInValue.CreateElement("id");
+        XmlElement? cueName = InternalXml.CreateElement("cueName");
+        XmlElement? cueNameId = InternalXml.CreateElement("id");
         cueNameId.InnerText = TrackID;
-        XmlElement? cueNameStr = TakeInValue.CreateElement("str");
+        XmlElement? cueNameStr = InternalXml.CreateElement("str");
         cueNameStr.InnerText = TrackName;
         cueName.AppendChild(cueNameId);
         cueName.AppendChild(cueNameStr);
         root.AppendChild(cueName);
-        XmlElement? dressCode = TakeInValue.CreateElement("dressCode");
+        XmlElement? dressCode = InternalXml.CreateElement("dressCode");
         dressCode.InnerText = "false";
         root.AppendChild(dressCode);
-        XmlElement? eventName = TakeInValue.CreateElement("eventName");
-        XmlElement? eventNameId = TakeInValue.CreateElement("id");
+        XmlElement? eventName = InternalXml.CreateElement("eventName");
+        XmlElement? eventNameId = InternalXml.CreateElement("id");
         eventNameId.InnerText = "1";
-        XmlElement? eventNameStr = TakeInValue.CreateElement("str");
+        XmlElement? eventNameStr = InternalXml.CreateElement("str");
         eventNameStr.InnerText = "無期限常時解放";
         eventName.AppendChild(eventNameId);
         eventName.AppendChild(eventNameStr);
         root.AppendChild(eventName);
-        XmlElement? subEventName = TakeInValue.CreateElement("subEventName");
-        XmlElement? subEventNameId = TakeInValue.CreateElement("id");
+        XmlElement? subEventName = InternalXml.CreateElement("subEventName");
+        XmlElement? subEventNameId = InternalXml.CreateElement("id");
         subEventNameId.InnerText = "1";
-        XmlElement? subEventNameStr = TakeInValue.CreateElement("str");
+        XmlElement? subEventNameStr = InternalXml.CreateElement("str");
         subEventNameStr.InnerText = "無期限常時解放";
         subEventName.AppendChild(subEventNameId);
         subEventName.AppendChild(subEventNameStr);
         root.AppendChild(subEventName);
-        XmlElement? lockType = TakeInValue.CreateElement("lockType");
+        XmlElement? lockType = InternalXml.CreateElement("lockType");
         lockType.InnerText = "0";
         root.AppendChild(lockType);
-        XmlElement? subLockType = TakeInValue.CreateElement("subLockType");
+        XmlElement? subLockType = InternalXml.CreateElement("subLockType");
         subLockType.InnerText = "1";
         root.AppendChild(subLockType);
-        XmlElement? dotNetListView = TakeInValue.CreateElement("dotNetListView");
+        XmlElement? dotNetListView = InternalXml.CreateElement("dotNetListView");
         dotNetListView.InnerText = "true";
         root.AppendChild(dotNetListView);
-        XmlElement? notesData = TakeInValue.CreateElement("notesData");
-        for (int i = 0; i < 7; i++)
+        XmlElement? notesData = InternalXml.CreateElement("notesData");
+        int currentDiff;
+        for (currentDiff = 0; currentDiff < 6; currentDiff++) try
         {
-            XmlElement? noteCandidate = TakeInValue.CreateElement("Notes");
-            XmlElement? fileCandidate = TakeInValue.CreateElement("file");
-            XmlElement? pathCandidate = TakeInValue.CreateElement("path");
-            pathCandidate.InnerText = CompensateZero(TrackID) + "_0" + i + ".ma2";
+            XmlElement? noteCandidate = InternalXml.CreateElement("Notes");
+            XmlElement? fileCandidate = InternalXml.CreateElement("file");
+            XmlElement? pathCandidate = InternalXml.CreateElement("path");
+            pathCandidate.InnerText = $"{CompensateZero(TrackID)}_0{currentDiff}.ma2";
             fileCandidate.AppendChild(pathCandidate);
-            XmlElement? levelCandidate = TakeInValue.CreateElement("level");
-            XmlElement? levelDecimalCandidate = TakeInValue.CreateElement("levelDecimal");
-            XmlElement? notesDesignerCandidate = TakeInValue.CreateElement("notesDesigner");
-            XmlElement? notesDesignerIdCandidate = TakeInValue.CreateElement("id");
-            XmlElement? notesDesignerStrCandidate = TakeInValue.CreateElement("str");
-            XmlElement? notesTypeCandidate = TakeInValue.CreateElement("notesType");
+            XmlElement? levelCandidate = InternalXml.CreateElement("level");
+            XmlElement? levelDecimalCandidate = InternalXml.CreateElement("levelDecimal");
+            XmlElement? notesDesignerCandidate = InternalXml.CreateElement("notesDesigner");
+            XmlElement? notesDesignerIdCandidate = InternalXml.CreateElement("id");
+            XmlElement? notesDesignerStrCandidate = InternalXml.CreateElement("str");
+            XmlElement? notesTypeCandidate = InternalXml.CreateElement("notesType");
             notesTypeCandidate.InnerText = "0";
-            XmlElement? musicLevelIDCandidate = TakeInValue.CreateElement("musicLevelID");
-            XmlElement? isEnabledCandidate = TakeInValue.CreateElement("isEnabled");
+            XmlElement? musicLevelIDCandidate = InternalXml.CreateElement("musicLevelID");
+            XmlElement? maxNotesCandidate = InternalXml.CreateElement("maxNotes");
+            XmlElement? isEnabledCandidate = InternalXml.CreateElement("isEnabled");
 
-            // switch (i)
-            // {
-            //     case 0:
-            //         notesDesignerStrCandidate.InnerText = Information["Easy Chart Maker"];
-            //         int designerIndex =
-            //             Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
-            //         if (designerIndex > 1)
-            //             notesDesignerIdCandidate.InnerText = artistNameDic.Keys.ToArray()[
-            //                 Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
-            //         isEnabledCandidate.InnerText = "true";
-            //         break;
-            //     case 1:
-            //         notesDesignerStrCandidate.InnerText = Information["Basic Chart Maker"];
-            //         designerIndex = Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
-            //         if (designerIndex > 1)
-            //             notesDesignerIdCandidate.InnerText = artistNameDic.Keys.ToArray()[
-            //                 Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
-            //         isEnabledCandidate.InnerText = "true";
-            //         break;
-            //     case 2:
-            //         notesDesignerStrCandidate.InnerText = Information["Advanced Chart Maker"];
-            //         designerIndex = Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
-            //         if (designerIndex > 1)
-            //             notesDesignerIdCandidate.InnerText = artistNameDic.Keys.ToArray()[
-            //                 Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
-            //         isEnabledCandidate.InnerText = "true";
-            //         break;
-            //     case 3:
-            //         notesDesignerStrCandidate.InnerText = Information["Expert Chart Maker"];
-            //         designerIndex = Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
-            //         if (designerIndex > 1)
-            //             notesDesignerIdCandidate.InnerText = artistNameDic.Keys.ToArray()[
-            //                 Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
-            //         isEnabledCandidate.InnerText = "true";
-            //         break;
-            //     case 4:
-            //         notesDesignerStrCandidate.InnerText = Information["Master Chart Maker"];
-            //         designerIndex = Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
-            //         if (designerIndex > 1)
-            //             notesDesignerIdCandidate.InnerText = artistNameDic.Keys.ToArray()[
-            //                 Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
-            //         isEnabledCandidate.InnerText = "true";
-            //         break;
-            //     case 5:
-            //         notesDesignerStrCandidate.InnerText = Information["Remaster Chart Maker"];
-            //         designerIndex = Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
-            //         if (designerIndex > 1)
-            //             notesDesignerIdCandidate.InnerText = artistNameDic.Keys.ToArray()[
-            //                 Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
-            //         isEnabledCandidate.InnerText = "true";
-            //         break;
-            //     case 6:
-            //         notesDesignerStrCandidate.InnerText = Information["Utage Chart Maker"];
-            //         designerIndex = Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText);
-            //         if (designerIndex > 1)
-            //             notesDesignerIdCandidate.InnerText = artistNameDic.Keys.ToArray()[
-            //                 Array.IndexOf(artistNameDic.Values.ToArray(), notesDesignerStrCandidate.InnerText)];
-            //         isEnabledCandidate.InnerText = "true";
-            //         break;
-            // }
+            switch (currentDiff)
+            {
+                case 0:
+                    notesDesignerStrCandidate.InnerText = InformationDict["Basic Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict["Basic Maker ID"].Equals("") ? "0" : InformationDict["Basic Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict["Basic"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict["Basic Max Note"].Equals("") ? "0" : InformationDict["Basic Max Note"];
+                    break;
+                case 1:
+                    notesDesignerStrCandidate.InnerText = InformationDict["Advanced Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict["Advanced Maker ID"].Equals("") ? "0" : InformationDict["Advanced Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict["Advanced"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict["Advanced Max Note"].Equals("") ? "0" : InformationDict["Advanced Max Note"];
+                    break;
+                case 2:
+                    notesDesignerStrCandidate.InnerText = InformationDict["Expert Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict["Expert Maker ID"].Equals("") ? "0" : InformationDict["Expert Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict["Expert"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict["Expert Max Note"].Equals("") ? "0" : InformationDict["Expert Max Note"];
+                    break;
+                case 3:
+                    notesDesignerStrCandidate.InnerText = InformationDict["Master Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict["Master Maker ID"].Equals("") ? "0" : InformationDict["Master Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict["Master"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict["Master Max Note"].Equals("") ? "0" : InformationDict["Master Max Note"];
+                    break;
+                case 4:
+                    notesDesignerStrCandidate.InnerText = InformationDict["Remaster Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict["Remaster Maker ID"].Equals("") ? "0" : InformationDict["Remaster Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict["Remaster"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict["Remaster Max Note"].Equals("") ? "0" : InformationDict["Remaster Max Note"];
+                    break;
+                case 5:
+                    notesDesignerStrCandidate.InnerText = InformationDict["Utage Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict["Utage Maker ID"].Equals("") ? "0" : InformationDict["Utage Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict["Utage"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict["Utage Max Note"].Equals("") ? "0" : InformationDict["Utage Max Note"];
+                    break;
+                case 6:
+                    notesDesignerStrCandidate.InnerText = InformationDict["Original Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict["Original Maker ID"].Equals("") ? "0" : InformationDict["Original Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict["Original"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict["Original Max Note"].Equals("") ? "0" : InformationDict["Original Max Note"];
+                    break;
+                case 11:
+                    notesDesignerStrCandidate.InnerText = InformationDict["Easy Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict["Easy Maker ID"].Equals("") ? "0" : InformationDict["Easy Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict["Easy"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict["Easy Max Note"].Equals("") ? "0" : InformationDict["Easy Max Note"];
+                    break;
+                default:
+                    // Reserves condition for more original charts
+                    notesDesignerStrCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Chart Maker"];
+                    notesDesignerIdCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Maker ID"].Equals("") ? "0" : InformationDict["Original Maker ID"];
+                    isEnabledCandidate.InnerText = InformationDict[$"Original {currentDiff - 6}"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
+                    maxNotesCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Max Note"].Equals("") ? "0" : InformationDict[$"Original {currentDiff - 6} Max Note"];
+                    break;
+
+            }
 
             notesDesignerCandidate.AppendChild(notesDesignerIdCandidate);
             notesDesignerCandidate.AppendChild(notesDesignerStrCandidate);
-            if (!TrackLevels[i].Equals(""))
+            if (!TrackLevels[currentDiff].Equals(""))
             {
-                levelCandidate.InnerText = TrackLevels[i];
-                musicLevelIDCandidate.InnerText = TrackLevels[i];
+                levelCandidate.InnerText = TrackLevels[currentDiff];
+                musicLevelIDCandidate.InnerText = TrackLevels[currentDiff];
             }
             else
             {
                 levelCandidate.InnerText = "0";
+                musicLevelIDCandidate.InnerText = "";
             }
 
-            if (!TrackDecimalLevels[i].Equals(""))
-                levelCandidate.InnerText = TrackDecimalLevels[i];
-            else levelCandidate.InnerText = "0";
+            levelCandidate.InnerText = TrackDecimalLevels[currentDiff].Equals("") ? "0" : TrackDecimalLevels[currentDiff];
             noteCandidate.AppendChild(fileCandidate);
             noteCandidate.AppendChild(levelCandidate);
             noteCandidate.AppendChild(levelDecimalCandidate);
             noteCandidate.AppendChild(notesDesignerCandidate);
             noteCandidate.AppendChild(notesTypeCandidate);
             noteCandidate.AppendChild(musicLevelIDCandidate);
+            noteCandidate.AppendChild(maxNotesCandidate);
             noteCandidate.AppendChild(isEnabledCandidate);
-            root.AppendChild(noteCandidate);
+            notesData.AppendChild(noteCandidate);
         }
+        catch (KeyNotFoundException ex)
+        {
+            Console.WriteLine("{0} presented at difficulty {1}, skipping", ex.GetType(), currentDiff);
+        }
+        root.AppendChild(notesData);
 
-        XmlElement? jacketFile = TakeInValue.CreateElement("jacketFile");
-        XmlElement? thumbnailName = TakeInValue.CreateElement("thumbnailName");
-        XmlElement? rightFile = TakeInValue.CreateElement("rightFile");
-        XmlElement? priority = TakeInValue.CreateElement("priority");
+        // Following are reserved for Utage charts
+        XmlElement? utageKanji = InternalXml.CreateElement("utageKanjiName");
+        utageKanji.InnerText = InformationDict["Utage Kanji"].Equals("") ? "0" : InformationDict["Utage Kanji"];
+        XmlElement? utageComment = InternalXml.CreateElement("comment");
+        utageComment.InnerText = InformationDict["Utage Comment"].Equals("") ? "0" : InformationDict["Utage Comment"];
+        XmlElement? utagePlayStyle = InternalXml.CreateElement("utagePlayStyle");
+        utagePlayStyle.InnerText = InformationDict["Utage Play Style"].Equals("") ? "0" : InformationDict["Utage Play Style"];
+        XmlElement ? utageFixedOptionRoot = InternalXml.CreateElement("fixedOptions");
+        for (int i = 0; i < 4; i++)
+        {
+            XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
+            XmlElement? utageFixedOptionName = InternalXml.CreateElement("_fixedOptionName");
+            utageFixedOptionName.InnerText = "None";
+            XmlElement? utageFixedOptionValue = InternalXml.CreateElement("FixedOption");
+            utageFixedOptionValue.InnerText = "None";
+            utageFixedOption.AppendChild(utageFixedOptionName);
+            utageFixedOption.AppendChild(utageFixedOptionValue);
+            utageFixedOptionRoot.AppendChild(utageFixedOption);
+        }
+        root.AppendChild(utageKanji);
+        root.AppendChild(utageComment);
+        root.AppendChild(utagePlayStyle);
+        root.AppendChild(utageFixedOptionRoot);
+
+
+        XmlElement? jacketFile = InternalXml.CreateElement("jacketFile");
+        XmlElement? thumbnailName = InternalXml.CreateElement("thumbnailName");
+        XmlElement? rightFile = InternalXml.CreateElement("rightFile");
+        XmlElement? priority = InternalXml.CreateElement("priority");
         priority.InnerText = "0";
         root.AppendChild(jacketFile);
         root.AppendChild(thumbnailName);
@@ -507,10 +559,13 @@ public class XmlInformation : TrackInformation, IXmlUtility
         root.AppendChild(priority);
     }
 
-    public XmlElement CreateNotesInformation(Dictionary<string, string> information, int chartIndex)
+    /// <summary>
+    ///     Writes music.xml to location specified
+    /// </summary>
+    /// <param name="location">Target Location</param>
+    public void WriteOutInformation(string location)
     {
-        XmlElement? result = TakeInValue.CreateElement("Notes");
-
-        return result;
+        GenerateInternalXml();
+        InternalXml.Save(location);
     }
 }

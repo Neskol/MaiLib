@@ -70,17 +70,17 @@ public class SimaiTokenizer : ITokenizer
             if (item.Contains("title"))
             {
                 titleCandidate = item.Replace("title=", "").Replace("[SD]", "").Replace("[DX]", "");
-                simaiTrackInformation.Information["Name"] = titleCandidate;
+                simaiTrackInformation.InformationDict["Name"] = titleCandidate;
             }
             else if (item.Contains("wholebpm"))
             {
                 bpmCandidate = item.Replace("wholebpm=", "");
-                simaiTrackInformation.Information["BPM"] = bpmCandidate;
+                simaiTrackInformation.InformationDict["BPM"] = bpmCandidate;
             }
             else if (item.Contains("artist"))
             {
                 artistCandidate = item.Replace("artist=", "");
-                simaiTrackInformation.Information["Composer"] = artistCandidate;
+                simaiTrackInformation.InformationDict["Composer"] = artistCandidate;
             }
             else if (item.Contains("des="))
             {
@@ -89,93 +89,93 @@ public class SimaiTokenizer : ITokenizer
             else if (item.Contains("shortid"))
             {
                 shortIdCandidate = item.Replace("shortid=", "");
-                simaiTrackInformation.Information["Music ID"] = shortIdCandidate;
+                simaiTrackInformation.InformationDict["Music ID"] = shortIdCandidate;
                 if (shortIdCandidate.Length <= 6 && int.TryParse(shortIdCandidate, out int id))
                 {
                     if (shortIdCandidate.Length > 4)
-                        simaiTrackInformation.Information["SDDX Suffix"] = "DX";
-                    else simaiTrackInformation.Information["SDDX Suffix"] = "SD";
+                        simaiTrackInformation.InformationDict["SDDX Suffix"] = "DX";
+                    else simaiTrackInformation.InformationDict["SDDX Suffix"] = "SD";
                 }
             }
             else if (item.Contains("genre"))
             {
                 genreCandidate = item.Replace("genre=", "");
-                simaiTrackInformation.Information["Genre"] = genreCandidate;
+                simaiTrackInformation.InformationDict["Genre"] = genreCandidate;
             }
             else if (item.Contains("version"))
             {
                 versionCandidate = item.Replace("version=", "");
-                simaiTrackInformation.Information["Version"] = versionCandidate;
+                simaiTrackInformation.InformationDict["Version"] = versionCandidate;
             }
             else if (item.Contains("lv_1"))
             {
                 string? easyCandidate = item.Replace("lv_1=", "");
-                simaiTrackInformation.Information["Easy"] = easyCandidate;
+                simaiTrackInformation.InformationDict["Easy"] = easyCandidate;
             }
             else if (item.Contains("des_1"))
             {
                 string? easyChartCandidate = item.Replace("des_1=", "");
-                simaiTrackInformation.Information["Easy Chart Maker"] = easyChartCandidate;
+                simaiTrackInformation.InformationDict["Easy Chart Maker"] = easyChartCandidate;
             }
             else if (item.Contains("lv_2"))
             {
                 string? basicCandidate = item.Replace("lv_2=", "");
-                simaiTrackInformation.Information["Basic"] = basicCandidate;
+                simaiTrackInformation.InformationDict["Basic"] = basicCandidate;
             }
             else if (item.Contains("des_2"))
             {
                 string? basicChartCandidate = item.Replace("des_2=", "");
-                simaiTrackInformation.Information["Basic Chart Maker"] = basicChartCandidate;
+                simaiTrackInformation.InformationDict["Basic Chart Maker"] = basicChartCandidate;
             }
             else if (item.Contains("lv_3"))
             {
                 string? advancedCandidate = item.Replace("lv_3=", "");
-                simaiTrackInformation.Information["Advanced"] = advancedCandidate;
+                simaiTrackInformation.InformationDict["Advanced"] = advancedCandidate;
             }
             else if (item.Contains("des_3"))
             {
                 string? advancedChartCandidate = item.Replace("des_3=", "");
-                simaiTrackInformation.Information["Advanced Chart Maker"] = advancedChartCandidate;
+                simaiTrackInformation.InformationDict["Advanced Chart Maker"] = advancedChartCandidate;
             }
             else if (item.Contains("lv_4"))
             {
                 string? expertCandidate = item.Replace("lv_4=", "");
-                simaiTrackInformation.Information["Expert"] = expertCandidate;
+                simaiTrackInformation.InformationDict["Expert"] = expertCandidate;
             }
             else if (item.Contains("des_4"))
             {
                 string? expertChartCandidate = item.Replace("des_4=", "");
-                simaiTrackInformation.Information["Expert Chart Maker"] = expertChartCandidate;
+                simaiTrackInformation.InformationDict["Expert Chart Maker"] = expertChartCandidate;
             }
             else if (item.Contains("lv_5"))
             {
                 string? masterCandidate = item.Replace("lv_5=", "");
-                simaiTrackInformation.Information["Master"] = masterCandidate;
+                simaiTrackInformation.InformationDict["Master"] = masterCandidate;
             }
             else if (item.Contains("des_5"))
             {
                 string? masterChartCandidate = item.Replace("des_5=", "");
-                simaiTrackInformation.Information["Master Chart Maker"] = masterChartCandidate;
+                simaiTrackInformation.InformationDict["Master Chart Maker"] = masterChartCandidate;
             }
             else if (item.Contains("lv_6"))
             {
                 string? remasterCandidate = item.Replace("lv_6=", "");
-                simaiTrackInformation.Information["Remaster"] = remasterCandidate;
+                simaiTrackInformation.InformationDict["Remaster"] = remasterCandidate;
             }
             else if (item.Contains("des_6"))
             {
                 string? remasterChartCandidate = item.Replace("des_6=", "");
-                simaiTrackInformation.Information["Remaster Chart Maker"] = remasterChartCandidate;
+                simaiTrackInformation.InformationDict["Remaster Chart Maker"] = remasterChartCandidate;
             }
             else if (item.Contains("lv_7"))
             {
                 string? utageCandidate = item.Replace("lv_7=", "");
-                simaiTrackInformation.Information["Utage"] = utageCandidate;
+                simaiTrackInformation.InformationDict["Utage"] = utageCandidate;
             }
             else if (item.Contains("des_7"))
             {
                 string? utageChartCandidate = item.Replace("des_7=", "");
-                simaiTrackInformation.Information["Utage Chart Maker"] = utageChartCandidate;
+                simaiTrackInformation.InformationDict["Utage Chart Maker"] = utageChartCandidate;
             }
             else if (item.Contains("inote_2"))
             {

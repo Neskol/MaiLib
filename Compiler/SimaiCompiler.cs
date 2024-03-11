@@ -23,7 +23,7 @@ public class SimaiCompiler : Compiler
         StrictDecimalLevel = strictDecimal;
         for (int i = 0; i < 7; i++) Charts.Add(new Simai());
         MusicXML = new XmlInformation(location);
-        Information = MusicXML.Information;
+        Information = MusicXML.InformationDict;
         //Construct Charts
         {
             if (!Information["Easy"].Equals("") &&
@@ -66,7 +66,7 @@ public class SimaiCompiler : Compiler
         string[]? ma2files = Directory.GetFiles(location, "*.ma2");
         Charts = [];
         MusicXML = new XmlInformation(location);
-        Information = MusicXML.Information;
+        Information = MusicXML.InformationDict;
         bool rotate = false;
         string? rotateParameter = "";
         foreach (KeyValuePair<string, string> pair in RotateDictionary)
@@ -121,6 +121,8 @@ public class SimaiCompiler : Compiler
             sw.WriteLine(Result);
         }
         sw.Close();
+        MusicXML = new XmlInformation(){ InformationDict = this.Information};
+        MusicXML.WriteOutInformation($"{targetLocation}/Music.xml");
     }
 
     public override string Compose()

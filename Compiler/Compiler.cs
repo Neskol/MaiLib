@@ -30,7 +30,7 @@ public abstract class Compiler : ICompiler
         Charts = [];
         MusicXML = new XmlInformation(location);
         MusicXML.Update();
-        Information = MusicXML.Information;
+        Information = MusicXML.InformationDict;
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             GlobalSep = "\\";
