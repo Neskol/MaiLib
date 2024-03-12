@@ -226,33 +226,13 @@ public abstract class TrackInformation : IXmlUtility
     ///     Return the suffix of Track title for export
     /// </summary>
     /// <value>this.TrackSubstituteName"_DX" if is DX chart</value>
-    public string DXChartTrackPathSuffix
-    {
-        get
-        {
-            string? musicID = InformationDict.GetValueOrDefault("Music ID") ??
-                              throw new NullReferenceException("Music ID is not Defined");
-            if (musicID.Length > 4)
-                return "_DX";
-            return "";
-        }
-    }
+    public string DXChartTrackPathSuffix => IsDXChart ? "_DX" : "";
 
     /// <summary>
     ///     Returns if the track is Standard or Deluxe
     /// </summary>
     /// <value>SD if standard, DX if deluxe</value>
-    public string StandardDeluxePrefix
-    {
-        get
-        {
-            string? musicID = InformationDict.GetValueOrDefault("Music ID") ??
-                              throw new NullReferenceException("Music ID is not Defined");
-            if (musicID.Length > 4)
-                return "DX";
-            return "SD";
-        }
-    }
+    public string StandardDeluxePrefix => IsDXChart ? "DX" : "SD";
 
     /// <summary>
     ///     Title suffix for better distinguish
@@ -268,9 +248,9 @@ public abstract class TrackInformation : IXmlUtility
     {
         get
         {
-            string? musicID = InformationDict.GetValueOrDefault("Music ID") ??
-                              throw new NullReferenceException("Music ID is not Defined");
-            return musicID.Length > 4;
+            string? musicID = CompensateZero(InformationDict.GetValueOrDefault("Music ID") ??
+                               throw new NullReferenceException("Music ID is not Defined"));
+            return int.Parse(musicID.Substring(2)).ToString().Length >= 4;
         }
     }
 

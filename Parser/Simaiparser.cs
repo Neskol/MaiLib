@@ -940,14 +940,14 @@ public class SimaiParser : IParser
         if ((isMeasureDuration || isHoldTimedDuration) && isSlide)
         {
             double waitTimeCandidate =
-                Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * 96;
+                Chart.GetBPMTimeUnit(bpm, MaximumDefinition) * (MaximumDefinition / 4);
             result[0] = waitTimeCandidate;
         }
         else if (isHoldBpmMeasureDuration && isSlide)
         {
             double bpmCandidate = double.Parse(durationCandidate.Split('#')[0]);
             double waitTimeCandidate =
-                Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * 96;
+                Chart.GetBPMTimeUnit(bpmCandidate, MaximumDefinition) * (MaximumDefinition / 4);
             result[0] = waitTimeCandidate;
         }
 
