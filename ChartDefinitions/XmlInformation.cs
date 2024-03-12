@@ -497,16 +497,16 @@ public class XmlInformation : TrackInformation, IXmlUtility
             notesDesignerCandidate.AppendChild(notesDesignerStrCandidate);
             if (!TrackLevels[currentDiff].Equals(""))
             {
-                levelCandidate.InnerText = TrackLevels[currentDiff];
-                musicLevelIDCandidate.InnerText = TrackLevels[currentDiff];
+                levelCandidate.InnerText = (Array.IndexOf(Level, TrackLevels[currentDiff]) + 1).ToString();
+                musicLevelIDCandidate.InnerText = TrackDecimalLevels[currentDiff].Split('.')[1];
             }
             else
             {
                 levelCandidate.InnerText = "0";
-                musicLevelIDCandidate.InnerText = "";
+                musicLevelIDCandidate.InnerText = "0";
             }
 
-            levelCandidate.InnerText = TrackDecimalLevels[currentDiff].Equals("") ? "0" : TrackDecimalLevels[currentDiff];
+            // levelCandidate.InnerText = TrackDecimalLevels[currentDiff].Equals("") ? "0" : TrackDecimalLevels[currentDiff];
             noteCandidate.AppendChild(fileCandidate);
             noteCandidate.AppendChild(levelCandidate);
             noteCandidate.AppendChild(levelDecimalCandidate);

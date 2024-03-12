@@ -121,8 +121,8 @@ public class SimaiCompiler : Compiler
             sw.WriteLine(Result);
         }
         sw.Close();
-        MusicXML = new XmlInformation(){ InformationDict = this.Information};
-        MusicXML.WriteOutInformation($"{targetLocation}/Music.xml");
+        // MusicXML = new XmlInformation(){ InformationDict = this.Information};
+        // MusicXML.WriteOutInformation($"{targetLocation}/Music.xml");
     }
 
     public override string Compose()
