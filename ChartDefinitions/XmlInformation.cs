@@ -48,6 +48,12 @@ public class XmlInformation : TrackInformation, IXmlUtility
         XmlNodeList? addVersionCandidate = InternalXml.GetElementsByTagName("AddVersion");
         XmlNodeList? sortNameCandidate = InternalXml.GetElementsByTagName("sortName");
         XmlNodeList? versionNumberCandidate = InternalXml.GetElementsByTagName("releaseTagName");
+        XmlNodeList? utageKanjiCandidate = InternalXml.GetElementsByTagName("utageKanjiName");
+        XmlNodeList? utageCommentCandidate = InternalXml.GetElementsByTagName("comment");
+        XmlNodeList? utagePlayStyleCandidate = InternalXml.GetElementsByTagName("utagePlayStyle");
+        XmlNodeList? utageFixedOptionsCandidate = InternalXml.GetElementsByTagName("FixedOption");
+
+
         //Add in name and music ID.
         ////Add BPM
         //this.information.Add("BPM",bpmCandidate[0].InnerText);
@@ -277,6 +283,31 @@ public class XmlInformation : TrackInformation, IXmlUtility
             {
                 Console.WriteLine("There is no such chart: " + ex.Message);
             }
+
+        foreach (XmlNode candidate in utageKanjiCandidate)
+        {
+            if (InformationDict["Utage Kanji"].Equals("")) InformationDict["Utage Kanji"] = candidate.InnerText;
+        }
+
+        foreach (XmlNode candidate in utageCommentCandidate)
+        {
+            if (InformationDict["Utage Comment"].Equals("")) InformationDict["Utage Comment"] = candidate.InnerText;
+        }
+
+        foreach (XmlNode candidate in utagePlayStyleCandidate)
+        {
+            if (InformationDict["Utage Play Style"].Equals("")) InformationDict["Utage Play Style"] = candidate.InnerText;
+        }
+
+        /// Need to figure this out later
+        // foreach (XmlNode candidate in utageFixedOptionsCandidate)
+        // {
+        //     string optionName = "None";
+        //     string optionValue = "None";
+        //     if (candidate["_fixedOptionName"] is not null) optionName = candidate["_fixedOptionName"]?.InnerText ?? "None";
+        //     if (candidate["_fixedOptionValue"] is not null) optionValue = candidate["_fixedOptionName"]?.InnerText ?? "None";
+        //     if (optionName is not "None" or "") InformationDict.Add($"Utage Fixed Option {optionName}", optionValue);
+        // }
 
         InformationDict["SDDX Suffix"] = StandardDeluxeSuffix;
     }
@@ -525,9 +556,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
 
         // Following are reserved for Utage charts
         XmlElement? utageKanji = InternalXml.CreateElement("utageKanjiName");
-        utageKanji.InnerText = InformationDict["Utage Kanji"].Equals("") ? "0" : InformationDict["Utage Kanji"];
+        utageKanji.InnerText = InformationDict["Utage Kanji"].Equals("") ? "" : InformationDict["Utage Kanji"];
         XmlElement? utageComment = InternalXml.CreateElement("comment");
-        utageComment.InnerText = InformationDict["Utage Comment"].Equals("") ? "0" : InformationDict["Utage Comment"];
+        utageComment.InnerText = InformationDict["Utage Comment"].Equals("") ? "" : InformationDict["Utage Comment"];
         XmlElement? utagePlayStyle = InternalXml.CreateElement("utagePlayStyle");
         utagePlayStyle.InnerText = InformationDict["Utage Play Style"].Equals("") ? "0" : InformationDict["Utage Play Style"];
         XmlElement ? utageFixedOptionRoot = InternalXml.CreateElement("fixedOptions");
@@ -535,9 +566,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
         {
             XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
             XmlElement? utageFixedOptionName = InternalXml.CreateElement("_fixedOptionName");
-            utageFixedOptionName.InnerText = "None";
-            XmlElement? utageFixedOptionValue = InternalXml.CreateElement("FixedOption");
-            utageFixedOptionValue.InnerText = "None";
+            utageFixedOptionName.InnerText = InformationDict["Genre ID"].Equals(UtageGenreId.ToString()) ? "None" : "";
+            XmlElement? utageFixedOptionValue = InternalXml.CreateElement("_fixedOptionValue");
+            utageFixedOptionValue.InnerText = InformationDict["Genre ID"].Equals(UtageGenreId.ToString()) ? "None" : "";
             utageFixedOption.AppendChild(utageFixedOptionName);
             utageFixedOption.AppendChild(utageFixedOptionValue);
             utageFixedOptionRoot.AppendChild(utageFixedOption);
