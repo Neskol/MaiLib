@@ -140,7 +140,8 @@ public class XmlInformation : TrackInformation, IXmlUtility
 
                     if (genreId == UtageGenreId)
                     {
-                        InformationDict["Utage Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                        InformationDict["Utage Decimal"] =
+                            levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
 
                         InformationDict["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                             ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
@@ -151,7 +152,8 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     }
                     else
                     {
-                        InformationDict["Basic Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                        InformationDict["Basic Decimal"] =
+                            levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
 
                         InformationDict["Basic"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                             ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
@@ -165,12 +167,13 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    InformationDict["Advanced Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Advanced Decimal"] =
+                        levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerIdCandidate =
-                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
+                        notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
@@ -185,12 +188,13 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    InformationDict["Expert Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Expert Decimal"] =
+                        levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerIdCandidate =
-                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
+                        notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
@@ -205,12 +209,13 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    InformationDict["Master Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Master Decimal"] =
+                        levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerIdCandidate =
-                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
+                        notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
@@ -225,12 +230,13 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 {
                     XmlElement? levelCandidate = candidate["level"] ?? throw new NullReferenceException();
                     XmlElement? levelDecimalCandidate = candidate["levelDecimal"] ?? throw new NullReferenceException();
-                    InformationDict["Remaster Decimal"] = levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
+                    InformationDict["Remaster Decimal"] =
+                        levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
                     XmlElement? musicLevelIDCandidate = candidate["musicLevelID"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerIdCandidate =
-                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
+                        notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
@@ -267,7 +273,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? notesDesignerCandidate =
                         candidate["notesDesigner"] ?? throw new NullReferenceException();
                     XmlElement? notesDesignerIdCandidate =
-                   notesDesignerCandidate["id"] ?? throw new NullReferenceException();
+                        notesDesignerCandidate["id"] ?? throw new NullReferenceException();
                     notesDesignerCandidate = notesDesignerCandidate["str"] ?? throw new NullReferenceException();
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
@@ -296,7 +302,8 @@ public class XmlInformation : TrackInformation, IXmlUtility
 
         foreach (XmlNode candidate in utagePlayStyleCandidate)
         {
-            if (InformationDict["Utage Play Style"].Equals("")) InformationDict["Utage Play Style"] = candidate.InnerText;
+            if (InformationDict["Utage Play Style"].Equals(""))
+                InformationDict["Utage Play Style"] = candidate.InnerText;
         }
 
         /// Need to figure this out later
@@ -446,112 +453,177 @@ public class XmlInformation : TrackInformation, IXmlUtility
         root.AppendChild(dotNetListView);
         XmlElement? notesData = InternalXml.CreateElement("notesData");
         int currentDiff;
-        for (currentDiff = 0; currentDiff < 6; currentDiff++) try
-        {
-            XmlElement? noteCandidate = InternalXml.CreateElement("Notes");
-            XmlElement? fileCandidate = InternalXml.CreateElement("file");
-            XmlElement? pathCandidate = InternalXml.CreateElement("path");
-            pathCandidate.InnerText = $"{CompensateZero(TrackID)}_0{currentDiff}.ma2";
-            fileCandidate.AppendChild(pathCandidate);
-            XmlElement? levelCandidate = InternalXml.CreateElement("level");
-            XmlElement? levelDecimalCandidate = InternalXml.CreateElement("levelDecimal");
-            XmlElement? notesDesignerCandidate = InternalXml.CreateElement("notesDesigner");
-            XmlElement? notesDesignerIdCandidate = InternalXml.CreateElement("id");
-            XmlElement? notesDesignerStrCandidate = InternalXml.CreateElement("str");
-            XmlElement? notesTypeCandidate = InternalXml.CreateElement("notesType");
-            notesTypeCandidate.InnerText = "0";
-            XmlElement? musicLevelIDCandidate = InternalXml.CreateElement("musicLevelID");
-            XmlElement? maxNotesCandidate = InternalXml.CreateElement("maxNotes");
-            XmlElement? isEnabledCandidate = InternalXml.CreateElement("isEnabled");
-
-            switch (currentDiff)
+        for (currentDiff = 0; currentDiff < 6; currentDiff++)
+            try
             {
-                case 0:
-                    notesDesignerStrCandidate.InnerText = InformationDict["Basic Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict["Basic Maker ID"].Equals("") ? "0" : InformationDict["Basic Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict["Basic"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict["Basic Max Note"].Equals("") ? "0" : InformationDict["Basic Max Note"];
-                    break;
-                case 1:
-                    notesDesignerStrCandidate.InnerText = InformationDict["Advanced Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict["Advanced Maker ID"].Equals("") ? "0" : InformationDict["Advanced Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict["Advanced"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict["Advanced Max Note"].Equals("") ? "0" : InformationDict["Advanced Max Note"];
-                    break;
-                case 2:
-                    notesDesignerStrCandidate.InnerText = InformationDict["Expert Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict["Expert Maker ID"].Equals("") ? "0" : InformationDict["Expert Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict["Expert"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict["Expert Max Note"].Equals("") ? "0" : InformationDict["Expert Max Note"];
-                    break;
-                case 3:
-                    notesDesignerStrCandidate.InnerText = InformationDict["Master Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict["Master Maker ID"].Equals("") ? "0" : InformationDict["Master Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict["Master"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict["Master Max Note"].Equals("") ? "0" : InformationDict["Master Max Note"];
-                    break;
-                case 4:
-                    notesDesignerStrCandidate.InnerText = InformationDict["Remaster Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict["Remaster Maker ID"].Equals("") ? "0" : InformationDict["Remaster Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict["Remaster"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict["Remaster Max Note"].Equals("") ? "0" : InformationDict["Remaster Max Note"];
-                    break;
-                case 5:
-                    notesDesignerStrCandidate.InnerText = InformationDict["Utage Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict["Utage Maker ID"].Equals("") ? "0" : InformationDict["Utage Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict["Utage"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict["Utage Max Note"].Equals("") ? "0" : InformationDict["Utage Max Note"];
-                    break;
-                case 6:
-                    notesDesignerStrCandidate.InnerText = InformationDict["Original Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict["Original Maker ID"].Equals("") ? "0" : InformationDict["Original Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict["Original"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict["Original Max Note"].Equals("") ? "0" : InformationDict["Original Max Note"];
-                    break;
-                case 11:
-                    notesDesignerStrCandidate.InnerText = InformationDict["Easy Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict["Easy Maker ID"].Equals("") ? "0" : InformationDict["Easy Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict["Easy"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict["Easy Max Note"].Equals("") ? "0" : InformationDict["Easy Max Note"];
-                    break;
-                default:
-                    // Reserves condition for more original charts
-                    notesDesignerStrCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Chart Maker"];
-                    notesDesignerIdCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Maker ID"].Equals("") ? "0" : InformationDict["Original Maker ID"];
-                    isEnabledCandidate.InnerText = InformationDict[$"Original {currentDiff - 6}"].Equals("") ? "false" : "true"; // Because bool.ToString() returns True or False
-                    maxNotesCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Max Note"].Equals("") ? "0" : InformationDict[$"Original {currentDiff - 6} Max Note"];
-                    break;
+                XmlElement? noteCandidate = InternalXml.CreateElement("Notes");
+                XmlElement? fileCandidate = InternalXml.CreateElement("file");
+                XmlElement? pathCandidate = InternalXml.CreateElement("path");
+                pathCandidate.InnerText = $"{CompensateZero(TrackID)}_0{currentDiff}.ma2";
+                fileCandidate.AppendChild(pathCandidate);
+                XmlElement? levelCandidate = InternalXml.CreateElement("level");
+                XmlElement? levelDecimalCandidate = InternalXml.CreateElement("levelDecimal");
+                XmlElement? notesDesignerCandidate = InternalXml.CreateElement("notesDesigner");
+                XmlElement? notesDesignerIdCandidate = InternalXml.CreateElement("id");
+                XmlElement? notesDesignerStrCandidate = InternalXml.CreateElement("str");
+                XmlElement? notesTypeCandidate = InternalXml.CreateElement("notesType");
+                notesTypeCandidate.InnerText = "0";
+                XmlElement? musicLevelIDCandidate = InternalXml.CreateElement("musicLevelID");
+                XmlElement? maxNotesCandidate = InternalXml.CreateElement("maxNotes");
+                XmlElement? isEnabledCandidate = InternalXml.CreateElement("isEnabled");
 
+                switch (currentDiff)
+                {
+                    case 0:
+                        notesDesignerStrCandidate.InnerText = InformationDict["Basic Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = InformationDict["Basic Maker ID"].Equals("")
+                            ? "0"
+                            : InformationDict["Basic Maker ID"];
+                        isEnabledCandidate.InnerText =
+                            InformationDict["Basic"].Equals("")
+                                ? "false"
+                                : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict["Basic Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict["Basic Max Note"];
+                        break;
+                    case 1:
+                        notesDesignerStrCandidate.InnerText = InformationDict["Advanced Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = InformationDict["Advanced Maker ID"].Equals("")
+                            ? "0"
+                            : InformationDict["Advanced Maker ID"];
+                        isEnabledCandidate.InnerText =
+                            InformationDict["Advanced"].Equals("")
+                                ? "false"
+                                : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict["Advanced Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict["Advanced Max Note"];
+                        break;
+                    case 2:
+                        notesDesignerStrCandidate.InnerText = InformationDict["Expert Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = InformationDict["Expert Maker ID"].Equals("")
+                            ? "0"
+                            : InformationDict["Expert Maker ID"];
+                        isEnabledCandidate.InnerText =
+                            InformationDict["Expert"].Equals("")
+                                ? "false"
+                                : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict["Expert Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict["Expert Max Note"];
+                        break;
+                    case 3:
+                        notesDesignerStrCandidate.InnerText = InformationDict["Master Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = InformationDict["Master Maker ID"].Equals("")
+                            ? "0"
+                            : InformationDict["Master Maker ID"];
+                        isEnabledCandidate.InnerText =
+                            InformationDict["Master"].Equals("")
+                                ? "false"
+                                : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict["Master Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict["Master Max Note"];
+                        break;
+                    case 4:
+                        notesDesignerStrCandidate.InnerText = InformationDict["Remaster Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = InformationDict["Remaster Maker ID"].Equals("")
+                            ? "0"
+                            : InformationDict["Remaster Maker ID"];
+                        isEnabledCandidate.InnerText =
+                            InformationDict["Remaster"].Equals("")
+                                ? "false"
+                                : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict["Remaster Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict["Remaster Max Note"];
+                        break;
+                    case 5:
+                        notesDesignerStrCandidate.InnerText = InformationDict["Utage Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = InformationDict["Utage Maker ID"].Equals("")
+                            ? "0"
+                            : InformationDict["Utage Maker ID"];
+                        isEnabledCandidate.InnerText =
+                            InformationDict["Utage"].Equals("")
+                                ? "false"
+                                : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict["Utage Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict["Utage Max Note"];
+                        break;
+                    case 6:
+                        notesDesignerStrCandidate.InnerText = InformationDict["Original Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = InformationDict["Original Maker ID"].Equals("")
+                            ? "0"
+                            : InformationDict["Original Maker ID"];
+                        isEnabledCandidate.InnerText =
+                            InformationDict["Original"].Equals("")
+                                ? "false"
+                                : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict["Original Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict["Original Max Note"];
+                        break;
+                    case 11:
+                        notesDesignerStrCandidate.InnerText = InformationDict["Easy Chart Maker"];
+                        notesDesignerIdCandidate.InnerText = InformationDict["Easy Maker ID"].Equals("")
+                            ? "0"
+                            : InformationDict["Easy Maker ID"];
+                        isEnabledCandidate.InnerText =
+                            InformationDict["Easy"].Equals("")
+                                ? "false"
+                                : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict["Easy Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict["Easy Max Note"];
+                        break;
+                    default:
+                        // Reserves condition for more original charts
+                        notesDesignerStrCandidate.InnerText =
+                            InformationDict[$"Original {currentDiff - 6} Chart Maker"];
+                        notesDesignerIdCandidate.InnerText =
+                            InformationDict[$"Original {currentDiff - 6} Maker ID"].Equals("")
+                                ? "0"
+                                : InformationDict["Original Maker ID"];
+                        isEnabledCandidate.InnerText = InformationDict[$"Original {currentDiff - 6}"].Equals("")
+                            ? "false"
+                            : "true"; // Because bool.ToString() returns True or False
+                        maxNotesCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Max Note"].Equals("")
+                            ? "0"
+                            : InformationDict[$"Original {currentDiff - 6} Max Note"];
+                        break;
+                }
+
+                notesDesignerCandidate.AppendChild(notesDesignerIdCandidate);
+                notesDesignerCandidate.AppendChild(notesDesignerStrCandidate);
+                if (!TrackLevels[currentDiff].Equals(""))
+                {
+                    levelCandidate.InnerText = (Array.IndexOf(Level, TrackLevels[currentDiff]) + 1).ToString();
+                    musicLevelIDCandidate.InnerText = TrackDecimalLevels[currentDiff].Split('.')[1];
+                }
+                else
+                {
+                    levelCandidate.InnerText = "0";
+                    musicLevelIDCandidate.InnerText = "0";
+                }
+
+                // levelCandidate.InnerText = TrackDecimalLevels[currentDiff].Equals("") ? "0" : TrackDecimalLevels[currentDiff];
+                noteCandidate.AppendChild(fileCandidate);
+                noteCandidate.AppendChild(levelCandidate);
+                noteCandidate.AppendChild(levelDecimalCandidate);
+                noteCandidate.AppendChild(notesDesignerCandidate);
+                noteCandidate.AppendChild(notesTypeCandidate);
+                noteCandidate.AppendChild(musicLevelIDCandidate);
+                noteCandidate.AppendChild(maxNotesCandidate);
+                noteCandidate.AppendChild(isEnabledCandidate);
+                notesData.AppendChild(noteCandidate);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine("{0} presented at difficulty {1}, skipping", ex.GetType(), currentDiff);
             }
 
-            notesDesignerCandidate.AppendChild(notesDesignerIdCandidate);
-            notesDesignerCandidate.AppendChild(notesDesignerStrCandidate);
-            if (!TrackLevels[currentDiff].Equals(""))
-            {
-                levelCandidate.InnerText = (Array.IndexOf(Level, TrackLevels[currentDiff]) + 1).ToString();
-                musicLevelIDCandidate.InnerText = TrackDecimalLevels[currentDiff].Split('.')[1];
-            }
-            else
-            {
-                levelCandidate.InnerText = "0";
-                musicLevelIDCandidate.InnerText = "0";
-            }
-
-            // levelCandidate.InnerText = TrackDecimalLevels[currentDiff].Equals("") ? "0" : TrackDecimalLevels[currentDiff];
-            noteCandidate.AppendChild(fileCandidate);
-            noteCandidate.AppendChild(levelCandidate);
-            noteCandidate.AppendChild(levelDecimalCandidate);
-            noteCandidate.AppendChild(notesDesignerCandidate);
-            noteCandidate.AppendChild(notesTypeCandidate);
-            noteCandidate.AppendChild(musicLevelIDCandidate);
-            noteCandidate.AppendChild(maxNotesCandidate);
-            noteCandidate.AppendChild(isEnabledCandidate);
-            notesData.AppendChild(noteCandidate);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            Console.WriteLine("{0} presented at difficulty {1}, skipping", ex.GetType(), currentDiff);
-        }
         root.AppendChild(notesData);
 
         // Following are reserved for Utage charts
@@ -560,8 +632,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
         XmlElement? utageComment = InternalXml.CreateElement("comment");
         utageComment.InnerText = InformationDict["Utage Comment"].Equals("") ? "" : InformationDict["Utage Comment"];
         XmlElement? utagePlayStyle = InternalXml.CreateElement("utagePlayStyle");
-        utagePlayStyle.InnerText = InformationDict["Utage Play Style"].Equals("") ? "0" : InformationDict["Utage Play Style"];
-        XmlElement ? utageFixedOptionRoot = InternalXml.CreateElement("fixedOptions");
+        utagePlayStyle.InnerText =
+            InformationDict["Utage Play Style"].Equals("") ? "0" : InformationDict["Utage Play Style"];
+        XmlElement? utageFixedOptionRoot = InternalXml.CreateElement("fixedOptions");
         for (int i = 0; i < 4; i++)
         {
             XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
@@ -573,6 +646,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
             utageFixedOption.AppendChild(utageFixedOptionValue);
             utageFixedOptionRoot.AppendChild(utageFixedOption);
         }
+
         root.AppendChild(utageKanji);
         root.AppendChild(utageComment);
         root.AppendChild(utagePlayStyle);

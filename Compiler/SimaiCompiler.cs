@@ -142,11 +142,7 @@ public class SimaiCompiler : Compiler
             beginning += $"&shortid={Information.GetValueOrDefault("Music ID")}\n";
             beginning += $"&genre={Information.GetValueOrDefault("Genre")}\n";
             beginning += $"&genreid={Information.GetValueOrDefault("Genre ID")}\n";
-            beginning += "&cabinet=";
-            if (MusicXML.IsDXChart)
-                beginning += "DX\n";
-            else
-                beginning += "SD\n";
+            beginning += $"&cabinet={(MusicXML.IsDXChart ? "DX" : "SD")}\n";
             beginning += $"&version={MusicXML.TrackVersion}\n";
             beginning += "&ChartConverter=Neskol\n";
             beginning += "&ChartConvertTool=MaichartConverter\n";

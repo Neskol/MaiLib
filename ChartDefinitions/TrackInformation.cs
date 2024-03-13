@@ -79,7 +79,8 @@ public abstract class TrackInformation : IXmlUtility
     /// <value>this.TrackID</value>
     public string TrackID
     {
-        get => InformationDict.GetValueOrDefault("Music ID") ?? throw new NullReferenceException("Music ID is not defined");
+        get => InformationDict.GetValueOrDefault("Music ID") ??
+               throw new NullReferenceException("Music ID is not defined");
         set => InformationDict["Music ID"] = value;
     }
 
@@ -99,7 +100,8 @@ public abstract class TrackInformation : IXmlUtility
     /// <value>this.TrackGenreID</value>
     public int TrackGenreID
     {
-        get => int.Parse(InformationDict.GetValueOrDefault("Genre ID") ?? throw new NullReferenceException("Genre is not defined"));
+        get => int.Parse(InformationDict.GetValueOrDefault("Genre ID") ??
+                         throw new NullReferenceException("Genre is not defined"));
         set => InformationDict["Genre ID"] = value.ToString();
     }
 
@@ -119,7 +121,8 @@ public abstract class TrackInformation : IXmlUtility
     /// <value>this.TrackComposer</value>
     public string TrackComposer
     {
-        get => InformationDict.GetValueOrDefault("Composer") ?? throw new NullReferenceException("Genre is not defined");
+        get => InformationDict.GetValueOrDefault("Composer") ??
+               throw new NullReferenceException("Genre is not defined");
         set => InformationDict["Composer"] = value;
     }
 
@@ -129,7 +132,8 @@ public abstract class TrackInformation : IXmlUtility
     /// <value>this.TrackComposer</value>
     public int TrackComposerID
     {
-        get => int.Parse(InformationDict.GetValueOrDefault("Composer ID") ?? throw new NullReferenceException("Genre is not defined"));
+        get => int.Parse(InformationDict.GetValueOrDefault("Composer ID") ??
+                         throw new NullReferenceException("Genre is not defined"));
         set => InformationDict["Composer ID"] = value.ToString();
     }
 
@@ -158,7 +162,8 @@ public abstract class TrackInformation : IXmlUtility
             if (InformationDict.TryGetValue("Basic", out string? basicLevel) && basicLevel != null &&
                 !basicLevel.Equals(""))
                 return basicLevel;
-            if (InformationDict.TryGetValue("Easy", out string? easyLevel) && easyLevel != null && !easyLevel.Equals(""))
+            if (InformationDict.TryGetValue("Easy", out string? easyLevel) && easyLevel != null &&
+                !easyLevel.Equals(""))
                 return easyLevel;
             return "ORIGINAL";
         }
@@ -170,15 +175,16 @@ public abstract class TrackInformation : IXmlUtility
     /// </summary>
     public string[] TrackLevels
     {
-        get => [
-                InformationDict["Easy"],
-                InformationDict["Basic"],
-                InformationDict["Advanced"],
-                InformationDict["Expert"],
-                InformationDict["Master"],
-                InformationDict["Remaster"],
-                InformationDict["Utage"]
-            ];
+        get =>
+        [
+            InformationDict["Easy"],
+            InformationDict["Basic"],
+            InformationDict["Advanced"],
+            InformationDict["Expert"],
+            InformationDict["Master"],
+            InformationDict["Remaster"],
+            InformationDict["Utage"]
+        ];
         set
         {
             InformationDict["Easy"] = value[0];
@@ -249,7 +255,7 @@ public abstract class TrackInformation : IXmlUtility
         get
         {
             string? musicID = CompensateZero(InformationDict.GetValueOrDefault("Music ID") ??
-                               throw new NullReferenceException("Music ID is not Defined"));
+                                             throw new NullReferenceException("Music ID is not Defined"));
             return int.Parse(musicID.Substring(2)).ToString().Length >= 4;
         }
     }
@@ -275,7 +281,8 @@ public abstract class TrackInformation : IXmlUtility
     /// <value>this.TrackVersion</value>
     public int TrackVersionID
     {
-        get => int.Parse(InformationDict.GetValueOrDefault("Version ID") ?? throw new NullReferenceException("Genre is not defined"));
+        get => int.Parse(InformationDict.GetValueOrDefault("Version ID") ??
+                         throw new NullReferenceException("Genre is not defined"));
         set => InformationDict["Version ID"] = value.ToString();
     }
 
@@ -366,7 +373,7 @@ public abstract class TrackInformation : IXmlUtility
             { "Sort Name", "" },
             { "Music ID", "" },
             { "Genre", "" },
-            { "Genre ID",""},
+            { "Genre ID", "" },
             { "Version", "" },
             { "Version ID", "" },
             { "Version Number", "" },
