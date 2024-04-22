@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using System.Xml;
 
 namespace MaiLib;
@@ -83,6 +84,13 @@ public abstract class TrackInformation : IXmlUtility
                throw new NullReferenceException("Music ID is not defined");
         set => InformationDict["Music ID"] = value;
     }
+
+
+    /// <summary>
+    ///     Return the 6-digit track ID
+    /// </summary>
+    /// <value>this.TrackID</value>
+    public string TrackIDLong => CompensateZero(TrackID);
 
     /// <summary>
     ///     Return the track genre (By default cabinet 6 categories)
@@ -250,15 +258,21 @@ public abstract class TrackInformation : IXmlUtility
     ///     See if the chart is DX chart.
     /// </summary>
     /// <value>True if is DX, false if SD</value>
-    public bool IsDXChart
-    {
-        get
-        {
-            string? musicID = CompensateZero(InformationDict.GetValueOrDefault("Music ID") ??
-                                             throw new NullReferenceException("Music ID is not Defined"));
-            return int.Parse(musicID.Substring(2)).ToString().Length >= 4;
-        }
-    }
+    public bool IsDXChart => TrackIDLong[1] is '1';
+    // {
+    //     get
+    //     {
+    //         string? musicID = CompensateZero(InformationDict.GetValueOrDefault("Music ID") ??
+    //                                          throw new NullReferenceException("Music ID is not Defined"));
+    //         return int.Parse(musicID.Substring(2)).ToString().Length >= 4;
+    //     }
+    // }
+
+    /// <summary>
+    ///     See if the chart is DX Utage chart.
+    /// </summary>
+    /// <value>True if is DX Utage, false elsewise</value>
+    public bool IsDXUtage => TrackIDLong[0] is '1';
 
     /// <summary>
     ///     Return this.TrackVersion
