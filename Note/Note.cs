@@ -101,7 +101,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         WaitTickStamp = inTake.WaitTickStamp;
         WaitTimeStamp = inTake.WaitTimeStamp;
         CalculatedLastTime = inTake.CalculatedLastTime;
-        CalculatedLastTime = inTake.CalculatedLastTime;
+        CalculatedWaitTime = inTake.CalculatedWaitTime;
         // TickBPMDisagree = inTake.TickBPMDisagree;
         // BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
@@ -370,13 +370,13 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         copyTo.TickStamp = this.TickStamp;
         copyTo.TickTimeStamp = this.TickTimeStamp;
         copyTo.LastLength = this.LastLength;
-        // copyTo.LastTickStamp = this.LastTickStamp;
+        copyTo.LastTickStamp = this.LastTickStamp;
         copyTo.LastTimeStamp = this.LastTimeStamp;
         copyTo.WaitLength = this.WaitLength;
-        // copyTo.WaitTickStamp = this.WaitTickStamp;
+        copyTo.WaitTickStamp = this.WaitTickStamp;
         copyTo.WaitTimeStamp = this.WaitTimeStamp;
         copyTo.CalculatedLastTime = this.CalculatedLastTime;
-        copyTo.CalculatedLastTime = this.CalculatedLastTime;
+        copyTo.CalculatedWaitTime = this.CalculatedWaitTime;
         // copyTo.TickBPMDisagree = this.TickBPMDisagree;
         // copyTo.BPM = this.BPM;
         copyTo.BPMChangeNotes = this.BPMChangeNotes;

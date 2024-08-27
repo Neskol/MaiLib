@@ -279,7 +279,7 @@ public abstract class Chart : IChart
                             //                     Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                             //                     HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
                             // x.Update();
-                            if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
+                            x.TickTimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedWaitTime == 0)
                             {
                                 x.WaitTimeStamp = GetTimeStamp(x.WaitTickStamp);
@@ -482,7 +482,8 @@ public abstract class Chart : IChart
 
                 break;
             case SlideGroup group:
-                copy = new SlideGroup();
+                copy = new SlideGroup(x);
+                ((SlideGroup)copy).InternalSlides.Clear();
                 foreach (var slide in group.InternalSlides)
                 {
                     ((SlideGroup)copy).InternalSlides.Add((Slide)CopyAndShiftNote(slide, overallTick));
