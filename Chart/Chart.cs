@@ -488,6 +488,7 @@ public abstract class Chart : IChart
                 {
                     ((SlideGroup)copy).InternalSlides.Add((Slide)CopyAndShiftNote(slide, overallTick));
                 }
+
                 break;
             case Slide:
                 copy = new Slide(x);
@@ -504,6 +505,15 @@ public abstract class Chart : IChart
 
         copy.Bar += overallTick / Definition;
         copy.Tick += overallTick % Definition;
+        // 考虑负数的情况
+        // 假设 copy.Bar = 2, copy.Tick = 0, overallTick = -192
+        // copy.Tick += overallTick % Definition 会导致 copy.Tick 变成负数
+        if (copy.Tick < 0)
+        {
+            copy.Bar -= 1;
+            copy.Tick += Definition;
+        }
+
         copy.Update();
         return copy;
     }
@@ -628,6 +638,11 @@ public abstract class Chart : IChart
         List<Note>? result = new List<Note>();
         bool writeRest = true;
         result.Add(bar[0]);
+        if (minimalQuaver < 0)
+        {
+            throw new OverflowException("minimalQuaver 怎么是负的，不对劲");
+        }
+
         for (int i = 0; i < definition; i += definition / minimalQuaver)
         {
             //Separate Touch and others to prevent ordering issue
