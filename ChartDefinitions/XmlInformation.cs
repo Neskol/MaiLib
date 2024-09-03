@@ -114,7 +114,8 @@ public class XmlInformation : TrackInformation, IXmlUtility
             {
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
                 TrackVersionID = int.Parse(idCandidate.InnerText);
-                TrackVersion = Version[int.Parse(idCandidate.InnerText)];
+                int versionID = int.Parse(idCandidate.InnerText);
+                TrackVersion = versionID < Version.Count() ? Version[versionID] : Version[0];
             }
         }
 
