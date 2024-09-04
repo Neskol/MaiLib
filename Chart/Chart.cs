@@ -252,7 +252,7 @@ public abstract class Chart : IChart
                             // x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                             //                     HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
                             // x.Update();
-                            if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
+                            x.TickTimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedLastTime == 0)
                             {
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
