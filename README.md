@@ -1,14 +1,25 @@
 # MaiLib
 
 ## A library for processing maimai charts
+This is a parser for rhythm game `maimai` chart interpretation and manipulation. While this parser is primarily made for `maimai`, the program structure keeps the extensibility for other games to use.
+
+`MaiLib` currently supports 2 formats of charts:
+1. `MA2`: a machine-readable pseudocode used by official `maimai` game. It records each note in chronological order relative to bar and tick, and has a statistics section recording maximum object number and scores, etc. The game used `Ver. 1.03` of this format before maimai DX FESTiVAL, and shifted to `Ver 1.04` after adding new `Slide` notes. This format itself does not contain metadata of the music - stored externally in `music.xml`. This format is more preferable for this parser.
+2. `Simai`: a human-readable pseudocode used by most chart player programs. It lines `Tap` and `Hold` notes in punch-hole like arrays with fixed separations (`n-th` notes), and marks `Slide` note as a group binding with the starting `Tap` note. The detailed specification can be found at https://w.atwiki.jp/simai/pages/1003.html.
 
 > One example implementation of this library is MaichartConverter, which converts between Simai and Ma2. Please
 > see [MaichartConverter](https://github.com/Neskol/MaichartConverter) for more information.
 
 ### Build
+> While you can simply build this library, but mostly you want to add this repo as a submodule.
 
-    git clone
+    git clone https://github.com/Neskol/MaiLib
     dotnet build
+
+### Add as a submodule
+    git submodule add https://github.com/Neskol/MaiLib
+    git submodule update --init --recursive
+    //Your other command continues
 
 ### Usage
 
@@ -40,7 +51,7 @@
   after its start tap. If your Slide note starts longer or shorter than 1 quaver of the current BPM, you will have to:
   a) change
   the BPM for that specific Slide or b) define the time by [wait time##last time] (and calculating that is extremely
-  time consuming).
+  time-consuming).
 - I hope someone develops a language better than Simai to use as a intermediate language between coding and charting.
   Thank you.
 
@@ -54,7 +65,7 @@
 - image folders should be structured in `image/Texture2D/` and the files should start with 'UI_Jacket_xxxxxx.jpg', where
   'xxxxxx' matches the music id specified in `music.xml` in each a000 folder. Please make sure to add 0s at the front of
   this so that it contains 6 digits
-- The difficulty parameter is listed 0-4, from Basic to Re:Master. In MaiLib, I specified rules for Easy and Utage but
+- The difficulty parameter is listed 0-4, from Basic to Re:Master. In MaiLib, I specified rules for Easy and Utage, but
   it
   takes time for me to figure it out, or you could implement it on your own, referring MaiLib code
 - All paths, reguardless of operating system, should end with a path separator like "/" or "\". Do not include the
