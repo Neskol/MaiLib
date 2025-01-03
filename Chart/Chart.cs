@@ -252,7 +252,7 @@ public abstract class Chart : IChart
                             // x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                             //                     HasBPMChangeInBetween(x.TickStamp, x.LastTickStamp);
                             // x.Update();
-                            if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
+                            x.TickTimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedLastTime == 0)
                             {
                                 x.LastTimeStamp = GetTimeStamp(x.LastTickStamp);
@@ -279,7 +279,7 @@ public abstract class Chart : IChart
                             //                     Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
                             //                     HasBPMChangeInBetween(x.TickStamp, x.WaitTickStamp);
                             // x.Update();
-                            if (x.TickTimeStamp == 0) x.TickTimeStamp = GetTimeStamp(x.TickStamp);
+                            x.TickTimeStamp = GetTimeStamp(x.TickStamp);
                             if (x.CalculatedWaitTime == 0)
                             {
                                 x.WaitTimeStamp = GetTimeStamp(x.WaitTickStamp);
@@ -457,6 +457,69 @@ public abstract class Chart : IChart
         return result;
     }
 
+    private Note CopyAndShiftNote(Note x, int overallTick)
+    {
+        Note copy;
+        switch (x)
+        {
+            case Tap:
+                copy = new Tap(x);
+                break;
+            case Hold:
+                copy = new Hold(x);
+                break;
+            case SlideEachSet set:
+                var copySet = new SlideEachSet(set);
+                copy = copySet;
+                copySet.InternalSlides = [];
+                foreach (var slide in set.InternalSlides)
+                {
+                    copySet.InternalSlides.Add((Slide)CopyAndShiftNote(slide, overallTick));
+                }
+
+                if (set.SlideStart is not null)
+                {
+                    copySet.SlideStart = CopyAndShiftNote(set.SlideStart, overallTick);
+                }
+
+                break;
+            case SlideGroup group:
+                copy = new SlideGroup(x);
+                ((SlideGroup)copy).InternalSlides.Clear();
+                foreach (var slide in group.InternalSlides)
+                {
+                    ((SlideGroup)copy).InternalSlides.Add((Slide)CopyAndShiftNote(slide, overallTick));
+                }
+
+                break;
+            case Slide:
+                copy = new Slide(x);
+                break;
+            case BPMChange:
+                copy = new BPMChange(x);
+                break;
+            case MeasureChange change:
+                copy = new MeasureChange(change);
+                break;
+            default:
+                return new Rest();
+        }
+
+        copy.Bar += overallTick / Definition;
+        copy.Tick += overallTick % Definition;
+        // 考虑负数的情况
+        // 假设 copy.Bar = 2, copy.Tick = 0, overallTick = -192
+        // copy.Tick += overallTick % Definition 会导致 copy.Tick 变成负数
+        if (copy.Tick < 0)
+        {
+            copy.Bar -= 1;
+            copy.Tick += Definition;
+        }
+
+        copy.Update();
+        return copy;
+    }
+
     public void ShiftByOffset(int overallTick)
     {
         List<Note>? updatedNotes = [];
@@ -465,48 +528,11 @@ public abstract class Chart : IChart
                 (x.NoteType is NoteType.BPM && x.Bar != 0 && x.Tick != 0) ||
                 (x.NoteGenre is NoteGenre.MEASURE && x.Bar != 0 && x.Tick != 0))
             {
-                Note copy;
-                switch (x.NoteGenre)
-                {
-                    case NoteGenre.TAP:
-                        copy = new Tap(x);
-                        copy.Bar += overallTick / Definition;
-                        copy.Tick += overallTick % Definition;
-                        copy.Update();
-                        break;
-                    case NoteGenre.HOLD:
-                        copy = new Hold(x);
-                        copy.Bar += overallTick / Definition;
-                        copy.Tick += overallTick % Definition;
-                        copy.Update();
-                        break;
-                    case NoteGenre.SLIDE:
-                        copy = new Slide(x);
-                        copy.Bar += overallTick / Definition;
-                        copy.Tick += overallTick % Definition;
-                        copy.Update();
-                        break;
-                    case NoteGenre.BPM:
-                        copy = new BPMChange(x);
-                        copy.Bar += overallTick / Definition;
-                        copy.Tick += overallTick % Definition;
-                        copy.Update();
-                        break;
-                    case NoteGenre.MEASURE:
-                        copy = new MeasureChange((MeasureChange)x);
-                        copy.Bar += overallTick / Definition;
-                        copy.Tick += overallTick % Definition;
-                        copy.Update();
-                        break;
-                    default:
-                        copy = new Rest();
-                        break;
-                }
-
-                updatedNotes.Add(copy);
+                updatedNotes.Add(CopyAndShiftNote(x, overallTick));
             } //! This method is not designed with detecting overallTickOverflow!
             else
             {
+                Console.WriteLine(x.Compose(ChartVersion.Ma2_104));
                 updatedNotes.Add(x);
             }
 
@@ -613,6 +639,11 @@ public abstract class Chart : IChart
         List<Note>? result = [];
         bool writeRest = true;
         result.Add(bar[0]);
+        if (minimalQuaver < 0)
+        {
+            throw new OverflowException("minimalQuaver 怎么是负的，不对劲");
+        }
+
         for (int i = 0; i < definition; i += definition / minimalQuaver)
         {
             //Separate Touch and others to prevent ordering issue
