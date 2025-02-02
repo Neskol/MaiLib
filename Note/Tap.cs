@@ -9,7 +9,7 @@ using static MaiLib.ChartEnum;
 public class Tap : Note
 {
 
-    protected Tap TapFactory;
+    protected Tap? TapFactory;
     
     /// <summary>
     ///     Empty Constructor Tap Note
