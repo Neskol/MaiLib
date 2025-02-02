@@ -8,6 +8,9 @@ using static MaiLib.ChartEnum;
 /// </summary>
 public class Tap : Note
 {
+
+    protected Tap TapFactory;
+    
     /// <summary>
     ///     Empty Constructor Tap Note
     /// </summary>
@@ -211,7 +214,7 @@ public class Tap : Note
 
     public override Note NewInstance()
     {
-        Note result = new Tap(this);
-        return result;
+        TapFactory ??= new Tap(this);
+        return TapFactory;
     }
 }

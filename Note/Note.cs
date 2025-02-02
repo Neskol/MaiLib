@@ -10,6 +10,7 @@ using static ChartEnum;
 /// </summary>
 public abstract class Note : IEquatable<Note>, INote, IComparable
 {
+    
     #region Constructors
 
     /// <summary>

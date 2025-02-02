@@ -8,6 +8,9 @@ using static ChartEnum;
 /// </summary>
 public class MeasureChange : Note
 {
+
+    protected MeasureChange MeasureChangeFactory;
+    
     #region Constructors
 
     /// <summary>
@@ -84,7 +87,7 @@ public class MeasureChange : Note
 
     public override Note NewInstance()
     {
-        Note result = new MeasureChange(this);
-        return result;
+        MeasureChangeFactory ??= new MeasureChange(this);
+        return MeasureChangeFactory;
     }
 }
