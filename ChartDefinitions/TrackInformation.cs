@@ -85,6 +85,8 @@ public abstract class TrackInformation : IXmlUtility
         set => InformationDict["Music ID"] = value;
     }
 
+    public string TrackIDShort => this.TrackID.Length > 4 ? this.TrackID[4..] : this.TrackID;
+
 
     /// <summary>
     ///     Return the 6-digit track ID
