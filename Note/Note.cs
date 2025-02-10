@@ -231,7 +231,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     }
 
     /// <summary>
-    ///     The definition of the note which represented by the maximum tick of a 4/4 bar. By default it is 384.
+    ///     The definition of the note which represented by the maximum tick of a 4/4 bar. By default, it is 384.
     /// </summary>
     public int Definition { get; protected set; }
 
@@ -241,7 +241,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     public bool SpecialEffect { get; protected set; }
 
     /// <summary>
-    ///     Determines the size of the touch. By default it is M1
+    ///     Determines the size of the touch. By default, it is M1
     /// </summary>
     public string TouchSize { get; protected set; }
 
