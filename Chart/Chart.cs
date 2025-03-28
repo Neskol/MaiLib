@@ -690,7 +690,7 @@ public abstract class Chart : IChart
             error += "\nActual: " + RealNoteNumber(result) + "\n";
             foreach (Note? y in result) error += y.Compose(ChartVersion.Debug) + "\n";
             Console.WriteLine(error);
-            throw new InvalidOperationException("NOTE NUMBER IS NOT MATCHING");
+            throw new InvalidOperationException($"NOTE NUMBER IS NOT MATCHING\nError Details:\n{error}");
         }
 
         bool hasFirstBPMChange = false;

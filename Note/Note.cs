@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace MaiLib;
+﻿namespace MaiLib;
 
 using static NoteEnum;
 using static ChartEnum;

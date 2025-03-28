@@ -10,12 +10,16 @@ public class SimaiParser : IParser
     /// <summary>
     ///     The maximum definition of a chart
     /// </summary>
-    public static int MaximumDefinition = 384;
+    public static int MaximumDefinition
+    {
+        get;
+        private set;
+    } = 384;
 
     private static readonly string[] AllowedSlideType =
         ["qq", "q", "pp", "p", "v", "w", "<", ">", "^", "s", "z", "V", "-"];
 
-    private Tap PreviousSlideStart;
+    private Tap previousSlideStart;
     private BPMChanges bpmChanges;
 
     /// <summary>
@@ -23,7 +27,7 @@ public class SimaiParser : IParser
     /// </summary>
     public SimaiParser()
     {
-        PreviousSlideStart = new Tap();
+        previousSlideStart = new Tap();
         bpmChanges = new();
     }
 
@@ -130,8 +134,8 @@ public class SimaiParser : IParser
                 if (containingBreak) token = token.Replace("b", "");
                 SpecialState breakState = containingBreak ? SpecialState.Break : SpecialState.Normal;
                 List<string> extractedToken = ExtractConnectingSlides(token);
-                if (extractedToken.Count == 1) result = SlideOfToken(token, bar, tick, PreviousSlideStart, bpm);
-                else result = SlideGroupOfToken(extractedToken, bar, tick, PreviousSlideStart, bpm);
+                if (extractedToken.Count == 1) result = SlideOfToken(token, bar, tick, previousSlideStart, bpm);
+                else result = SlideGroupOfToken(extractedToken, bar, tick, previousSlideStart, bpm);
                 result.NoteSpecialState = breakState;
                 result.Update();
             }
@@ -152,11 +156,11 @@ public class SimaiParser : IParser
             else if (!(token.Contains('!') || token.Contains('?')) && !token.Equals("E") && !token.Equals(""))
             {
                 result = TapOfToken(token, bar, tick, bpm);
-                if (result.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START) PreviousSlideStart = (Tap)result;
+                if (result.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START) previousSlideStart = (Tap)result;
             }
             else if (token.Contains('!') || token.Contains('?'))
             {
-                PreviousSlideStart = TapOfToken(token, bar, tick, bpm);
+                previousSlideStart = TapOfToken(token, bar, tick, bpm);
             }
         }
 
@@ -405,7 +409,6 @@ public class SimaiParser : IParser
             noteType = NoteType.SI_;
         }
 
-        //Console.WriteLine("Key Candidate: "+keyCandidate);
         int fixedKeyCandidate = int.Parse(endKeyCandidate) - 1;
         if (fixedKeyCandidate < 0) endKeyCandidate += 8;
         double[] durationResult = GetTimeCandidates(bpm, sustainCandidate, true);
@@ -725,7 +728,7 @@ public class SimaiParser : IParser
         else if (slideCandidate.Length > 0 && normalSlideExtracted)
             result.Add(slideCandidate + "CN" + lastKeyCandidate);
 
-        // Post processing of slide durations
+        // Post-processing of slide durations
         if (result.Count(p => p.Contains('[')) == 0)
         {
             throw new Exception("Extracted slides do not contain any duration setting: " + String.Join(", ", result));
@@ -884,7 +887,7 @@ public class SimaiParser : IParser
         {
             bool isSlideReassignedFormat = durationCandidate.Split('#')[0].Length != 0;
             result[0] = isSlideReassignedFormat
-                ? Chart.GetBPMTimeUnit(double.Parse(durationCandidate.Split('#')[0]), MaximumDefinition) * 96
+                ? Chart.GetBPMTimeUnit(double.Parse(durationCandidate.Split('#')[0]), MaximumDefinition) * (MaximumDefinition / 4)
                 : 0;
             result[1] = isSlideReassignedFormat
                 ? double.Parse(durationCandidate.Split('#')[1])
