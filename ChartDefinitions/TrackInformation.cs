@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using System.Xml;
 
 namespace MaiLib;
@@ -27,14 +28,14 @@ public abstract class TrackInformation : IXmlUtility
         "maimai PiNK", "maimai PiNK PLUS", "maimai MURASAKi", "maimai MURASAKi PLUS", "maimai MiLK", "maimai MiLK PLUS",
         "maimai FiNALE", "maimai DX", "maimai DX PLUS", "maimai DX Splash", "maimai DX Splash PLUS",
         "maimai DX UNiVERSE", "maimai DX UNiVERSE PLUS", "maimai DX FESTiVAL", "maimai DX FESTiVAL PLUS",
-        "maimai DX BUDDiES", "maimai DX BUDDiES PLUS", "maimai DX PRiSM"
+        "maimai DX BUDDiES", "maimai DX BUDDiES PLUS", "maimai DX PRISM", "maimai DX PRISM PLUS"
     ]; // TODO: Convert to enum
 
     public static readonly string[] ShortVersion =
     [
         "maimai", "PLUS", "GreeN", "GreeN PLUS", "ORANGE", "ORANGE PLUS", "PiNK", "PiNK PLUS", "MURASAKi",
         "MURASAKi PLUS", "MiLK", "MiLK PLUS", "FiNALE", "DX", "DX PLUS", "DX Splash", "DX Splash PLUS", "DX UNiVERSE",
-        "DX UNiVERSE PLUS", "DX FESTiVAL", "DX FESTiVAL PLUS", "DX BUDDiES", "DX BUDDiES PLUS", "DX PRiSM"
+        "DX UNiVERSE PLUS", "DX FESTiVAL", "DX FESTiVAL PLUS", "DX BUDDiES", "DX BUDDiES PLUS", "DX PRISM", "DX PRISM PLUS"
     ]; // TODO: Convert to enum
 
     #region Constructors
@@ -83,8 +84,6 @@ public abstract class TrackInformation : IXmlUtility
                throw new NullReferenceException("Music ID is not defined");
         set => InformationDict["Music ID"] = value;
     }
-
-    public string TrackIDShort => this.TrackID.Length > 4 ? this.TrackID[4..] : this.TrackID;
 
 
     /// <summary>
