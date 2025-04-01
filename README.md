@@ -42,17 +42,16 @@ This is a parser for rhythm game `maimai` chart interpretation and manipulation.
 ## Additional notice for Simai compatability
 
 - As always, I think Simai is a language more focused on charting rather than interpreting. I still have no idea why
-  there isn't a UI-based charting tool. Instead we have to learn this unsecure and unintuitive language, especially
+  there isn't a UI-based charting tool. Instead, we have to learn this unsecure and unintuitive language, especially
   after
   Festival added new features. This makes interpreting Simai a huge PAIN since the way it converts between ticks and
   times is vague and honestly unreasonable.
 - For example, it defines a Slide note as having a wait time of 1 beat or one 1/4 note (or a crotchet for those in the
   music community)
   after its start tap. If your Slide note starts longer or shorter than 1 quaver of the current BPM, you will have to:
-  a) change
-  the BPM for that specific Slide or b) define the time by [wait time##last time] (and calculating that is extremely
-  time-consuming).
-- I hope someone develops a language better than Simai to use as a intermediate language between coding and charting.
+  * Change the BPM for that specific Slide; 
+  * Define the time by [wait time##last time] (and calculating that is extremely time-consuming).
+- I hope someone develops a language better than Simai to use as an intermediate language between coding and charting.
   Thank you.
 
 ### Parameters notice
