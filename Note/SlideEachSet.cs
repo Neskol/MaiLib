@@ -24,6 +24,7 @@ public class SlideEachSet : Note
             SlideEachSet? candidate =
                 x as SlideEachSet ?? throw new InvalidOperationException("This is not a SLIDE EACH");
             InternalSlides.AddRange(candidate.InternalSlides);
+            SlideStart = candidate.SlideStart;
         }
         else if (x.NoteSpecificGenre is NoteSpecificGenre.SLIDE)
         {
