@@ -469,10 +469,10 @@ public abstract class Chart : IChart
                 copy = new Hold(x);
                 break;
             case SlideEachSet set:
-                var copySet = new SlideEachSet(set);
+                SlideEachSet copySet = new SlideEachSet(set);
                 copy = copySet;
                 copySet.InternalSlides = [];
-                foreach (var slide in set.InternalSlides)
+                foreach (Slide slide in set.InternalSlides)
                 {
                     copySet.InternalSlides.Add((Slide)CopyAndShiftNote(slide, overallTick));
                 }
@@ -486,7 +486,7 @@ public abstract class Chart : IChart
             case SlideGroup group:
                 copy = new SlideGroup(x);
                 ((SlideGroup)copy).InternalSlides.Clear();
-                foreach (var slide in group.InternalSlides)
+                foreach (Slide slide in group.InternalSlides)
                 {
                     ((SlideGroup)copy).InternalSlides.Add((Slide)CopyAndShiftNote(slide, overallTick));
                 }
@@ -507,9 +507,9 @@ public abstract class Chart : IChart
 
         copy.Bar += overallTick / Definition;
         copy.Tick += overallTick % Definition;
-        // 考虑负数的情况
-        // 假设 copy.Bar = 2, copy.Tick = 0, overallTick = -192
-        // copy.Tick += overallTick % Definition 会导致 copy.Tick 变成负数
+        // Deal with negative shifts
+        // Assuming copy.Bar = 2, copy.Tick = 0, overallTick = -192
+        // copy.Tick += overallTick % Definition leads copy.Tick to be negative
         if (copy.Tick < 0)
         {
             copy.Bar -= 1;
@@ -572,10 +572,10 @@ public abstract class Chart : IChart
         foreach (Note? x in bar)
         {
             if (!startTimeList.Contains(x.Tick)) startTimeList.Add(x.Tick);
-            if (x.NoteType is NoteType.BPM)
-            {
-                //Console.WriteLine(x.Compose(0));
-            }
+            // if (x.NoteType is NoteType.BPM)
+            // {
+            //     Console.WriteLine(x.Compose(0));
+            // }
         }
 
         if (startTimeList[startTimeList.Count - 1] != definition) startTimeList.Add(definition);
@@ -641,7 +641,7 @@ public abstract class Chart : IChart
         result.Add(bar[0]);
         if (minimalQuaver < 0)
         {
-            throw new OverflowException("minimalQuaver 怎么是负的，不对劲");
+            throw new InvalidDataException("NEGATIVE VALUE: minimalQuaver");
         }
 
         for (int i = 0; i < definition; i += definition / minimalQuaver)
@@ -759,7 +759,7 @@ public abstract class Chart : IChart
     }
 
     /// <summary>
-    ///     Return if this is a prime (1 counts)
+    ///     Return if this is a prime (1 counts as prime)
     /// </summary>
     /// <param name="number">Number to inspect</param>
     /// <returns>True if is prime, false otherwise</returns>
