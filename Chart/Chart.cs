@@ -672,7 +672,7 @@ public abstract class Chart : IChart
                         lastNote.Next = x;
                     }
                 }
-                else if (x.Tick == i && x.IsNote && x.NoteType is NoteType.TTP or NoteType.THO)
+                else if (x.Tick == i && x is { IsNote: true, NoteType: NoteType.TTP or NoteType.THO })
                 {
                     if (x.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
