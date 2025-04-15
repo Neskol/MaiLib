@@ -100,7 +100,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         WaitTickStamp = inTake.WaitTickStamp;
         WaitTimeStamp = inTake.WaitTimeStamp;
         CalculatedLastTime = inTake.CalculatedLastTime;
-        CalculatedLastTime = inTake.CalculatedLastTime;
+        CalculatedWaitTime = inTake.CalculatedWaitTime;
         // TickBPMDisagree = inTake.TickBPMDisagree;
         // BPM = inTake.BPM;
         BPMChangeNotes = inTake.BPMChangeNotes;
@@ -369,13 +369,13 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         copyTo.TickStamp = this.TickStamp;
         copyTo.TickTimeStamp = this.TickTimeStamp;
         copyTo.LastLength = this.LastLength;
-        // copyTo.LastTickStamp = this.LastTickStamp;
+        copyTo.LastTickStamp = this.LastTickStamp;
         copyTo.LastTimeStamp = this.LastTimeStamp;
         copyTo.WaitLength = this.WaitLength;
-        // copyTo.WaitTickStamp = this.WaitTickStamp;
+        copyTo.WaitTickStamp = this.WaitTickStamp;
         copyTo.WaitTimeStamp = this.WaitTimeStamp;
         copyTo.CalculatedLastTime = this.CalculatedLastTime;
-        copyTo.CalculatedLastTime = this.CalculatedLastTime;
+        copyTo.CalculatedWaitTime = this.CalculatedWaitTime;
         // copyTo.TickBPMDisagree = this.TickBPMDisagree;
         // copyTo.BPM = this.BPM;
         copyTo.BPMChangeNotes = this.BPMChangeNotes;
@@ -955,7 +955,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     {
         BPMChange nearestBpmChange = BPMChangeNotes.Where(note => GetTimeStamp(note.TickStamp) <= timeStamp)
                                          .MaxBy(note => note.TickStamp) ??
-                                     throw new InvalidOperationException("GIVEN NOTE DOES NOT CONTAIN BPM CHANGE");
+                                     BPMChangeNotes[0];
         return (int)double.Round(nearestBpmChange.TickStamp +
                                  (timeStamp - GetTimeStamp(nearestBpmChange.TickStamp)) / nearestBpmChange.BPMTimeUnit);
     }
@@ -964,7 +964,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     {
         BPMChange nearestBpmChange = changeTable.Where(note => GetTimeStamp(changeTable, note.TickStamp) <= timeStamp)
                                          .MaxBy(note => note.TickStamp) ??
-                                     throw new InvalidOperationException("GIVEN NOTE DOES NOT CONTAIN BPM CHANGE");
+                                     changeTable[0];
         return (int)double.Round(nearestBpmChange.TickStamp +
                                  (timeStamp - GetTimeStamp(changeTable, nearestBpmChange.TickStamp)) /
                                  nearestBpmChange.BPMTimeUnit);
