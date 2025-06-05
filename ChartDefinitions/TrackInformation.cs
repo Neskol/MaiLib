@@ -271,7 +271,7 @@ public abstract class TrackInformation : IXmlUtility
     /// <summary>
     ///     See if the chart is DX Utage chart.
     /// </summary>
-    /// <value>True if is DX Utage, false elsewise</value>
+    /// <value>True if is DX Utage, else return false</value>
     public bool IsDXUtage => TrackIDLong[0] is '1';
 
     /// <summary>
