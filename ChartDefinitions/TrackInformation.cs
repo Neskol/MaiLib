@@ -47,6 +47,7 @@ public abstract class TrackInformation : IXmlUtility
     {
         InternalXml = new XmlDocument();
         InformationDict = [];
+        UtageFixedOptionDict = [];
         FormatInformation();
         Update();
     }
@@ -326,6 +327,12 @@ public abstract class TrackInformation : IXmlUtility
     /// </summary>
     /// <value>this.Information as Dictionary</value>
     public Dictionary<string, string> InformationDict { get; set; }
+
+    /// <summary>
+    ///     Give access to this.FixedOptions
+    /// </summary>
+    /// <value>this.FixedOptions as Dictionary</value>
+    public Dictionary<string, string> UtageFixedOptionDict { get; set; }
 
     /// <summary>
     ///     Return the XML node that has same name with

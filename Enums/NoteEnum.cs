@@ -76,7 +76,7 @@ public class NoteEnum
         /// <value>Imaginary Slide Start that does not appear in a slide</value>
         NST,
 
-        /// <value>Singular Sldie Start but does not have consecutive slide</value>
+        /// <value>Singular Slide Start but does not have consecutive slide</value>
         NSS,
 
         /// <value>Touch Tap</value>

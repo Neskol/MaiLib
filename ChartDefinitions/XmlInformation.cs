@@ -7,7 +7,7 @@ namespace MaiLib;
 /// </summary>
 public class XmlInformation : TrackInformation, IXmlUtility
 {
-    private const int UtageGenreId = 107;
+    private const int utageGenreId = 107;
 
     #region Constructors
 
@@ -19,12 +19,12 @@ public class XmlInformation : TrackInformation, IXmlUtility
         Update();
     }
 
-    public XmlInformation(string location)
+    public XmlInformation(string file)
     {
         {
-            if (File.Exists(location + "Music.xml"))
+            if (File.Exists(file))
             {
-                InternalXml.Load(location + "Music.xml");
+                InternalXml.Load(file );
                 Update();
             }
             else
@@ -138,7 +138,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     XmlElement? fileCandidate = candidate["file"] ?? throw new NullReferenceException();
                     fileCandidate = fileCandidate["path"] ?? throw new NullReferenceException();
 
-                    if (genreId == UtageGenreId)
+                    if (genreId == utageGenreId)
                     {
                         InformationDict["Utage Decimal"] =
                             levelCandidate.InnerText + "." + levelDecimalCandidate.InnerText;
@@ -304,6 +304,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
         {
             if (InformationDict["Utage Play Style"].Equals(""))
                 InformationDict["Utage Play Style"] = candidate.InnerText;
+        }
+
+        foreach (XmlNode candidate in utageFixedOptionsCandidate)
+        {
+            if (candidate["_fixedOptionName"].InnerText is not "None")
+            {
+                UtageFixedOptionDict.Add(candidate["_fixedOptionName"].InnerText, candidate["_fixedOptionValue"].InnerText);
+            }
         }
 
         /// Need to figure this out later
@@ -627,30 +635,48 @@ public class XmlInformation : TrackInformation, IXmlUtility
         root.AppendChild(notesData);
 
         // Following are reserved for Utage charts
-        XmlElement? utageKanji = InternalXml.CreateElement("utageKanjiName");
-        utageKanji.InnerText = InformationDict["Utage Kanji"].Equals("") ? "" : InformationDict["Utage Kanji"];
-        XmlElement? utageComment = InternalXml.CreateElement("comment");
-        utageComment.InnerText = InformationDict["Utage Comment"].Equals("") ? "" : InformationDict["Utage Comment"];
-        XmlElement? utagePlayStyle = InternalXml.CreateElement("utagePlayStyle");
-        utagePlayStyle.InnerText =
-            InformationDict["Utage Play Style"].Equals("") ? "0" : InformationDict["Utage Play Style"];
-        XmlElement? utageFixedOptionRoot = InternalXml.CreateElement("fixedOptions");
-        for (int i = 0; i < 4; i++)
+        if (InformationDict["Genre ID"].Equals(utageGenreId.ToString()))
         {
-            XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
-            XmlElement? utageFixedOptionName = InternalXml.CreateElement("_fixedOptionName");
-            utageFixedOptionName.InnerText = InformationDict["Genre ID"].Equals(UtageGenreId.ToString()) ? "None" : "";
-            XmlElement? utageFixedOptionValue = InternalXml.CreateElement("_fixedOptionValue");
-            utageFixedOptionValue.InnerText = InformationDict["Genre ID"].Equals(UtageGenreId.ToString()) ? "None" : "";
-            utageFixedOption.AppendChild(utageFixedOptionName);
-            utageFixedOption.AppendChild(utageFixedOptionValue);
-            utageFixedOptionRoot.AppendChild(utageFixedOption);
-        }
+            XmlElement? utageKanji = InternalXml.CreateElement("utageKanjiName");
+            utageKanji.InnerText = InformationDict["Utage Kanji"].Equals("") ? "" : InformationDict["Utage Kanji"];
+            XmlElement? utageComment = InternalXml.CreateElement("comment");
+            utageComment.InnerText =
+                InformationDict["Utage Comment"].Equals("") ? "" : InformationDict["Utage Comment"];
+            XmlElement? utagePlayStyle = InternalXml.CreateElement("utagePlayStyle");
+            utagePlayStyle.InnerText =
+                InformationDict["Utage Play Style"].Equals("") ? "0" : InformationDict["Utage Play Style"];
+            XmlElement? utageFixedOptionRoot = InternalXml.CreateElement("fixedOptions");
+            if (UtageFixedOptionDict.Count > 4)
+            {
+                foreach (KeyValuePair<string, string> fixedOption in UtageFixedOptionDict)
+                {
+                    XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
+                    XmlElement? utageFixedOptionName = InternalXml.CreateElement("_fixedOptionName");
+                    utageFixedOptionName.InnerText = fixedOption.Key;
+                    XmlElement? utageFixedOptionValue = InternalXml.CreateElement("_fixedOptionValue");
+                    utageFixedOptionValue.InnerText = fixedOption.Value;
+                    utageFixedOption.AppendChild(utageFixedOptionName);
+                    utageFixedOption.AppendChild(utageFixedOptionValue);
+                    utageFixedOptionRoot.AppendChild(utageFixedOption);
+                }
+            }
+            else for (int i = 0; i < 4; i++)
+            {
+                XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
+                XmlElement? utageFixedOptionName = InternalXml.CreateElement("_fixedOptionName");
+                utageFixedOptionName.InnerText = i < UtageFixedOptionDict.Count ? UtageFixedOptionDict.ElementAt(i).Key : "None";
+                XmlElement? utageFixedOptionValue = InternalXml.CreateElement("_fixedOptionValue");
+                utageFixedOptionName.InnerText = i < UtageFixedOptionDict.Count ? UtageFixedOptionDict.ElementAt(i).Value : "Off";
+                utageFixedOption.AppendChild(utageFixedOptionName);
+                utageFixedOption.AppendChild(utageFixedOptionValue);
+                utageFixedOptionRoot.AppendChild(utageFixedOption);
+            }
 
-        root.AppendChild(utageKanji);
-        root.AppendChild(utageComment);
-        root.AppendChild(utagePlayStyle);
-        root.AppendChild(utageFixedOptionRoot);
+            root.AppendChild(utageKanji);
+            root.AppendChild(utageComment);
+            root.AppendChild(utagePlayStyle);
+            root.AppendChild(utageFixedOptionRoot);
+        }
 
 
         XmlElement? jacketFile = InternalXml.CreateElement("jacketFile");
@@ -671,6 +697,6 @@ public class XmlInformation : TrackInformation, IXmlUtility
     public void WriteOutInformation(string location)
     {
         GenerateInternalXml();
-        InternalXml.Save(location);
+        this.Save(location);
     }
 }
