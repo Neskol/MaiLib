@@ -19,7 +19,22 @@ public class XmlInformation : TrackInformation, IXmlUtility
         Update();
     }
 
-    public XmlInformation(string file)
+    public XmlInformation(string location)
+    {
+        {
+            if (File.Exists(Path.Combine(location, "Music.xml")))
+            {
+                InternalXml.Load(Path.Combine(location, "Music.xml"));
+                Update();
+            }
+            else
+            {
+                Update();
+            }
+        }
+    }
+
+    public XmlInformation(string file, bool isFile)
     {
         {
             if (File.Exists(file))
@@ -308,22 +323,11 @@ public class XmlInformation : TrackInformation, IXmlUtility
 
         foreach (XmlNode candidate in utageFixedOptionsCandidate)
         {
-            if (candidate["_fixedOptionName"].InnerText is not "None")
-            {
-                UtageFixedOptionDict.Add(candidate["_fixedOptionName"].InnerText, candidate["_fixedOptionValue"].InnerText);
-            }
+            XmlElement? fixedOptionName = candidate["_fixedOptionName"] ?? throw new NullReferenceException();
+            XmlElement? fixedOptionValue = candidate["_fixedOptionValue"] ?? throw new NullReferenceException();
+            if (fixedOptionName.InnerText is "None" or "") continue;
+            UtageFixedOptionDict.Add(fixedOptionName.InnerText, fixedOptionValue.InnerText);
         }
-
-        /// Need to figure this out later
-        // foreach (XmlNode candidate in utageFixedOptionsCandidate)
-        // {
-        //     string optionName = "None";
-        //     string optionValue = "None";
-        //     if (candidate["_fixedOptionName"] is not null) optionName = candidate["_fixedOptionName"]?.InnerText ?? "None";
-        //     if (candidate["_fixedOptionValue"] is not null) optionValue = candidate["_fixedOptionName"]?.InnerText ?? "None";
-        //     if (optionName is not "None" or "") InformationDict.Add($"Utage Fixed Option {optionName}", optionValue);
-        // }
-
         InformationDict["SDDX Suffix"] = StandardDeluxeSuffix;
     }
 
