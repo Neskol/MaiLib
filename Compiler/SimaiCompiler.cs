@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using System.Text;
 using static MaiLib.NoteEnum;
 
 namespace MaiLib;
@@ -10,8 +11,12 @@ namespace MaiLib;
 public class SimaiCompiler : Compiler
 {
     public bool StrictDecimalLevel { get; set; }
+    private StringBuilder stringBuilder = new StringBuilder();
 
-    public string Result { get; private set; }
+    public string Result
+    {
+        get => stringBuilder.ToString();
+    }
 
     /// <summary>
     ///     Construct compiler of a single song.
@@ -50,7 +55,7 @@ public class SimaiCompiler : Compiler
                 Charts[6] = new Ma2(location + Information.GetValueOrDefault("Utage Chart Path"));
         }
 
-        Result = Compose();
+        stringBuilder.Clear().Append(this.Compose());
         //Console.WriteLine(result);
     }
 
@@ -97,7 +102,7 @@ public class SimaiCompiler : Compiler
 
         List<string>? ma2List = [.. ma2files];
 
-        Result = Compose(true, ma2List);
+        stringBuilder.Clear().Append(Compose(true, ma2List));
         //Console.WriteLine(result);
     }
 
@@ -111,7 +116,7 @@ public class SimaiCompiler : Compiler
         Charts = [];
         Information = [];
         MusicXML = new XmlInformation();
-        Result = "";
+        stringBuilder.Clear();
     }
 
     public void WriteOut(string targetLocation, bool overwrite)
@@ -127,31 +132,30 @@ public class SimaiCompiler : Compiler
 
     public override string Compose()
     {
-        string? result = "";
+        StringBuilder composedText = new();
         // Console.WriteLine("StrictDecimal: "+StrictDecimalLevel);
         // Console.ReadKey();
         //Add Information
         {
-            string? beginning = "";
-            beginning +=
-                $"&title={Information.GetValueOrDefault("Name")}{Information.GetValueOrDefault("SDDX Suffix")}\n";
-            beginning += $"&wholebpm={Information.GetValueOrDefault("BPM")}\n";
-            beginning += $"&artist={Information.GetValueOrDefault("Composer")}\n";
-            beginning += $"&artistid={Information.GetValueOrDefault("Composer ID")}\n";
-            beginning += $"&des={Information.GetValueOrDefault("Master Chart Maker")}\n";
-            beginning += $"&shortid={Information.GetValueOrDefault("Music ID")}\n";
-            beginning += $"&genre={Information.GetValueOrDefault("Genre")}\n";
-            beginning += $"&genreid={Information.GetValueOrDefault("Genre ID")}\n";
-            beginning += $"&cabinet={(MusicXML.IsDXChart ? "DX" : "SD")}\n";
-            beginning += $"&version={MusicXML.TrackVersion}\n";
-            beginning += "&ChartConverter=Neskol\n";
-            beginning += "&ChartConvertTool=MaichartConverter\n";
-            // string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
+            composedText
+                .Append(
+                    $"&title={Information.GetValueOrDefault("Name")}{Information.GetValueOrDefault("SDDX Suffix")}\n")
+                .Append($"&wholebpm={Information.GetValueOrDefault("BPM")}\n")
+                .Append($"&artist={Information.GetValueOrDefault("Composer")}\n");
+            composedText.Append($"&artistid={Information.GetValueOrDefault("Composer ID")}\n");
+            composedText.Append($"&des={Information.GetValueOrDefault("Master Chart Maker")}\n");
+            composedText.Append($"&shortid={Information.GetValueOrDefault("Music ID")}\n");
+            composedText.Append($"&genre={Information.GetValueOrDefault("Genre")}\n");
+            composedText.Append($"&genreid={Information.GetValueOrDefault("Genre ID")}\n");
+            composedText.Append($"&cabinet={(MusicXML.IsDXChart ? "DX" : "SD")}\n");
+            composedText.Append($"&version={MusicXML.TrackVersion}\n");
+            composedText.Append("&ChartConverter=Neskol\n");
+            composedText.Append("&ChartConvertTool=MaichartConverter\n");
+            // string assemblyVersion = FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing");
             // if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
-            // beginning += "&ChartConvertToolVersion=" + assemblyVersion + "\n";
-            beginning += $"&ChartConvertToolVersion={Assembly.GetExecutingAssembly().GetName().Version}\n";
-            beginning += "&smsg=See https://github.com/Neskol/MaichartConverter for updates\n";
-            beginning += "\n";
+            // composedText.Append("&ChartConvertToolVersion=" + assemblyVersion + "\n");
+            composedText.Append($"&ChartConvertToolVersion={Assembly.GetExecutingAssembly().GetName().Version}\n");
+            composedText.Append("&smsg=See https://github.com/Neskol/MaichartConverter for updates\n\n");
 
             if (Information.TryGetValue("Easy", out string? easy) &&
                 Information.TryGetValue("Easy Chart Maker", out string? easyMaker))
@@ -162,9 +166,8 @@ public class SimaiCompiler : Compiler
                     difficultyCandidate = decimalLevel;
                 }
 
-                beginning += "&lv_1=" + difficultyCandidate + "\n";
-                beginning += "&des_1=" + easyMaker + "\n";
-                beginning += "\n";
+                composedText.Append($"&lv_1={difficultyCandidate}\n");
+                composedText.Append($"&des_1={easyMaker}\n\n");
             }
 
             if (Information.TryGetValue("Basic", out string? basic) &&
@@ -176,9 +179,8 @@ public class SimaiCompiler : Compiler
                     difficultyCandidate = decimalLevel;
                 }
 
-                beginning += "&lv_2=" + difficultyCandidate + "\n";
-                beginning += "&des_2=" + basicMaker + "\n";
-                beginning += "\n";
+                composedText.Append($"&lv_2={difficultyCandidate}\n");
+                composedText.Append($"&des_2={basicMaker}\n\n");
             }
 
 
@@ -191,9 +193,8 @@ public class SimaiCompiler : Compiler
                     difficultyCandidate = decimalLevel;
                 }
 
-                beginning += "&lv_3=" + difficultyCandidate + "\n";
-                beginning += "&des_3=" + advanceMaker + "\n";
-                beginning += "\n";
+                composedText.Append($"&lv_3={difficultyCandidate}\n");
+                composedText.Append($"&des_3={advanceMaker}\n\n");
             }
 
 
@@ -206,9 +207,8 @@ public class SimaiCompiler : Compiler
                     difficultyCandidate = decimalLevel;
                 }
 
-                beginning += "&lv_4=" + difficultyCandidate + "\n";
-                beginning += "&des_4=" + expertMaker + "\n";
-                beginning += "\n";
+                composedText.Append($"&lv_4={difficultyCandidate}\n");
+                composedText.Append($"&des_4={expertMaker}\n\n");
             }
 
 
@@ -221,9 +221,8 @@ public class SimaiCompiler : Compiler
                     difficultyCandidate = decimalLevel;
                 }
 
-                beginning += "&lv_5=" + difficultyCandidate + "\n";
-                beginning += "&des_5=" + masterMaker + "\n";
-                beginning += "\n";
+                composedText.Append($"&lv_5={difficultyCandidate}\n");
+                composedText.Append($"&des_5={masterMaker}\n\n");
             }
 
 
@@ -236,35 +235,29 @@ public class SimaiCompiler : Compiler
                     difficultyCandidate = decimalLevel;
                 }
 
-                beginning += "&lv_6=" + difficultyCandidate + "\n";
-                beginning += "&des_6=" + remasterMaker;
-                beginning += "\n";
-                beginning += "\n";
+                composedText.Append($"&lv_6={difficultyCandidate}\n");
+                composedText.Append($"&des_6={remasterMaker}\n\n");
             }
-
-            result += beginning;
         }
-        Console.WriteLine("Finished writing header of " + Information.GetValueOrDefault("Name"));
+        Console.WriteLine($"Finished writing header of {Information.GetValueOrDefault("Name")}");
 
         //Compose Charts
+        for (int i = 0; i < Charts.Count; i++)
         {
-            for (int i = 0; i < Charts.Count; i++)
+            // Console.WriteLine("Processing chart: " + i);
+            if (Charts[i] != null && !Information[Difficulty[i]].Equals(""))
             {
-                // Console.WriteLine("Processing chart: " + i);
-                if (Charts[i] != null && !Information[Difficulty[i]].Equals(""))
-                {
-                    string? isDxChart = Information.GetValueOrDefault("SDDX Suffix");
-                    if (!Charts[i].IsDxChart) isDxChart = "";
-                    result += "&inote_" + (i + 1) + "=\n";
-                    result += Compose(Charts[i]);
-                    CompiledChart.Add(Information.GetValueOrDefault("Name") + isDxChart + " [" + Difficulty[i] + "]");
-                }
-
-                result += "\n";
+                string? isDxChart = Information.GetValueOrDefault("SDDX Suffix");
+                if (!Charts[i].IsDxChart) isDxChart = "";
+                composedText.Append($"&inote_{i + 1}=\n");
+                composedText.Append(Compose(Charts[i]));
+                CompiledChart.Add(Information.GetValueOrDefault("Name") + isDxChart + " [" + Difficulty[i] + "]");
             }
+
+            composedText.Append("\n");
         }
         Console.WriteLine("Finished composing.");
-        return result;
+        return composedText.ToString();
     }
 
     /// <summary>
