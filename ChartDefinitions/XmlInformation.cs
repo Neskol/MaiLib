@@ -698,7 +698,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
     ///     Writes music.xml to location specified
     /// </summary>
     /// <param name="location">Target Location</param>
-    public void WriteOutInformation(string location)
+    public override void Save (string location)
     {
         GenerateInternalXml();
         this.Save(location);

@@ -341,7 +341,7 @@ public abstract class TrackInformation : IXmlUtility
     ///     Save the Information to given path
     /// </summary>
     /// <param name="location">Path to save the Information</param>
-    public void Save(string location)
+    public virtual void Save(string location)
     {
         InternalXml.Save(location);
     }
