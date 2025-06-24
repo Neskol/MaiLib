@@ -238,6 +238,22 @@ public abstract class TrackInformation : IXmlUtility
     }
 
     /// <summary>
+    ///     Access to Utage Fixed Options
+    /// </summary>
+    public List<string> UtageFixedOptions
+    {
+        get
+        {
+            List<string> result = [];
+            foreach (KeyValuePair<string, string> option in UtageFixedOptionDict)
+            {
+                result.Add($"{option.Key}: {option.Value}");
+            }
+            return result;
+        }
+    }
+
+    /// <summary>
     ///     Return the suffix of Track title for export
     /// </summary>
     /// <value>this.TrackSubstituteName"_DX" if is DX chart</value>
@@ -326,13 +342,13 @@ public abstract class TrackInformation : IXmlUtility
     ///     Give access to this.Information
     /// </summary>
     /// <value>this.Information as Dictionary</value>
-    public Dictionary<string, string> InformationDict { get; set; }
+    public Dictionary<string, string> InformationDict { get; private set; }
 
     /// <summary>
     ///     Give access to this.FixedOptions
     /// </summary>
     /// <value>this.FixedOptions as Dictionary</value>
-    public Dictionary<string, string> UtageFixedOptionDict { get; set; }
+    public Dictionary<string, string> UtageFixedOptionDict { get; private set; }
 
     /// <summary>
     ///     Return the XML node that has same name with
@@ -358,30 +374,6 @@ public abstract class TrackInformation : IXmlUtility
     ///     Update Information
     /// </summary>
     public abstract void Update();
-
-    // /// <summary>
-    // /// Construct track Information from given location
-    // /// </summary>
-    // /// <param name="location">Place to load</param>
-    // public TrackInformation(string location)
-    // {
-    //     {
-    //         this.TakeInValue = new XmlDocument();
-    //         if (File.Exists(location + "Music.xml"))
-    //         {
-    //             this.TakeInValue.Load(location + "Music.xml");
-    //             this.Information=new Dictionary<string, string>();
-    //             this.FormatInformation();
-    //             this.Update();
-    //         }
-    //         else
-    //         {
-    //             this.Information=new Dictionary<string, string>();
-    //             this.FormatInformation();
-    //         }
-
-    //     }
-    // }
 
     /// <summary>
     ///     Add in necessary nodes in Information.

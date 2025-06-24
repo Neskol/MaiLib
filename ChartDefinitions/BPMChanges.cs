@@ -56,7 +56,7 @@ public class BPMChanges
                 string? result = "BPM_DEF" + "\t";
                 for (int x = 0; x < 4; x++)
                 {
-                    result = result + string.Format("{0:F3}", ChangeNotes[x].BPM);
+                    result = result + $"{ChangeNotes[x].BPM:F3}";
                     result += "\t";
                 }
 
@@ -68,14 +68,14 @@ public class BPMChanges
                 string? result = "BPM_DEF" + "\t";
                 foreach (BPMChange? x in ChangeNotes)
                 {
-                    result += string.Format("{0:F3}", x.BPM);
+                    result += $"{x.BPM:F3}";
                     result += "\t";
                     times++;
                 }
 
                 while (times < 4)
                 {
-                    result += string.Format("{0:F3}", ChangeNotes[0].BPM);
+                    result += $"{ChangeNotes[0].BPM:F3}";
                     result += "\t";
                     times++;
                 }
@@ -103,12 +103,12 @@ public class BPMChanges
     {
         List<BPMChange> adjusted = [];
         Note lastNote = new Rest();
-        foreach (BPMChange? x in ChangeNotes)
-            if (!(x.Bar == lastNote.Bar && x.Tick == lastNote.Tick && x.BPM == lastNote.BPM))
-            {
-                adjusted.Add(x);
-                lastNote = x;
-            }
+        foreach (BPMChange? x in ChangeNotes.Where(x =>
+                     !(x.Bar == lastNote.Bar && x.Tick == lastNote.Tick && x.BPM == lastNote.BPM)))
+        {
+            adjusted.Add(x);
+            lastNote = x;
+        }
 
         // Console.WriteLine(adjusted.Count);
         ChangeNotes = [.. adjusted];
