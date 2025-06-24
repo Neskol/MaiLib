@@ -302,7 +302,12 @@ public class SimaiCompiler : Compiler
             if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out string? decimalLevel))
                 difficultyCandidate = $"{decimalLevel}?";
 
-            composedText.Append($"&lv_{defaultChartIndex}={difficultyCandidate}\n\n");
+            composedText.Append($"&lv_{defaultChartIndex}={difficultyCandidate}\n");
+            foreach (KeyValuePair<string,string> option in MusicXML.UtageFixedOptionDict)
+            {
+                composedText.Append($"&fixedoption={option.Key}:{option.Value}\n");
+            }
+            composedText.Append('\n');
         }
 
         Console.WriteLine($"Finished writing header of {Information.GetValueOrDefault("Name")}");
@@ -316,7 +321,7 @@ public class SimaiCompiler : Compiler
                 string? isDxChart = "Utage";
                 composedText.Append($"&inote_{i + 2}=\n");
                 composedText.Append(Compose(Charts[i]));
-                CompiledChart.Add(Information.GetValueOrDefault("Name") + isDxChart + " [宴]");
+                CompiledChart.Add($"{Information.GetValueOrDefault("Name")}{isDxChart} [宴]");
                 composedText.Append('\n');
             }
         }
@@ -324,7 +329,7 @@ public class SimaiCompiler : Compiler
         {
             composedText.Append("&inote_7=\n");
             composedText.Append(Compose(Charts[0]));
-            CompiledChart.Add(Information.GetValueOrDefault("Name") + "Utage" + " [宴]");
+            CompiledChart.Add($"{Information.GetValueOrDefault("Name")}Utage [宴]");
         }
 
         Console.WriteLine("Finished composing.");

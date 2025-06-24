@@ -238,22 +238,6 @@ public abstract class TrackInformation : IXmlUtility
     }
 
     /// <summary>
-    ///     Access to Utage Fixed Options
-    /// </summary>
-    public List<string> UtageFixedOptions
-    {
-        get
-        {
-            List<string> result = [];
-            foreach (KeyValuePair<string, string> option in UtageFixedOptionDict)
-            {
-                result.Add($"{option.Key}: {option.Value}");
-            }
-            return result;
-        }
-    }
-
-    /// <summary>
     ///     Return the suffix of Track title for export
     /// </summary>
     /// <value>this.TrackSubstituteName"_DX" if is DX chart</value>
@@ -276,14 +260,6 @@ public abstract class TrackInformation : IXmlUtility
     /// </summary>
     /// <value>True if is DX, false if SD</value>
     public bool IsDXChart => TrackIDLong[1] is '1';
-    // {
-    //     get
-    //     {
-    //         string? musicID = CompensateZero(InformationDict.GetValueOrDefault("Music ID") ??
-    //                                          throw new NullReferenceException("Music ID is not Defined"));
-    //         return int.Parse(musicID.Substring(2)).ToString().Length >= 4;
-    //     }
-    // }
 
     /// <summary>
     ///     See if the chart is DX Utage chart.
