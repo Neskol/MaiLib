@@ -44,8 +44,7 @@ public class SimaiTokenizer : ITokenizer
 
     public string[] TokensFromText(string text)
     {
-        string? storage = text;
-        string[]? result = new String(text.ToCharArray().Where(c => !Char.IsWhiteSpace(c)).ToArray()).Split(',');
+        string[]? result = new string(text.ToCharArray().Where(c => !char.IsWhiteSpace(c)).ToArray()).Split(',');
         return result;
     }
 
@@ -90,12 +89,12 @@ public class SimaiTokenizer : ITokenizer
             {
                 shortIdCandidate = item.Replace("shortid=", "");
                 simaiTrackInformation.InformationDict["Music ID"] = shortIdCandidate;
-                if (shortIdCandidate.Length <= 6 && int.TryParse(shortIdCandidate, out int id))
-                {
-                    if (shortIdCandidate.Length > 4)
-                        simaiTrackInformation.InformationDict["SDDX Suffix"] = "DX";
-                    else simaiTrackInformation.InformationDict["SDDX Suffix"] = "SD";
-                }
+                // if (shortIdCandidate.Length <= 6 && int.TryParse(shortIdCandidate, out int id))
+                // {
+                //     if (shortIdCandidate.Length > 4)
+                //         simaiTrackInformation.InformationDict["SDDX Suffix"] = "DX";
+                //     else simaiTrackInformation.InformationDict["SDDX Suffix"] = "SD";
+                // }
             }
             else if (item.Contains("genre"))
             {
@@ -176,6 +175,12 @@ public class SimaiTokenizer : ITokenizer
             {
                 string? utageChartCandidate = item.Replace("des_7=", "");
                 simaiTrackInformation.InformationDict["Utage Chart Maker"] = utageChartCandidate;
+            }
+            else if (item.Contains("fixedoption"))
+            {
+                string? fixedOptionCandidate = item.Replace("fixedoption=", "");
+                string[] options = fixedOptionCandidate.Split(':');
+                simaiTrackInformation.UtageFixedOptionDict.Add(options[0], options[1]);
             }
             else if (item.Contains("inote_2"))
             {

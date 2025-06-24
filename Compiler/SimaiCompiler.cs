@@ -286,10 +286,9 @@ public class SimaiCompiler : Compiler
             defaultChartIndex = 2;
             foreach (string? ma2file in ma2files)
             {
-                string difficultyCandidate = Information["Utage"].Equals("") ? "宴" : $"{Information["Utage"]}?";
+                string difficultyCandidate = Information["Utage"] is "" or "宴" ? "宴" : $"{Information["Utage"]}?";
                 if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out string? decimalLevel))
-                    difficultyCandidate = $"{decimalLevel}?";
-
+                    difficultyCandidate = decimalLevel is "0.0" ? "宴" : $"{decimalLevel}?";
                 composedText.Append($"&lv_{defaultChartIndex}={difficultyCandidate}\n\n");
                 defaultChartIndex++;
             }
@@ -298,10 +297,9 @@ public class SimaiCompiler : Compiler
         }
         else
         {
-            string difficultyCandidate = Information["Utage"].Equals("") ? "宴" : $"{Information["Utage"]}?";
+            string difficultyCandidate = Information["Utage"] is "" or "宴" ? "宴" : $"{Information["Utage"]}?";
             if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out string? decimalLevel))
-                difficultyCandidate = $"{decimalLevel}?";
-
+                difficultyCandidate = decimalLevel is "0.0" ? "宴" : $"{decimalLevel}?";
             composedText.Append($"&lv_{defaultChartIndex}={difficultyCandidate}\n");
             foreach (KeyValuePair<string,string> option in MusicXML.UtageFixedOptionDict)
             {
