@@ -160,7 +160,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
 
                         InformationDict["Utage"] = int.Parse(musicLevelIDCandidate.InnerText) != 0
                             ? Level[int.Parse(musicLevelIDCandidate.InnerText) - 1]
-                            : "";
+                            : "宴";
                         InformationDict["Utage Chart Maker"] = notesDesignerCandidate.InnerText;
                         InformationDict["Utage Maker ID"] = notesDesignerIdCandidate.InnerText;
                         InformationDict["Utage Chart Path"] = fileCandidate.InnerText;
