@@ -609,10 +609,15 @@ public class XmlInformation : TrackInformation, IXmlUtility
 
                 notesDesignerCandidate.AppendChild(notesDesignerIdCandidate);
                 notesDesignerCandidate.AppendChild(notesDesignerStrCandidate);
-                if (!TrackLevels[currentDiff].Equals(""))
+                if (TrackLevels[currentDiff] is not "")
                 {
-                    levelCandidate.InnerText = (Array.IndexOf(Level, TrackLevels[currentDiff]) + 1).ToString();
-                    musicLevelIDCandidate.InnerText = TrackDecimalLevels[currentDiff].Split('.')[1];
+                    musicLevelIDCandidate.InnerText = (Array.IndexOf(Level, TrackLevels[currentDiff])).ToString();
+                    levelCandidate.InnerText = TrackLevels[currentDiff].Contains('+') ? TrackLevels[currentDiff].Split('+')[0] : TrackLevels[currentDiff];
+                    if (TrackDecimalLevels[currentDiff] is not "")
+                    {
+                        levelDecimalCandidate.InnerText = TrackDecimalLevels[currentDiff];
+                    }
+                    else levelDecimalCandidate.InnerText = TrackLevels[currentDiff].Contains('+') ? "6" : "0"; // E.g. 14+ => Level >= 14.6
                 }
                 else
                 {
@@ -701,6 +706,6 @@ public class XmlInformation : TrackInformation, IXmlUtility
     public override void Save (string location)
     {
         GenerateInternalXml();
-        this.Save(location);
+        InternalXml.Save(location);
     }
 }
