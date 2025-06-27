@@ -89,12 +89,6 @@ public class SimaiTokenizer : ITokenizer
             {
                 shortIdCandidate = item.Replace("shortid=", "");
                 simaiTrackInformation.InformationDict["Music ID"] = shortIdCandidate;
-                // if (shortIdCandidate.Length <= 6 && int.TryParse(shortIdCandidate, out int id))
-                // {
-                //     if (shortIdCandidate.Length > 4)
-                //         simaiTrackInformation.InformationDict["SDDX Suffix"] = "DX";
-                //     else simaiTrackInformation.InformationDict["SDDX Suffix"] = "SD";
-                // }
             }
             else if (item.Contains("genre"))
             {

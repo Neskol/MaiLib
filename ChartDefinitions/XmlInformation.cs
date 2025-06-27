@@ -487,9 +487,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 switch (currentDiff)
                 {
                     case 0:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Basic Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Basic Chart Maker"] is "" ? "-" : InformationDict["Basic Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Basic Maker ID"].Equals("")
-                            ? "0"
+                            ? "999"
                             : InformationDict["Basic Maker ID"];
                         isEnabledCandidate.InnerText =
                             InformationDict["Basic"].Equals("")
@@ -500,9 +500,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Basic Max Note"];
                         break;
                     case 1:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Advanced Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Advanced Chart Maker"] is "" ? "-" : InformationDict["Advanced Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Advanced Maker ID"].Equals("")
-                            ? "0"
+                            ? "999"
                             : InformationDict["Advanced Maker ID"];
                         isEnabledCandidate.InnerText =
                             InformationDict["Advanced"].Equals("")
@@ -513,9 +513,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Advanced Max Note"];
                         break;
                     case 2:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Expert Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Expert Chart Maker"] is "" ? "-" : InformationDict["Expert Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Expert Maker ID"].Equals("")
-                            ? "0"
+                            ? "999"
                             : InformationDict["Expert Maker ID"];
                         isEnabledCandidate.InnerText =
                             InformationDict["Expert"].Equals("")
@@ -526,9 +526,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Expert Max Note"];
                         break;
                     case 3:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Master Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Master Chart Maker"] is "" ? "-" : InformationDict["Master Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Master Maker ID"].Equals("")
-                            ? "0"
+                            ? "999"
                             : InformationDict["Master Maker ID"];
                         isEnabledCandidate.InnerText =
                             InformationDict["Master"].Equals("")
@@ -539,9 +539,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Master Max Note"];
                         break;
                     case 4:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Remaster Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Remaster Chart Maker"] is "" ? "-" : InformationDict["Remaster Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Remaster Maker ID"].Equals("")
-                            ? "0"
+                            ? "999"
                             : InformationDict["Remaster Maker ID"];
                         isEnabledCandidate.InnerText =
                             InformationDict["Remaster"].Equals("")
@@ -552,9 +552,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Remaster Max Note"];
                         break;
                     case 5:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Utage Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Utage Chart Maker"] is "" ? "-" : InformationDict["Utage Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Utage Maker ID"].Equals("")
-                            ? "0"
+                            ? "999"
                             : InformationDict["Utage Maker ID"];
                         isEnabledCandidate.InnerText =
                             InformationDict["Utage"].Equals("")
@@ -565,9 +565,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Utage Max Note"];
                         break;
                     case 6:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Original Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Original Chart Maker"] is "" ? "-" : InformationDict["Original Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Original Maker ID"].Equals("")
-                            ? "0"
+                            ? "999"
                             : InformationDict["Original Maker ID"];
                         isEnabledCandidate.InnerText =
                             InformationDict["Original"].Equals("")
@@ -578,9 +578,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Original Max Note"];
                         break;
                     case 11:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Easy Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Easy Chart Maker"] is "" ? "-" : InformationDict["Easy Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Easy Maker ID"].Equals("")
-                            ? "0"
+                            ? "999"
                             : InformationDict["Easy Maker ID"];
                         isEnabledCandidate.InnerText =
                             InformationDict["Easy"].Equals("")
@@ -590,21 +590,21 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             ? "0"
                             : InformationDict["Easy Max Note"];
                         break;
-                    default:
-                        // Reserves condition for more original charts
-                        notesDesignerStrCandidate.InnerText =
-                            InformationDict[$"Original {currentDiff - 6} Chart Maker"];
-                        notesDesignerIdCandidate.InnerText =
-                            InformationDict[$"Original {currentDiff - 6} Maker ID"].Equals("")
-                                ? "0"
-                                : InformationDict["Original Maker ID"];
-                        isEnabledCandidate.InnerText = InformationDict[$"Original {currentDiff - 6}"].Equals("")
-                            ? "false"
-                            : "true"; // Because bool.ToString() returns True or False
-                        maxNotesCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Max Note"].Equals("")
-                            ? "0"
-                            : InformationDict[$"Original {currentDiff - 6} Max Note"];
-                        break;
+                    // default:
+                    //     // Reserves condition for more original charts
+                    //     notesDesignerStrCandidate.InnerText =
+                    //         InformationDict[$"Original {currentDiff - 6} Chart Maker"];
+                    //     notesDesignerIdCandidate.InnerText =
+                    //         InformationDict[$"Original {currentDiff - 6} Maker ID"].Equals("")
+                    //             ? "0"
+                    //             : InformationDict["Original Maker ID"];
+                    //     isEnabledCandidate.InnerText = InformationDict[$"Original {currentDiff - 6}"].Equals("")
+                    //         ? "false"
+                    //         : "true"; // Because bool.ToString() returns True or False
+                    //     maxNotesCandidate.InnerText = InformationDict[$"Original {currentDiff - 6} Max Note"].Equals("")
+                    //         ? "0"
+                    //         : InformationDict[$"Original {currentDiff - 6} Max Note"];
+                    //     break;
                 }
 
                 notesDesignerCandidate.AppendChild(notesDesignerIdCandidate);
