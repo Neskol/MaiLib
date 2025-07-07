@@ -273,11 +273,11 @@ public class SimaiCompiler : Compiler
         composedText.Append(MusicXML.IsDXChart ? "DX\n" : "SD\n");
         composedText.Append($"&version={MusicXML.TrackVersion}\n");
         composedText.Append("&ChartConverter=Neskol\n");
-        composedText.Append("&ChartConvertTool=MaichartConverter=\n");
+        composedText.Append("&ChartConvertTool=MaichartConverter\n");
         string assemblyVersion =
             FileVersionInfo.GetVersionInfo(typeof(SimaiCompiler).Assembly.Location).ProductVersion ?? "Alpha Testing";
         if (assemblyVersion.Contains('+')) assemblyVersion = assemblyVersion.Split('+')[0];
-        composedText.Append($"&ChartConvertToolVersion{assemblyVersion}\n");
+        composedText.Append($"&ChartConvertToolVersion={assemblyVersion}\n");
         composedText.Append("&smsg=See https://github.com/Neskol/MaichartConverter for updates\n\n");
 
         int defaultChartIndex = 7;
