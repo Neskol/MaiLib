@@ -154,7 +154,7 @@ public class Hold : Note
                         break;
                     case ChartVersion.Ma2_103:
                         string typeCandidate =
-                            NoteSpecialState is SpecialState.EX || NoteSpecialState is SpecialState.BreakEX
+                            NoteSpecialState is SpecialState.EX or SpecialState.BreakEX
                                 ? "XHO"
                                 : NoteType.ToString();
                         result = typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
@@ -191,11 +191,18 @@ public class Hold : Note
                     case ChartVersion.SimaiFes:
                     default:
                         result += KeyGroup + (KeyNum + 1).ToString();
-                        if (NoteSpecialState == SpecialState.Break)
-                            result += "b";
-                        else if (NoteSpecialState == SpecialState.EX)
-                            result += "x";
-                        else if (NoteSpecialState == SpecialState.BreakEX) result += "bx";
+                        switch (NoteSpecialState)
+                        {
+                            case SpecialState.Break:
+                                result += "b";
+                                break;
+                            case SpecialState.EX:
+                                result += "x";
+                                break;
+                            case SpecialState.BreakEX:
+                                result += "bx";
+                                break;
+                        }
                         if (SpecialEffect) result += "f";
                         result += "h";
                         if (TickBPMDisagree || Delayed)
@@ -227,15 +234,12 @@ public class Hold : Note
                                 result += "NM";
                                 break;
                         }
-
                         result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" +
                                   KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
                         break;
                 }
-
                 break;
         }
-
         return result;
     }
 

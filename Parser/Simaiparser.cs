@@ -19,6 +19,8 @@ public class SimaiParser : IParser
     private static readonly string[] AllowedSlideType =
         ["qq", "q", "pp", "p", "v", "w", "<", ">", "^", "s", "z", "V", "-"];
 
+    private static readonly char[] TouchGroup = ['A', 'B', 'C', 'D', 'E', 'F'];
+
     private Tap previousSlideStart;
     private BPMChanges bpmChanges;
 
@@ -172,12 +174,13 @@ public class SimaiParser : IParser
         bool isEXBreak = token.Contains("b") && token.Contains("x");
         bool isBreak = token.Contains("b") && !token.Contains("x");
         bool isEXTap = token.Contains("x") && !token.Contains("b");
-        bool isTouch = token.Contains("A") ||
-                       token.Contains("B") ||
-                       token.Contains("C") ||
-                       token.Contains("D") ||
-                       token.Contains("E") ||
-                       token.Contains("F");
+        // bool isTouch = token.Contains("A") ||
+        //                token.Contains("B") ||
+        //                token.Contains("C") ||
+        //                token.Contains("D") ||
+        //                token.Contains("E") ||
+        //                token.Contains("F");
+        bool isTouch = TouchGroup.Any(token.Contains);
         Tap? result = new Tap();
         if (isTouch)
         {
@@ -219,11 +222,17 @@ public class SimaiParser : IParser
         bool specialEffect = false;
         NoteType noteType = NoteType.HLD;
         SpecialState specialState = SpecialState.Normal;
-        if (keyCandidate.Contains('C'))
+        if (TouchGroup.Any(keyCandidate.Contains))
         {
             noteType = NoteType.THO;
-            key = "0C";
-            specialEffect = keyCandidate.Contains('f');
+            specialEffect = token.Contains("f");
+            // Simai spec allows C to substitute C1 but C1 is still highly preferable
+            int keyNum = 0;
+            if (!token.Contains('C'))
+            {
+                keyNum = int.Parse(keyCandidate.Substring(1, 1)) - 1;
+            }
+            key = keyNum + keyCandidate[..1];
         }
         else if (keyCandidate.Contains('x') && keyCandidate.Contains('b'))
         {

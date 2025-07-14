@@ -19,6 +19,7 @@ public class ChartEnum
         Simai,
         SimaiFes,
         Ma2_103,
-        Ma2_104
+        Ma2_104,
+        Ma2_105
     }
 }
