@@ -25,7 +25,6 @@ public abstract class Chart : IChart
         // IsDxChart = false;
         Definition = 384;
         UnitScore = [500, 1000, 1500, 2000, 2500];
-        ChartType = ChartType.Standard;
         ChartVersion = ChartVersion.Ma2_103;
     }
 
@@ -34,7 +33,10 @@ public abstract class Chart : IChart
     /// <summary>
     ///     Defines the chart type by enums
     /// </summary>
-    public ChartType ChartType { get; protected set; }
+    public ChartType ChartType => Notes.Any(p =>
+        p.NoteSpecialState is SpecialState.EX or SpecialState.BreakEX or SpecialState.ConnectingSlide)
+        ? ChartType.DX
+        : ChartType.Standard;
 
     /// <summary>
     ///     Defines the chart version by enums

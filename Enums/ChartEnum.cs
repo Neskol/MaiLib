@@ -7,10 +7,7 @@ public class ChartEnum
     public enum ChartType
     {
         Standard,
-        StandardUtage,
-        DX,
-        DXFestival,
-        DXUtage
+        DX
     }
 
     public enum ChartVersion
