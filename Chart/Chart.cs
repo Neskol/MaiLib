@@ -421,6 +421,8 @@ public abstract class Chart : IChart
                 return new Ma2(this) { ChartVersion = ChartVersion.Ma2_103 }.Compose();
             case ChartVersion.Ma2_104:
                 return new Ma2(this) { ChartVersion = ChartVersion.Ma2_104 }.Compose();
+            case ChartVersion.Ma2_105:
+                return new Ma2(this) { ChartVersion = ChartVersion.Ma2_105 }.Compose();
             case ChartVersion.Debug:
             default:
                 return new Ma2(this) { ChartVersion = ChartVersion.Ma2_104 }.Compose();
