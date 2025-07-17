@@ -10,11 +10,7 @@ public class SimaiParser : IParser
     /// <summary>
     ///     The maximum definition of a chart
     /// </summary>
-    public static int MaximumDefinition
-    {
-        get;
-        private set;
-    } = 384;
+    public static int MaximumDefinition { get; private set; } = 384;
 
     private static readonly string[] AllowedSlideType =
         ["qq", "q", "pp", "p", "v", "w", "<", ">", "^", "s", "z", "V", "-"];
@@ -232,6 +228,7 @@ public class SimaiParser : IParser
             {
                 keyNum = int.Parse(keyCandidate.Substring(1, 1)) - 1;
             }
+
             key = keyNum + keyCandidate[..1];
         }
         else if (keyCandidate.Contains('x') && keyCandidate.Contains('b'))
@@ -896,7 +893,8 @@ public class SimaiParser : IParser
         {
             bool isSlideReassignedFormat = durationCandidate.Split('#')[0].Length != 0;
             result[0] = isSlideReassignedFormat
-                ? Chart.GetBPMTimeUnit(double.Parse(durationCandidate.Split('#')[0]), MaximumDefinition) * (MaximumDefinition / 4)
+                ? Chart.GetBPMTimeUnit(double.Parse(durationCandidate.Split('#')[0]), MaximumDefinition) *
+                  (MaximumDefinition / 4)
                 : 0;
             result[1] = isSlideReassignedFormat
                 ? double.Parse(durationCandidate.Split('#')[1])

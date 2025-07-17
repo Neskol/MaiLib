@@ -79,7 +79,7 @@ public class Slide : Note
 
     #endregion
 
-    public override bool Delayed => WaitLength != (Definition / 4);
+    public override bool Delayed => WaitLength != Definition / 4;
 
     public override NoteGenre NoteGenre => NoteGenre.SLIDE;
 

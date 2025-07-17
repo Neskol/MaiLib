@@ -30,7 +30,7 @@ public class TouchNote : ICodeBlock
         StringBuilder builder = new();
         builder.Append(Sensor.Compose(chartVersion));
         builder.Append(TapComp.Compose(chartVersion));
-        if (IsFirework) builder.Append(('f'));
+        if (IsFirework) builder.Append('f');
         if (HoldDuration is not null) builder.Append(HoldDuration.Compose(chartVersion));
         return builder.ToString();
     }

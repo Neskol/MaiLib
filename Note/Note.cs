@@ -8,7 +8,6 @@ using static ChartEnum;
 /// </summary>
 public abstract class Note : IEquatable<Note>, INote, IComparable
 {
-    
     #region Constructors
 
     /// <summary>
@@ -947,7 +946,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
     public static double GetTimeStamp(List<BPMChange> changeTable, int overallTick)
     {
-        Note dummyNote = new Rest() { BPMChangeNotes = changeTable };
+        Note dummyNote = new Rest { BPMChangeNotes = changeTable };
         return dummyNote.GetTimeStamp(overallTick);
     }
 

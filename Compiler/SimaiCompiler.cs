@@ -301,10 +301,11 @@ public class SimaiCompiler : Compiler
             if (StrictDecimalLevel && Information.TryGetValue("Utage Decimal", out string? decimalLevel))
                 difficultyCandidate = decimalLevel is "0.0" ? "宴" : $"{decimalLevel}?";
             composedText.Append($"&lv_{defaultChartIndex}={difficultyCandidate}\n");
-            foreach (KeyValuePair<string,string> option in MusicXML.UtageFixedOptionDict)
+            foreach (KeyValuePair<string, string> option in MusicXML.UtageFixedOptionDict)
             {
                 composedText.Append($"&fixedoption={option.Key}:{option.Value}\n");
             }
+
             composedText.Append('\n');
         }
 

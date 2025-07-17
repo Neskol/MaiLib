@@ -8,9 +8,8 @@ using static ChartEnum;
 /// </summary>
 public class MeasureChange : Note
 {
-
     protected MeasureChange? MeasureChangeFactory;
-    
+
     #region Constructors
 
     /// <summary>

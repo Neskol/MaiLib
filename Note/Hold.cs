@@ -203,6 +203,7 @@ public class Hold : Note
                                 result += "bx";
                                 break;
                         }
+
                         if (SpecialEffect) result += "f";
                         result += "h";
                         if (TickBPMDisagree || Delayed)
@@ -234,12 +235,15 @@ public class Hold : Note
                                 result += "NM";
                                 break;
                         }
+
                         result += NoteType + "\t" + Bar + "\t" + Tick + "\t" + KeyNum + "\t" + LastLength + "\t" +
                                   KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
                         break;
                 }
+
                 break;
         }
+
         return result;
     }
 

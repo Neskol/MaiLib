@@ -71,6 +71,7 @@ public class Simai : Chart
                 {
                     TotalDelay = mostDelayedNote.LastTickStamp - StoredChart.Count * Definition;
                 }
+
                 int delayBar = TotalDelay / Definition + 2;
                 List<Note> firstBpm = [];
                 foreach (Note? bpm in Notes)
@@ -87,7 +88,8 @@ public class Simai : Chart
                         {
                             case NoteSpecificGenre.MEASURE:
                                 currentQuaver = (lastNote as MeasureChange ??
-                                                 throw new InvalidCastException("This note is not measure change")).Quaver;
+                                                 throw new InvalidCastException("This note is not measure change"))
+                                    .Quaver;
                                 break;
                             case NoteSpecificGenre.BPM:
                                 break;

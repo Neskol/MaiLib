@@ -35,7 +35,8 @@ public abstract class TrackInformation : IXmlUtility
     [
         "maimai", "PLUS", "GreeN", "GreeN PLUS", "ORANGE", "ORANGE PLUS", "PiNK", "PiNK PLUS", "MURASAKi",
         "MURASAKi PLUS", "MiLK", "MiLK PLUS", "FiNALE", "DX", "DX PLUS", "DX Splash", "DX Splash PLUS", "DX UNiVERSE",
-        "DX UNiVERSE PLUS", "DX FESTiVAL", "DX FESTiVAL PLUS", "DX BUDDiES", "DX BUDDiES PLUS", "DX PRiSM", "DX PRiSM PLUS"
+        "DX UNiVERSE PLUS", "DX FESTiVAL", "DX FESTiVAL PLUS", "DX BUDDiES", "DX BUDDiES PLUS", "DX PRiSM",
+        "DX PRiSM PLUS"
     ]; // TODO: Convert to enum
 
     #region Constructors
@@ -109,8 +110,10 @@ public abstract class TrackInformation : IXmlUtility
     /// <value>this.TrackGenreID</value>
     public int TrackGenreID
     {
-        get => InformationDict["Genre ID"] is "" or null? 101 : int.Parse(InformationDict.GetValueOrDefault("Genre ID") ??
-                         throw new NullReferenceException("Genre is not defined"));
+        get => InformationDict["Genre ID"] is "" or null
+            ? 101
+            : int.Parse(InformationDict.GetValueOrDefault("Genre ID") ??
+                        throw new NullReferenceException("Genre is not defined"));
         set => InformationDict["Genre ID"] = value.ToString();
     }
 
@@ -288,8 +291,10 @@ public abstract class TrackInformation : IXmlUtility
     /// <value>this.TrackVersion</value>
     public int TrackVersionID
     {
-        get => InformationDict["Version ID"] is null or ""? 0 : int.Parse(InformationDict.GetValueOrDefault("Version ID") ??
-                         throw new NullReferenceException("Genre is not defined"));
+        get => InformationDict["Version ID"] is null or ""
+            ? 0
+            : int.Parse(InformationDict.GetValueOrDefault("Version ID") ??
+                        throw new NullReferenceException("Genre is not defined"));
         set => InformationDict["Version ID"] = value.ToString();
     }
 

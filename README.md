@@ -1,22 +1,33 @@
 # MaiLib
 
 ## A library for processing maimai charts
-This is a parser for rhythm game `maimai` chart interpretation and manipulation. While this parser is primarily made for `maimai`, the program structure keeps the extensibility for other games to use.
+
+This is a parser for rhythm game `maimai` chart interpretation and manipulation. While this parser is primarily made for
+`maimai`, the program structure keeps the extensibility for other games to use.
 
 `MaiLib` currently supports 2 formats of charts:
-1. `MA2`: a machine-readable pseudocode used by official `maimai` game. It records each note in chronological order relative to bar and tick, and has a statistics section recording maximum object number and scores, etc. The game used `Ver. 1.03` of this format before maimai DX FESTiVAL, and shifted to `Ver 1.04` after adding new `Slide` notes. This format itself does not contain metadata of the music - stored externally in `music.xml`. This format is more preferable for this parser.
-2. `Simai`: a human-readable pseudocode used by most chart player programs. It lines `Tap` and `Hold` notes in punch-hole like arrays with fixed separations (`n-th` notes), and marks `Slide` note as a group binding with the starting `Tap` note. The detailed specification can be found at https://w.atwiki.jp/simai/pages/1003.html.
+
+1. `MA2`: a machine-readable pseudocode used by official `maimai` game. It records each note in chronological order
+   relative to bar and tick, and has a statistics section recording maximum object number and scores, etc. The game used
+   `Ver. 1.03` of this format before maimai DX FESTiVAL, and shifted to `Ver 1.04` after adding new `Slide` notes. This
+   format itself does not contain metadata of the music - stored externally in `music.xml`. This format is more
+   preferable for this parser.
+2. `Simai`: a human-readable pseudocode used by most chart player programs. It lines `Tap` and `Hold` notes in
+   punch-hole like arrays with fixed separations (`n-th` notes), and marks `Slide` note as a group binding with the
+   starting `Tap` note. The detailed specification can be found at https://w.atwiki.jp/simai/pages/1003.html.
 
 > One example implementation of this library is MaichartConverter, which converts between Simai and Ma2. Please
 > see [MaichartConverter](https://github.com/Neskol/MaichartConverter) for more information.
 
 ### Build
+
 > While you can simply build this library, but mostly you want to add this repo as a submodule.
 
     git clone https://github.com/Neskol/MaiLib
     dotnet build
 
 ### Add as a submodule
+
     git submodule add https://github.com/Neskol/MaiLib
     git submodule update --init --recursive
     //Your other command continues
@@ -49,8 +60,8 @@ This is a parser for rhythm game `maimai` chart interpretation and manipulation.
 - For example, it defines a Slide note as having a wait time of 1 beat or one 1/4 note (or a crotchet for those in the
   music community)
   after its start tap. If your Slide note starts longer or shorter than 1 quaver of the current BPM, you will have to:
-  * Change the BPM for that specific Slide; 
-  * Define the time by [wait time##last time] (and calculating that is extremely time-consuming).
+    * Change the BPM for that specific Slide;
+    * Define the time by [wait time##last time] (and calculating that is extremely time-consuming).
 - I hope someone develops a language better than Simai to use as an intermediate language between coding and charting.
   Thank you.
 
