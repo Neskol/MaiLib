@@ -1,7 +1,7 @@
 namespace MaiLib;
 
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
+using static NoteEnum;
+using static ChartEnum;
 
 public class SlideEachSet : Note
 {
@@ -194,10 +194,7 @@ public class SlideEachSet : Note
             case ChartVersion.Ma2_103:
             case ChartVersion.Ma2_104:
                 if (SlideStart != null) SlideStart.Compose(format);
-                foreach (Slide x in InternalSlides)
-                {
-                    x.Compose(format);
-                }
+                foreach (Slide x in InternalSlides) x.Compose(format);
 
                 break;
             default:

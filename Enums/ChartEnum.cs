@@ -1,5 +1,3 @@
-using System.ComponentModel.Design;
-
 namespace MaiLib;
 
 public class ChartEnum

@@ -223,6 +223,6 @@ public class SimaiTokenizer : ITokenizer
         string[]? takeIn = File.ReadAllLines(path);
         string? storage = "";
         foreach (string? line in takeIn) storage += line;
-        this.UpdateFromText(storage);
+        UpdateFromText(storage);
     }
 }

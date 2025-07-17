@@ -1,7 +1,6 @@
 namespace MaiLib;
 
-using static MaiLib.TokenEnum;
-using static MaiLib.NoteEnum;
+using static TokenEnum;
 
 public class SimaiParserR
 {

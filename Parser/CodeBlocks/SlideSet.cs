@@ -19,14 +19,10 @@ public class SlideSet : ICodeBlock
 
     public string Compose(ChartVersion chartVersion)
     {
-        if (SlideComp is not null)
-        {
-            return SlideComp.Compose(chartVersion);
-        }
-        else if (SlideConnectedComp is not null)
-        {
-            return SlideConnectedComp.Compose(chartVersion);
-        }
-        else throw new ICodeBlock.ComponentMissingException("SLIDE-SET", "SLIDE-COMP OR SLIDE-CONNECTED-COMP");
+        if (SlideComp is not null) return SlideComp.Compose(chartVersion);
+
+        if (SlideConnectedComp is not null) return SlideConnectedComp.Compose(chartVersion);
+
+        throw new ICodeBlock.ComponentMissingException("SLIDE-SET", "SLIDE-COMP OR SLIDE-CONNECTED-COMP");
     }
 }

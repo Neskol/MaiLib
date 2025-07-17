@@ -1,7 +1,8 @@
-﻿namespace MaiLib;
+﻿using System.Text;
+
+namespace MaiLib;
 
 using static ChartEnum;
-using System.Text;
 
 /// <summary>
 ///     Implementation of chart in ma2 format.
@@ -30,7 +31,7 @@ public class Ma2 : Chart, ICompiler
         BPMChanges = new BPMChanges(bpmChanges);
         MeasureChanges = new MeasureChanges(measureChanges);
         ChartVersion = ChartVersion.Ma2_103;
-        this.Update();
+        Update();
     }
 
     /// <summary>
@@ -47,7 +48,7 @@ public class Ma2 : Chart, ICompiler
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartVersion = ChartVersion.Ma2_103;
-        this.Update();
+        Update();
     }
 
     /// <summary>
@@ -63,7 +64,7 @@ public class Ma2 : Chart, ICompiler
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartVersion = ChartVersion.Ma2_103;
-        this.Update();
+        Update();
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ public class Ma2 : Chart, ICompiler
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartVersion = ChartVersion.Ma2_103;
-        this.Update();
+        Update();
     }
 
     #endregion
@@ -150,7 +151,7 @@ public class Ma2 : Chart, ICompiler
             case ChartVersion.Ma2_104:
             case ChartVersion.Ma2_105:
                 base.Update();
-                StringBuilder result = new StringBuilder();
+                StringBuilder result = new();
                 string targetVersion;
                 switch (ChartVersion)
                 {

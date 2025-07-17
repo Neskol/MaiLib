@@ -11,7 +11,7 @@ namespace MaiLib;
 public class SimaiCompiler : Compiler
 {
     public bool StrictDecimalLevel { get; set; }
-    private StringBuilder stringBuilder = new();
+    private readonly StringBuilder stringBuilder = new();
 
     public string Result
     {
@@ -302,9 +302,7 @@ public class SimaiCompiler : Compiler
                 difficultyCandidate = decimalLevel is "0.0" ? "宴" : $"{decimalLevel}?";
             composedText.Append($"&lv_{defaultChartIndex}={difficultyCandidate}\n");
             foreach (KeyValuePair<string, string> option in MusicXML.UtageFixedOptionDict)
-            {
                 composedText.Append($"&fixedoption={option.Key}:{option.Value}\n");
-            }
 
             composedText.Append('\n');
         }

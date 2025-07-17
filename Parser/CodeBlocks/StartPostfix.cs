@@ -16,9 +16,7 @@ public class StartPostfix : ICodeBlock
     public StartPostfix(string suppliedString)
     {
         if (_allowedStrings.Any(suppliedString.Equals))
-        {
             Postfix = suppliedString;
-        }
         else throw new ICodeBlock.UnexpectedStringSuppliedException("SENSOR", ExpectedStrings, suppliedString);
     }
 

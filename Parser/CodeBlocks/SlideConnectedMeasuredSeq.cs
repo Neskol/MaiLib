@@ -24,7 +24,7 @@ public class SlideConnectedMeasuredSeq : ICodeBlock
 
     public string Compose(ChartVersion chartVersion)
     {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new();
         builder.Append(SlideType.Compose(chartVersion));
         builder.Append(Key.Compose(chartVersion));
         if (InnerSlideConnectedSeq is not null) builder.Append(InnerSlideConnectedSeq.Compose(chartVersion));

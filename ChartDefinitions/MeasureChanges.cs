@@ -75,11 +75,9 @@ public class MeasureChanges
     {
         get
         {
-            if (Quavers is null || Quavers.Count == 0)
-            {
-                return 4;
-            }
-            else return Quavers[0];
+            if (Quavers is null || Quavers.Count == 0) return 4;
+
+            return Quavers[0];
         }
     }
 
@@ -87,11 +85,9 @@ public class MeasureChanges
     {
         get
         {
-            if (Beats is null || Beats.Count == 0)
-            {
-                return 4;
-            }
-            else return Beats[0];
+            if (Beats is null || Beats.Count == 0) return 4;
+
+            return Beats[0];
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿namespace MaiLib;
 
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
+using static NoteEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     Construct a Slide note (With START!)
@@ -174,8 +174,8 @@ public class Slide : Note
 
                 if (format is ChartVersion.Debug)
                 {
-                    result += "_" + this.Tick;
-                    result += "_" + this.Key;
+                    result += "_" + Tick;
+                    result += "_" + Key;
                 }
 
                 break;

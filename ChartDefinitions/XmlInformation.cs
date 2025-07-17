@@ -81,17 +81,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
             }
 
         foreach (XmlNode candidate in bpmCandidate)
-        {
-            if (TrackBPM.Equals("")) TrackBPM = candidate.InnerText;
-        }
+            if (TrackBPM.Equals(""))
+                TrackBPM = candidate.InnerText;
 
         foreach (XmlNode candidate in sortNameCandidate)
-        {
-            if (TrackSortName.Equals("")) TrackSortName = candidate.InnerText;
-        }
+            if (TrackSortName.Equals(""))
+                TrackSortName = candidate.InnerText;
 
         foreach (XmlNode candidate in composerCandidate)
-        {
             if (TrackComposer.Equals(""))
             {
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
@@ -99,10 +96,8 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 TrackComposerID = int.Parse(idCandidate.InnerText);
                 TrackComposer = strCandidate.InnerText;
             }
-        }
 
         foreach (XmlNode candidate in genreCandidate)
-        {
             if (TrackGenre.Equals(""))
             {
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
@@ -111,19 +106,15 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 TrackGenreID = genreId;
                 TrackGenre = strCandidate.InnerText;
             }
-        }
 
         foreach (XmlNode candidate in versionNumberCandidate)
-        {
             if (TrackVersionNumber.Equals(""))
             {
                 XmlElement? strCandidate = candidate["str"] ?? throw new NullReferenceException();
                 TrackVersionNumber = strCandidate.InnerText;
             }
-        }
 
         foreach (XmlNode candidate in addVersionCandidate)
-        {
             if (TrackVersion.Equals(""))
             {
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
@@ -131,7 +122,6 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 int versionID = int.Parse(idCandidate.InnerText);
                 TrackVersion = versionID < Version.Count() ? Version[versionID] : Version[0];
             }
-        }
 
         foreach (XmlNode candidate in chartCandidate)
             try
@@ -306,20 +296,16 @@ public class XmlInformation : TrackInformation, IXmlUtility
             }
 
         foreach (XmlNode candidate in utageKanjiCandidate)
-        {
-            if (InformationDict["Utage Kanji"].Equals("")) InformationDict["Utage Kanji"] = candidate.InnerText;
-        }
+            if (InformationDict["Utage Kanji"].Equals(""))
+                InformationDict["Utage Kanji"] = candidate.InnerText;
 
         foreach (XmlNode candidate in utageCommentCandidate)
-        {
-            if (InformationDict["Utage Comment"].Equals("")) InformationDict["Utage Comment"] = candidate.InnerText;
-        }
+            if (InformationDict["Utage Comment"].Equals(""))
+                InformationDict["Utage Comment"] = candidate.InnerText;
 
         foreach (XmlNode candidate in utagePlayStyleCandidate)
-        {
             if (InformationDict["Utage Play Style"].Equals(""))
                 InformationDict["Utage Play Style"] = candidate.InnerText;
-        }
 
         foreach (XmlNode candidate in utageFixedOptionsCandidate)
         {
@@ -633,9 +619,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
                         ? TrackLevels[currentDiff].Split('+')[0]
                         : TrackLevels[currentDiff];
                     if (TrackDecimalLevels[currentDiff] is not "")
-                    {
                         levelDecimalCandidate.InnerText = TrackDecimalLevels[currentDiff];
-                    }
                     else
                         levelDecimalCandidate.InnerText =
                             TrackLevels[currentDiff].Contains('+') ? "6" : "0"; // E.g. 14+ => Level >= 14.6
@@ -677,7 +661,6 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 InformationDict["Utage Play Style"].Equals("") ? "0" : InformationDict["Utage Play Style"];
             XmlElement? utageFixedOptionRoot = InternalXml.CreateElement("fixedOptions");
             if (UtageFixedOptionDict.Count > 4)
-            {
                 foreach (KeyValuePair<string, string> fixedOption in UtageFixedOptionDict)
                 {
                     XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
@@ -689,7 +672,6 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     utageFixedOption.AppendChild(utageFixedOptionValue);
                     utageFixedOptionRoot.AppendChild(utageFixedOption);
                 }
-            }
             else
                 for (int i = 0; i < 4; i++)
                 {

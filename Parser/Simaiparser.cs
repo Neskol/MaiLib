@@ -1,6 +1,6 @@
 namespace MaiLib;
 
-using static MaiLib.NoteEnum;
+using static NoteEnum;
 
 /// <summary>
 ///     Parse charts in Simai format
@@ -18,7 +18,7 @@ public class SimaiParser : IParser
     private static readonly char[] TouchGroup = ['A', 'B', 'C', 'D', 'E', 'F'];
 
     private Tap previousSlideStart;
-    private BPMChanges bpmChanges;
+    private readonly BPMChanges bpmChanges;
 
     /// <summary>
     ///     Constructor of simaiparser
@@ -26,7 +26,7 @@ public class SimaiParser : IParser
     public SimaiParser()
     {
         previousSlideStart = new Tap();
-        bpmChanges = new();
+        bpmChanges = new BPMChanges();
     }
 
     public Chart ChartOfToken(string[] tokens)
@@ -34,7 +34,7 @@ public class SimaiParser : IParser
     {
         List<Note>? notes = [];
         // var bpmChanges = new BPMChanges();
-        MeasureChanges? measureChanges = new MeasureChanges(4, 4);
+        MeasureChanges? measureChanges = new(4, 4);
         int bar = 0;
         int tick = 0;
         double currentBPM = 0.0;
@@ -177,16 +177,13 @@ public class SimaiParser : IParser
         //                token.Contains("E") ||
         //                token.Contains("F");
         bool isTouch = TouchGroup.Any(token.Contains);
-        Tap? result = new Tap();
+        Tap? result = new();
         if (isTouch)
         {
             bool hasSpecialEffect = token.Contains("f");
             // Simai spec allows C to substitute C1 but C1 is still highly preferable
             int keyCandidate = 0;
-            if (!token.Contains('C'))
-            {
-                keyCandidate = int.Parse(token.Substring(1, 1)) - 1;
-            }
+            if (!token.Contains('C')) keyCandidate = int.Parse(token.Substring(1, 1)) - 1;
 
             result = new Tap(NoteType.TTP, bar, tick, keyCandidate + token.Substring(0, 1), hasSpecialEffect, "M1");
         }
@@ -224,10 +221,7 @@ public class SimaiParser : IParser
             specialEffect = token.Contains("f");
             // Simai spec allows C to substitute C1 but C1 is still highly preferable
             int keyNum = 0;
-            if (!token.Contains('C'))
-            {
-                keyNum = int.Parse(keyCandidate.Substring(1, 1)) - 1;
-            }
+            if (!token.Contains('C')) keyNum = int.Parse(keyCandidate.Substring(1, 1)) - 1;
 
             key = keyNum + keyCandidate[..1];
         }
@@ -367,7 +361,7 @@ public class SimaiParser : IParser
             if (sclDistance >= 4 && scrDistance >= 4)
                 throw new InvalidOperationException(
                     $"^ requires a distance 0<d<4. SCL distance: {sclDistance}, SCR distance: {scrDistance}. Connected Start Key: {connectedSlideStart} StartKey: {slideStartCandidate.KeyNum}, EndKey: {endKeyCandidate}, Token: {token}");
-            else noteType = sclDistance < scrDistance ? NoteType.SCL : NoteType.SCR;
+            noteType = sclDistance < scrDistance ? NoteType.SCL : NoteType.SCR;
         }
         else if (token.Contains('s'))
         {
@@ -432,7 +426,10 @@ public class SimaiParser : IParser
             result.WaitLength = 0;
             result.CalculatedWaitTime = 0;
         }
-        else result.NoteSpecialState = noteSpecialState;
+        else
+        {
+            result.NoteSpecialState = noteSpecialState;
+        }
 
         return (Slide)result;
     }
@@ -550,17 +547,11 @@ public class SimaiParser : IParser
 
         List<string> result = [];
         foreach (string part in extractedParts)
-        {
             if (ContainsSlideNotation(part))
-            {
                 result.AddRange(ExtractEachSlides(part));
-            }
             else if (int.TryParse(part, out int _))
-            {
                 result.AddRange(part.Select(eachTap => eachTap.ToString()));
-            }
             else result.Add(part);
-        }
 
         return result;
     }
@@ -639,7 +630,6 @@ public class SimaiParser : IParser
         bool slideNotationFound = IsSlideNotation(token[0]);
         string buffer = "";
         foreach (char x in token)
-        {
             if (!slideNotationFound && IsSlideNotation(x))
             {
                 buffer += '_';
@@ -647,8 +637,10 @@ public class SimaiParser : IParser
                 buffer = x.ToString();
                 slideNotationFound = true;
             }
-            else buffer += x;
-        }
+            else
+            {
+                buffer += x;
+            }
 
         result.Add(buffer);
         return result;
@@ -683,7 +675,6 @@ public class SimaiParser : IParser
         string? lastKeyCandidate = "";
 
         foreach (char symbol in candidates)
-        {
             if (!slideStartExtracted && !IsSlideNotation(symbol))
             {
                 slideStartCandidate += symbol;
@@ -727,7 +718,6 @@ public class SimaiParser : IParser
             {
                 slideCandidate += symbol;
             }
-        }
 
         // Compensation for the last slide
         if (slideCandidate.Length > 0 && !normalSlideExtracted) result.Add(slideCandidate);
@@ -736,12 +726,10 @@ public class SimaiParser : IParser
 
         // Post-processing of slide durations
         if (result.Count(p => p.Contains('[')) == 0)
-        {
             throw new Exception("Extracted slides do not contain any duration setting: " + String.Join(", ", result));
-        }
         // Catch for single duration connecting slides
         // This condition is faulty: it should be triggered when there are at least 2 slides
-        else if (result.Count(p => AllowedSlideType.Any(p.Contains)) >= 2 && result.Count(p => p.Contains('[')) == 1)
+        if (result.Count(p => AllowedSlideType.Any(p.Contains)) >= 2 && result.Count(p => p.Contains('[')) == 1)
         {
             static string ReplaceDuration(string oldValue, string newDuration)
             {
@@ -755,7 +743,7 @@ public class SimaiParser : IParser
                 }
 
                 if (oldValue.Contains("CN")) return $"{result.Split("CN")[0]}{newDuration}CN{result.Split("CN")[1]}";
-                else return oldValue + newDuration;
+                return oldValue + newDuration;
             }
 
             string slideDurationCandidate =
@@ -790,15 +778,16 @@ public class SimaiParser : IParser
             bool writeOriginalWaitTime = !isMeasureDuration;
             // bool writeOriginalWaitTime = true; // This trigger is only used once
             for (int i = result[0].Contains('_') ? 1 : 0; i < result.Count; i++)
-            {
                 if (writeOriginalWaitTime)
                 {
                     result[i] = ReplaceDuration(result[i],
                         $"[{Math.Round(originalWaitDuration, 4)}##{Math.Round(averageDuration, 4)}]");
                     writeOriginalWaitTime = false;
                 }
-                else result[i] = ReplaceDuration(result[i], newDurationCandidate);
-            }
+                else
+                {
+                    result[i] = ReplaceDuration(result[i], newDurationCandidate);
+                }
         }
 
         return result;
@@ -883,13 +872,15 @@ public class SimaiParser : IParser
             result[1] = lastTimeCandidate;
             return result;
         }
-        else if (isSlideTimedDuration)
+
+        if (isSlideTimedDuration)
         {
             result[0] = double.Parse(durationCandidate.Split("##")[0]);
             result[1] = double.Parse(durationCandidate.Split("##")[1]);
             return result;
         }
-        else if (isHoldTimedDuration)
+
+        if (isHoldTimedDuration)
         {
             bool isSlideReassignedFormat = durationCandidate.Split('#')[0].Length != 0;
             result[0] = isSlideReassignedFormat
@@ -901,7 +892,8 @@ public class SimaiParser : IParser
                 : double.Parse(durationCandidate.Replace("#", ""));
             return result;
         }
-        else if (isSlideBpmMeasureDuration)
+
+        if (isSlideBpmMeasureDuration)
         {
             result[0] = double.Parse(durationCandidate.Split("##")[0]);
             string extractedDurationCandidate = durationCandidate.Split("##")[1];
@@ -915,7 +907,8 @@ public class SimaiParser : IParser
             result[1] = lastTimeCandidate;
             return result;
         }
-        else if (isHoldBpmMeasureDuration)
+
+        if (isHoldBpmMeasureDuration)
         {
             double bpmCandidate = double.Parse(durationCandidate.Split('#')[0]);
             string extractedQuaverBeatCandidate = durationCandidate.Split('#')[1];
@@ -931,7 +924,8 @@ public class SimaiParser : IParser
             result[1] = lastTimeCandidate;
             return result;
         }
-        else throw new InvalidOperationException($"NON OF THE DURATION PATTERNS MATCHED: {durationCandidate}");
+
+        throw new InvalidOperationException($"NON OF THE DURATION PATTERNS MATCHED: {durationCandidate}");
     }
 
     public static double[] GetTimeCandidates(double bpm, string input, bool isSlide)

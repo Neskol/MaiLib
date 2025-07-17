@@ -1,5 +1,4 @@
-﻿using System.Data;
-using static MaiLib.ChartEnum;
+﻿using static MaiLib.ChartEnum;
 
 namespace MaiLib;
 
@@ -31,14 +30,15 @@ public class TimeDuration : ICodeBlock
             case ChartVersion.SimaiFes:
             default:
                 if (SecondsOfDuration is not null) return $"[#{SecondsOfDuration}]";
-                else if (BPM is not null)
+                if (BPM is not null)
                 {
                     if (Quaver is null) throw new ICodeBlock.ComponentMissingException("TIME-DURATION", "QUAVER");
-                    else if (Multiple is null)
+                    if (Multiple is null)
                         throw new ICodeBlock.ComponentMissingException("TIME-DURATION", "MULTIPLE");
-                    else return $"[{BPM}#{Quaver}:{Multiple}]";
+                    return $"[{BPM}#{Quaver}:{Multiple}]";
                 }
-                else throw new ICodeBlock.ComponentMissingException("TIME-DURATION", "SECONDS-OF-DURATION OR BPM");
+
+                throw new ICodeBlock.ComponentMissingException("TIME-DURATION", "SECONDS-OF-DURATION OR BPM");
         }
     }
 }

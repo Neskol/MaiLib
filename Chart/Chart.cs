@@ -1,7 +1,7 @@
 namespace MaiLib;
 
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
+using static NoteEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     A class holding notes and information to form a chart
@@ -126,11 +126,9 @@ public abstract class Chart : IChart
         get
         {
             Dictionary<int, int> eachPairDictionary = [];
-            foreach (Note note in this.Notes.Where(p => p.NoteGenre is NoteGenre.TAP or NoteGenre.HOLD))
-            {
+            foreach (Note note in Notes.Where(p => p.NoteGenre is NoteGenre.TAP or NoteGenre.HOLD))
                 if (!eachPairDictionary.Keys.Contains(note.TickStamp)) eachPairDictionary.Add(note.TickStamp, 1);
                 else eachPairDictionary[note.TickStamp]++;
-            }
 
             return eachPairDictionary.Values.Count(p => p > 1);
         }
@@ -208,7 +206,7 @@ public abstract class Chart : IChart
         for (int i = 0; i <= maxBar; i++)
         {
             List<Note>? bar = [];
-            BPMChange? noteChange = new BPMChange();
+            BPMChange? noteChange = new();
             double currentBPM = BPMChanges.ChangeNotes[0].BPM;
             Note lastNote = new Rest();
             Note realLastNote = new Rest();
@@ -216,7 +214,6 @@ public abstract class Chart : IChart
                 if (x.Bar == i)
                     bar.Add(x); //Extract the first BPM change in bar to the beginning of the bar
             foreach (Note? x in Notes)
-            {
                 // if (FirstNote == null && !(x.NoteType is NoteType.BPM or NoteType.MEASURE)) FirstNote = x;
                 // Console.WriteLine(x.Compose(0));
                 //x.TickTimeStamp = this.GetTimeStamp(x.TickStamp);
@@ -240,6 +237,7 @@ public abstract class Chart : IChart
                         case NoteSpecificGenre.REST:
                             break;
                         case NoteSpecificGenre.TAP:
+
                             // if (x.NoteSpecialState is SpecialState.EX) IsDxChart = false;
                             // if (x.NoteType is NoteType.TTP)
                             // {
@@ -248,7 +246,6 @@ public abstract class Chart : IChart
                             // else if (x.NoteSpecialState is SpecialState.Break or SpecialState.BreakEX)
                             // {
                             // }
-
                             break;
                         case NoteSpecificGenre.HOLD:
                             // x.TickBPMDisagree = Math.Abs(GetBPMByTick(x.TickStamp) - GetBPMByTick(x.LastTickStamp)) > Tolerance ||
@@ -265,13 +262,13 @@ public abstract class Chart : IChart
                             }
 
                             if (delay > TotalDelay) TotalDelay = delay;
+
                             //Console.WriteLine("New delay: " + delay);
                             //Console.WriteLine(x.Compose(1));
                             // if (x.NoteType is NoteType.THO)
                             // {
                             //     IsDxChart = false;
                             // }
-
                             break;
                         case NoteSpecificGenre.SLIDE_START:
                             break;
@@ -321,7 +318,6 @@ public abstract class Chart : IChart
                     realLastNote = x;
                     timeStamp += x.TickTimeStamp;
                 }
-            }
 
             List<Note>? afterBar =
             [
@@ -349,11 +345,8 @@ public abstract class Chart : IChart
         for (int i = 0; i < chartCandidate.Length; i++) chartCandidate[i] = [];
 
         foreach (BPMChange bpmChangeNote in BPMChanges.ChangeNotes)
-        {
             chartCandidate[bpmChangeNote.Bar].Insert(0, bpmChangeNote);
-            // Well I know this is not the best practice but we assume bar may be empty here
-        }
-
+        // Well I know this is not the best practice but we assume bar may be empty here
         foreach (Note x in Notes)
         {
             x.BPMChangeNotes = BPMChanges.ChangeNotes;
@@ -473,27 +466,20 @@ public abstract class Chart : IChart
                 copy = new Hold(x);
                 break;
             case SlideEachSet set:
-                SlideEachSet copySet = new SlideEachSet(set);
+                SlideEachSet copySet = new(set);
                 copy = copySet;
                 copySet.InternalSlides = [];
                 foreach (Slide slide in set.InternalSlides)
-                {
                     copySet.InternalSlides.Add((Slide)CopyAndShiftNote(slide, overallTick));
-                }
 
-                if (set.SlideStart is not null)
-                {
-                    copySet.SlideStart = CopyAndShiftNote(set.SlideStart, overallTick);
-                }
+                if (set.SlideStart is not null) copySet.SlideStart = CopyAndShiftNote(set.SlideStart, overallTick);
 
                 break;
             case SlideGroup group:
                 copy = new SlideGroup(x);
                 ((SlideGroup)copy).InternalSlides.Clear();
                 foreach (Slide slide in group.InternalSlides)
-                {
                     ((SlideGroup)copy).InternalSlides.Add((Slide)CopyAndShiftNote(slide, overallTick));
-                }
 
                 break;
             case Slide:
@@ -574,14 +560,12 @@ public abstract class Chart : IChart
     {
         List<int>? startTimeList = [0];
         foreach (Note? x in bar)
-        {
-            if (!startTimeList.Contains(x.Tick)) startTimeList.Add(x.Tick);
-            // if (x.NoteType is NoteType.BPM)
-            // {
-            //     Console.WriteLine(x.Compose(0));
-            // }
-        }
-
+            if (!startTimeList.Contains(x.Tick))
+                startTimeList.Add(x.Tick);
+        // if (x.NoteType is NoteType.BPM)
+        // {
+        //     Console.WriteLine(x.Compose(0));
+        // }
         if (startTimeList[startTimeList.Count - 1] != definition) startTimeList.Add(definition);
         List<int>? intervalCandidates = [];
         int minimalInterval = GCD(startTimeList[0], startTimeList[1]);
@@ -643,10 +627,7 @@ public abstract class Chart : IChart
         List<Note>? result = [];
         bool writeRest = true;
         result.Add(bar[0]);
-        if (minimalQuaver < 0)
-        {
-            throw new InvalidDataException("NEGATIVE VALUE: minimalQuaver");
-        }
+        if (minimalQuaver < 0) throw new InvalidDataException("NEGATIVE VALUE: minimalQuaver");
 
         for (int i = 0; i < definition; i += definition / minimalQuaver)
         {
@@ -940,16 +921,15 @@ public abstract class Chart : IChart
         List<Note> adjusted = [];
         List<Slide> slideCandidates = [];
         foreach (Note? x in Notes)
-        {
             switch (x.NoteSpecificGenre)
             {
-                case NoteEnum.NoteSpecificGenre.SLIDE_EACH:
+                case NoteSpecificGenre.SLIDE_EACH:
                     SlideEachSet? candidate = x as SlideEachSet ??
                                               throw new InvalidOperationException("THIS IS NOT A SLIDE EACH");
                     if (candidate.SlideStart != null) adjusted.Add(candidate.SlideStart);
                     if (candidate.InternalSlides.Count > 0) slideCandidates.AddRange(candidate.InternalSlides);
                     break;
-                case NoteEnum.NoteSpecificGenre.SLIDE_GROUP:
+                case NoteSpecificGenre.SLIDE_GROUP:
                     x.Update();
                     SlideGroup? groupCandidate = x as SlideGroup ??
                                                  throw new InvalidOperationException("THIS IS NOT A SLIDE GROUP");
@@ -959,10 +939,8 @@ public abstract class Chart : IChart
                     adjusted.Add(x);
                     break;
             }
-        }
 
         foreach (Slide? x in slideCandidates)
-        {
             switch (x.NoteSpecificGenre)
             {
                 case NoteSpecificGenre.SLIDE_GROUP:
@@ -974,7 +952,6 @@ public abstract class Chart : IChart
                     adjusted.Add(x);
                     break;
             }
-        }
 
         Notes = adjusted;
     }
@@ -998,7 +975,10 @@ public abstract class Chart : IChart
                 slideNotesOfChart.Add((Slide)candidate);
                 processedSlideDic.Add((Slide)candidate, false);
             }
-            else adjusted.Add(candidate);
+            else
+            {
+                adjusted.Add(candidate);
+            }
         }
 
         // If this chart only have one slide, it cannot be connecting slide; otherwise this chart is invalid.
@@ -1063,28 +1043,22 @@ public abstract class Chart : IChart
             processedSlideOfChart.Sort((p, q) => p.TickStamp.CompareTo(q.TickStamp));
             string errorMsg = "Slide(s) were skipped during processing: \n";
             foreach (KeyValuePair<Slide, bool> x in processedSlideDic)
-            {
                 if (!x.Value)
                 {
                     errorMsg += x.Key.Compose(ChartVersion.Ma2_104) + ", " + x.Key.TickStamp;
                     if (x.Key.NoteSpecialState is SpecialState.ConnectingSlide)
-                    {
                         errorMsg += ", and it is a connecting slide\n";
-                    }
                 }
-            }
 
             errorMsg += "\n------------\nComposedSlides: \n";
             foreach (Slide x in processedSlideOfChart)
             {
                 errorMsg += x.Compose(ChartVersion.Ma2_104) + "\n";
                 if (x is SlideGroup)
-                {
                     errorMsg += "This slide is also a Slide Group with last slide as " +
                                 (x as SlideGroup ?? throw new NullReferenceException(
                                     "This note cannot be casted to SlideGroup: " + x.Compose(ChartVersion.Debug)))
                                 .LastSlide.Compose(ChartVersion.Debug) + "\n";
-                }
             }
 
             throw new InvalidOperationException("SLIDE NUMBER MISMATCH - Expected: " + slideNotesOfChart.Count +

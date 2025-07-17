@@ -25,7 +25,7 @@ public class BeginSeq : ICodeBlock
 
     public string Compose(ChartVersion chartVersion)
     {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new();
         result.Append(BPM.Compose(chartVersion));
         result.Append(Measure.Compose(chartVersion));
         result.Append(NoteSeq.Compose(chartVersion));

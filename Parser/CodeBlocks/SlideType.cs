@@ -23,7 +23,10 @@ public class SlideType : ICodeBlock
         {
             NoteType = suppliedString;
         }
-        else throw new ICodeBlock.UnexpectedStringSuppliedException("SLIDE-TYPE", ExpectedStrings, suppliedString);
+        else
+        {
+            throw new ICodeBlock.UnexpectedStringSuppliedException("SLIDE-TYPE", ExpectedStrings, suppliedString);
+        }
     }
 
     public string Compose(ChartVersion chartVersion)

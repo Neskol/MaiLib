@@ -1,8 +1,9 @@
+using System.Text;
+
 namespace MaiLib;
 
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
-using System.Text;
+using static NoteEnum;
+using static ChartEnum;
 
 public class Simai : Chart
 {
@@ -44,7 +45,7 @@ public class Simai : Chart
         BPMChanges = bpmChanges;
         MeasureChanges = measureChanges;
         ChartVersion = ChartVersion.Simai;
-        this.Update();
+        Update();
     }
 
     public Simai(Chart takenIn)
@@ -53,7 +54,7 @@ public class Simai : Chart
         BPMChanges = takenIn.BPMChanges;
         MeasureChanges = takenIn.MeasureChanges;
         ChartVersion = ChartVersion.Simai;
-        this.Update();
+        Update();
     }
 
     #endregion
@@ -68,9 +69,7 @@ public class Simai : Chart
                 StringBuilder result = new();
                 Note? mostDelayedNote = Notes.MaxBy(note => note.LastTickStamp);
                 if (mostDelayedNote is not null)
-                {
                     TotalDelay = mostDelayedNote.LastTickStamp - StoredChart.Count * Definition;
-                }
 
                 int delayBar = TotalDelay / Definition + 2;
                 List<Note> firstBpm = [];

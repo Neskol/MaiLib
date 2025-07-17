@@ -1,7 +1,7 @@
 ﻿namespace MaiLib;
 
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
+using static NoteEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     Constructs Hold Note
@@ -104,7 +104,7 @@ public class Hold : Note
     public Hold(Note inTake)
     {
         inTake.CopyOver(this);
-        if (inTake.NoteGenre is not NoteEnum.NoteGenre.HOLD)
+        if (inTake.NoteGenre is not NoteGenre.HOLD)
         {
             TouchSize = ((Hold)inTake).TouchSize ?? throw new NullReferenceException();
             SpecialEffect = ((Hold)inTake).SpecialEffect;
@@ -122,7 +122,7 @@ public class Hold : Note
 
     public override bool IsNote => true;
 
-    public override NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.HOLD;
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.HOLD;
 
     //TODO: REWRITE THIS
     public override bool CheckValidity() => true;
@@ -190,7 +190,7 @@ public class Hold : Note
                     case ChartVersion.Simai:
                     case ChartVersion.SimaiFes:
                     default:
-                        result += KeyGroup + (KeyNum + 1).ToString();
+                        result += KeyGroup + (KeyNum + 1);
                         switch (NoteSpecialState)
                         {
                             case SpecialState.Break:

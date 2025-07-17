@@ -12,9 +12,7 @@ public class Sensor : ICodeBlock
     public Sensor(string suppliedString)
     {
         if (_allowedStrings.Any(suppliedString.Equals))
-        {
             SensorArea = suppliedString;
-        }
         else throw new ICodeBlock.UnexpectedStringSuppliedException("SENSOR", ExpectedStrings, suppliedString);
     }
 
