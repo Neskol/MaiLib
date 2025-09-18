@@ -868,10 +868,10 @@ public abstract class Chart : IChart
                   GetTimeStamp(bpmChanges, inTake.TickStamp, definition) + "\n";
         if (inTake.NoteGenre is NoteGenre.SLIDE)
         {
-            result += "This note has wait length of " + inTake.WaitLength + ", and therefor, its wait tick stamp is " +
+            result += "This note has wait length of " + inTake.WaitLength + ", and therefore, its wait tick stamp is " +
                       inTake.WaitTickStamp + " with wait time stamp of " +
                       GetTimeStamp(bpmChanges, inTake.WaitTickStamp, definition) + "\n";
-            result += "This note has last length of " + inTake.LastLength + ", and therefor, its last tick stamp is " +
+            result += "This note has last length of " + inTake.LastLength + ", and therefore, its last tick stamp is " +
                       inTake.LastTickStamp + " with last time stamp of " +
                       GetTimeStamp(bpmChanges, inTake.LastTickStamp, definition) + "\n";
         }
@@ -1010,6 +1010,22 @@ public abstract class Chart : IChart
                 if (currentGroup.SlideCount > 1)
                 {
                     adjusted.Add(currentGroup);
+                    currentGroup.Update();
+                    currentGroup.TickTimeStamp = GetTimeStamp(currentGroup.TickStamp);
+                    if (currentGroup.CalculatedWaitTime == 0)
+                    {
+                        currentGroup.WaitTimeStamp = GetTimeStamp(currentGroup.WaitTickStamp);
+                        currentGroup.CalculatedWaitTime = currentGroup.WaitTimeStamp - currentGroup.TickTimeStamp;
+                    }
+
+                    if (currentGroup.CalculatedLastTime == 0)
+                    {
+                        currentGroup.LastTimeStamp = GetTimeStamp(currentGroup.LastTickStamp);
+                        currentGroup.CalculatedLastTime = currentGroup.LastTimeStamp - currentGroup.TickTimeStamp;
+                        currentGroup.FixedLastLength =
+                            (int)double.Round(currentGroup.CalculatedLastTime /
+                                              GetBPMTimeUnit(GetBPMByTick(currentGroup.TickStamp), Definition));
+                    }
                     processedSlideOfChart.Add(currentGroup);
                     processedSlideDic[parentSlide] = true;
                 }

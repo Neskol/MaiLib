@@ -176,7 +176,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     The Last length
     /// </summary>
-    public int LastLength { get; set; }
+    public virtual int LastLength { get; set; }
 
     /// <summary>
     ///     Fixed Tick Last length with fixed BPM

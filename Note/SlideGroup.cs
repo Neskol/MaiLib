@@ -42,6 +42,8 @@ public class SlideGroup : Slide
     public Slide FirstSlide => InternalSlides.First();
     public Slide LastSlide => InternalSlides.Last();
 
+    public override int LastLength => InternalSlides.Sum(slide => slide.LastLength);
+
     public void AddConnectingSlide(Slide candidate)
     {
         InternalSlides.Add(candidate);
@@ -85,10 +87,6 @@ public class SlideGroup : Slide
                 break;
             case ChartVersion.Simai:
             case ChartVersion.SimaiFes:
-                this.Bar = this.FirstSlide.Bar;
-                this.Tick = this.FirstSlide.Tick;
-                this.BPM = this.FirstSlide.BPM;
-                this.WaitLength = this.FirstSlide.WaitLength;
                 if (this.InternalSlides.Any(slide => slide.NoteSpecialState is SpecialState.ConnectingSlide && slide.WaitLength is not 0))
                     foreach (Slide? x in InternalSlides)
                         result += x.Compose(format);
@@ -100,10 +98,6 @@ public class SlideGroup : Slide
                         // Console.WriteLine("The internal last length is {0}",x.LastLength);
                         // Console.WriteLine("Current last length is {0}",this.LastLength);
                     }
-
-                    LastLength = InternalSlides.Sum(slide => slide.LastLength);
-                    Console.WriteLine("Last Length: {0}", LastLength);
-                    Console.WriteLine("Recalculated Last Length: {0}", InternalSlides.Sum(slide => slide.LastLength));
                     if (TickBPMDisagree || Delayed)
                     {
                         result += GenerateAppropriateLength(LastLength, BPM);
@@ -147,9 +141,14 @@ public class SlideGroup : Slide
             throw new InvalidOperationException("THE LAST SLIDE IN THIS GROUP DOES NOT HAVE LAST TIME ASSIGNED");
         if (SlideCount > 0 && Key != null)
         {
+            Tick = FirstSlide.Tick;
+            Bar = FirstSlide.Bar;
+            BPM = FirstSlide.BPM;
+            TickStamp = FirstSlide.TickStamp;
+            WaitLength = FirstSlide.WaitLength;
             foreach (Slide? x in InternalSlides)
                 if (x.LastLength == 0)
-                    x.LastLength = InternalSlides.Last().LastLength;
+                    x.LastLength = LastSlide.LastLength;
 
             while (Tick >= Definition)
             {
