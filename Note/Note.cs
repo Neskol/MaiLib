@@ -899,7 +899,9 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
         if (CalculatedLastTime != 0 && LastLength == 0)
         {
-            int tickCandidate = NoteGenre is NoteGenre.HOLD ? TickStamp : WaitTickStamp;
+            int tickCandidate = TickStamp;
+            // If slide has wait time, use WaitTickStamp (= TickStamp + CalculatedWaitTime) instead
+            if (NoteGenre is NoteGenre.SLIDE && WaitTickStamp != 0) tickCandidate = WaitTickStamp;
             LastTimeStamp = GetTimeStamp(tickCandidate) + CalculatedLastTime;
             LastTickStamp = GetTickStampByTime(LastTimeStamp);
             LastLength = LastTickStamp - tickCandidate;
