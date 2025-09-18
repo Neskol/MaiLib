@@ -193,6 +193,7 @@ public class SlideEachSet : Note
                 break;
             case ChartVersion.Ma2_103:
             case ChartVersion.Ma2_104:
+            case ChartVersion.Ma2_105:
                 if (SlideStart != null) SlideStart.Compose(format);
                 foreach (Slide x in InternalSlides) x.Compose(format);
 

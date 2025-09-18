@@ -185,6 +185,7 @@ public class Slide : Note
                          EndKey;
                 break;
             case ChartVersion.Ma2_104:
+            case ChartVersion.Ma2_105:
                 switch (NoteSpecialState)
                 {
                     case SpecialState.EX:

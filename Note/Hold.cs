@@ -160,6 +160,7 @@ public class Hold : Note
                         result = typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key + "\t" + LastLength;
                         break;
                     case ChartVersion.Ma2_104:
+                    case ChartVersion.Ma2_105:
                         switch (NoteSpecialState)
                         {
                             case SpecialState.EX:
@@ -217,6 +218,7 @@ public class Hold : Note
                                  KeyGroup + "\t" + (SpecialEffect ? 1 : 0) + "\t" + TouchSize;
                         break;
                     case ChartVersion.Ma2_104:
+                    case ChartVersion.Ma2_105:
                         switch (NoteSpecialState)
                         {
                             case SpecialState.EX:

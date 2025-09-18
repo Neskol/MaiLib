@@ -179,6 +179,7 @@ public class Tap : Note
                     : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
                 break;
             case ChartVersion.Ma2_104:
+            case ChartVersion.Ma2_105:
                 typeCandidate = NoteType.ToString();
                 switch (NoteSpecialState)
                 {
