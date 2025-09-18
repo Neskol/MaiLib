@@ -883,12 +883,13 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     {
         // Console.WriteLine("This note has BPM note number of " + this.BPMChangeNotes.Count());
         bool result = false;
-        TickStamp = Bar * Definition + Tick;
         while (Tick >= Definition)
         {
+            // This kind of less clever method is to deal with offsetting not time
             Tick -= Definition;
             Bar++;
         }
+        TickStamp = Bar * Definition + Tick;
 
         if (CalculatedWaitTime != 0 && WaitLength == 0)
         {

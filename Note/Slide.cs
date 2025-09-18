@@ -101,59 +101,7 @@ public class Slide : Note
             case ChartVersion.Simai:
             case ChartVersion.SimaiFes:
             default:
-                switch (NoteType)
-                {
-                    #region DetailedSlideTypes
-
-                    case NoteType.SI_:
-                        result += "-";
-                        break;
-                    case NoteType.SV_:
-                        result += "v";
-                        break;
-                    case NoteType.SF_:
-                        result += "w";
-                        break;
-                    case NoteType.SCL:
-                        if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
-                            result += "<";
-                        else
-                            result += ">";
-                        break;
-                    case NoteType.SCR:
-                        if (int.Parse(Key) == 0 || int.Parse(Key) == 1 || int.Parse(Key) == 6 || int.Parse(Key) == 7)
-                            result += ">";
-                        else
-                            result += "<";
-                        break;
-                    case NoteType.SUL:
-                        result += "p";
-                        break;
-                    case NoteType.SUR:
-                        result += "q";
-                        break;
-                    case NoteType.SSL:
-                        result += "s";
-                        break;
-                    case NoteType.SSR:
-                        result += "z";
-                        break;
-                    case NoteType.SLL:
-                        result += "V" + GenerateInflection(this);
-                        break;
-                    case NoteType.SLR:
-                        result += "V" + GenerateInflection(this);
-                        break;
-                    case NoteType.SXL:
-                        result += "pp";
-                        break;
-                    case NoteType.SXR:
-                        result += "qq";
-                        break;
-
-                    #endregion
-                }
-
+                result += GetSimaiSlideNotation(this);
                 result += (EndKeyNum + 1).ToString();
                 if (NoteSpecialState == SpecialState.Break)
                     result += "b";
@@ -246,6 +194,65 @@ public class Slide : Note
                 throw new InvalidDataException("INFLECTION CANNOT BE USED OTHER THAN SLL AND SLR!");
         }
 
+        return result;
+    }
+
+    public static string ComposeWithoutLengthInSimai(Slide intake)
+    {
+        return $"{GetSimaiSlideNotation(intake)}{(intake.EndKeyNum + 1).ToString()}";
+    }
+
+    public static string GetSimaiSlideNotation(Slide intake)
+    {
+        string result = "";
+        NoteType noteType = intake.NoteType;
+        int key = int.Parse(intake.Key);
+        switch (noteType)
+        {
+            case NoteType.SI_:
+                result = "-";
+                break;
+            case NoteType.SV_:
+                result = "v";
+                break;
+            case NoteType.SF_:
+                result = "w";
+                break;
+            case NoteType.SCL:
+                if (key == 0 || key == 1 || key == 6 || key == 7)
+                    result = "<";
+                else
+                    result = ">";
+                break;
+            case NoteType.SCR:
+                if (key == 0 || key == 1 || key == 6 || key == 7)
+                    result = ">";
+                else
+                    result = "<";
+                break;
+            case NoteType.SUL:
+                result = "p";
+                break;
+            case NoteType.SUR:
+                result = "q";
+                break;
+            case NoteType.SSL:
+                result = "s";
+                break;
+            case NoteType.SSR:
+                result = "z";
+                break;
+            case NoteType.SLL:
+            case NoteType.SLR:
+                result = $"V{GenerateInflection(intake)}";
+                break;
+            case NoteType.SXL:
+                result = "pp";
+                break;
+            case NoteType.SXR:
+                result = "qq";
+                break;
+        }
         return result;
     }
 

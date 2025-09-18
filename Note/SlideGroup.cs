@@ -69,9 +69,52 @@ public class SlideGroup : Slide
     public override string Compose(ChartVersion format)
     {
         string? result = "";
-        foreach (Slide? x in InternalSlides)
-            result += x.Compose(format);
 
+        // foreach (Slide? x in InternalSlides)
+        //     result += x.Compose(format);
+
+        switch (format)
+        {
+            case ChartVersion.Ma2_103:
+            case ChartVersion.Ma2_104:
+            case ChartVersion.Ma2_105:
+                foreach (Slide? x in InternalSlides)
+                {
+                    result += x.Compose(format);
+                }
+                break;
+            case ChartVersion.Simai:
+            case ChartVersion.SimaiFes:
+                this.Bar = this.FirstSlide.Bar;
+                this.Tick = this.FirstSlide.Tick;
+                this.BPM = this.FirstSlide.BPM;
+                this.WaitLength = this.FirstSlide.WaitLength;
+                if (this.InternalSlides.Any(slide => slide.NoteSpecialState is SpecialState.ConnectingSlide && slide.WaitLength is not 0))
+                    foreach (Slide? x in InternalSlides)
+                        result += x.Compose(format);
+                else
+                {
+                    foreach (Slide? x in InternalSlides)
+                    {
+                        result += ComposeWithoutLengthInSimai(x);
+                        // Console.WriteLine("The internal last length is {0}",x.LastLength);
+                        // Console.WriteLine("Current last length is {0}",this.LastLength);
+                    }
+
+                    LastLength = InternalSlides.Sum(slide => slide.LastLength);
+                    Console.WriteLine("Last Length: {0}", LastLength);
+                    Console.WriteLine("Recalculated Last Length: {0}", InternalSlides.Sum(slide => slide.LastLength));
+                    if (TickBPMDisagree || Delayed)
+                    {
+                        result += GenerateAppropriateLength(LastLength, BPM);
+                    }
+                    else result += GenerateAppropriateLength(LastLength);
+                    // Console.WriteLine("Recalculating Last Length: {0}", this.InternalSlides.Sum(slide => slide.LastLength));
+                    // Console.WriteLine("Calculated last time is: {0}", GenerateAppropriateLength(this.InternalSlides.Sum(slide => slide.LastLength),BPM));
+                }
+                if (this.FirstSlide.NoteSpecialState == SpecialState.Break) result += "b";
+                break;
+        }
         return result;
     }
 
