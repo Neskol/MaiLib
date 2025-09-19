@@ -144,7 +144,6 @@ public class SlideGroup : Slide
             Tick = FirstSlide.Tick;
             Bar = FirstSlide.Bar;
             BPM = FirstSlide.BPM;
-            TickStamp = FirstSlide.TickStamp;
             WaitLength = FirstSlide.WaitLength;
             foreach (Slide? x in InternalSlides)
                 if (x.LastLength == 0)
@@ -166,10 +165,13 @@ public class SlideGroup : Slide
                 totalLastLength += x.LastLength;
             }
 
-            WaitTickStamp = TickStamp + totalWaitLength;
-            //this.waitTimeStamp = this.GetTimeStamp(this.waitTickStamp);
-            LastTickStamp = WaitTickStamp + totalLastLength;
-            //this.lastTimeStamp = this.GetTimeStamp(this.lastTickStamp);
+            WaitLength = totalWaitLength;
+            LastLength = totalLastLength;
+
+            // WaitTickStamp = TickStamp + totalWaitLength;
+            // //this.waitTimeStamp = this.GetTimeStamp(this.waitTickStamp);
+            // LastTickStamp = WaitTickStamp + totalLastLength;
+            // //this.lastTimeStamp = this.GetTimeStamp(this.lastTickStamp);
             if (CalculatedLastTime > 0 && CalculatedWaitTime > 0) result = true;
         }
 
