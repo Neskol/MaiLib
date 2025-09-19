@@ -92,6 +92,7 @@ public class SlideGroup : Slide
                         result += x.Compose(format);
                 else
                 {
+                    Update();
                     foreach (Slide? x in InternalSlides)
                     {
                         result += ComposeWithoutLengthInSimai(x);
@@ -167,6 +168,14 @@ public class SlideGroup : Slide
 
             WaitLength = totalWaitLength;
             LastLength = totalLastLength;
+
+            WaitTimeStamp = GetTimeStamp(WaitTickStamp);
+            CalculatedWaitTime = WaitTimeStamp - TickTimeStamp;
+            LastTimeStamp = GetTimeStamp(LastTickStamp);
+            CalculatedLastTime = LastTimeStamp - TickTimeStamp;
+            // FixedLastLength =
+            //     (int)double.Round(CalculatedLastTime /
+            //                       GetBPMTimeUnit(Chart.GetBPMByTick(TickStamp), Definition));
 
             // WaitTickStamp = TickStamp + totalWaitLength;
             // //this.waitTimeStamp = this.GetTimeStamp(this.waitTickStamp);

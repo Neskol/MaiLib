@@ -1010,22 +1010,24 @@ public abstract class Chart : IChart
                 if (currentGroup.SlideCount > 1)
                 {
                     adjusted.Add(currentGroup);
-                    currentGroup.Update();
-                    currentGroup.TickTimeStamp = GetTimeStamp(currentGroup.TickStamp);
-                    if (currentGroup.CalculatedWaitTime == 0)
-                    {
-                        currentGroup.WaitTimeStamp = GetTimeStamp(currentGroup.WaitTickStamp);
-                        currentGroup.CalculatedWaitTime = currentGroup.WaitTimeStamp - currentGroup.TickTimeStamp;
-                    }
-
-                    if (currentGroup.CalculatedLastTime == 0)
-                    {
-                        currentGroup.LastTimeStamp = GetTimeStamp(currentGroup.LastTickStamp);
-                        currentGroup.CalculatedLastTime = currentGroup.LastTimeStamp - currentGroup.TickTimeStamp;
-                        currentGroup.FixedLastLength =
-                            (int)double.Round(currentGroup.CalculatedLastTime /
-                                              GetBPMTimeUnit(GetBPMByTick(currentGroup.TickStamp), Definition));
-                    }
+                    // currentGroup.Update();
+                    // currentGroup.TickTimeStamp = GetTimeStamp(currentGroup.TickStamp);
+                    //
+                    // // Basically this does not trigger as Slide Group takes first slide's data
+                    // if (currentGroup.CalculatedWaitTime == 0)
+                    // {
+                    //     currentGroup.WaitTimeStamp = GetTimeStamp(currentGroup.WaitTickStamp);
+                    //     currentGroup.CalculatedWaitTime = currentGroup.WaitTimeStamp - currentGroup.TickTimeStamp;
+                    // }
+                    //
+                    // if (currentGroup.CalculatedLastTime == 0)
+                    // {
+                    //     currentGroup.LastTimeStamp = GetTimeStamp(currentGroup.LastTickStamp);
+                    //     currentGroup.CalculatedLastTime = currentGroup.LastTimeStamp - currentGroup.TickTimeStamp;
+                    //     currentGroup.FixedLastLength =
+                    //         (int)double.Round(currentGroup.CalculatedLastTime /
+                    //                           GetBPMTimeUnit(GetBPMByTick(currentGroup.TickStamp), Definition));
+                    // }
                     processedSlideOfChart.Add(currentGroup);
                     processedSlideDic[parentSlide] = true;
                 }
