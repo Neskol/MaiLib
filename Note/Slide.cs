@@ -253,6 +253,7 @@ public class Slide : Note
                 result = "qq";
                 break;
         }
+
         return result;
     }
 

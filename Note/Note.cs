@@ -44,8 +44,9 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <param name="touchSize">Touch Size: M1 or L1</param>
     /// <param name="noteSpecialState">Special state of the note</param>
     public Note(NoteType type, string key, string endKey, int bar, int tick,
-        double tickTimeStamp, int lastLength,  double lastTimeStamp, int waitLength,
-         int waitTimeStamp, double calculatedLastTime, double calculatedWaitTime, List<BPMChange> bpmChangeNotes, string touchSize,
+        double tickTimeStamp, int lastLength, double lastTimeStamp, int waitLength,
+        int waitTimeStamp, double calculatedLastTime, double calculatedWaitTime, List<BPMChange> bpmChangeNotes,
+        string touchSize,
         SpecialState noteSpecialState)
     {
         NoteType = type;

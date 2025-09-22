@@ -84,10 +84,12 @@ public class SlideGroup : Slide
                 {
                     result += x.Compose(format);
                 }
+
                 break;
             case ChartVersion.Simai:
             case ChartVersion.SimaiFes:
-                if (this.InternalSlides.Any(slide => slide.NoteSpecialState is SpecialState.ConnectingSlide && slide.WaitLength is not 0))
+                if (this.InternalSlides.Any(slide =>
+                        slide.NoteSpecialState is SpecialState.ConnectingSlide && slide.WaitLength is not 0))
                     foreach (Slide? x in InternalSlides)
                         result += x.Compose(format);
                 else
@@ -99,6 +101,7 @@ public class SlideGroup : Slide
                         // Console.WriteLine("The internal last length is {0}",x.LastLength);
                         // Console.WriteLine("Current last length is {0}",this.LastLength);
                     }
+
                     if (TickBPMDisagree || Delayed)
                     {
                         result += GenerateAppropriateLength(LastLength, BPM);
@@ -107,9 +110,11 @@ public class SlideGroup : Slide
                     // Console.WriteLine("Recalculating Last Length: {0}", this.InternalSlides.Sum(slide => slide.LastLength));
                     // Console.WriteLine("Calculated last time is: {0}", GenerateAppropriateLength(this.InternalSlides.Sum(slide => slide.LastLength),BPM));
                 }
+
                 if (this.FirstSlide.NoteSpecialState == SpecialState.Break) result += "b";
                 break;
         }
+
         return result;
     }
 

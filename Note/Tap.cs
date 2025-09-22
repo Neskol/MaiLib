@@ -134,10 +134,10 @@ public class Tap : Note
                 switch (NoteType)
                 {
                     case NoteType.NST:
-                        result += (KeyNum + 1) + "!";
+                        result += KeyNum + 1 + "!";
                         break;
                     case NoteType.NSS:
-                        result += (KeyNum + 1) + "$";
+                        result += KeyNum + 1 + "$";
                         break;
                     case NoteType.TTP:
                         result += KeyGroup + (KeyNum + 1);
