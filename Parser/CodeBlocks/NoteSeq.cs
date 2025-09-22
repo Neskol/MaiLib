@@ -52,16 +52,16 @@ public class NoteSeq : ICodeBlock
                 builder.Append(InnerNoteSeq.Compose(chartVersion));
                 builder.Append('\n');
             }
-            else throw new ICodeBlock.ComponentMissingException("NOTE-SEQ", "CHART-DEF");
+            else
+            {
+                throw new ICodeBlock.ComponentMissingException("NOTE-SEQ", "CHART-DEF");
+            }
         }
         else if (NoteComp is not null)
         {
             builder.Append(NoteComp.Compose(chartVersion));
             builder.Append(',');
-            if (InnerNoteSeq is not null)
-            {
-                builder.Append(InnerNoteSeq.Compose(chartVersion));
-            }
+            if (InnerNoteSeq is not null) builder.Append(InnerNoteSeq.Compose(chartVersion));
         }
         else if (IsSingleComma)
         {

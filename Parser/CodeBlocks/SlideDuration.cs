@@ -17,15 +17,10 @@ public class SlideDuration : ICodeBlock
 
     public string Compose(ChartEnum.ChartVersion chartVersion)
     {
-        if (MeasureDuration is not null)
-        {
-            return "[" + MeasureDuration.Compose(chartVersion) + "]";
-        }
-        else if (SlideTimeDuration is not null)
-        {
-            return "[" + SlideTimeDuration.Compose(chartVersion) + "]";
-        }
-        else
-            throw new ICodeBlock.ComponentMissingException("SLIDE-DURATION", "MEASURE-DURATION OR SLIDE-TIME-DURATION");
+        if (MeasureDuration is not null) return "[" + MeasureDuration.Compose(chartVersion) + "]";
+
+        if (SlideTimeDuration is not null) return "[" + SlideTimeDuration.Compose(chartVersion) + "]";
+
+        throw new ICodeBlock.ComponentMissingException("SLIDE-DURATION", "MEASURE-DURATION OR SLIDE-TIME-DURATION");
     }
 }

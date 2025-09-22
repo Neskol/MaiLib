@@ -15,7 +15,7 @@ public class BPMChange : Note
     /// </summary>
     public BPMChange()
     {
-        NoteType = NoteEnum.NoteType.BPM;
+        NoteType = NoteType.BPM;
         Key = "";
         Update();
     }
@@ -28,7 +28,7 @@ public class BPMChange : Note
     /// <param name="BPM">BPM</param>
     public BPMChange(int bar, int startTime, double BPM)
     {
-        NoteType = NoteEnum.NoteType.BPM;
+        NoteType = NoteType.BPM;
         Bar = bar;
         Tick = startTime;
         this.BPM = BPM;
@@ -41,7 +41,7 @@ public class BPMChange : Note
     /// <param name="takeIn">Take in BPMChange</param>
     public BPMChange(BPMChange takeIn)
     {
-        NoteType = NoteEnum.NoteType.BPM;
+        NoteType = NoteType.BPM;
         Bar = takeIn.Bar;
         Tick = takeIn.Tick;
         BPM = takeIn.BPM;
@@ -54,7 +54,7 @@ public class BPMChange : Note
     /// <param name="takeIn">Take in note</param>
     public BPMChange(Note takeIn)
     {
-        NoteType = NoteEnum.NoteType.BPM;
+        NoteType = NoteType.BPM;
         Bar = takeIn.Bar;
         Tick = takeIn.Tick;
         Update();
@@ -66,11 +66,11 @@ public class BPMChange : Note
 
     public double BPMTimeUnit => 60 / BPM * 4 / Definition;
 
-    public override NoteGenre NoteGenre => NoteEnum.NoteGenre.BPM;
+    public override NoteGenre NoteGenre => NoteGenre.BPM;
 
     public override bool IsNote => true;
 
-    public override NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.BPM;
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.BPM;
 
 
     public override bool CheckValidity() => BPM != 0;

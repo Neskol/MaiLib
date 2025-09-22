@@ -114,7 +114,7 @@ public abstract class Compiler : ICompiler
     /// <returns>First BPM change table of this.charts</returns>
     public BPMChanges SymbolicBPMTable()
     {
-        BPMChanges? bpmTable = new BPMChanges();
+        BPMChanges? bpmTable = new();
         bool foundTable = false;
         for (int i = 0; i < Charts.Count && !foundTable; i++)
             if (Charts[i] != null)

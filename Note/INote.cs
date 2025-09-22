@@ -1,6 +1,6 @@
 ﻿namespace MaiLib;
 
-using static MaiLib.ChartEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     Provide interface and basic functions for Notes

@@ -28,7 +28,7 @@ public class SlideConnectedSeq : ICodeBlock
 
     public string Compose(ChartVersion chartVersion)
     {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new();
         builder.Append(SlideType.Compose(chartVersion));
         builder.Append(Key.Compose(chartVersion));
         builder.Append(SlideDuration.Compose(chartVersion));

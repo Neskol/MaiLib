@@ -28,17 +28,11 @@ public class NormalNote : ICodeBlock
     {
         StringBuilder builder = new();
         if (TapComp is not null)
-        {
             builder.Append(TapComp.Compose(chartVersion));
-        }
         else if (HoldComp is not null)
-        {
             builder.Append(HoldComp.Compose(chartVersion));
-        }
         else if (SlideGroupComp is not null)
-        {
             builder.Append(SlideGroupComp.Compose(chartVersion));
-        }
         else throw new ICodeBlock.ComponentMissingException("NORMAL-NOTE", "TAP-COMP OR HOLD-COMP OR SLIDE-GROUP-COMP");
 
         return builder.ToString();

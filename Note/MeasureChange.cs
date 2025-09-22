@@ -8,9 +8,8 @@ using static ChartEnum;
 /// </summary>
 public class MeasureChange : Note
 {
-
     protected MeasureChange? MeasureChangeFactory;
-    
+
     #region Constructors
 
     /// <summary>
@@ -60,11 +59,11 @@ public class MeasureChange : Note
     /// <value>Quaver</value>
     public int Quaver { get; }
 
-    public override NoteEnum.NoteGenre NoteGenre => NoteEnum.NoteGenre.MEASURE;
+    public override NoteGenre NoteGenre => NoteGenre.MEASURE;
 
     public override bool IsNote => false;
 
-    public override NoteEnum.NoteSpecificGenre NoteSpecificGenre => NoteEnum.NoteSpecificGenre.MEASURE;
+    public override NoteSpecificGenre NoteSpecificGenre => NoteSpecificGenre.MEASURE;
 
     public override bool CheckValidity()
     {

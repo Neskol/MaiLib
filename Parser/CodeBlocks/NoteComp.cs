@@ -45,7 +45,10 @@ public class NoteComp : ICodeBlock
         {
             throw new ICodeBlock.ComponentMissingException("NOTE-COMP", "SINGLE-NOTE");
         }
-        else throw new ICodeBlock.ComponentMissingException("NOTE-COMP", "SINGLE NOTE, (NOTE-COMP), KEY-COMP");
+        else
+        {
+            throw new ICodeBlock.ComponentMissingException("NOTE-COMP", "SINGLE NOTE, (NOTE-COMP), KEY-COMP");
+        }
 
         return builder.ToString();
     }

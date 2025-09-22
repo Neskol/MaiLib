@@ -1,7 +1,8 @@
-﻿namespace MaiLib;
+﻿using System.Text;
+
+namespace MaiLib;
 
 using static ChartEnum;
-using System.Text;
 
 /// <summary>
 ///     Implementation of chart in ma2 format.
@@ -30,7 +31,7 @@ public class Ma2 : Chart, ICompiler
         BPMChanges = new BPMChanges(bpmChanges);
         MeasureChanges = new MeasureChanges(measureChanges);
         ChartVersion = ChartVersion.Ma2_103;
-        this.Update();
+        Update();
     }
 
     /// <summary>
@@ -47,7 +48,7 @@ public class Ma2 : Chart, ICompiler
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartVersion = ChartVersion.Ma2_103;
-        this.Update();
+        Update();
     }
 
     /// <summary>
@@ -63,7 +64,7 @@ public class Ma2 : Chart, ICompiler
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartVersion = ChartVersion.Ma2_103;
-        this.Update();
+        Update();
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ public class Ma2 : Chart, ICompiler
         StoredChart = new List<List<Note>>(takenIn.StoredChart);
         Information = new Dictionary<string, string>(takenIn.Information);
         ChartVersion = ChartVersion.Ma2_103;
-        this.Update();
+        Update();
     }
 
     #endregion
@@ -96,10 +97,11 @@ public class Ma2 : Chart, ICompiler
         builder.Append($"T_REC_TAP\t{NormalTapNum}\n");
         builder.Append($"T_REC_BRK\t{BreakTapNum}\n");
         builder.Append($"T_REC_XTP\t{ExTapNum}\n");
-        if (ChartVersion is ChartVersion.Ma2_104) builder.Append($"T_REC_BXX\t{BreakExTapNum}\n");
+        if (ChartVersion is ChartVersion.Ma2_104 or ChartVersion.Ma2_105)
+            builder.Append($"T_REC_BXX\t{BreakExTapNum}\n");
         builder.Append($"T_REC_HLD\t{NormalHoldNum}\n");
         builder.Append($"T_REC_XHO\t{ExHoldNum}\n");
-        if (ChartVersion is ChartVersion.Ma2_104)
+        if (ChartVersion is ChartVersion.Ma2_104 or ChartVersion.Ma2_105)
         {
             builder.Append($"T_REC_BHO\t{BreakHoldNum}\n");
             builder.Append($"T_REC_BXH\t{BreakExHoldNum}\n");
@@ -108,11 +110,13 @@ public class Ma2 : Chart, ICompiler
         builder.Append($"T_REC_STR\t{NormalSlideStartNum}\n");
         builder.Append($"T_REC_BST\t{BreakSlideStartNum}\n");
         builder.Append($"T_REC_XST\t{ExSlideStartNum}\n");
-        if (ChartVersion is ChartVersion.Ma2_104) builder.Append($"T_REC_XBS\t{BreakExSlideStartNum}\n");
+        if (ChartVersion is ChartVersion.Ma2_104 or ChartVersion.Ma2_105)
+            builder.Append($"T_REC_XBS\t{BreakExSlideStartNum}\n");
         builder.Append($"T_REC_TTP\t{TouchTapNum}\n");
         builder.Append($"T_REC_THO\t{TouchHoldNum}\n");
         builder.Append($"T_REC_SLD\t{NormalSlideNum}\n");
-        if (ChartVersion is ChartVersion.Ma2_104) builder.Append($"T_REC_BSL\t{BreakSlideNum}\n");
+        if (ChartVersion is ChartVersion.Ma2_104 or ChartVersion.Ma2_105)
+            builder.Append($"T_REC_BSL\t{BreakSlideNum}\n");
         builder.Append($"T_REC_ALL\t{AllNoteRecNum}\n");
 
         builder.Append($"T_NUM_TAP\t{TapNum}\n");
@@ -145,8 +149,9 @@ public class Ma2 : Chart, ICompiler
         {
             case ChartVersion.Ma2_103:
             case ChartVersion.Ma2_104:
+            case ChartVersion.Ma2_105:
                 base.Update();
-                StringBuilder result = new StringBuilder();
+                StringBuilder result = new();
                 string targetVersion;
                 switch (ChartVersion)
                 {
@@ -155,6 +160,9 @@ public class Ma2 : Chart, ICompiler
                         break;
                     case ChartVersion.Ma2_104:
                         targetVersion = "1.04.00";
+                        break;
+                    case ChartVersion.Ma2_105:
+                        targetVersion = "1.05.00";
                         break;
                     default:
                         return base.Compose(ChartVersion);

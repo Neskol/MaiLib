@@ -1,4 +1,3 @@
-using static MaiLib.NoteEnum;
 using static MaiLib.TokenEnum;
 
 namespace MaiLib
@@ -54,7 +53,10 @@ namespace MaiLib
                 throw new NullReferenceException("The scanner is not provided with valid chart to scan.");
             if (LineNum < IncomingChart.Length)
             {
-                if (IncomingChart[LineNum].Length == 0) CurrentToken = TokenType.BLANK;
+                if (IncomingChart[LineNum].Length == 0)
+                {
+                    CurrentToken = TokenType.BLANK;
+                }
                 else if (CharNum < IncomingChart[LineNum].Length)
                 {
                     switch (NextChar)
@@ -205,7 +207,10 @@ namespace MaiLib
                     LineNum++;
                 }
             }
-            else CurrentToken = TokenType.EOS;
+            else
+            {
+                CurrentToken = TokenType.EOS;
+            }
         }
     }
 

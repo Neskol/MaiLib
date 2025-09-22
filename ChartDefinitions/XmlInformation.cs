@@ -39,7 +39,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
         {
             if (File.Exists(file))
             {
-                InternalXml.Load(file );
+                InternalXml.Load(file);
                 Update();
             }
             else
@@ -81,17 +81,14 @@ public class XmlInformation : TrackInformation, IXmlUtility
             }
 
         foreach (XmlNode candidate in bpmCandidate)
-        {
-            if (TrackBPM.Equals("")) TrackBPM = candidate.InnerText;
-        }
+            if (TrackBPM.Equals(""))
+                TrackBPM = candidate.InnerText;
 
         foreach (XmlNode candidate in sortNameCandidate)
-        {
-            if (TrackSortName.Equals("")) TrackSortName = candidate.InnerText;
-        }
+            if (TrackSortName.Equals(""))
+                TrackSortName = candidate.InnerText;
 
         foreach (XmlNode candidate in composerCandidate)
-        {
             if (TrackComposer.Equals(""))
             {
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
@@ -99,10 +96,8 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 TrackComposerID = int.Parse(idCandidate.InnerText);
                 TrackComposer = strCandidate.InnerText;
             }
-        }
 
         foreach (XmlNode candidate in genreCandidate)
-        {
             if (TrackGenre.Equals(""))
             {
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
@@ -111,19 +106,15 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 TrackGenreID = genreId;
                 TrackGenre = strCandidate.InnerText;
             }
-        }
 
         foreach (XmlNode candidate in versionNumberCandidate)
-        {
             if (TrackVersionNumber.Equals(""))
             {
                 XmlElement? strCandidate = candidate["str"] ?? throw new NullReferenceException();
                 TrackVersionNumber = strCandidate.InnerText;
             }
-        }
 
         foreach (XmlNode candidate in addVersionCandidate)
-        {
             if (TrackVersion.Equals(""))
             {
                 XmlElement? idCandidate = candidate["id"] ?? throw new NullReferenceException();
@@ -131,7 +122,6 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 int versionID = int.Parse(idCandidate.InnerText);
                 TrackVersion = versionID < Version.Count() ? Version[versionID] : Version[0];
             }
-        }
 
         foreach (XmlNode candidate in chartCandidate)
             try
@@ -306,20 +296,16 @@ public class XmlInformation : TrackInformation, IXmlUtility
             }
 
         foreach (XmlNode candidate in utageKanjiCandidate)
-        {
-            if (InformationDict["Utage Kanji"].Equals("")) InformationDict["Utage Kanji"] = candidate.InnerText;
-        }
+            if (InformationDict["Utage Kanji"].Equals(""))
+                InformationDict["Utage Kanji"] = candidate.InnerText;
 
         foreach (XmlNode candidate in utageCommentCandidate)
-        {
-            if (InformationDict["Utage Comment"].Equals("")) InformationDict["Utage Comment"] = candidate.InnerText;
-        }
+            if (InformationDict["Utage Comment"].Equals(""))
+                InformationDict["Utage Comment"] = candidate.InnerText;
 
         foreach (XmlNode candidate in utagePlayStyleCandidate)
-        {
             if (InformationDict["Utage Play Style"].Equals(""))
                 InformationDict["Utage Play Style"] = candidate.InnerText;
-        }
 
         foreach (XmlNode candidate in utageFixedOptionsCandidate)
         {
@@ -328,6 +314,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
             if (fixedOptionName.InnerText is "None" or "") continue;
             UtageFixedOptionDict.Add(fixedOptionName.InnerText, fixedOptionValue.InnerText);
         }
+
         InformationDict["SDDX Suffix"] = StandardDeluxeSuffix;
     }
 
@@ -487,7 +474,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 switch (currentDiff)
                 {
                     case 0:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Basic Chart Maker"] is "" ? "-" : InformationDict["Basic Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Basic Chart Maker"] is ""
+                            ? "-"
+                            : InformationDict["Basic Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Basic Maker ID"].Equals("")
                             ? "999"
                             : InformationDict["Basic Maker ID"];
@@ -500,7 +489,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Basic Max Note"];
                         break;
                     case 1:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Advanced Chart Maker"] is "" ? "-" : InformationDict["Advanced Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Advanced Chart Maker"] is ""
+                            ? "-"
+                            : InformationDict["Advanced Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Advanced Maker ID"].Equals("")
                             ? "999"
                             : InformationDict["Advanced Maker ID"];
@@ -513,7 +504,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Advanced Max Note"];
                         break;
                     case 2:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Expert Chart Maker"] is "" ? "-" : InformationDict["Expert Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Expert Chart Maker"] is ""
+                            ? "-"
+                            : InformationDict["Expert Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Expert Maker ID"].Equals("")
                             ? "999"
                             : InformationDict["Expert Maker ID"];
@@ -526,7 +519,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Expert Max Note"];
                         break;
                     case 3:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Master Chart Maker"] is "" ? "-" : InformationDict["Master Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Master Chart Maker"] is ""
+                            ? "-"
+                            : InformationDict["Master Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Master Maker ID"].Equals("")
                             ? "999"
                             : InformationDict["Master Maker ID"];
@@ -539,7 +534,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Master Max Note"];
                         break;
                     case 4:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Remaster Chart Maker"] is "" ? "-" : InformationDict["Remaster Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Remaster Chart Maker"] is ""
+                            ? "-"
+                            : InformationDict["Remaster Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Remaster Maker ID"].Equals("")
                             ? "999"
                             : InformationDict["Remaster Maker ID"];
@@ -552,7 +549,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Remaster Max Note"];
                         break;
                     case 5:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Utage Chart Maker"] is "" ? "-" : InformationDict["Utage Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Utage Chart Maker"] is ""
+                            ? "-"
+                            : InformationDict["Utage Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Utage Maker ID"].Equals("")
                             ? "999"
                             : InformationDict["Utage Maker ID"];
@@ -565,7 +564,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Utage Max Note"];
                         break;
                     case 6:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Original Chart Maker"] is "" ? "-" : InformationDict["Original Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Original Chart Maker"] is ""
+                            ? "-"
+                            : InformationDict["Original Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Original Maker ID"].Equals("")
                             ? "999"
                             : InformationDict["Original Maker ID"];
@@ -578,7 +579,9 @@ public class XmlInformation : TrackInformation, IXmlUtility
                             : InformationDict["Original Max Note"];
                         break;
                     case 11:
-                        notesDesignerStrCandidate.InnerText = InformationDict["Easy Chart Maker"] is "" ? "-" : InformationDict["Easy Chart Maker"];
+                        notesDesignerStrCandidate.InnerText = InformationDict["Easy Chart Maker"] is ""
+                            ? "-"
+                            : InformationDict["Easy Chart Maker"];
                         notesDesignerIdCandidate.InnerText = InformationDict["Easy Maker ID"].Equals("")
                             ? "999"
                             : InformationDict["Easy Maker ID"];
@@ -611,13 +614,15 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 notesDesignerCandidate.AppendChild(notesDesignerStrCandidate);
                 if (TrackLevels[currentDiff] is not "")
                 {
-                    musicLevelIDCandidate.InnerText = (Array.IndexOf(Level, TrackLevels[currentDiff])).ToString();
-                    levelCandidate.InnerText = TrackLevels[currentDiff].Contains('+') ? TrackLevels[currentDiff].Split('+')[0] : TrackLevels[currentDiff];
+                    musicLevelIDCandidate.InnerText = Array.IndexOf(Level, TrackLevels[currentDiff]).ToString();
+                    levelCandidate.InnerText = TrackLevels[currentDiff].Contains('+')
+                        ? TrackLevels[currentDiff].Split('+')[0]
+                        : TrackLevels[currentDiff];
                     if (TrackDecimalLevels[currentDiff] is not "")
-                    {
                         levelDecimalCandidate.InnerText = TrackDecimalLevels[currentDiff];
-                    }
-                    else levelDecimalCandidate.InnerText = TrackLevels[currentDiff].Contains('+') ? "6" : "0"; // E.g. 14+ => Level >= 14.6
+                    else
+                        levelDecimalCandidate.InnerText =
+                            TrackLevels[currentDiff].Contains('+') ? "6" : "0"; // E.g. 14+ => Level >= 14.6
                 }
                 else
                 {
@@ -656,7 +661,6 @@ public class XmlInformation : TrackInformation, IXmlUtility
                 InformationDict["Utage Play Style"].Equals("") ? "0" : InformationDict["Utage Play Style"];
             XmlElement? utageFixedOptionRoot = InternalXml.CreateElement("fixedOptions");
             if (UtageFixedOptionDict.Count > 4)
-            {
                 foreach (KeyValuePair<string, string> fixedOption in UtageFixedOptionDict)
                 {
                     XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
@@ -668,18 +672,21 @@ public class XmlInformation : TrackInformation, IXmlUtility
                     utageFixedOption.AppendChild(utageFixedOptionValue);
                     utageFixedOptionRoot.AppendChild(utageFixedOption);
                 }
-            }
-            else for (int i = 0; i < 4; i++)
-            {
-                XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
-                XmlElement? utageFixedOptionName = InternalXml.CreateElement("_fixedOptionName");
-                utageFixedOptionName.InnerText = i < UtageFixedOptionDict.Count ? UtageFixedOptionDict.ElementAt(i).Key : "None";
-                XmlElement? utageFixedOptionValue = InternalXml.CreateElement("_fixedOptionValue");
-                utageFixedOptionName.InnerText = i < UtageFixedOptionDict.Count ? UtageFixedOptionDict.ElementAt(i).Value : "Off";
-                utageFixedOption.AppendChild(utageFixedOptionName);
-                utageFixedOption.AppendChild(utageFixedOptionValue);
-                utageFixedOptionRoot.AppendChild(utageFixedOption);
-            }
+            else
+                for (int i = 0; i < 4; i++)
+                {
+                    XmlElement? utageFixedOption = InternalXml.CreateElement("FixedOption");
+                    XmlElement? utageFixedOptionName = InternalXml.CreateElement("_fixedOptionName");
+                    utageFixedOptionName.InnerText =
+                        i < UtageFixedOptionDict.Count ? UtageFixedOptionDict.ElementAt(i).Key : "None";
+                    XmlElement? utageFixedOptionValue = InternalXml.CreateElement("_fixedOptionValue");
+                    utageFixedOptionName.InnerText = i < UtageFixedOptionDict.Count
+                        ? UtageFixedOptionDict.ElementAt(i).Value
+                        : "Off";
+                    utageFixedOption.AppendChild(utageFixedOptionName);
+                    utageFixedOption.AppendChild(utageFixedOptionValue);
+                    utageFixedOptionRoot.AppendChild(utageFixedOption);
+                }
 
             root.AppendChild(utageKanji);
             root.AppendChild(utageComment);
@@ -703,7 +710,7 @@ public class XmlInformation : TrackInformation, IXmlUtility
     ///     Writes music.xml to location specified
     /// </summary>
     /// <param name="location">Target Location</param>
-    public override void Save (string location)
+    public override void Save(string location)
     {
         GenerateInternalXml();
         InternalXml.Save(location);

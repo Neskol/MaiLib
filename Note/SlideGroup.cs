@@ -42,6 +42,8 @@ public class SlideGroup : Slide
     public Slide FirstSlide => InternalSlides.First();
     public Slide LastSlide => InternalSlides.Last();
 
+    public override int LastLength => InternalSlides.Sum(slide => slide.LastLength);
+
     public void AddConnectingSlide(Slide candidate)
     {
         InternalSlides.Add(candidate);
@@ -69,8 +71,49 @@ public class SlideGroup : Slide
     public override string Compose(ChartVersion format)
     {
         string? result = "";
-        foreach (Slide? x in InternalSlides)
-            result += x.Compose(format);
+
+        // foreach (Slide? x in InternalSlides)
+        //     result += x.Compose(format);
+
+        switch (format)
+        {
+            case ChartVersion.Ma2_103:
+            case ChartVersion.Ma2_104:
+            case ChartVersion.Ma2_105:
+                foreach (Slide? x in InternalSlides)
+                {
+                    result += x.Compose(format);
+                }
+
+                break;
+            case ChartVersion.Simai:
+            case ChartVersion.SimaiFes:
+                if (this.InternalSlides.Any(slide =>
+                        slide.NoteSpecialState is SpecialState.ConnectingSlide && slide.WaitLength is not 0))
+                    foreach (Slide? x in InternalSlides)
+                        result += x.Compose(format);
+                else
+                {
+                    Update();
+                    foreach (Slide? x in InternalSlides)
+                    {
+                        result += ComposeWithoutLengthInSimai(x);
+                        // Console.WriteLine("The internal last length is {0}",x.LastLength);
+                        // Console.WriteLine("Current last length is {0}",this.LastLength);
+                    }
+
+                    if (TickBPMDisagree || Delayed)
+                    {
+                        result += GenerateAppropriateLength(LastLength, BPM);
+                    }
+                    else result += GenerateAppropriateLength(LastLength);
+                    // Console.WriteLine("Recalculating Last Length: {0}", this.InternalSlides.Sum(slide => slide.LastLength));
+                    // Console.WriteLine("Calculated last time is: {0}", GenerateAppropriateLength(this.InternalSlides.Sum(slide => slide.LastLength),BPM));
+                }
+
+                if (this.FirstSlide.NoteSpecialState == SpecialState.Break) result += "b";
+                break;
+        }
 
         return result;
     }
@@ -104,9 +147,13 @@ public class SlideGroup : Slide
             throw new InvalidOperationException("THE LAST SLIDE IN THIS GROUP DOES NOT HAVE LAST TIME ASSIGNED");
         if (SlideCount > 0 && Key != null)
         {
+            Tick = FirstSlide.Tick;
+            Bar = FirstSlide.Bar;
+            BPM = FirstSlide.BPM;
+            WaitLength = FirstSlide.WaitLength;
             foreach (Slide? x in InternalSlides)
                 if (x.LastLength == 0)
-                    x.LastLength = InternalSlides.Last().LastLength;
+                    x.LastLength = LastSlide.LastLength;
 
             while (Tick >= Definition)
             {
@@ -124,10 +171,21 @@ public class SlideGroup : Slide
                 totalLastLength += x.LastLength;
             }
 
-            WaitTickStamp = TickStamp + totalWaitLength;
-            //this.waitTimeStamp = this.GetTimeStamp(this.waitTickStamp);
-            LastTickStamp = WaitTickStamp + totalLastLength;
-            //this.lastTimeStamp = this.GetTimeStamp(this.lastTickStamp);
+            WaitLength = totalWaitLength;
+            LastLength = totalLastLength;
+
+            WaitTimeStamp = GetTimeStamp(WaitTickStamp);
+            CalculatedWaitTime = WaitTimeStamp - TickTimeStamp;
+            LastTimeStamp = GetTimeStamp(LastTickStamp);
+            CalculatedLastTime = LastTimeStamp - TickTimeStamp;
+            // FixedLastLength =
+            //     (int)double.Round(CalculatedLastTime /
+            //                       GetBPMTimeUnit(Chart.GetBPMByTick(TickStamp), Definition));
+
+            // WaitTickStamp = TickStamp + totalWaitLength;
+            // //this.waitTimeStamp = this.GetTimeStamp(this.waitTickStamp);
+            // LastTickStamp = WaitTickStamp + totalLastLength;
+            // //this.lastTimeStamp = this.GetTimeStamp(this.lastTickStamp);
             if (CalculatedLastTime > 0 && CalculatedWaitTime > 0) result = true;
         }
 

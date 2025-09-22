@@ -40,11 +40,16 @@ public class SlideConnectedComp : ICodeBlock
                 builder.Append(SlideDuration.Compose(chartVersion));
                 if (IsBreak) builder.Append('b');
             }
-            else throw new ICodeBlock.ComponentMissingException("SLIDE-CONNECTED", "SLIDE-DURATION");
+            else
+            {
+                throw new ICodeBlock.ComponentMissingException("SLIDE-CONNECTED", "SLIDE-DURATION");
+            }
         }
         else
+        {
             throw new ICodeBlock.ComponentMissingException("SLIDE-CONNECTED",
                 "SLIDE-CONNECTED-SEQ OR SLIDE-CONNECTED-MEASURED-SEQ");
+        }
 
         return builder.ToString();
     }

@@ -17,14 +17,10 @@ public class HoldDuration : ICodeBlock
 
     public string Compose(ChartEnum.ChartVersion chartVersion)
     {
-        if (MeasureDuration is not null)
-        {
-            return "[" + MeasureDuration.Compose(chartVersion) + "]";
-        }
-        else if (TimeDuration is not null)
-        {
-            return "[" + TimeDuration.Compose(chartVersion) + "]";
-        }
-        else throw new ICodeBlock.ComponentMissingException("HOLD-DURATION", "MEASURE-DURATION OR TIME-DURATION");
+        if (MeasureDuration is not null) return "[" + MeasureDuration.Compose(chartVersion) + "]";
+
+        if (TimeDuration is not null) return "[" + TimeDuration.Compose(chartVersion) + "]";
+
+        throw new ICodeBlock.ComponentMissingException("HOLD-DURATION", "MEASURE-DURATION OR TIME-DURATION");
     }
 }

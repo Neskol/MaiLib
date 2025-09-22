@@ -1,16 +1,15 @@
 ﻿namespace MaiLib;
 
-using static MaiLib.NoteEnum;
-using static MaiLib.ChartEnum;
+using static NoteEnum;
+using static ChartEnum;
 
 /// <summary>
 ///     Tap note
 /// </summary>
 public class Tap : Note
 {
-
     protected Tap? TapFactory;
-    
+
     /// <summary>
     ///     Empty Constructor Tap Note
     /// </summary>
@@ -70,7 +69,7 @@ public class Tap : Note
     {
         inTake.CopyOver(this);
         //NoteType = inTake.NoteGenre.Equals("TAP") ? inTake.NoteType : "TAP";
-        if (inTake.NoteGenre is NoteEnum.NoteGenre.TAP)
+        if (inTake.NoteGenre is NoteGenre.TAP)
         {
             TouchSize = ((Tap)inTake).TouchSize ?? throw new NullReferenceException();
             SpecialEffect = ((Tap)inTake).SpecialEffect;
@@ -135,13 +134,13 @@ public class Tap : Note
                 switch (NoteType)
                 {
                     case NoteType.NST:
-                        result += (KeyNum + 1).ToString() + "!";
+                        result += KeyNum + 1 + "!";
                         break;
                     case NoteType.NSS:
-                        result += (KeyNum + 1).ToString() + "$";
+                        result += KeyNum + 1 + "$";
                         break;
                     case NoteType.TTP:
-                        result += KeyGroup + (KeyNum + 1).ToString();
+                        result += KeyGroup + (KeyNum + 1);
                         break;
                     default:
                         result += (KeyNum + 1).ToString();
@@ -180,6 +179,7 @@ public class Tap : Note
                     : typeCandidate + "\t" + Bar + "\t" + Tick + "\t" + Key;
                 break;
             case ChartVersion.Ma2_104:
+            case ChartVersion.Ma2_105:
                 typeCandidate = NoteType.ToString();
                 switch (NoteSpecialState)
                 {

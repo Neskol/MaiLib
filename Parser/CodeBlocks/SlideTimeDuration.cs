@@ -1,5 +1,4 @@
-﻿using System.Data;
-using static MaiLib.ChartEnum;
+﻿using static MaiLib.ChartEnum;
 
 namespace MaiLib;
 
@@ -34,15 +33,15 @@ public class SlideTimeDuration : ICodeBlock
             case ChartVersion.SimaiFes:
             default:
                 if (SecondsOfDuration is not null) return $"[{SecondsOfWait}##{SecondsOfDuration}]";
-                else if (BPM is not null)
+                if (BPM is not null)
                 {
                     if (Quaver is null) throw new ICodeBlock.ComponentMissingException("SLIDE-TIME-DURATION", "QUAVER");
-                    else if (Multiple is null)
+                    if (Multiple is null)
                         throw new ICodeBlock.ComponentMissingException("SLIDE-TIME-DURATION", "MULTIPLE");
-                    else return $"[{SecondsOfWait}##{BPM}#{Quaver}:{Multiple}]";
+                    return $"[{SecondsOfWait}##{BPM}#{Quaver}:{Multiple}]";
                 }
-                else
-                    throw new ICodeBlock.ComponentMissingException("SLIDE-TIME-DURATION", "SECONDS-OF-DURATION OR BPM");
+
+                throw new ICodeBlock.ComponentMissingException("SLIDE-TIME-DURATION", "SECONDS-OF-DURATION OR BPM");
         }
     }
 }

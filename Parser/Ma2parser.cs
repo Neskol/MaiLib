@@ -1,6 +1,6 @@
 ﻿namespace MaiLib;
 
-using static MaiLib.NoteEnum;
+using static NoteEnum;
 
 /// <summary>
 ///     Give enums of parameters of Standard Keys
@@ -51,7 +51,7 @@ public enum DxHoldParam
 public class Ma2Parser : IParser
 {
     private Tap PreviousSlideStart;
-    private static int _maximumDefinition = 384;
+    private static readonly int _maximumDefinition = 384;
 
     /// <summary>
     ///     Empty constructor
@@ -63,8 +63,8 @@ public class Ma2Parser : IParser
 
     public Chart ChartOfToken(string[] token)
     {
-        BPMChanges? bpmChanges = new BPMChanges();
-        MeasureChanges? measureChanges = new MeasureChanges();
+        BPMChanges? bpmChanges = new();
+        MeasureChanges? measureChanges = new();
         List<Note>? notes = [];
         if (token != null)
             foreach (string? x in token)
@@ -114,7 +114,7 @@ public class Ma2Parser : IParser
                 else if (isBPM)
                 {
                     string[]? bpmCandidate = x.Split('\t');
-                    BPMChange? candidate = new BPMChange(int.Parse(bpmCandidate[1]),
+                    BPMChange? candidate = new(int.Parse(bpmCandidate[1]),
                         int.Parse(bpmCandidate[2]),
                         double.Parse(bpmCandidate[3]));
                     bpmChanges.Add(candidate);
@@ -213,7 +213,6 @@ public class Ma2Parser : IParser
         }
 
         if (!fesNoteState.Equals(""))
-        {
             switch (fesNoteState)
             {
                 case "BR":
@@ -230,7 +229,6 @@ public class Ma2Parser : IParser
                     break;
                 //NM does not need extra case
             }
-        }
 
         if (bpm > 0.0) result.BPM = bpm;
         if (result.NoteSpecificGenre is NoteSpecificGenre.SLIDE_START) PreviousSlideStart = (Tap)result;
@@ -295,7 +293,7 @@ public class Ma2Parser : IParser
             throw new Exception("Given Note Type is not valid. Given: " + candidate[(int)DxTapParam.Type]);
         if (!slideStart.Key.Equals(candidate[(int)StdParam.Key]) || slideStart.Bar != bar || slideStart.Tick != tick)
             PreviousSlideStart = new Tap(NoteType.NST, bar, tick, candidate[(int)StdParam.Key]);
-        Slide? result = new Slide(typeCandidate,
+        Slide? result = new(typeCandidate,
             bar,
             tick,
             slideStart.Key,

@@ -8,7 +8,6 @@ using static ChartEnum;
 /// </summary>
 public abstract class Note : IEquatable<Note>, INote, IComparable
 {
-    
     #region Constructors
 
     /// <summary>
@@ -34,26 +33,20 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <param name="endKey">End Key for Slides</param>
     /// <param name="bar">Bar of the note</param>
     /// <param name="tick">Tick of the note</param>
-    /// <param name="fixedTick">Tick fixed to BPM</param>
-    /// <param name="tickStamp">Bar * Definition + Tick</param>
     /// <param name="tickTimeStamp">Exact time of Tick</param>
     /// <param name="lastLength">Sustaining length</param>
-    /// <param name="lastTickStamp">End sustain tick</param>
     /// <param name="lastTimeStamp">Exact time of the end of sustain</param>
     /// <param name="waitLength">Wait Length</param>
-    /// <param name="waitTickStamp">End wait tick</param>
     /// <param name="waitTimeStamp">Exact time of wait tick</param>
     /// <param name="calculatedLastTime">Last time calculated in exact time</param>
     /// <param name="calculatedWaitTime">Wait time calculated in exact time</param>
-    /// <param name="tickBPMDisagree">Bool which BPM change happened between start and end</param>
-    /// <param name="bpm">BPM</param>
     /// <param name="bpmChangeNotes">Change notes of the BPM</param>
     /// <param name="touchSize">Touch Size: M1 or L1</param>
     /// <param name="noteSpecialState">Special state of the note</param>
-    public Note(NoteType type, string key, string endKey, int bar, int tick, int fixedTick, int tickStamp,
-        double tickTimeStamp, int lastLength, int lastTickStamp, double lastTimeStamp, int waitLength,
-        int waitTickStamp, int waitTimeStamp, double calculatedLastTime, double calculatedWaitTime,
-        bool tickBPMDisagree, double bpm, List<BPMChange> bpmChangeNotes, string touchSize,
+    public Note(NoteType type, string key, string endKey, int bar, int tick,
+        double tickTimeStamp, int lastLength, double lastTimeStamp, int waitLength,
+        int waitTimeStamp, double calculatedLastTime, double calculatedWaitTime, List<BPMChange> bpmChangeNotes,
+        string touchSize,
         SpecialState noteSpecialState)
     {
         NoteType = type;
@@ -62,13 +55,10 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         Bar = bar;
         Tick = tick;
         // FixedTick = fixedTick;
-        TickStamp = tickStamp;
         TickTimeStamp = tickTimeStamp;
         LastLength = lastLength;
-        LastTickStamp = lastTickStamp;
         LastTimeStamp = lastTimeStamp;
         WaitLength = waitLength;
-        WaitTickStamp = waitTickStamp;
         WaitTimeStamp = waitTimeStamp;
         CalculatedLastTime = calculatedLastTime;
         CalculatedWaitTime = calculatedWaitTime;
@@ -91,13 +81,10 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         EndKey = inTake.EndKey;
         Bar = inTake.Bar;
         Tick = inTake.Tick;
-        TickStamp = inTake.TickStamp;
         TickTimeStamp = inTake.TickTimeStamp;
         LastLength = inTake.LastLength;
-        LastTickStamp = inTake.LastTickStamp;
         LastTimeStamp = inTake.LastTimeStamp;
         WaitLength = inTake.WaitLength;
-        WaitTickStamp = inTake.WaitTickStamp;
         WaitTimeStamp = inTake.WaitTimeStamp;
         CalculatedLastTime = inTake.CalculatedLastTime;
         CalculatedWaitTime = inTake.CalculatedWaitTime;
@@ -146,7 +133,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     The absolute Tick Calculated by this.bar*384+this.Tick
     /// </summary>
-    public int TickStamp { get; set; }
+    public int TickStamp => Bar * Definition + Tick;
 
     /// <summary>
     ///     The start time stamp
@@ -166,7 +153,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     The stamp of Wait time ends in Ticks
     /// </summary>
-    public int WaitTickStamp { get; set; }
+    public int WaitTickStamp => TickStamp + WaitLength;
     // public int WaitTickStamp => LastTickStamp + WaitLength;
 
     /// <summary>
@@ -177,7 +164,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     The Last length
     /// </summary>
-    public int LastLength { get; set; }
+    public virtual int LastLength { get; set; }
 
     /// <summary>
     ///     Fixed Tick Last length with fixed BPM
@@ -187,7 +174,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     The stamp when the Last time ends in Ticks
     /// </summary>
-    public int LastTickStamp { get; set; }
+    public int LastTickStamp => WaitTickStamp + LastLength;
     // public int LastTickStamp => LastLength == 0 ? TickStamp : TickStamp + LastLength;
 
     /// <summary>
@@ -361,28 +348,25 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <param name="copyTo">Target note</param>
     public void CopyOver(Note copyTo)
     {
-        copyTo.NoteType = this.NoteType;
-        copyTo.Key = this.Key;
-        copyTo.EndKey = this.EndKey;
-        copyTo.Bar = this.Bar;
-        copyTo.Tick = this.Tick;
-        copyTo.TickStamp = this.TickStamp;
-        copyTo.TickTimeStamp = this.TickTimeStamp;
-        copyTo.LastLength = this.LastLength;
-        copyTo.LastTickStamp = this.LastTickStamp;
-        copyTo.LastTimeStamp = this.LastTimeStamp;
-        copyTo.WaitLength = this.WaitLength;
-        copyTo.WaitTickStamp = this.WaitTickStamp;
-        copyTo.WaitTimeStamp = this.WaitTimeStamp;
-        copyTo.CalculatedLastTime = this.CalculatedLastTime;
-        copyTo.CalculatedWaitTime = this.CalculatedWaitTime;
+        copyTo.NoteType = NoteType;
+        copyTo.Key = Key;
+        copyTo.EndKey = EndKey;
+        copyTo.Bar = Bar;
+        copyTo.Tick = Tick;
+        copyTo.TickTimeStamp = TickTimeStamp;
+        copyTo.LastLength = LastLength;
+        copyTo.LastTimeStamp = LastTimeStamp;
+        copyTo.WaitLength = WaitLength;
+        copyTo.WaitTimeStamp = WaitTimeStamp;
+        copyTo.CalculatedLastTime = CalculatedLastTime;
+        copyTo.CalculatedWaitTime = CalculatedWaitTime;
         // copyTo.TickBPMDisagree = this.TickBPMDisagree;
         // copyTo.BPM = this.BPM;
-        copyTo.BPMChangeNotes = this.BPMChangeNotes;
-        copyTo.NoteSpecialState = this.NoteSpecialState;
-        copyTo.TouchSize = this.TouchSize;
-        copyTo.SpecialEffect = this.SpecialEffect;
-        copyTo.Definition = this.Definition;
+        copyTo.BPMChangeNotes = BPMChangeNotes;
+        copyTo.NoteSpecialState = NoteSpecialState;
+        copyTo.TouchSize = TouchSize;
+        copyTo.SpecialEffect = SpecialEffect;
+        copyTo.Definition = Definition;
     }
 
     public abstract bool CheckValidity();
@@ -884,9 +868,9 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     {
         // Console.WriteLine("This note has BPM note number of " + this.BPMChangeNotes.Count());
         bool result = false;
-        TickStamp = Bar * Definition + Tick;
         while (Tick >= Definition)
         {
+            // This kind of less clever method is to deal with offsetting not time
             Tick -= Definition;
             Bar++;
         }
@@ -894,8 +878,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
         if (CalculatedWaitTime != 0 && WaitLength == 0)
         {
             WaitTimeStamp = GetTimeStamp(TickStamp) + CalculatedWaitTime;
-            WaitTickStamp = GetTickStampByTime(WaitTimeStamp);
-            WaitLength = WaitTickStamp - TickStamp;
+            WaitLength = GetTickStampByTime(WaitTimeStamp) - TickStamp;
         }
 
         if (CalculatedLastTime != 0 && LastLength == 0)
@@ -904,14 +887,11 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
             // If slide has wait time, use WaitTickStamp (= TickStamp + CalculatedWaitTime) instead
             if (NoteGenre is NoteGenre.SLIDE && WaitTickStamp != 0) tickCandidate = WaitTickStamp;
             LastTimeStamp = GetTimeStamp(tickCandidate) + CalculatedLastTime;
-            LastTickStamp = GetTickStampByTime(LastTimeStamp);
-            LastLength = LastTickStamp - tickCandidate;
+            LastLength = GetTickStampByTime(LastTimeStamp) - tickCandidate;
         }
 
         double bpmUnit = GetBPMTimeUnit(BPM);
         FixedLastLength = (int)double.Round(CalculatedLastTime / bpmUnit);
-        WaitTickStamp = TickStamp + WaitLength;
-        LastTickStamp = WaitTickStamp + LastLength;
         if (!(NoteGenre is NoteGenre.SLIDE || NoteGenre is NoteGenre.HOLD))
             result = true;
         else if (CalculatedLastTime > 0 && CalculatedWaitTime > 0) result = true;
@@ -949,7 +929,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
 
     public static double GetTimeStamp(List<BPMChange> changeTable, int overallTick)
     {
-        Note dummyNote = new Rest() { BPMChangeNotes = changeTable };
+        Note dummyNote = new Rest { BPMChangeNotes = changeTable };
         return dummyNote.GetTimeStamp(overallTick);
     }
 
