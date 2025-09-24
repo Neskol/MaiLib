@@ -34,7 +34,8 @@ public abstract class TrackInformation : IXmlUtility
     [
         "maimai", "PLUS", "GreeN", "GreeN PLUS", "ORANGE", "ORANGE PLUS", "PiNK", "PiNK PLUS", "MURASAKi",
         "MURASAKi PLUS", "MiLK", "MiLK PLUS", "FiNALE", "DX", "DX PLUS", "DX Splash", "DX Splash PLUS", "DX UNiVERSE",
-        "DX UNiVERSE PLUS", "DX FESTiVAL", "DX FESTiVAL PLUS", "DX BUDDiES", "DX BUDDiES PLUS", "DX PRiSM", "DX PRiSM PLUS", "DX CiRCLE"
+        "DX UNiVERSE PLUS", "DX FESTiVAL", "DX FESTiVAL PLUS", "DX BUDDiES", "DX BUDDiES PLUS", "DX PRiSM",
+        "DX PRiSM PLUS", "DX CiRCLE"
     ]; // TODO: Convert to enum
 
     #region Constructors
