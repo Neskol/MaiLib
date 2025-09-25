@@ -16,6 +16,8 @@ public class MeasureChanges
         Tick = [];
         Quavers = [];
         Beats = [];
+        InitialQuavers = 4;
+        InitialBeats = 4;
         ChangeNotes = [];
     }
 
@@ -28,6 +30,8 @@ public class MeasureChanges
         Tick = new List<int>(takeIn.Tick);
         Quavers = new List<int>(takeIn.Quavers);
         Beats = new List<int>(takeIn.Beats);
+        InitialQuavers = takeIn.InitialQuavers;
+        InitialBeats = takeIn.InitialBeats;
         ChangeNotes = new List<MeasureChange>(takeIn.ChangeNotes);
     }
 
@@ -43,8 +47,8 @@ public class MeasureChanges
         Quavers = [];
         Beats = [];
         ChangeNotes = [];
-        Quavers.Add(initialQuaver);
-        Beats.Add(initialBeat);
+        InitialQuavers = initialQuaver;
+        InitialBeats = initialBeat;
     }
 
     /// <summary>
@@ -71,30 +75,13 @@ public class MeasureChanges
     public List<int> Beats { get; }
     public List<MeasureChange> ChangeNotes { get; }
 
-    public int InitialQuavers
-    {
-        get
-        {
-            if (Quavers is null || Quavers.Count == 0) return 4;
-
-            return Quavers[0];
-        }
-    }
-
-    public int InitialBeats
-    {
-        get
-        {
-            if (Beats is null || Beats.Count == 0) return 4;
-
-            return Beats[0];
-        }
-    }
+    public int InitialQuavers {get; private set;}
+    public int InitialBeats {get; private set;}
 
     /// <summary>
     ///     Return first definitions
     /// </summary>
-    public string InitialChange => "MET_DEF" + "\t" + InitialQuavers + "\t" + InitialBeats + "\n";
+    public string InitialChange => $"MET_DEF\t{InitialQuavers}\t{InitialBeats}\n";
 
     /// <summary>
     ///     Add new measure changes to MeasureChanges
