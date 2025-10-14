@@ -266,6 +266,7 @@ public class SimaiParser : IParser
         Note slideStart = startNote;
         // int prevSlideKey = -1;
         List<Slide> slideCandidates = [];
+        double totalLastTime = 0;
         foreach (string x in extractedTokens)
         {
             Slide connectCandidate = SlideOfToken(x, currentBar, currentTick, slideStart, bpm);
@@ -278,6 +279,19 @@ public class SimaiParser : IParser
                 currentBar += currentTick / MaximumDefinition;
                 currentTick %= MaximumDefinition;
             }
+            totalLastTime += connectCandidate.CalculatedLastTime;
+        }
+        
+        // Fix the accuracy loss caused by LastLength
+        Slide pseudoWholeSlide = new Slide(slideCandidates[0]);
+        pseudoWholeSlide.CalculatedLastTime = totalLastTime;
+        pseudoWholeSlide.LastLength = 0;
+        pseudoWholeSlide.Update();
+        // calculate the difference between the whole slide and the last fragment, a.k.a. the amount of accuracy loss
+        int diff = pseudoWholeSlide.LastTickStamp - slideCandidates.Last().LastTickStamp;
+        if (diff != 0) // compensate the accuracy loss
+        {
+            slideCandidates.Last().LastLength += diff;
         }
 
         return new SlideGroup(slideCandidates) { BPMChangeNotes = bpmChanges.ChangeNotes };
