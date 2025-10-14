@@ -35,15 +35,19 @@ public class SimaiParser : IParser
         List<Note>? notes = [];
         // var bpmChanges = new BPMChanges();
         MeasureChanges? measureChanges = new(4, 4);
-        int bar = 0;
-        int tick = 0;
+        // use Fraction to record current time, to avoid accuracy loss
+        Fraction timeInBar = new Fraction(0, 1);
+        Fraction timeStep = new Fraction(0, 1);
         double currentBPM = 0.0;
-        int tickStep = 0;
         for (int i = 0; i < tokens.Length; i++)
         {
             List<string>? eachPairCandidates = EachGroupOfToken(tokens[i]);
             string currentToken = ""; // Solely used to log current error
             int previousConnectingSlideTick = 0;
+            // dynamically calculate bar and tick from timeInBar
+            double _time = timeInBar.ToDouble();
+            int bar = (int)Math.Floor(_time);
+            int tick = (int)Math.Round((_time - bar) * MaximumDefinition);
             try
             {
                 foreach (string? eachNote in eachPairCandidates)
@@ -56,15 +60,12 @@ public class SimaiParser : IParser
 
                     if (noteCandidate.NoteSpecificGenre is NoteSpecificGenre.BPM)
                     {
-                        noteCandidate.Bar = bar;
-                        noteCandidate.Tick = tick;
                         currentBPM = noteCandidate.BPM;
                         bpmChanges.Add((BPMChange)noteCandidate);
                     }
                     else if (noteCandidate.NoteSpecificGenre is NoteSpecificGenre.MEASURE)
                     {
-                        string? quaverCandidate = eachNote.Replace("{", "").Replace("}", "");
-                        tickStep = MaximumDefinition / int.Parse(quaverCandidate);
+                        timeStep = new Fraction(1, ((MeasureChange)noteCandidate).Quaver);
                     }
 
                     else /*if (currentBPM > 0.0)*/
@@ -102,13 +103,7 @@ public class SimaiParser : IParser
                 throw new ParsingException(ex, bar, tick, currentToken, string.Join(", ", eachPairCandidates));
             }
 
-
-            tick += tickStep;
-            while (tick >= MaximumDefinition)
-            {
-                tick -= MaximumDefinition;
-                bar++;
-            }
+            timeInBar += timeStep;
         }
 
         Chart result = new Simai(notes, bpmChanges, measureChanges);
@@ -149,6 +144,8 @@ public class SimaiParser : IParser
             else if (isMeasure)
             {
                 string? quaverCandidate = token.Replace("{", "").Replace("}", "");
+                if (quaverCandidate.StartsWith("#")) 
+                    throw new NotImplementedException($"Measure with absolute time {{{quaverCandidate}}} are not supported! Please use measure of BPM and quaver, like (120){{16}} instead");
                 result = new MeasureChange(bar, tick, int.Parse(quaverCandidate));
             }
             else if (!(token.Contains('!') || token.Contains('?')) && !token.Equals("E") && !token.Equals(""))
@@ -964,3 +961,53 @@ public class SimaiParser : IParser
 public class ParsingException(Exception ex, int bar, int tick, string token, string tokenSet)
     : Exception(
         $"Simai Parser encountered an error while parsing after bar {bar} tick {tick} when parsing token {token} in each group “{tokenSet}”: \n{ex.Message}\nOriginal Stack:\n{ex.StackTrace}\n");
+
+public class Fraction
+{
+    public int Numerator { get; private set; }
+    public int Denominator { get; private set; }
+    
+    public Fraction(int numerator, int denominator)
+    {
+        Numerator = numerator;
+        Denominator = denominator;
+        Reduce();
+    }
+
+    public Fraction() : this(0, 1) {}
+    
+    private void Reduce()
+    {
+        int gcd = GCD(Math.Abs(Numerator), Math.Abs(Denominator));
+        Numerator /= gcd;
+        Denominator /= gcd;
+    }
+
+    private static int GCD(int a, int b)
+    {
+        while (b != 0)
+        {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    public override string ToString()
+    {
+        return Denominator == 1 ? Numerator.ToString() : $"{Numerator}/{Denominator}";
+    }
+
+    public static Fraction operator +(Fraction a, Fraction b)
+    {
+        int numerator = a.Numerator * b.Denominator + b.Numerator * a.Denominator;
+        int denominator = a.Denominator * b.Denominator;
+        return new Fraction(numerator, denominator);
+    }
+
+    public double ToDouble()
+    {
+        return (double)Numerator / Denominator;
+    }
+}
