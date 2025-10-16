@@ -67,7 +67,7 @@ public class SimaiParser : IParser
                         tickStep = MaximumDefinition / int.Parse(quaverCandidate);
                     }
 
-                    else /*if (currentBPM > 0.0)*/
+                    else if (noteCandidate.NoteSpecificGenre is not NoteSpecificGenre.REST)
                     {
                         if (noteCandidate.NoteSpecialState is SpecialState.ConnectingSlide)
                         {
