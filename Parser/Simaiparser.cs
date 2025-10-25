@@ -68,7 +68,7 @@ public class SimaiParser : IParser
                         timeStep = new Fraction(1, ((MeasureChange)noteCandidate).Quaver);
                     }
 
-                    else /*if (currentBPM > 0.0)*/
+                    else if (noteCandidate.NoteSpecificGenre is not NoteSpecificGenre.REST)
                     {
                         if (noteCandidate.NoteSpecialState is SpecialState.ConnectingSlide)
                         {
