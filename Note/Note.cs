@@ -228,7 +228,7 @@ public abstract class Note : IEquatable<Note>, INote, IComparable
     /// <summary>
     ///     Determines the size of the touch. By default, it is M1
     /// </summary>
-    public string TouchSize { get; protected set; }
+    public string TouchSize { get; set; }
 
     /// <summary>
     ///     The previous note
