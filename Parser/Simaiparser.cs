@@ -664,76 +664,56 @@ public class SimaiParser : IParser
     /// <returns>Result of parsed tokens</returns>
     public static List<string> ExtractConnectingSlides(string token)
     {
+        string originToken = token; // 输出报错信息用
         List<string> result = [];
-        char[]? candidates = token.ToCharArray();
 
-        static string KeyCandidate(string token)
+        string slideCandidate = "";
+        bool firstSegmentExtracted = false;
+        // 将完整的fes slide的token(如1-2-3[2:1])，拆为若干子notation
+        // 逻辑上，我们可以定义三类notation：星星体(如-)，数字键位号(如1)，时间标记(如[2:1])
+        while (token.Length > 0)
         {
-            string result = "";
-            int inflectionV = token.Contains('V') ? 2 : 1; // V slide involves VXX
-            for (int i = 0; i < token.Length && result.Length < inflectionV; i++)
-                if (!IsSlideNotation(token[i]) && char.IsNumber(token[i]))
-                    result += token[i].ToString();
-            if (result.Length > 1) result = result[1].ToString();
-            return ((int.Parse(result) - 1) % 8).ToString();
+            string notation = "";
+            // 循环提取下一个notation
+            if (IsSlideNotation(token[0]))
+            { // 星星体类notation
+                var next2Chars = token.Substring(0, 2);
+                notation = next2Chars == "pp" || next2Chars == "qq" ? next2Chars : token[0].ToString();
+                if (!AllowedSlideType.Contains(notation)) throw new Exception($"Unexpected slide type: {notation} in slide: {originToken}");
+                
+                // 当遇到星星体时，应该把此前的slideCandidate中的内容写入result
+                // 进一步的，如果此前slideCandidate为空，仅在第一个segment的时候是正常的，否则就是出错了（出现了类似1-p2这种情况了）
+                if (slideCandidate == "" && firstSegmentExtracted) throw new Exception($"Unexpected occurrence of slide notation: {notation} in slide: {originToken}");
+                if (slideCandidate != "") result.Add(slideCandidate);
+                firstSegmentExtracted = true;
+                slideCandidate = ""; // 清空此前的slideCandidate
+            }
+            else if (char.IsDigit(token[0]))
+            { // 数字键位号类notation
+                notation = token[0].ToString();
+            }
+            else if (token[0] == '[')
+            { // 时间标记类notation
+                var endPos = token.IndexOf(']');
+                if (endPos == -1) throw new Exception($"Unclosed time notation: {token}");
+                notation =  token.Substring(0, endPos + 1);
+            }
+            else throw new Exception($"Cannot parse notation {token} in slide: {originToken}");
+
+            slideCandidate += notation;
+            token = token.Substring(notation.Length);
         }
-
-        bool slideStartExtracted = false;
-        bool normalSlideExtracted = false;
-        string? slideStartCandidate = "";
-        string? slideCandidate = "";
-        string? previousSlideNoteBuffer = "";
-        string? lastKeyCandidate = "";
-
-        foreach (char symbol in candidates)
-            if (!slideStartExtracted && !IsSlideNotation(symbol))
-            {
-                slideStartCandidate += symbol;
-            }
-            else if (!normalSlideExtracted && !IsSlideNotation(symbol))
-            {
-                slideCandidate += symbol;
-                previousSlideNoteBuffer += symbol;
-            }
-            else if (IsSlideNotation(symbol) && ((symbol == 'p' && previousSlideNoteBuffer.Equals("p")) ||
-                                                 (symbol == 'q' && previousSlideNoteBuffer.Equals("q"))))
-            {
-                slideCandidate += symbol;
-                previousSlideNoteBuffer += symbol;
-            }
-            else if (IsSlideNotation(symbol) && !slideStartExtracted)
-            {
-                if (slideStartCandidate.Length > 0) result.Add(slideStartCandidate + "_");
-                slideCandidate += symbol;
-                previousSlideNoteBuffer += symbol;
-                slideStartExtracted = true;
-            }
-            else if (IsSlideNotation(symbol) &&
-                     !((symbol == 'p' && previousSlideNoteBuffer.Equals("p")) ||
-                       (symbol == 'q' && previousSlideNoteBuffer.Equals("q"))) && !normalSlideExtracted)
-            {
-                lastKeyCandidate = KeyCandidate(slideCandidate);
-                result.Add(slideCandidate);
-                normalSlideExtracted = true;
-                slideCandidate = symbol.ToString();
-                previousSlideNoteBuffer = symbol.ToString();
-            }
-            else if (IsSlideNotation(symbol))
-            {
-                result.Add(slideCandidate + "CN" + lastKeyCandidate);
-                lastKeyCandidate = KeyCandidate(slideCandidate);
-                slideCandidate = symbol.ToString();
-                previousSlideNoteBuffer = symbol.ToString();
-            }
-            else
-            {
-                slideCandidate += symbol;
-            }
-
-        // Compensation for the last slide
-        if (slideCandidate.Length > 0 && !normalSlideExtracted) result.Add(slideCandidate);
-        else if (slideCandidate.Length > 0 && normalSlideExtracted)
-            result.Add(slideCandidate + "CN" + lastKeyCandidate);
+        if (slideCandidate != "") result.Add(slideCandidate); // 最后剩余的candidate也要加进去
+        
+        // 给上述result中，第二个及以后的星星添加上CN
+        int start = IsSlideNotation(result[0][0]) ? 1 : 2; // 个别情况（兼容旧版本）result[0]可能形如`1_`，特判这种情况，此时需要额外跳过一个
+        for (int i = result.Count - 1; i >= start; i--)
+        {
+            var prevSlide = result[i - 1];
+            if (prevSlide.Last() == ']') prevSlide = prevSlide.Substring(0, prevSlide.IndexOf('[')); // 如果prevSlide以时间标记结尾，需要去除时间标记后才能找出星星结束点
+            var lastKey = int.Parse(prevSlide.Last().ToString());
+            result[i] += "CN" + (lastKey - 1);
+        }
 
         // Post-processing of slide durations
         if (result.Count(p => p.Contains('[')) == 0)
