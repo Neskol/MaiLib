@@ -677,7 +677,7 @@ public class SimaiParser : IParser
             // 循环提取下一个notation
             if (IsSlideNotation(token[0]))
             { // 星星体类notation
-                var next2Chars = token.Substring(0, 2);
+                string next2Chars = token.Substring(0, 2);
                 notation = next2Chars == "pp" || next2Chars == "qq" ? next2Chars : token[0].ToString();
                 if (!AllowedSlideType.Contains(notation)) throw new Exception($"Unexpected slide type: {notation} in slide: {originToken}");
                 
@@ -694,7 +694,7 @@ public class SimaiParser : IParser
             }
             else if (token[0] == '[')
             { // 时间标记类notation
-                var endPos = token.IndexOf(']');
+                int endPos = token.IndexOf(']');
                 if (endPos == -1) throw new Exception($"Unclosed time notation: {token}");
                 notation =  token.Substring(0, endPos + 1);
             }
@@ -709,9 +709,9 @@ public class SimaiParser : IParser
         int start = IsSlideNotation(result[0][0]) ? 1 : 2; // 个别情况（兼容旧版本）result[0]可能形如`1_`，特判这种情况，此时需要额外跳过一个
         for (int i = result.Count - 1; i >= start; i--)
         {
-            var prevSlide = result[i - 1];
+            string prevSlide = result[i - 1];
             if (prevSlide.Last() == ']') prevSlide = prevSlide.Substring(0, prevSlide.IndexOf('[')); // 如果prevSlide以时间标记结尾，需要去除时间标记后才能找出星星结束点
-            var lastKey = int.Parse(prevSlide.Last().ToString());
+            int lastKey = int.Parse(prevSlide.Last().ToString());
             result[i] += "CN" + (lastKey - 1);
         }
 
